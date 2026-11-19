@@ -1,0 +1,2388 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Vision Pro · Visual Learning</title><script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
+<meta name="description" content="The Vision Pro never shows you the room directly.">
+<meta property="og:type" content="website"><meta property="og:title" content="Vision Pro · Visual Learning"><meta property="og:description" content="The Vision Pro never shows you the room directly.">
+<meta property="og:image" content="https://visual-learning.app/vision-pro-og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:url" content="https://visual-learning.app/vision-pro">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Vision Pro · Visual Learning"><meta name="twitter:description" content="The Vision Pro never shows you the room directly."><meta name="twitter:image" content="https://visual-learning.app/vision-pro-og.png">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20x%3D%223%22%20y%3D%223%22%20width%3D%2226%22%20height%3D%2226%22%20rx%3D%226%22%20fill%3D%22%23f2c14e%22%20stroke%3D%22%2323263a%22%20stroke-width%3D%222.4%22%2F%3E%3Ccircle%20cx%3D%2216%22%20cy%3D%2216%22%20r%3D%226%22%20fill%3D%22%23fffaf0%22%20stroke%3D%22%2323263a%22%20stroke-width%3D%222.4%22%2F%3E%3C%2Fsvg%3E"><style>
+.site{width:min(980px,100% - 32px);margin:22px auto 0;padding:0 20px;display:flex;align-items:center;gap:10px;font:600 12px ui-monospace,"SF Mono",Menlo,Consolas,monospace;color:#23263a;position:relative;z-index:5}
+.site a{color:inherit;text-decoration:none}
+.site .home{font:700 15px ui-sans-serif,system-ui,"Segoe UI",sans-serif;white-space:nowrap;margin-right:auto}
+.site .home:hover{text-decoration:underline;text-underline-offset:3px}
+.pill{background:#fffaf0;border:1.3px solid #23263a;border-radius:999px;padding:5px 11px;white-space:nowrap;box-shadow:2px 2px 0 #23263a;transition:transform .12s,box-shadow .12s;cursor:pointer}
+.pill:hover{transform:translate(-1px,-1px);box-shadow:3px 3px 0 #23263a}
+.menu{position:relative}
+.menu summary{list-style:none;display:flex;align-items:center;gap:7px}
+.menu summary::-webkit-details-marker{display:none}
+.menu summary b{opacity:.5}
+.menu summary i{font-style:normal;font-size:9px;opacity:.6;transition:transform .15s}
+.menu[open] summary{background:#23263a;color:#fffaf0}
+.menu[open] summary i{transform:rotate(180deg)}
+.panel{position:absolute;right:0;top:calc(100% + 10px);width:min(560px,calc(100vw - 32px));background:#f5f0e5;border:1.4px solid #23263a;border-radius:8px;box-shadow:4px 4px 0 #23263a;padding:10px;display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.panel a{display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 6px 8px;border-radius:6px;border:1.2px solid transparent;text-align:center}
+.panel a:hover{border-color:#23263a;background:#fffaf0}
+.panel a[aria-current]{background:#efe8d8;border-color:#23263a}
+.panel img{width:100%;aspect-ratio:1/1;object-fit:contain}
+.panel b{font-size:10px;opacity:.55;letter-spacing:.06em}
+.panel span{font:600 12px/1.25 ui-sans-serif,system-ui,"Segoe UI",sans-serif}
+.arrows{display:flex;gap:6px}
+.arrows a{padding:5px 10px}
+.iso-page{padding-top:16px!important}
+.credit{margin:16px 2px 0;font:500 12px/1.5 ui-sans-serif,system-ui,"Segoe UI",sans-serif;color:#7b7666}
+.credit a{color:inherit;text-underline-offset:2px}
+.keys{font:600 11px ui-monospace,Menlo,Consolas,monospace;color:#8a8676}
+@media (max-width:760px){
+.site{width:100%;padding:10px 10px 0;margin-top:0;gap:6px;flex-wrap:wrap}
+.site .badges{order:-2;margin-left:auto}
+.site .maker,.site .guide{font-size:11px;padding:4px 10px}
+.site::after{content:"";order:-1;flex-basis:100%;height:0}
+.site .home{font-size:14px}
+.menu summary .nm{display:none}
+.panel{position:fixed;left:10px;right:10px;top:52px;width:auto;max-height:calc(100vh - 70px);overflow:auto;grid-template-columns:repeat(3,1fr);gap:4px;padding:8px}
+.panel span{font-size:11px}
+.iso-page{padding-top:10px!important}
+.keys{display:none}
+.credit{margin:12px 2px 0}
+}
+.render .site,.render .credit{display:none}
+.embed .site,.embed .credit{display:none!important}
+.embed .iso-page{margin:0 auto!important;padding:6px!important;width:100%!important}
+.embed.fill .iso-page{height:100vh;display:flex;flex-direction:column}
+.embed.fill .card{flex:1;grid-template-rows:auto 1fr auto}
+.embed.fill .main{display:flex;flex-direction:column}
+.embed.fill .stage{flex:1;display:grid;place-items:center}
+a.guide,.site a.guide{font:700 12px ui-monospace,"SF Mono",Menlo,Consolas,monospace;white-space:nowrap;text-decoration:none;color:#23263a;background:#f2c14e;border:1.3px solid #23263a;border-radius:999px;padding:5px 12px;box-shadow:2px 2px 0 #23263a;transition:transform .12s,box-shadow .12s}
+a.guide:hover{transform:translate(-1px,-1px);box-shadow:3px 3px 0 #23263a}
+.badges{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+a.maker,.site a.maker{font:600 12px ui-monospace,"SF Mono",Menlo,Consolas,monospace;white-space:nowrap;text-decoration:none;color:#fffaf0;background:#23263a;border:1.3px solid #23263a;border-radius:999px;padding:5px 12px;box-shadow:2px 2px 0 #23263a55;transition:transform .12s}
+.maker b{font-weight:700;color:#f2c14e}
+.maker:hover{transform:translate(-1px,-1px)}
+</style><style>
+.iso{
+  --anatomy-page:#0b0b0b;--anatomy-card:#131313;--anatomy-text:#a3a3a3;--anatomy-strong:#e6e6e6;--anatomy-muted:#6e6e6e;
+  --anatomy-paper:#131313;--anatomy-face:#1b1b1b;--anatomy-top:#1c1c1c;
+  --anatomy-shade-0:#0f0f0f;--anatomy-shade-1:#121212;--anatomy-shade-2:#151515;--anatomy-shade-3:#181818;
+  --anatomy-lit-top:#262626;--anatomy-lit-shade:#1d1d1d;
+  --anatomy-hi:#d4d4d4;--anatomy-mid:#6a6a6a;--anatomy-lo:#3e3e3e;--anatomy-faint:#2a2a2a;--anatomy-lit:#ffffff;
+  --anatomy-halo:#050505;--anatomy-halo-opacity:.9;--anatomy-dot:#e6e6e6;
+  --anatomy-red:#ff6b6b;--anatomy-green:#6be0a0;--anatomy-blue:#6b9bff;
+  --anatomy-weight:.6px;--anatomy-ease:cubic-bezier(.32,.72,0,1);
+  --anatomy-mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --anatomy-lift:inset 0 1px 0 0 #ffffff0a,inset 0 0 0 1px #ffffff06,0 0 0 1px #00000026,0 1px 1px -.5px #00000014,0 3px 3px -1.5px #00000014,0 6px 6px -3px #00000014,0 12px 12px -6px #00000014;
+}
+.iso[data-theme="light"]{
+  --anatomy-page:#f2f2ef;--anatomy-card:#fbfbfa;--anatomy-text:#57575a;--anatomy-strong:#18181a;--anatomy-muted:#8c8c90;
+  --anatomy-paper:#fbfbfa;--anatomy-face:#ffffff;--anatomy-top:#ffffff;
+  --anatomy-shade-0:#dcdcd9;--anatomy-shade-1:#e5e5e2;--anatomy-shade-2:#ededea;--anatomy-shade-3:#f4f4f1;
+  --anatomy-lit-top:#ffffff;--anatomy-lit-shade:#eeeeeb;
+  --anatomy-hi:#26262a;--anatomy-mid:#8a8a8f;--anatomy-lo:#b4b4b8;--anatomy-faint:#d4d4d6;--anatomy-lit:#000000;
+  --anatomy-halo:#8a8a80;--anatomy-halo-opacity:.32;--anatomy-dot:#3a3a3e;
+  --anatomy-red:#e5484d;--anatomy-green:#30a46c;--anatomy-blue:#3e63dd;
+  --anatomy-lift:inset 0 1px 0 0 #ffffff,0 0 0 1px #0000000f,0 1px 1px -.5px #0000000a,0 3px 3px -1.5px #0000000a,0 6px 6px -3px #0000000a,0 12px 12px -6px #0000000a;
+}
+.iso-svg{display:block;width:100%;height:auto;overflow:visible}
+.iso-svg path,.iso-svg circle{vector-effect:non-scaling-stroke}
+.iso-fill{fill:var(--anatomy-paper);stroke:none}
+.iso-solid[data-lit]>.iso-fill{fill:var(--anatomy-face)}
+.iso-shade,.iso-top{stroke:none}
+.iso-shade[data-shade="0"]{fill:var(--anatomy-shade-0)}
+.iso-shade[data-shade="1"]{fill:var(--anatomy-shade-1)}
+.iso-shade[data-shade="2"]{fill:var(--anatomy-shade-2)}
+.iso-shade[data-shade="3"]{fill:var(--anatomy-shade-3)}
+.iso-top{fill:var(--anatomy-top)}
+.iso-solid[data-lit]>.iso-top{fill:var(--anatomy-lit-top)}
+.iso-solid[data-lit]>.iso-shade{fill:var(--anatomy-lit-shade)}
+.iso-solid[data-seamless]>.iso-shade,.iso-solid[data-seamless]>.iso-top{stroke-width:.4;stroke-linejoin:round}
+.iso-solid[data-seamless]>.iso-shade[data-shade="0"]{stroke:var(--anatomy-shade-0)}
+.iso-solid[data-seamless]>.iso-shade[data-shade="1"]{stroke:var(--anatomy-shade-1)}
+.iso-solid[data-seamless]>.iso-shade[data-shade="2"]{stroke:var(--anatomy-shade-2)}
+.iso-solid[data-seamless]>.iso-shade[data-shade="3"]{stroke:var(--anatomy-shade-3)}
+.iso-solid[data-seamless]>.iso-top{stroke:var(--anatomy-top)}
+.iso-solid[data-seamless][data-lit]>.iso-top{stroke:var(--anatomy-lit-top)}
+.iso-solid[data-seamless][data-lit]>.iso-shade{stroke:var(--anatomy-lit-shade)}
+.iso-solid[data-lit]>.iso-edge{stroke:var(--anatomy-lit)}
+.iso-halo{fill:var(--anatomy-halo);stroke:none;filter:blur(9px);opacity:var(--anatomy-halo-opacity);transform:translateY(3px)}
+.iso-line{fill:none;stroke:var(--anatomy-lo);stroke-width:var(--anatomy-weight);stroke-linecap:round;stroke-linejoin:round}
+.iso-line[data-tone="hi"]{stroke:var(--anatomy-hi)}
+.iso-line[data-tone="mid"]{stroke:var(--anatomy-mid)}
+.iso-line[data-tone="lo"]{stroke:var(--anatomy-lo)}
+.iso-line[data-tone="faint"]{stroke:var(--anatomy-faint)}
+.iso-line[data-tone="lit"]{stroke:var(--anatomy-lit)}
+.iso-line[data-tone="red"]{stroke:var(--anatomy-red)}
+.iso-line[data-tone="green"]{stroke:var(--anatomy-green)}
+.iso-line[data-tone="blue"]{stroke:var(--anatomy-blue)}
+.iso-line[data-dotted]{stroke-dasharray:.01 3.5;stroke-width:1}
+.iso-line[data-dashed]{stroke-dasharray:3 3}
+.iso-line[data-flow]{stroke-dasharray:2 6}
+.iso-wire-end{fill:var(--anatomy-paper);stroke:var(--anatomy-lo);stroke-width:var(--anatomy-weight)}
+.iso-wire[data-tone="hi"] .iso-wire-end{stroke:var(--anatomy-hi)}
+.iso-wire[data-tone="mid"] .iso-wire-end{stroke:var(--anatomy-mid)}
+.iso-wire[data-tone="faint"] .iso-wire-end{stroke:var(--anatomy-faint)}
+.iso-wire[data-tone="lit"] .iso-wire-end{stroke:var(--anatomy-lit)}
+.iso-dots circle{fill:var(--anatomy-dot);stroke:none;opacity:.32}
+.iso-dots[data-tone="hi"] circle{opacity:.85}
+.iso-dots[data-tone="mid"] circle{opacity:.45}
+.iso-dots[data-tone="lo"] circle{opacity:.22}
+.iso-dots[data-tone="faint"] circle{opacity:.12}
+.iso-face-text{fill:var(--anatomy-mid);font-family:var(--anatomy-mono);letter-spacing:.04em}
+.iso-face-text[data-tone="hi"]{fill:var(--anatomy-hi)}
+.iso-face-text[data-tone="lo"]{fill:var(--anatomy-lo)}
+.iso-face-text[data-tone="faint"]{fill:var(--anatomy-faint)}
+.tb-body{fill:var(--anatomy-shade-2);stroke:none}
+.tb-shine{fill:var(--anatomy-top);stroke:none}
+.tb-shade{fill:var(--anatomy-shade-0);stroke:none}
+.tb-ring{fill:none;stroke:var(--anatomy-lo);stroke-width:.45;stroke-linecap:butt;stroke-linejoin:round}
+.tb-ring[data-tone="mid"]{stroke:var(--anatomy-mid)}
+.tb-ring[data-tone="faint"]{stroke:var(--anatomy-faint)}
+.tb-ring[data-tone="hi"]{stroke:var(--anatomy-hi)}
+@keyframes iso-flow{to{stroke-dashoffset:-32}}
+@keyframes iso-pulse{0%,100%{opacity:.18}12%{opacity:1}40%{opacity:.18}}
+.iso-line[data-flow]{animation:iso-flow 1600ms linear infinite}
+.iso-dots circle[data-pulse]{animation:iso-pulse 1600ms steps(1,end) infinite;animation-delay:var(--pulse-at,0ms)}
+.iso-figure{margin:32px 0 36px}
+.iso-plate{position:relative;padding:52px 24px;border-radius:0;background:var(--anatomy-card);box-shadow:0 0 0 1px var(--anatomy-mid);--anatomy-paper:var(--anatomy-card)}
+.iso-plate-corners{position:absolute;inset:18px 20px;pointer-events:none}
+.iso-plate-corner{position:absolute;color:var(--anatomy-muted);font-family:var(--anatomy-mono);font-size:10.5px;line-height:1;letter-spacing:.04em;white-space:nowrap}
+.iso-plate-corner[data-corner="fig"]{top:0;left:0;color:var(--anatomy-text)}
+.iso-plate-corner[data-corner="title"]{top:0;right:0;text-transform:uppercase;letter-spacing:.1em}
+.iso-plate-corner[data-corner="hint"]{bottom:0;left:0;text-transform:uppercase;letter-spacing:.1em}
+.iso-plate-corner[data-corner="readout"]{right:0;bottom:0;color:var(--anatomy-text);font-variant-numeric:tabular-nums}
+.iso-plate .iso-svg{margin:0 auto}
+.iso-legend{display:grid;gap:8px;margin-top:12px;color:var(--anatomy-muted);font-size:13px;line-height:1.55}
+.iso-keys{display:flex;flex-wrap:wrap;gap:6px 18px}
+.iso-key{display:inline-flex;align-items:center;gap:7px}
+.iso-swatch{width:16px;height:10px;flex:none;overflow:visible}
+.iso-swatch path{fill:none;stroke:var(--anatomy-hi);stroke-width:1;vector-effect:non-scaling-stroke;stroke-linejoin:round;stroke-linecap:round}
+.iso-swatch[data-mark="raised"] path,.iso-swatch[data-mark="flat"] path{stroke:var(--anatomy-mid)}
+.iso-swatch[data-mark="lit"] path{stroke:var(--anatomy-lit)}
+.iso-swatch[data-mark="dim"] path{stroke:var(--anatomy-lo)}
+.iso-swatch[data-mark="dotted"] path{stroke-dasharray:.01 3;stroke-width:1.4}
+.iso-swatch[data-mark="dashed"] path{stroke-dasharray:3 2.5}
+.iso-swatch[data-mark="red"] path{stroke:var(--anatomy-red)}
+.iso-swatch[data-mark="green"] path{stroke:var(--anatomy-green)}
+.iso-swatch[data-mark="blue"] path{stroke:var(--anatomy-blue)}
+.iso-swatch-crease{stroke:var(--anatomy-lo)!important}
+@media (max-width:560px){.iso-plate{padding:48px 12px 70px}.iso-plate-corner[data-corner="hint"]{bottom:18px}}
+@media (prefers-reduced-motion:reduce){.iso-line[data-flow],.iso-dots circle[data-pulse]{animation:none}}
+
+*{box-sizing:border-box}
+html{color-scheme:dark}
+body[data-theme="light"]{color-scheme:light}
+body{margin:0;background:var(--anatomy-page);color:var(--anatomy-text);font:14px/1.6 ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+.iso-page{width:min(980px,100% - 32px);margin:64px auto 96px}
+</style></head><body class="iso" data-theme="light"><header class="site">
+  <a class="home" href="/">← Visual Learning</a>
+  <details class="menu"><summary class="pill"><b>28</b><span class="nm">Vision Pro</span><span>· all 40</span><i>▼</i></summary>
+    <nav class="panel"><a href="/dji-drone"><img src="/thumbs/dji-drone.webp" alt="" loading="lazy"><b>FIG. 29</b><span>DJI drone</span></a><a href="/dji-neo"><img src="/thumbs/dji-neo.webp" alt="" loading="lazy"><b>FIG. 36</b><span>DJI Neo</span></a><a href="/vision-pro" aria-current="page"><img src="/thumbs/vision-pro.webp" alt="" loading="lazy"><b>FIG. 28</b><span>Vision Pro</span></a><a href="/rolex"><img src="/thumbs/rolex.webp" alt="" loading="lazy"><b>FIG. 38</b><span>Rolex Submariner</span></a><a href="/meta-glasses"><img src="/thumbs/meta-glasses.webp" alt="" loading="lazy"><b>FIG. 37</b><span>Meta Ray-Ban Display</span></a><a href="/ipad-pro"><img src="/thumbs/ipad-pro.webp" alt="" loading="lazy"><b>FIG. 41</b><span>iPad Pro</span></a><a href="/dgx-spark"><img src="/thumbs/dgx-spark.webp" alt="" loading="lazy"><b>FIG. 25</b><span>NVIDIA DGX Spark</span></a><a href="/spot"><img src="/thumbs/spot.webp" alt="" loading="lazy"><b>FIG. 30</b><span>Spot robot dog</span></a><a href="/robot-vacuum"><img src="/thumbs/robot-vacuum.webp" alt="" loading="lazy"><b>FIG. 40</b><span>Robot vacuum with an arm</span></a><a href="/atlas"><img src="/thumbs/atlas.webp" alt="" loading="lazy"><b>FIG. 35</b><span>Atlas robot</span></a><a href="/combination-lock"><img src="/thumbs/combination-lock.webp" alt="" loading="lazy"><b>FIG. 39</b><span>Combination lock</span></a><a href="/starlink"><img src="/thumbs/starlink.webp" alt="" loading="lazy"><b>FIG. 33</b><span>Starlink dish</span></a><a href="/switch-2"><img src="/thumbs/switch-2.webp" alt="" loading="lazy"><b>FIG. 32</b><span>Nintendo Switch 2</span></a><a href="/f1-wheel"><img src="/thumbs/f1-wheel.webp" alt="" loading="lazy"><b>FIG. 34</b><span>F1 steering wheel</span></a><a href="/ps-controller"><img src="/thumbs/ps-controller.webp" alt="" loading="lazy"><b>FIG. 24</b><span>PlayStation controller</span></a><a href="/iphone"><img src="/thumbs/iphone.webp" alt="" loading="lazy"><b>FIG. 20</b><span>iPhone</span></a><a href="/macbook"><img src="/thumbs/macbook.webp" alt="" loading="lazy"><b>FIG. 21</b><span>MacBook</span></a><a href="/rtx-5090"><img src="/thumbs/rtx-5090.webp" alt="" loading="lazy"><b>FIG. 27</b><span>RTX 5090</span></a><a href="/mac-mini"><img src="/thumbs/mac-mini.webp" alt="" loading="lazy"><b>FIG. 26</b><span>Mac mini</span></a><a href="/apple-watch"><img src="/thumbs/apple-watch.webp" alt="" loading="lazy"><b>FIG. 23</b><span>Apple Watch</span></a><a href="/airpods"><img src="/thumbs/airpods.webp" alt="" loading="lazy"><b>FIG. 22</b><span>AirPods Pro</span></a><a href="/mechanical-watch"><img src="/thumbs/mechanical-watch.webp" alt="" loading="lazy"><b>FIG. 18</b><span>Mechanical watch</span></a><a href="/rubiks-cube"><img src="/thumbs/rubiks-cube.webp" alt="" loading="lazy"><b>FIG. 15</b><span>Rubik's cube</span></a><a href="/instant-camera"><img src="/thumbs/instant-camera.webp" alt="" loading="lazy"><b>FIG. 16</b><span>Instant camera</span></a><a href="/atom"><img src="/thumbs/atom.webp" alt="" loading="lazy"><b>FIG. 19</b><span>The atom</span></a><a href="/lava-lamp"><img src="/thumbs/lava-lamp.webp" alt="" loading="lazy"><b>FIG. 17</b><span>Lava lamp</span></a><a href="/claw-machine"><img src="/thumbs/claw-machine.webp" alt="" loading="lazy"><b>FIG. 02</b><span>Claw machine</span></a><a href="/microwave"><img src="/thumbs/microwave.webp" alt="" loading="lazy"><b>FIG. 07</b><span>Microwave</span></a><a href="/espresso-machine"><img src="/thumbs/espresso-machine.webp" alt="" loading="lazy"><b>FIG. 01</b><span>Espresso machine</span></a><a href="/car-engine"><img src="/thumbs/car-engine.webp" alt="" loading="lazy"><b>FIG. 03</b><span>Car engine</span></a><a href="/vending-machine"><img src="/thumbs/vending-machine.webp" alt="" loading="lazy"><b>FIG. 04</b><span>Vending machine</span></a><a href="/washing-machine"><img src="/thumbs/washing-machine.webp" alt="" loading="lazy"><b>FIG. 05</b><span>Washing machine</span></a><a href="/toaster"><img src="/thumbs/toaster.webp" alt="" loading="lazy"><b>FIG. 06</b><span>Toaster</span></a><a href="/pencil-sharpener"><img src="/thumbs/pencil-sharpener.webp" alt="" loading="lazy"><b>FIG. 08</b><span>Pencil sharpener</span></a><a href="/smoke-alarm"><img src="/thumbs/smoke-alarm.webp" alt="" loading="lazy"><b>FIG. 09</b><span>Smoke alarm</span></a><a href="/fridge"><img src="/thumbs/fridge.webp" alt="" loading="lazy"><b>FIG. 10</b><span>Fridge</span></a><a href="/capsule-toy-machine"><img src="/thumbs/capsule-toy-machine.webp" alt="" loading="lazy"><b>FIG. 11</b><span>Capsule toy machine</span></a><a href="/photo-booth"><img src="/thumbs/photo-booth.webp" alt="" loading="lazy"><b>FIG. 12</b><span>Photo booth</span></a><a href="/roller-coaster"><img src="/thumbs/roller-coaster.webp" alt="" loading="lazy"><b>FIG. 13</b><span>Roller coaster</span></a><a href="/elevator"><img src="/thumbs/elevator.webp" alt="" loading="lazy"><b>FIG. 14</b><span>Elevator</span></a></nav>
+  </details>
+  <span class="arrows"><a class="pill" href="/dji-neo" data-go="prev" title="DJI Neo (←)">←</a><a class="pill" href="/rolex" data-go="next" title="Rolex Submariner (→)">→</a></span>
+  <span class="badges"><a class="guide" href="https://x.com/elvar_official/status/2111831136171151589" target="_blank" rel="noopener">Full guide ↗</a><a class="maker" href="https://x.com/elvar_official" target="_blank" rel="noopener">Made by <b>@elvar_official</b></a></span>
+</header><main class="iso-page"><style>.c-chrome{--f:#cfd7e0;--t:#e3e8ed;--s3:#d8dee6;--s2:#cfd7e0;--s1:#b8bfc9;--s0:#a0a7b1}
+.c-steel{--f:#bcc5cf;--t:#d8dde3;--s3:#c8cfd8;--s2:#bcc5cf;--s1:#a7afba;--s0:#9299a5}
+.c-dark{--f:#8e98a6;--t:#bdc3cb;--s3:#a2abb6;--s2:#8e98a6;--s1:#7f8896;--s0:#707886}
+.c-iron{--f:#8a8f9c;--t:#bbbec6;--s3:#9fa3ae;--s2:#8a8f9c;--s1:#7c808d;--s0:#6d717f}
+.c-brass{--f:#e3b866;--t:#efd6a6;--s3:#e8c582;--s2:#e3b866;--s1:#c9a45e;--s0:#af9057}
+.c-copper{--f:#d98a5a;--t:#e9bb9f;--s3:#e09f78;--s2:#d98a5a;--s1:#c07c54;--s0:#a86e4e}
+.c-black{--f:#383a4e;--t:#8c8d98;--s3:#5c5d6e;--s2:#383a4e;--s1:#34364a;--s0:#303245}
+.c-rubber{--f:#44465a;--t:#93949f;--s3:#666778;--s2:#44465a;--s1:#3f4154;--s0:#393b4e}
+.c-wood{--f:#cf9460;--t:#e3c1a3;--s3:#d8a77d;--s2:#cf9460;--s1:#b88559;--s0:#a07552}
+.c-porcelain{--f:#f7f3ea;--t:#faf8f3;--s3:#f8f5ee;--s2:#f7f3ea;--s1:#dad7d1;--s0:#bebbb9}
+.c-glass{--f:#d9eef5;--t:#e9f5f9;--s3:#e0f1f7;--s2:#d9eef5;--s1:#c0d3db;--s0:#a8b8c1}
+.c-amber{--f:#ffb648;--t:#ffd595;--s3:#ffc369;--s2:#ffb648;--s1:#e1a244;--s0:#c48e41}
+.c-mint{--f:#86d3ad;--t:#b9e5cf;--s3:#9cdbbc;--s2:#86d3ad;--s1:#78bb9c;--s0:#6aa48b}
+.c-butter{--f:#f2c14e;--t:#f7db98;--s3:#f4cc6e;--s2:#f2c14e;--s1:#d6ac4a;--s0:#ba9645}
+.c-tomato{--f:#e5583e;--t:#f09e8f;--s3:#ea7661;--s2:#e5583e;--s1:#cb503c;--s0:#b04939}
+.c-sky{--f:#7fb9e9;--t:#b5d6f2;--s3:#96c6ed;--s2:#7fb9e9;--s1:#72a5d0;--s0:#6590b8}
+.c-rose{--f:#f2a5bf;--t:#f7cbda;--s3:#f4b5cb;--s2:#f2a5bf;--s1:#d693ac;--s0:#ba8299}
+.c-lilac{--f:#b9a6e8;--t:#d6cbf2;--s3:#c6b6ec;--s2:#b9a6e8;--s1:#a494d0;--s0:#9082b7}
+.c-cream{--f:#f6eedb;--t:#faf5ea;--s3:#f8f1e1;--s2:#f6eedb;--s1:#dad3c4;--s0:#bdb8ae}
+.c-paper{--f:#fbf7ee;--t:#fdfaf5;--s3:#fcf8f1;--s2:#fbf7ee;--s1:#dedbd5;--s0:#c1bebc}
+.c-green{--f:#5fae7b;--t:#a2d0b2;--s3:#7cbd93;--s2:#5fae7b;--s1:#569b71;--s0:#4d8866}
+.c-pcb{--f:#3f8f5c;--t:#90bea0;--s3:#62a379;--s2:#3f8f5c;--s1:#3a8056;--s0:#367150}
+.c{--anatomy-paper:var(--f);--anatomy-face:var(--f);--anatomy-top:var(--t);--anatomy-shade-3:var(--s3);--anatomy-shade-2:var(--s2);--anatomy-shade-1:var(--s1);--anatomy-shade-0:var(--s0);--anatomy-lit-top:var(--t);--anatomy-lit-shade:var(--s2)}
+.c-body{--f:var(--body);--t:var(--body-t);--s3:var(--body-3);--s2:var(--body);--s1:var(--body-1);--s0:var(--body-0)}
+.c-alt{--f:var(--alt);--t:var(--alt-t);--s3:var(--alt-3);--s2:var(--alt);--s1:var(--alt-1);--s0:var(--alt-0)}
+.iso[data-theme="light"]{--anatomy-page:#ece6d8;--anatomy-card:#f5f0e5;--anatomy-hi:#23263a;--anatomy-mid:#23263aa8;--anatomy-lo:#23263a70;--anatomy-faint:#23263a45;--anatomy-lit:#23263a;--anatomy-dot:#23263a;--anatomy-weight:1.15px;--anatomy-halo-opacity:0;--anatomy-text:#4a4c5e;--anatomy-strong:#23263a;--anatomy-muted:#8a8676}
+body.iso{background:var(--anatomy-page);margin:0}
+.iso-page{max-width:980px;margin:0 auto;padding:28px 20px 40px;font-family:ui-sans-serif,system-ui,"Segoe UI",sans-serif;color:var(--anatomy-text)}
+.card{background:var(--anatomy-card);border:1.4px solid #23263a;border-radius:6px;box-shadow:4px 4px 0 #23263a;display:grid;grid-template-columns:200px 1fr;overflow:hidden}
+.side{border-right:1.4px solid #23263a;padding:18px 16px;display:flex;flex-direction:column;gap:10px;background:#efe8d8}
+.fig{font:600 11px var(--anatomy-mono);letter-spacing:.08em;text-transform:uppercase;color:#6b6656}
+.title{font:700 21px/1.15 ui-sans-serif,system-ui,"Segoe UI",sans-serif;color:#23263a;margin:2px 0 6px}
+.steps{display:flex;flex-direction:column;gap:7px;margin-top:4px}
+.step{appearance:none;text-align:left;font:600 12.5px var(--anatomy-mono);color:#23263a;background:#fffaf0;border:1.3px solid #23263a;border-radius:999px;padding:7px 12px 7px 10px;cursor:pointer;display:flex;gap:8px;align-items:center;box-shadow:2px 2px 0 #23263a;transition:transform .12s,box-shadow .12s,background .2s,opacity .2s}
+.step b{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;background:#23263a;color:#fffaf0;font-size:10px;flex:none}
+.step:hover:not([disabled]){transform:translate(-1px,-1px);box-shadow:3px 3px 0 #23263a}
+.step:active:not([disabled]),.step[data-press]{transform:translate(2px,2px);box-shadow:0 0 0 #23263a}
+.step[disabled]{opacity:.38;cursor:default;box-shadow:none}
+.step[data-on]{background:var(--body);opacity:1;box-shadow:2px 2px 0 #23263a}
+.step[data-done]{opacity:.55;box-shadow:none}
+.main{position:relative;padding:14px 18px 12px}
+.hint{font:500 13.5px/1.45 ui-sans-serif,system-ui,"Segoe UI",sans-serif;color:#23263a;min-height:40px;max-width:600px}
+.lapse{display:inline-block;margin-left:8px;font:700 11px var(--anatomy-mono);background:#23263a;color:#fffaf0;border-radius:4px;padding:2px 6px;vertical-align:1px;opacity:0;transition:opacity .2s}
+.lapse[data-on]{opacity:1}
+.stage svg{display:block;width:100%;height:auto;overflow:visible}
+.chips{display:flex;flex-wrap:wrap;gap:6px 8px;margin-top:4px}
+.chip{font:600 11.5px var(--anatomy-mono);color:#23263a;background:#fffaf0;border:1.2px solid #23263a;border-radius:6px;padding:5px 8px;font-variant-numeric:tabular-nums;white-space:nowrap;transition:background .25s}
+.chip i{font-style:normal;color:#7b7666;font-weight:500;margin-right:5px;text-transform:uppercase;font-size:10px;letter-spacing:.06em}
+.chip[data-hot]{background:var(--body)}
+.foot{display:flex;align-items:center;gap:18px;flex-wrap:wrap;border-top:1.4px solid #23263a;padding:10px 18px;grid-column:1/-1;background:#efe8d8}
+.idea{font:500 13px/1.45 ui-sans-serif,system-ui,"Segoe UI",sans-serif;color:#23263a;flex:1 1 340px}
+.idea b{font-weight:700}
+.ctl{display:flex;align-items:center;gap:8px;font:600 10px var(--anatomy-mono);letter-spacing:.07em;text-transform:uppercase;color:#6b6656}
+.sw{width:18px;height:18px;border-radius:50%;border:1.3px solid #23263a;cursor:pointer;padding:0}
+.sw[data-on]{box-shadow:0 0 0 2px #f5f0e5,0 0 0 3.4px #23263a}
+.shadow{fill:#ddd4c3}
+.slot{fill:#23263a;opacity:.62}
+.plate{fill:#e3b866;stroke:#23263a;stroke-width:1px;vector-effect:non-scaling-stroke}
+.dial-face{fill:#fffdf6;stroke:#23263a;stroke-width:1px;vector-effect:non-scaling-stroke}
+.dial-red{fill:none;stroke:#e5583e;stroke-width:2.2px;stroke-linecap:round;vector-effect:non-scaling-stroke}
+.glint{fill:none;stroke:#fff;stroke-width:1.6px;stroke-linecap:round;opacity:.85;vector-effect:non-scaling-stroke}
+.needle{fill:none;stroke:#e5583e;stroke-width:1.6px;stroke-linecap:round;vector-effect:non-scaling-stroke}
+.lcd{fill:#cde7c3;stroke:#23263a;stroke-width:1px;vector-effect:non-scaling-stroke}
+.lcd-text{fill:#23263a;font-family:var(--anatomy-mono);font-weight:700;letter-spacing:.02em}
+.glass .iso-fill,.glass .iso-shade,.glass .iso-top{fill-opacity:.32}
+.ink{fill:none;stroke:#23263a;stroke-width:1.15px;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+.word{font:700 15px "Segoe Print","Bradley Hand","Comic Sans MS",cursive;fill:#23263a;paint-order:stroke;stroke:#f5f0e5;stroke-width:4px;stroke-linejoin:round}
+.cursor{position:fixed;left:0;top:0;z-index:10;pointer-events:none;transform-origin:3px 2px;filter:drop-shadow(1px 2px 0 #23263a55)}
+.render *{transition:none!important}
+.modes{display:flex;gap:2px;padding:2px;background:#fffaf0;border:1.3px solid #23263a;border-radius:999px;box-shadow:2px 2px 0 #23263a;margin:2px 0 6px}
+.mode{flex:1;appearance:none;border:0;background:none;border-radius:999px;padding:5px 6px;font:700 11.5px var(--anatomy-mono);color:#6b6656;cursor:pointer;white-space:nowrap;transition:background .15s,color .15s;display:flex;align-items:center;justify-content:center;gap:6px}
+.mode:hover:not([aria-checked="true"]){color:#23263a}
+.mode[aria-checked="true"]{background:#23263a;color:#fffaf0}
+.restart{appearance:none;background:none;border:0;padding:2px 0;margin-top:auto;align-self:flex-start;font:600 11px var(--anatomy-mono);color:#6b6656;cursor:pointer;text-decoration:underline;text-decoration-color:#6b665666;text-underline-offset:3px}
+.restart:hover{color:#23263a;text-decoration-color:#23263a}
+.render .modes,.render .restart{display:none}
+.manual .step:not([disabled]):not([data-on]){animation:nudge 1.5s ease-in-out infinite}
+@keyframes nudge{0%,100%{box-shadow:2px 2px 0 #23263a,0 0 0 0 #23263a55}60%{box-shadow:2px 2px 0 #23263a,0 0 0 6px #23263a00}}
+@media (prefers-reduced-motion:reduce){.manual .step{animation:none!important}}
+@media (max-width:760px){
+.iso-page{width:100%;margin:0 auto;padding:10px 10px 28px}
+.card{grid-template-columns:1fr;box-shadow:3px 3px 0 #23263a}
+.side{border-right:0;border-bottom:1.4px solid #23263a;padding:12px 12px 10px;gap:6px}
+.title{font-size:18px;margin:0 0 4px}
+.steps{flex-direction:row;flex-wrap:wrap;gap:6px}
+.step{padding:5px 10px 5px 6px;font-size:11.5px;gap:6px}
+.modes{max-width:280px;margin:0 0 4px}
+.restart{margin-top:2px}
+.main{padding:10px 10px 10px}
+.hint{min-height:57px;font-size:13px}
+.foot{padding:10px 12px;gap:10px 16px}
+.idea{flex-basis:100%}
+}
+
+.stage svg{overflow:hidden}
+.c-leather{--f:#a8794f;--t:#c9a07a;--s3:#b88a62;--s2:#a8794f;--s1:#946c48;--s0:#815f40}
+.step[data-on],.chip[data-hot]{background:var(--alt)}
+.shadow-mat{mix-blend-mode:multiply}
+.ph path,.ph use,.ph circle,.ph rect,.ph ellipse{vector-effect:non-scaling-stroke;stroke-linejoin:round}
+.ph .ol{fill:none;stroke:#23263a;stroke-width:1.1px;stroke-linecap:round}
+.ph .cr{fill:none;stroke:#23263a;stroke-width:.55px;opacity:.75;stroke-linecap:round}
+.ph .thin{fill:none;stroke:#23263a;stroke-width:.6px}
+.ph .hair{fill:none;stroke:#23263a;stroke-width:.4px;opacity:.55}
+.ph .seam{fill:none;stroke:#23263a;stroke-width:.5px;opacity:.5}
+.ph .lite{fill:none;stroke:#fff;stroke-width:.7px;opacity:.55;stroke-linecap:round}
+.ph .ink{fill:#23263a;stroke:none}
+.ph text{font-family:ui-sans-serif,system-ui,"Segoe UI",sans-serif;font-weight:700}
+.ph .hole{fill:#23263a;stroke:none;opacity:.8}
+.ph .vent{fill:#2a2c37;stroke:none}
+.ph .lens-g{fill:#141826;stroke:#23263a;stroke-width:.4px}
+.ph .lens-r{fill:none;stroke:#5d6478;stroke-width:.5px}
+.ph .lens-hi{fill:#fff;opacity:.75;stroke:none}
+.ph .lens-c{fill:#2c3a63;stroke:none;opacity:.9}
+.ph .ir{fill:#3a1d2a;stroke:#23263a;stroke-width:.3px}
+.ph .chipprint{fill:#d8dae2;font-weight:700;opacity:.92}
+.ph .chiplogo{fill:#d8dae2;opacity:.92;stroke:none}
+.ph .silk{fill:#e9efe6;font-weight:600;opacity:.8}
+.ph .trace{fill:none;stroke:#f3c27a;stroke-width:.4px;opacity:.6}
+.ph .pad{fill:#e3b866;stroke:none}
+.ph .cap{fill:#b9946a;stroke:#23263a;stroke-width:.25px}
+.ph .res{fill:#2a2c37;stroke:none}
+.ph .conn{fill:#3a3c48;stroke:#23263a;stroke-width:.4px}
+.ph .pins{fill:none;stroke:#e3b866;stroke-width:.5px}
+.ph .screw{fill:#c9d0d9;stroke:#23263a;stroke-width:.45px}
+.ph .slot{fill:none;stroke:#23263a;stroke-width:.5px;stroke-linecap:round}
+.ph .hi{fill:#fff;opacity:.7;stroke:none}
+.ph .blade{fill:#4a4d5c;stroke:#23263a;stroke-width:.35px}
+.ph .hub{fill:#2e3039;stroke:#23263a;stroke-width:.4px}
+.ph .flex{fill:#d08a3f;stroke:#23263a;stroke-width:.4px}
+.ph .knit{fill:none;stroke:#23263a;stroke-width:.45px;opacity:.28;stroke-linecap:round}
+.ph .knit-l{fill:none;stroke:#fff;stroke-width:.45px;opacity:.22;stroke-linecap:round}
+.ph .weave{fill:none;stroke:#fff;stroke-width:.5px;opacity:.28}
+.ph .grille{fill:#2a2c37;stroke:none;opacity:.85}
+.ph .fabric{fill:none;stroke:#23263a;stroke-width:.35px;opacity:.18}
+.ph .glare{fill:#fff;stroke:none}
+.ph .logo-glow{fill:#e8eefc;stroke:none}
+.ph .logo-face{fill:#f4f6fb;stroke:none}
+.ph .logo-alu{fill:#9aa0ab;stroke:none}
+.ph .orange{fill:#e8793a;stroke:#23263a;stroke-width:.4px}
+.ph .oled-on{fill:#0b0c12;stroke:none}
+.ph .px-r{fill:#ff4f5e;stroke:none}
+.ph .px-g{fill:#3fd38a;stroke:none}
+.ph .px-b{fill:#4f8dff;stroke:none}
+.ph .dim{fill:#f5f0e5;stroke:none}
+.fx .halo{stroke:none}
+.fx .rim{fill:none;stroke-width:1.7px;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+.fx .tag{fill:#fffaf0;stroke:#23263a;stroke-width:1.1px;vector-effect:non-scaling-stroke}
+.fx .tag-t{fill:#23263a;font:700 11px ui-monospace,"Cascadia Mono",Consolas,monospace}
+.fx .tag-s{fill:#6b6656;font:600 9px ui-monospace,"Cascadia Mono",Consolas,monospace}
+.fx .feed{fill:none;stroke:#e5583e;stroke-width:1px;stroke-dasharray:2.6 2;stroke-linecap:round;vector-effect:non-scaling-stroke}
+.fx .cone{fill:#7fb9e9;fill-opacity:.22;stroke:#4f7fc4;stroke-width:.9px;stroke-opacity:.7;vector-effect:non-scaling-stroke;stroke-linejoin:round}
+.fx .cone-rim{fill:none;stroke:#4f7fc4;stroke-width:.9px;stroke-dasharray:2.4 2;opacity:.6;vector-effect:non-scaling-stroke}
+.fx .pulse{fill:#fff;stroke:#4f7fc4;stroke-width:.9px;vector-effect:non-scaling-stroke}
+.fx .air-w{fill:none;stroke:#e5583e;stroke-width:1.5px;stroke-dasharray:6 5;stroke-linecap:round;opacity:.8;vector-effect:non-scaling-stroke}
+.fx .air-w-h{fill:#e5583e;stroke:none;opacity:.85}
+.fx .air-c{fill:none;stroke:#4f8dff;stroke-width:1.5px;stroke-dasharray:6 5;stroke-linecap:round;opacity:.75;vector-effect:non-scaling-stroke}
+.fx .air-c-h{fill:#4f8dff;stroke:none;opacity:.8}
+.fx .snd{fill:none;stroke:#23263a;stroke-width:1.6px;stroke-linecap:round;vector-effect:non-scaling-stroke}
+.fx .lead{fill:none;stroke:#23263a;stroke-width:.9px;stroke-dasharray:3 2.2;vector-effect:non-scaling-stroke}
+.fx .lead-dot{fill:#23263a;stroke:none}
+.fx .loupe{fill:#0b0c12;stroke:#23263a;stroke-width:2px;vector-effect:non-scaling-stroke}
+.fx .loupe-rim{fill:none;stroke:#fffaf0;stroke-width:3px;vector-effect:non-scaling-stroke}
+.fx .stamp{fill:none;stroke:#e5583e;stroke-width:1.2px;stroke-dasharray:2.4 1.8;vector-effect:non-scaling-stroke}
+.fx .px-r{fill:#ff4f5e}.fx .px-g{fill:#3fd38a}.fx .px-b{fill:#4f8dff}
+</style>
+<div class="card">
+  <aside class="side">
+    <div class="fig">Fig. 28 · Headset</div>
+    <div class="title">The Vision Pro</div>
+    <div class="modes" role="radiogroup" aria-label="Mode"><button class="mode" data-mode="auto" role="radio" aria-checked="false"><svg viewBox="0 0 12 12" width="9" height="9" aria-hidden="true"><path d="M2 1.2v9.6L10.4 6z" fill="currentColor"/></svg>Auto</button><button class="mode" data-mode="manual" role="radio" aria-checked="true"><svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M4 2.5l14.5 8.6-6.2 1.4 3.2 7-2.9 1.3-3.1-7-5.5 4.3z" fill="currentColor"/></svg>Manual</button></div>
+    <div class="steps"><button class="step" data-step="open" ><b>1</b>Lift the glass</button><button class="step" data-step="sees" disabled><b>2</b>What it sees</button><button class="step" data-step="apart" disabled><b>3</b>Take it apart</button><button class="step" data-step="pixels" disabled><b>4</b>One display</button><button class="step" data-step="eyes" disabled><b>5</b>Eye tracking</button><button class="step" data-step="air" disabled><b>6</b>Air and sound</button><button class="step" data-step="together" disabled><b>↺</b>Back together</button></div>
+    <button class="restart" data-restart>⟲ Start over</button>
+  </aside>
+  <section class="main">
+    <div class="hint"><span data-hint>How much does the Vision Pro see, and how small are its screens? Press the steps, or wait and the headset runs them by itself.</span><span class="lapse" data-lapse>×3</span></div>
+    <div class="stage"><svg xmlns="http://www.w3.org/2000/svg" class="iso-svg" viewBox="0 0 700 500" role="img" aria-label="An Vision Pro headset standing on a felt desk mat, the startup logo glowing behind its curved front glass, its knitted band looped behind it and its battery pack beside it on a woven cable. The glass lifts off to show the cameras feeding the R1 chip, the cameras look out into the room, the headset comes apart front to back into its layers, one display slides out (about the size of a postage stamp), the lens modules turn to show their eye-tracking lights, air flows through the fans and sound leaves the straps, and the cable's plug twists to lock."><defs><clipPath id="matclip"><path d="M672.1 269.2L675.7 270.3L678.8 271.6L681.3 273.2L683 275L683.9 276.9L684 278.9L683.2 280.8L681.7 282.6L480.1 462.2L477.8 463.8L474.8 465.3L471.3 466.4L467.4 467.2L463.2 467.6L458.9 467.6L454.6 467.3L450.6 466.6L27.9 368.8L24.3 367.7L21.2 366.4L18.7 364.8L17 363L16.1 361.1L16 359.1L16.8 357.2L18.3 355.4L219.9 175.8L222.2 174.2L225.2 172.7L228.7 171.6L232.6 170.8L236.8 170.4L241.1 170.4L245.4 170.7L249.4 171.4Z"/></clipPath>
+<filter id="vp-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="5"/></filter>
+<filter id="vp-soft" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="1.6"/></filter></defs><g class="art"><g class="c c-alt"><g class="iso-solid"><path class="iso-fill" d="M16 359.1L16.8 357.2L18.3 355.4L219.9 175.8L222.2 174.2L225.2 172.7L228.7 171.6L232.6 170.8L236.8 170.4L241.1 170.4L245.4 170.7L249.4 171.4L672.1 269.2L675.7 270.3L678.8 271.6L681.3 273.2L683 275L683.9 276.9L684 278.9L684 282.1L683.2 284.1L681.7 285.9L480.1 465.5L477.8 467.1L474.8 468.5L471.3 469.6L467.4 470.4L463.2 470.8L458.9 470.9L454.6 470.5L450.6 469.8L27.9 372L24.3 371L21.2 369.6L18.7 368L17 366.2L16.1 364.3L16 362.4Z"/><path class="iso-shade" data-shade="0" d="M684 282.1L683.2 284.1L683.2 280.8L684 278.9ZM683.2 284.1L681.7 285.9L681.7 282.6L683.2 280.8ZM681.7 285.9L480.1 465.5L480.1 462.2L681.7 282.6ZM480.1 465.5L477.8 467.1L477.8 463.8L480.1 462.2ZM477.8 467.1L474.8 468.5L474.8 465.3L477.8 463.8ZM474.8 468.5L471.3 469.6L471.3 466.4L474.8 465.3Z"/><path class="iso-shade" data-shade="1" d="M471.3 469.6L467.4 470.4L467.4 467.2L471.3 466.4ZM467.4 470.4L463.2 470.8L463.2 467.6L467.4 467.2ZM463.2 470.8L458.9 470.9L458.9 467.6L463.2 467.6Z"/><path class="iso-shade" data-shade="2" d="M458.9 470.9L454.6 470.5L454.6 467.3L458.9 467.6ZM454.6 470.5L450.6 469.8L450.6 466.6L454.6 467.3ZM450.6 469.8L27.9 372L27.9 368.8L450.6 466.6Z"/><path class="iso-shade" data-shade="3" d="M27.9 372L24.3 371L24.3 367.7L27.9 368.8ZM24.3 371L21.2 369.6L21.2 366.4L24.3 367.7ZM21.2 369.6L18.7 368L18.7 364.8L21.2 366.4ZM18.7 368L17 366.2L17 363L18.7 364.8ZM17 366.2L16.1 364.3L16.1 361.1L17 363ZM16.1 364.3L16 362.4L16 359.1L16.1 361.1Z"/><path class="iso-top" d="M672.1 269.2L675.7 270.3L678.8 271.6L681.3 273.2L683 275L683.9 276.9L684 278.9L683.2 280.8L681.7 282.6L480.1 462.2L477.8 463.8L474.8 465.3L471.3 466.4L467.4 467.2L463.2 467.6L458.9 467.6L454.6 467.3L450.6 466.6L27.9 368.8L24.3 367.7L21.2 366.4L18.7 364.8L17 363L16.1 361.1L16 359.1L16.8 357.2L18.3 355.4L219.9 175.8L222.2 174.2L225.2 172.7L228.7 171.6L232.6 170.8L236.8 170.4L241.1 170.4L245.4 170.7L249.4 171.4Z"/><path class="iso-line iso-crease" data-tone="faint" d="M684 278.9L683.2 280.8L681.7 282.6L480.1 462.2L477.8 463.8L474.8 465.3L471.3 466.4L467.4 467.2L463.2 467.6L458.9 467.6L454.6 467.3L450.6 466.6L27.9 368.8L24.3 367.7L21.2 366.4L18.7 364.8L17 363L16.1 361.1L16 359.1"/><path class="iso-line iso-bevel" data-tone="faint" d="M684 278.9L682.3 280.7L680.8 282.4L479.3 462L477.1 463.6L474.2 464.9L470.8 466L467.1 466.7L463 467.1L458.9 467.2L454.9 466.8L451 466.1L28.4 368.4L24.9 367.4L21.9 366.1L19.6 364.5L17.9 362.8L17.1 361L16 359.1"/><path class="iso-line" data-tone="faint" d="M684 280.6L683.2 282.5L681.7 284.4L480.1 463.9L477.8 465.6L474.8 467L471.3 468.1L467.4 468.9L463.2 469.3L458.9 469.3L454.6 469L450.6 468.3L27.9 370.5L24.3 369.5L21.2 368.1L18.7 366.5L17 364.7L16.1 362.8L16 360.9"/><path class="iso-line iso-edge" data-tone="hi" d="M16 359.1L16.8 357.2L18.3 355.4L219.9 175.8L222.2 174.2L225.2 172.7L228.7 171.6L232.6 170.8L236.8 170.4L241.1 170.4L245.4 170.7L249.4 171.4L672.1 269.2L675.7 270.3L678.8 271.6L681.3 273.2L683 275L683.9 276.9L684 278.9M684 282.1L683.2 284.1L681.7 285.9L480.1 465.5L477.8 467.1L474.8 468.5L471.3 469.6L467.4 470.4L463.2 470.8L458.9 470.9L454.6 470.5L450.6 469.8L27.9 372L24.3 371L21.2 369.6L18.7 368L17 366.2L16.1 364.3L16 362.4M684 278.9L684 282.1M16 359.1L16 362.4"/></g></g><path class="iso-line" data-tone="mid" data-dotted="" d="M669.2 271.8L671.8 272.5L674 273.5L675.7 274.6L677 275.9L677.6 277.3L677.7 278.7L677.1 280L676 281.3L474.5 460.9L472.8 462.1L470.7 463.1L468.2 463.9L465.4 464.4L462.4 464.7L459.4 464.7L456.3 464.5L453.5 464L30.8 366.2L28.2 365.5L26 364.5L24.3 363.4L23 362.1L22.4 360.7L22.3 359.3L22.9 358L24 356.7L225.5 177.1L227.2 175.9L229.3 174.9L231.8 174.1L234.6 173.6L237.6 173.3L240.6 173.3L243.7 173.5L246.5 174Z"/><path class="iso-line" data-tone="faint" d="M670.9 270.3L674 271.2L676.8 272.4L678.9 273.8L680.4 275.4L681.3 277.1L681.3 278.8L680.7 280.5L679.3 282.1L477.8 461.6L475.7 463.1L473.1 464.3L470 465.3L466.5 466L462.8 466.4L459.1 466.4L455.4 466.1L451.8 465.5L29.1 367.7L26 366.8L23.2 365.6L21.1 364.2L19.6 362.6L18.7 360.9L18.7 359.2L19.3 357.5L20.7 355.9L222.2 176.4L224.3 174.9L226.9 173.7L230 172.7L233.5 172L237.2 171.6L240.9 171.6L244.6 171.9L248.2 172.5Z"/><g class="c c-leather"><g class="iso-solid"><path class="iso-fill" d="M398.1 444.5L406.4 437.1L456.4 448.7L456.4 449.2L448.1 456.6L398.1 445.1Z"/><path class="iso-shade" data-shade="0" d="M456.4 449.2L448.1 456.6L448.1 456.1L456.4 448.7Z"/><path class="iso-shade" data-shade="2" d="M448.1 456.6L398.1 445.1L398.1 444.5L448.1 456.1Z"/><path class="iso-top" d="M406.4 437.1L456.4 448.7L448.1 456.1L398.1 444.5Z"/><path class="iso-line iso-crease" data-tone="faint" d="M456.4 448.7L448.1 456.1L398.1 444.5"/><path class="iso-line iso-edge" data-tone="hi" d="M398.1 444.5L406.4 437.1L456.4 448.7M456.4 449.2L448.1 456.6L398.1 445.1M456.4 448.7L456.4 449.2M398.1 444.5L398.1 445.1"/></g></g><path class="iso-line" data-tone="lo" data-dotted="" d="M407.2 438.3L453.7 449.1L447.2 454.9L400.7 444.1Z"/><g class="shadow-mat" clip-path="url(#matclip)"><path class="shadow" data-part="shadow-live" d=""/><path class="shadow" data-part="shadow-float" d="" opacity=".55"/></g><g class="ph" data-part="vp"></g><g class="ph fx" data-part="fx"></g><g data-part="sounds"></g></g></svg></div>
+    <div class="chips"><span class="chip" data-chipbox="cams"><i>cameras · Apple</i><span data-chip="cams">12</span></span><span class="chip" data-chipbox="sensors"><i>sensors · Apple</i><span data-chip="sensors">5</span></span><span class="chip" data-chipbox="mics"><i>mics · Apple</i><span data-chip="mics">6</span></span><span class="chip" data-chipbox="r1"><i>R1 · Apple</i><span data-chip="r1">12 ms</span></span><span class="chip" data-chipbox="px"><i>pixels · Apple</i><span data-chip="px">23 million</span></span><span class="chip" data-chipbox="parts"><i>parts</i><span data-chip="parts">1 headset</span></span></div>
+  </section>
+  <footer class="foot">
+    <div class="idea"><b>The big idea:</b> the Vision Pro never shows you the room directly. <b>12</b> cameras, <b>5</b> sensors and <b>6</b> microphones feed the R1 chip, which streams new images to the displays within <b>12 ms</b>, and those displays are two micro-OLED panels about the size of a postage stamp carrying <b>23 million</b> pixels between them. (All four figures are Apple's.)</div>
+    <div class="ctl">Colour <button class="sw" data-swatch="#f2c14e" title="butter" style="background:#f2c14e" data-on></button><button class="sw" data-swatch="#e5583e" title="tomato" style="background:#e5583e" ></button><button class="sw" data-swatch="#86d3ad" title="mint" style="background:#86d3ad" ></button><button class="sw" data-swatch="#7fb9e9" title="sky" style="background:#7fb9e9" ></button><button class="sw" data-swatch="#f2a5bf" title="rose" style="background:#f2a5bf" ></button></div>
+  </footer>
+</div><p class="credit"><span class="keys">Space or Enter runs the next step · ← → switch machines<br></span>Made by <a target="_blank" rel="noopener" href="https://x.com/elvar_official">@elvar_official</a></p></main><script>
+if (/[?&]embed\b/.test(location.search)) document.body.classList.add("embed");
+addEventListener("keydown", (e) => {
+  if (e.key === "Escape") document.querySelector(".menu").open = false;
+  if (e.altKey || e.ctrlKey || e.metaKey || e.target.closest("input,textarea,select")) return;
+  const go = e.key === "ArrowLeft" ? "prev" : e.key === "ArrowRight" ? "next" : null;
+  if (go) location.href = document.querySelector('[data-go="' + go + '"]').href;
+});
+addEventListener("click", (e) => { const m = document.querySelector(".menu"); if (m.open && !m.contains(e.target)) m.open = false; });
+</script><script type="module">const AZIMUTH = 45;
+const ELEVATION = 30;
+const SHADES = 4;
+const RADIANS = Math.PI / 180;
+const UNIT = Math.sqrt(1.6);
+function cameraOf({ scale, azimuth = AZIMUTH, elevation = ELEVATION }) {
+    const a = azimuth * RADIANS;
+    const e = elevation * RADIANS;
+    return { sinA: Math.sin(a), cosA: Math.cos(a), sinE: Math.sin(e), cosE: Math.cos(e), k: scale * UNIT };
+}
+function iso([x, y, z], projection) {
+    const { origin } = projection;
+    const { sinA, cosA, sinE, cosE, k } = cameraOf(projection);
+    return [origin[0] + (x * sinA - y * cosA) * k, origin[1] + ((x * cosA + y * sinA) * sinE - z * cosE) * k];
+}
+function towardViewer(projection) {
+    const { sinA, cosA } = cameraOf(projection);
+    return [cosA, sinA];
+}
+function depthOf([x, y, z], projection) {
+    const { sinA, cosA, sinE, cosE } = cameraOf(projection);
+    return (x * cosA + y * sinA) * cosE + z * sinE;
+}
+const tenth = (value) => {
+    const text = (Math.round(value * 10) / 10).toFixed(1).replace(/\.0$/, "");
+    return text === "-0" ? "0" : text;
+};
+function pathOf(points, closed = false) {
+    if (!points.length)
+        return "";
+    return points.map(([x, y], at) => `${at ? "L" : "M"}${tenth(x)} ${tenth(y)}`).join("") + (closed ? "Z" : "");
+}
+const joinPaths = (paths) => paths.filter(Boolean).join("");
+function roundedPlan({ x, y, w, d, r }, steps = 8) {
+    const radius = Math.max(0, Math.min(r, w / 2, d / 2));
+    const corners = [
+        [x + w - radius, y + radius, -90],
+        [x + w - radius, y + d - radius, 0],
+        [x + radius, y + d - radius, 90],
+        [x + radius, y + radius, 180],
+    ];
+    const out = [];
+    for (const [cx, cy, start] of corners) {
+        const count = radius > 0 ? steps : 0;
+        for (let step = 0; step <= count; step++) {
+            const angle = (start + (count ? (90 * step) / count : 45)) * RADIANS;
+            out.push([cx + radius * Math.cos(angle), cy + radius * Math.sin(angle)]);
+        }
+    }
+    return out;
+}
+function signedArea(points) {
+    let area = 0;
+    for (let index = 0; index < points.length; index++) {
+        const [ax, ay] = points[index];
+        const [bx, by] = points[(index + 1) % points.length];
+        area += ax * by - bx * ay;
+    }
+    return area / 2;
+}
+const oriented = (points) => (signedArea(points) < 0 ? [...points].reverse() : points);
+function convexHull(points) {
+    const sorted = [...points].sort((a, b) => a[0] - b[0] || a[1] - b[1]);
+    if (sorted.length < 3)
+        return sorted;
+    const cross = (o, a, b) => (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0]);
+    const lower = [];
+    for (const point of sorted) {
+        while (lower.length >= 2 && cross(lower[lower.length - 2], lower[lower.length - 1], point) <= 0)
+            lower.pop();
+        lower.push(point);
+    }
+    const upper = [];
+    for (let index = sorted.length - 1; index >= 0; index--) {
+        const point = sorted[index];
+        while (upper.length >= 2 && cross(upper[upper.length - 2], upper[upper.length - 1], point) <= 0)
+            upper.pop();
+        upper.push(point);
+    }
+    return [...lower.slice(0, -1), ...upper.slice(0, -1)];
+}
+function runsOf(flags, want) {
+    const count = flags.length;
+    const runs = [];
+    const start = flags.findIndex((flag, index) => flag !== flags[(index + count - 1) % count]);
+    if (start < 0)
+        return flags[0] === want ? [Array.from({ length: count + 1 }, (_, index) => index % count)] : [];
+    let run = null;
+    for (let step = 0; step < count; step++) {
+        const index = (start + step) % count;
+        if (flags[index] === want) {
+            if (!run)
+                run = [index];
+            run.push((index + 1) % count);
+        }
+        else if (run) {
+            runs.push(run);
+            run = null;
+        }
+    }
+    if (run)
+        runs.push(run);
+    return runs;
+}
+function extrude(ring, z, height, projection, options = {}) {
+    const convex = options.convex ?? true;
+    const count = ring.length;
+    const counter = signedArea(ring) > 0;
+    const [vx, vy] = towardViewer(projection);
+    const { sinA, cosA } = cameraOf(projection);
+    const normals = ring.map(([ax, ay], index) => {
+        const [bx, by] = ring[(index + 1) % count];
+        const dx = bx - ax;
+        const dy = by - ay;
+        const length = Math.hypot(dx, dy) || 1;
+        return (counter ? [dy / length, -dx / length] : [-dy / length, dx / length]);
+    });
+    const facing = normals.map(([nx, ny]) => nx * vx + ny * vy > 1e-9);
+    const top = ring.map(([x, y]) => iso([x, y, z + height], projection));
+    const bottom = ring.map(([x, y]) => iso([x, y, z], projection));
+    const outline = [];
+    const crease = [];
+    for (const run of runsOf(facing, false))
+        outline.push(pathOf(run.map((index) => top[index])));
+    for (const run of runsOf(facing, true)) {
+        crease.push(pathOf(run.map((index) => top[index])));
+        if (height > 0)
+            outline.push(pathOf(run.map((index) => bottom[index])));
+    }
+    if (height > 0) {
+        for (let index = 0; index < count; index++) {
+            if (facing[(index + count - 1) % count] !== facing[index])
+                outline.push(pathOf([top[index], bottom[index]]));
+        }
+    }
+    let fill;
+    if (convex) {
+        fill = pathOf(convexHull([...top, ...bottom]), true);
+    }
+    else {
+        const parts = [pathOf(oriented(top), true), pathOf(oriented(bottom), true)];
+        for (let index = 0; index < count; index++) {
+            if (!facing[index])
+                continue;
+            const next = (index + 1) % count;
+            parts.push(pathOf(oriented([top[index], top[next], bottom[next], bottom[index]]), true));
+        }
+        fill = parts.join("");
+    }
+    const buckets = Array.from({ length: SHADES }, () => []);
+    if (height > 0) {
+        const [lx, ly] = [-sinA, cosA];
+        for (let index = 0; index < count; index++) {
+            if (!facing[index])
+                continue;
+            const [nx, ny] = normals[index];
+            const lit = (nx * lx + ny * ly + 1) / 2;
+            const shade = Math.min(SHADES - 1, Math.max(0, Math.floor(lit * SHADES)));
+            const next = (index + 1) % count;
+            buckets[shade].push(pathOf(oriented([top[index], top[next], bottom[next], bottom[index]]), true));
+        }
+    }
+    let bevel;
+    if (options.bevel && options.bevel > 0) {
+        const by = options.bevel;
+        const inset = ring.map(([x, y], index) => {
+            const [ax, ay] = normals[(index + count - 1) % count];
+            const [bx, by2] = normals[index];
+            const mx = ax + bx;
+            const my = ay + by2;
+            const length = Math.hypot(mx, my) || 1;
+            return [x - (mx / length) * by, y - (my / length) * by];
+        });
+        const insetTop = inset.map(([x, y]) => iso([x, y, z + height], projection));
+        bevel = runsOf(facing, true)
+            .map((run) => pathOf([top[run[0]], ...run.slice(1, -1).map((index) => insetTop[index]), top[run[run.length - 1]]]))
+            .join("");
+    }
+    return {
+        fill,
+        outline: outline.join(""),
+        crease: crease.join(""),
+        top: pathOf(oriented(top), true),
+        shades: buckets.map((paths) => paths.join("")),
+        bevel,
+    };
+}
+const ringOf = (plan, steps = 8) => roundedPlan(plan, steps);
+function slabOf(plan, z, height, projection, steps = 8, bevel = 0) {
+    return extrude(ringOf(plan, steps), z, height, projection, { convex: true, bevel });
+}
+function circleRing(cx, cy, radius, steps = 40) {
+    return Array.from({ length: steps }, (_, step) => {
+        const angle = (step / steps) * Math.PI * 2;
+        return [cx + radius * Math.cos(angle), cy + radius * Math.sin(angle)];
+    });
+}
+function cylinder(cx, cy, radius, z, height, projection, steps = 32, bevel = 0) {
+    return extrude(circleRing(cx, cy, radius, steps), z, height, projection, { convex: true, bevel });
+}
+const insetPlan = ({ x, y, w, d, r }, by) => ({ x: x + by, y: y + by, w: w - by * 2, d: d - by * 2, r: Math.max(0, r - by) });
+function onTop(points, z, projection, closed = false) {
+    return pathOf(points.map(([x, y]) => iso([x, y, z], projection)), closed);
+}
+const planOutline = (plan, z, projection, steps = 8) => onTop(ringOf(plan, steps), z, projection, true);
+const lineOnTop = (from, to, z, projection) => onTop([from, to], z, projection);
+const segment = (from, to, projection) => pathOf([iso(from, projection), iso(to, projection)]);
+const rise = (at, from, to, projection) => segment([at[0], at[1], from], [at[0], at[1], to], projection);
+const ring = (cx, cy, radius, z, projection, steps = 40) => onTop(circleRing(cx, cy, radius, steps), z, projection, true);
+const pointsAt = (points, projection) => points.map((point) => iso(point, projection));
+function dotGrid(x, y, columns, rows, gap, z, projection) {
+    const dots = [];
+    for (let row = 0; row < rows; row++) {
+        for (let column = 0; column < columns; column++)
+            dots.push(iso([x + column * gap, y + row * gap, z], projection));
+    }
+    return dots;
+}
+function corners({ x, y, w, d }, inset = 0) {
+    return [
+        [x + inset, y + inset],
+        [x + w - inset, y + inset],
+        [x + inset, y + d - inset],
+        [x + w - inset, y + d - inset],
+    ];
+}
+function boxCorners({ x, y, w, d }, z0, z1) {
+    const out = [];
+    for (const px of [x, x + w])
+        for (const py of [y, y + d])
+            for (const z of [z0, z1])
+                out.push([px, py, z]);
+    return out;
+}
+function knurl(cx, cy, radius, z0, z1, count, projection, inset = 0.4) {
+    const [vx, vy] = towardViewer(projection);
+    const lines = [];
+    for (let index = 0; index < count; index++) {
+        const angle = (index / count) * Math.PI * 2;
+        const nx = Math.cos(angle);
+        const ny = Math.sin(angle);
+        if (nx * vx + ny * vy < 0.15)
+            continue;
+        lines.push(segment([cx + radius * nx, cy + radius * ny, z0 + inset], [cx + radius * nx, cy + radius * ny, z1 - inset], projection));
+    }
+    return lines.join("");
+}
+function sideArc(cx, cy, radius, z, projection, steps = 24) {
+    const [vx, vy] = towardViewer(projection);
+    const facing = Math.atan2(vy, vx);
+    const points = [];
+    for (let step = 0; step <= steps; step++) {
+        const angle = facing - Math.PI / 2 + (step / steps) * Math.PI;
+        points.push(iso([cx + radius * Math.cos(angle), cy + radius * Math.sin(angle), z], projection));
+    }
+    return pathOf(points);
+}
+function ringSeam(ring, z, projection) {
+    const count = ring.length;
+    const counter = signedArea(ring) > 0;
+    const [vx, vy] = towardViewer(projection);
+    const facing = ring.map(([ax, ay], index) => {
+        const [bx, by] = ring[(index + 1) % count];
+        const dx = bx - ax;
+        const dy = by - ay;
+        const [nx, ny] = counter ? [dy, -dx] : [-dy, dx];
+        return nx * vx + ny * vy > 1e-9;
+    });
+    return runsOf(facing, true).map((run) => pathOf(run.map((index) => iso([ring[index][0], ring[index][1], z], projection)))).join("");
+}
+const sideSeam = (plan, z, projection, steps = 8) => ringSeam(ringOf(plan, steps), z, projection);
+function sideRing(center, radius, axis, projection, steps = 20) {
+    const [px, py, pz] = center;
+    const points = [];
+    for (let step = 0; step < steps; step++) {
+        const angle = (step / steps) * Math.PI * 2;
+        const u = radius * Math.cos(angle);
+        const v = radius * Math.sin(angle);
+        points.push(iso(axis === "x" ? [px, py + u, pz + v] : [px + u, py, pz + v], projection));
+    }
+    return pathOf(points, true);
+}
+function coil(from, to, center, radius, turns, axis, projection, perTurn = 16) {
+    const count = Math.max(1, Math.round(turns * perTurn));
+    const back = [];
+    const front = [];
+    let run = [];
+    let near = null;
+    for (let index = 0; index <= count; index++) {
+        const share = index / count;
+        const angle = share * turns * Math.PI * 2;
+        const u = radius * Math.cos(angle);
+        const v = radius * Math.sin(angle);
+        const along = from + (to - from) * share;
+        const point = axis === "x" ? [along, center[0] + u, center[1] + v] : [center[0] + u, along, center[1] + v];
+        const normal = axis === "x" ? [0, Math.cos(angle), Math.sin(angle)] : [Math.cos(angle), 0, Math.sin(angle)];
+        const facing = depthOf(normal, projection) > 0;
+        const flat = iso(point, projection);
+        if (near === null)
+            near = facing;
+        if (facing !== near) {
+            run.push(flat);
+            (near ? front : back).push(pathOf(run));
+            run = [flat];
+            near = facing;
+            continue;
+        }
+        run.push(flat);
+    }
+    if (run.length > 1)
+        (near ? front : back).push(pathOf(run));
+    return { back: back.join(""), front: front.join("") };
+}
+function topTicks(from, to, step, every, edge, z, lengths, projection, axis = "x") {
+    const minor = [];
+    const major = [];
+    const first = Math.ceil(from / step) * step;
+    for (let at = first, index = Math.round(first / step); at <= to + 1e-9; at += step, index++) {
+        const big = index % every === 0;
+        const length = big ? lengths[1] : lengths[0];
+        const a = axis === "x" ? [at, edge] : [edge, at];
+        const b = axis === "x" ? [at, edge + length] : [edge + length, at];
+        (big ? major : minor).push(lineOnTop(a, b, z, projection));
+    }
+    return { minor: minor.join(""), major: major.join("") };
+}
+function sideTicks(from, to, step, every, face, top, lengths, projection, axis = "x") {
+    const minor = [];
+    const major = [];
+    const first = Math.ceil(from / step) * step;
+    for (let at = first, index = Math.round(first / step); at <= to + 1e-9; at += step, index++) {
+        const big = index % every === 0;
+        const length = big ? lengths[1] : lengths[0];
+        const a = axis === "x" ? [at, face, top] : [face, at, top];
+        const b = axis === "x" ? [at, face, top - length] : [face, at, top - length];
+        (big ? major : minor).push(segment(a, b, projection));
+    }
+    return { minor: minor.join(""), major: major.join("") };
+}
+function radialTicks(cx, cy, radius, count, every, z, lengths, projection, from = 0, span = Math.PI * 2) {
+    const minor = [];
+    const major = [];
+    const closed = Math.abs(span - Math.PI * 2) < 1e-9;
+    const steps = closed ? count : count + 1;
+    for (let index = 0; index < steps; index++) {
+        const angle = from + (index / count) * span;
+        const big = index % every === 0;
+        const inner = radius - (big ? lengths[1] : lengths[0]);
+        const sx = Math.sin(angle);
+        const sy = -Math.cos(angle);
+        (big ? major : minor).push(lineOnTop([cx + sx * inner, cy + sy * inner], [cx + sx * radius, cy + sy * radius], z, projection));
+    }
+    return { minor: minor.join(""), major: major.join("") };
+}
+const haloOf = (plan, z, height, projection) => slabOf(plan, z, height, projection).fill;
+function axisVector(projection, [dx, dy, dz]) {
+    const origin = iso([0, 0, 0], projection);
+    const moved = iso([dx, dy, dz], projection);
+    return [moved[0] - origin[0], moved[1] - origin[1]];
+}
+const fine = (value) => Math.round(value * 100) / 100;
+function translateAlong(projection, by) {
+    const [x, y] = axisVector(projection, by);
+    return `translate(${fine(x)} ${fine(y)})`;
+}
+const thousandth = (value) => Math.round(value * 1000) / 1000;
+function axesAt(at, z, projection) {
+    const origin = iso([at[0], at[1], z], projection);
+    const along = (point) => {
+        const [px, py] = iso(point, projection);
+        return [px - origin[0], py - origin[1]];
+    };
+    return { origin, x: along([at[0] + 1, at[1], z]), y: along([at[0], at[1] + 1, z]), z: along([at[0], at[1], z + 1]) };
+}
+const matrixOf = (u, v, origin) => `matrix(${thousandth(u[0])} ${thousandth(u[1])} ${thousandth(v[0])} ${thousandth(v[1])} ${thousandth(origin[0])} ${thousandth(origin[1])})`;
+function holdStill(element, [dx, dy]) {
+    const text = dx || dy ? `translate(${-dx} ${-dy})` : "";
+    element.querySelectorAll("[data-hold]").forEach((node) => (text ? node.setAttribute("transform", text) : node.removeAttribute("transform")));
+}
+function topMatrix(at, z, projection, along = "x") {
+    const { origin, x, y } = axesAt(at, z, projection);
+    return along === "x" ? matrixOf(x, y, origin) : matrixOf([-y[0], -y[1]], x, origin);
+}
+function sideMatrix(at, z, projection, face) {
+    const { origin, x, y, z: up } = axesAt(at, z, projection);
+    const down = [-up[0], -up[1]];
+    return face === "left" ? matrixOf(x, down, origin) : matrixOf([-y[0], -y[1]], down, origin);
+}
+function screenRise(height, projection) {
+    const { cosE, k } = cameraOf(projection);
+    return height * cosE * k;
+}
+function fitProjection(points, width, height, { pad = 24, headroom = 0, azimuth = AZIMUTH, elevation = ELEVATION } = {}) {
+    const unit = { origin: [0, 0], scale: 1, azimuth, elevation };
+    const flat = points.map((point) => iso(point, unit));
+    const xs = flat.map(([x]) => x);
+    const ys = flat.map(([, y]) => y);
+    const left = Math.min(...xs);
+    const right = Math.max(...xs);
+    const up = Math.min(...ys);
+    const down = Math.max(...ys);
+    const scale = Math.min((width - pad * 2) / (right - left), (height - pad * 2 - headroom) / (down - up));
+    return {
+        origin: [width / 2 - ((left + right) / 2) * scale, headroom + (height - headroom) / 2 - ((up + down) / 2) * scale],
+        scale,
+        azimuth,
+        elevation,
+    };
+}
+const escape = (text) => text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+const attrs = (pairs) => Object.entries(pairs)
+    .filter(([, value]) => value !== undefined && value !== false)
+    .map(([key, value]) => ` ${key}="${escape(String(value))}"`)
+    .join("");
+function solidSvg(paths, { tone = "hi", crease = "faint", halo = false, lit = false, flat = false, className, inner = "" } = {}) {
+    const parts = [];
+    if (halo)
+        parts.push(`<path class="iso-halo" d="${paths.fill}"/>`);
+    parts.push(`<path class="iso-fill" d="${paths.fill}"/>`);
+    if (!flat) {
+        paths.shades.forEach((d, shade) => {
+            if (d)
+                parts.push(`<path class="iso-shade" data-shade="${shade}" d="${d}"/>`);
+        });
+        parts.push(`<path class="iso-top" d="${paths.top}"/>`);
+    }
+    if (crease !== "none" && paths.crease)
+        parts.push(`<path class="iso-line iso-crease" data-tone="${crease}" d="${paths.crease}"/>`);
+    if (crease !== "none" && paths.bevel)
+        parts.push(`<path class="iso-line iso-bevel" data-tone="${crease}" d="${paths.bevel}"/>`);
+    if (inner)
+        parts.push(inner);
+    parts.push(`<path class="iso-line iso-edge" data-tone="${tone}" d="${paths.outline}"/>`);
+    return `<g${attrs({ class: className ? `iso-solid ${className}` : "iso-solid", "data-lit": lit ? "" : undefined, "data-seamless": paths.seamless ? "" : undefined })}>${parts.join("")}</g>`;
+}
+function lineSvg(d, { tone = "lo", dotted = false, dashed = false, flow = false, className, free } = {}) {
+    if (!d)
+        return "";
+    return `<path${attrs({
+        class: className ? `iso-line ${className}` : "iso-line",
+        "data-tone": tone,
+        "data-free": free === true ? "" : free || undefined,
+        "data-dotted": dotted ? "" : undefined,
+        "data-dashed": dashed ? "" : undefined,
+        "data-flow": flow ? "" : undefined,
+        d,
+    })}/>`;
+}
+function dotsSvg(points, { size = 0.5, tone = "mid", pulse = false } = {}) {
+    const dots = points
+        .map(([x, y, alpha], index) => `<circle cx="${tenth(x)}" cy="${tenth(y)}" r="${size}"${alpha !== undefined && alpha < 1 ? ` fill-opacity="${Math.max(0, alpha).toFixed(2)}"` : ""}${pulse ? ` data-pulse="" style="--pulse-at:${(index * 137) % 1600}ms"` : ""}/>`)
+        .join("");
+    return `<g class="iso-dots" data-tone="${tone}">${dots}</g>`;
+}
+function fadedSvg(list, style = {}) {
+    const groups = new Map();
+    for (const entry of list) {
+        const [d, alpha] = Array.isArray(entry) ? entry : [entry.d, entry.alpha];
+        if (!d || !(alpha > 0.02))
+            continue;
+        const level = Math.min(1, Math.round(alpha * 20) / 20);
+        groups.set(level, (groups.get(level) ?? "") + d);
+    }
+    return [...groups].map(([alpha, d]) => (alpha >= 1 ? lineSvg(d, style) : `<g opacity="${alpha.toFixed(2)}">${lineSvg(d, style)}</g>`)).join("");
+}
+function fadeLineSvg(points, { fade = [0, 0], tone = "lo", className, stops = 6 } = {}) {
+    if (points.length < 2)
+        return "";
+    const ease = (t) => t * t * (3 - 2 * t);
+    const hashOf = (text) => {
+        let hash = 2166136261;
+        for (let index = 0; index < text.length; index++)
+            hash = Math.imul(hash ^ text.charCodeAt(index), 16777619);
+        return (hash >>> 0).toString(36);
+    };
+    const lengths = [0];
+    for (let index = 1; index < points.length; index++)
+        lengths.push(lengths[index - 1] + Math.hypot(points[index][0] - points[index - 1][0], points[index][1] - points[index - 1][1]));
+    const at = (length) => {
+        let index = 1;
+        while (index < points.length - 1 && lengths[index] < length)
+            index++;
+        const span = lengths[index] - lengths[index - 1] || 1;
+        const t = Math.max(0, Math.min(1, (length - lengths[index - 1]) / span));
+        return [points[index - 1][0] + (points[index][0] - points[index - 1][0]) * t, points[index - 1][1] + (points[index][1] - points[index - 1][1]) * t];
+    };
+    const pieceOf = (from, to) => [at(from), ...points.filter((_, index) => lengths[index] > from + 1e-6 && lengths[index] < to - 1e-6), at(to)];
+    const total = lengths[lengths.length - 1];
+    if (total < 1e-6)
+        return "";
+    let [start, end] = Array.isArray(fade) ? fade : [fade, fade];
+    if (start + end > total) {
+        const share = total / (start + end);
+        start *= share;
+        end *= share;
+    }
+    const paint = `var(--anatomy-${tone})`;
+    const ramp = (piece, rising) => {
+        const d = pathOf(piece);
+        const [x1, y1] = piece[0];
+        const [x2, y2] = piece[piece.length - 1];
+        const id = `iso-fade-${hashOf(`${d}|${tone}|${rising}`)}`;
+        const marks = Array.from({ length: stops + 1 }, (_, index) => {
+            const t = index / stops;
+            const alpha = ease(rising ? t : 1 - t);
+            return `<stop offset="${t.toFixed(3)}" stop-opacity="${alpha.toFixed(3)}" style="stop-color:${paint}"/>`;
+        }).join("");
+        const gradient = `<linearGradient id="${id}" gradientUnits="userSpaceOnUse" x1="${tenth(x1)}" y1="${tenth(y1)}" x2="${tenth(x2)}" y2="${tenth(y2)}">${marks}</linearGradient>`;
+        return `<defs>${gradient}</defs><path${attrs({ class: className ? `iso-line ${className}` : "iso-line", "data-tone": tone, "data-free": rising ? "start" : "end", d, style: `stroke:url(#${id})` })}/>`;
+    };
+    const parts = [];
+    if (start > 0.05)
+        parts.push(ramp(pieceOf(0, start), true));
+    if (total - end - start > 0.05)
+        parts.push(lineSvg(pathOf(pieceOf(start, total - end)), { tone, className }));
+    if (end > 0.05)
+        parts.push(ramp(pieceOf(total - end, total), false));
+    return `<g class="iso-fade">${parts.join("")}</g>`;
+}
+function wireSvg(from, to, { via = [], tone = "lo", dotted = false, dashed = false, flow = false, ends = "both", size = 1.2 } = {}) {
+    const d = pathOf([from, ...via, to]);
+    const end = ([x, y]) => `<circle class="iso-wire-end" cx="${tenth(x)}" cy="${tenth(y)}" r="${size}"/>`;
+    return `<g class="iso-wire" data-tone="${tone}">${lineSvg(d, { tone, dotted, dashed, flow })}${ends === "both" || ends === "from" ? end(from) : ""}${ends === "both" || ends === "to" ? end(to) : ""}</g>`;
+}
+function faceTextSvg(transform, text, { size = 3, tone = "mid", anchor = "start" } = {}) {
+    return `<text class="iso-face-text" data-tone="${tone}" transform="${transform}" font-size="${size}" text-anchor="${anchor}">${escape(text)}</text>`;
+}
+function groupSvg(children, extra = {}) {
+    return `<g${attrs(extra)}>${Array.isArray(children) ? children.join("") : children}</g>`;
+}
+function figureSvg({ width, height, label, body, standalone = false, className }) {
+    const style = standalone ? `<style>${ISO_CSS}</style>` : "";
+    return `<svg${attrs({
+        xmlns: "http://www.w3.org/2000/svg",
+        class: `iso-svg${standalone ? " iso" : ""}${className ? ` ${className}` : ""}`,
+        "data-theme": standalone || undefined,
+        viewBox: `0 0 ${width} ${height}`,
+        role: "img",
+        "aria-label": label,
+    })}>${style}${Array.isArray(body) ? body.join("") : body}</svg>`;
+}
+function swatchSvg(mark) {
+    if (mark === "raised" || mark === "flat" || mark === "lit") {
+        const body = mark === "flat" ? "M2 6.5 8 3.5 14 6.5 8 9.5Z" : "M2 4.5 8 1.5 14 4.5 14 6 8 9 2 6Z";
+        const crease = mark === "flat" ? "" : `<path class="iso-swatch-crease" d="M2 4.5 8 7.5 14 4.5"/>`;
+        return `<svg class="iso-swatch" data-mark="${mark}" viewBox="0 0 16 10" aria-hidden="true"><path d="${body}"/>${crease}</svg>`;
+    }
+    return `<svg class="iso-swatch" data-mark="${mark}" viewBox="0 0 16 10" aria-hidden="true"><path d="M1.5 5h13"/></svg>`;
+}
+function plateHtml({ fig, title, hint, readout = "", keys = [], caption, body }) {
+    const corner = (name, text, extra = "") => `<span class="iso-plate-corner" data-corner="${name}"${extra}>${escape(text)}</span>`;
+    const legend = keys.length || caption
+        ? `<figcaption class="iso-legend">${keys.length ? `<span class="iso-keys">${keys.map((key) => `<span class="iso-key">${swatchSvg(key.mark)}${escape(key.label)}</span>`).join("")}</span>` : ""}${caption ? `<span class="iso-caption">${escape(caption)}</span>` : ""}</figcaption>`
+        : "";
+    return `<figure class="iso-figure"><div class="iso-plate"><div class="iso-plate-corners" aria-hidden="true">${corner("fig", fig)}${title ? corner("title", title) : ""}${hint ? corner("hint", hint) : ""}${corner("readout", readout, " data-readout")}</div>${body}</div>${legend}</figure>`;
+}
+function pageHtml({ title, theme = "dark", body, script = "", width = 650 }) {
+    return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>${escape(title)}</title><style>${ISO_CSS}${PAGE_CSS.replace("__WIDTH__", String(width))}</style></head><body class="iso" data-theme="${theme}"><main class="iso-page">${body}</main>${script ? `<script type="module">${script.replace(/<\/(script)/gi, "<\\/$1")}<\/script>` : ""}</body></html>`;
+}
+const PAGE_CSS = `
+*{box-sizing:border-box}
+html{color-scheme:dark}
+body[data-theme="light"]{color-scheme:light}
+body{margin:0;background:var(--anatomy-page);color:var(--anatomy-text);font:14px/1.6 ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+.iso-page{width:min(__WIDTH__px,100% - 32px);margin:64px auto 96px}
+`;
+const ISO_CSS = `
+.iso{
+  --anatomy-page:#0b0b0b;--anatomy-card:#131313;--anatomy-text:#a3a3a3;--anatomy-strong:#e6e6e6;--anatomy-muted:#6e6e6e;
+  --anatomy-paper:#131313;--anatomy-face:#1b1b1b;--anatomy-top:#1c1c1c;
+  --anatomy-shade-0:#0f0f0f;--anatomy-shade-1:#121212;--anatomy-shade-2:#151515;--anatomy-shade-3:#181818;
+  --anatomy-lit-top:#262626;--anatomy-lit-shade:#1d1d1d;
+  --anatomy-hi:#d4d4d4;--anatomy-mid:#6a6a6a;--anatomy-lo:#3e3e3e;--anatomy-faint:#2a2a2a;--anatomy-lit:#ffffff;
+  --anatomy-halo:#050505;--anatomy-halo-opacity:.9;--anatomy-dot:#e6e6e6;
+  --anatomy-red:#ff6b6b;--anatomy-green:#6be0a0;--anatomy-blue:#6b9bff;
+  --anatomy-weight:.6px;--anatomy-ease:cubic-bezier(.32,.72,0,1);
+  --anatomy-mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --anatomy-lift:inset 0 1px 0 0 #ffffff0a,inset 0 0 0 1px #ffffff06,0 0 0 1px #00000026,0 1px 1px -.5px #00000014,0 3px 3px -1.5px #00000014,0 6px 6px -3px #00000014,0 12px 12px -6px #00000014;
+}
+.iso[data-theme="light"]{
+  --anatomy-page:#f2f2ef;--anatomy-card:#fbfbfa;--anatomy-text:#57575a;--anatomy-strong:#18181a;--anatomy-muted:#8c8c90;
+  --anatomy-paper:#fbfbfa;--anatomy-face:#ffffff;--anatomy-top:#ffffff;
+  --anatomy-shade-0:#dcdcd9;--anatomy-shade-1:#e5e5e2;--anatomy-shade-2:#ededea;--anatomy-shade-3:#f4f4f1;
+  --anatomy-lit-top:#ffffff;--anatomy-lit-shade:#eeeeeb;
+  --anatomy-hi:#26262a;--anatomy-mid:#8a8a8f;--anatomy-lo:#b4b4b8;--anatomy-faint:#d4d4d6;--anatomy-lit:#000000;
+  --anatomy-halo:#8a8a80;--anatomy-halo-opacity:.32;--anatomy-dot:#3a3a3e;
+  --anatomy-red:#e5484d;--anatomy-green:#30a46c;--anatomy-blue:#3e63dd;
+  --anatomy-lift:inset 0 1px 0 0 #ffffff,0 0 0 1px #0000000f,0 1px 1px -.5px #0000000a,0 3px 3px -1.5px #0000000a,0 6px 6px -3px #0000000a,0 12px 12px -6px #0000000a;
+}
+.iso-svg{display:block;width:100%;height:auto;overflow:visible}
+.iso-svg path,.iso-svg circle{vector-effect:non-scaling-stroke}
+.iso-fill{fill:var(--anatomy-paper);stroke:none}
+.iso-solid[data-lit]>.iso-fill{fill:var(--anatomy-face)}
+.iso-shade,.iso-top{stroke:none}
+.iso-shade[data-shade="0"]{fill:var(--anatomy-shade-0)}
+.iso-shade[data-shade="1"]{fill:var(--anatomy-shade-1)}
+.iso-shade[data-shade="2"]{fill:var(--anatomy-shade-2)}
+.iso-shade[data-shade="3"]{fill:var(--anatomy-shade-3)}
+.iso-top{fill:var(--anatomy-top)}
+.iso-solid[data-lit]>.iso-top{fill:var(--anatomy-lit-top)}
+.iso-solid[data-lit]>.iso-shade{fill:var(--anatomy-lit-shade)}
+.iso-solid[data-seamless]>.iso-shade,.iso-solid[data-seamless]>.iso-top{stroke-width:.4;stroke-linejoin:round}
+.iso-solid[data-seamless]>.iso-shade[data-shade="0"]{stroke:var(--anatomy-shade-0)}
+.iso-solid[data-seamless]>.iso-shade[data-shade="1"]{stroke:var(--anatomy-shade-1)}
+.iso-solid[data-seamless]>.iso-shade[data-shade="2"]{stroke:var(--anatomy-shade-2)}
+.iso-solid[data-seamless]>.iso-shade[data-shade="3"]{stroke:var(--anatomy-shade-3)}
+.iso-solid[data-seamless]>.iso-top{stroke:var(--anatomy-top)}
+.iso-solid[data-seamless][data-lit]>.iso-top{stroke:var(--anatomy-lit-top)}
+.iso-solid[data-seamless][data-lit]>.iso-shade{stroke:var(--anatomy-lit-shade)}
+.iso-solid[data-lit]>.iso-edge{stroke:var(--anatomy-lit)}
+.iso-halo{fill:var(--anatomy-halo);stroke:none;filter:blur(9px);opacity:var(--anatomy-halo-opacity);transform:translateY(3px)}
+.iso-line{fill:none;stroke:var(--anatomy-lo);stroke-width:var(--anatomy-weight);stroke-linecap:round;stroke-linejoin:round}
+.iso-line[data-tone="hi"]{stroke:var(--anatomy-hi)}
+.iso-line[data-tone="mid"]{stroke:var(--anatomy-mid)}
+.iso-line[data-tone="lo"]{stroke:var(--anatomy-lo)}
+.iso-line[data-tone="faint"]{stroke:var(--anatomy-faint)}
+.iso-line[data-tone="lit"]{stroke:var(--anatomy-lit)}
+.iso-line[data-tone="red"]{stroke:var(--anatomy-red)}
+.iso-line[data-tone="green"]{stroke:var(--anatomy-green)}
+.iso-line[data-tone="blue"]{stroke:var(--anatomy-blue)}
+.iso-line[data-dotted]{stroke-dasharray:.01 3.5;stroke-width:1}
+.iso-line[data-dashed]{stroke-dasharray:3 3}
+.iso-line[data-flow]{stroke-dasharray:2 6}
+.iso-wire-end{fill:var(--anatomy-paper);stroke:var(--anatomy-lo);stroke-width:var(--anatomy-weight)}
+.iso-wire[data-tone="hi"] .iso-wire-end{stroke:var(--anatomy-hi)}
+.iso-wire[data-tone="mid"] .iso-wire-end{stroke:var(--anatomy-mid)}
+.iso-wire[data-tone="faint"] .iso-wire-end{stroke:var(--anatomy-faint)}
+.iso-wire[data-tone="lit"] .iso-wire-end{stroke:var(--anatomy-lit)}
+.iso-dots circle{fill:var(--anatomy-dot);stroke:none;opacity:.32}
+.iso-dots[data-tone="hi"] circle{opacity:.85}
+.iso-dots[data-tone="mid"] circle{opacity:.45}
+.iso-dots[data-tone="lo"] circle{opacity:.22}
+.iso-dots[data-tone="faint"] circle{opacity:.12}
+.iso-face-text{fill:var(--anatomy-mid);font-family:var(--anatomy-mono);letter-spacing:.04em}
+.iso-face-text[data-tone="hi"]{fill:var(--anatomy-hi)}
+.iso-face-text[data-tone="lo"]{fill:var(--anatomy-lo)}
+.iso-face-text[data-tone="faint"]{fill:var(--anatomy-faint)}
+.tb-body{fill:var(--anatomy-shade-2);stroke:none}
+.tb-shine{fill:var(--anatomy-top);stroke:none}
+.tb-shade{fill:var(--anatomy-shade-0);stroke:none}
+.tb-ring{fill:none;stroke:var(--anatomy-lo);stroke-width:.45;stroke-linecap:butt;stroke-linejoin:round}
+.tb-ring[data-tone="mid"]{stroke:var(--anatomy-mid)}
+.tb-ring[data-tone="faint"]{stroke:var(--anatomy-faint)}
+.tb-ring[data-tone="hi"]{stroke:var(--anatomy-hi)}
+@keyframes iso-flow{to{stroke-dashoffset:-32}}
+@keyframes iso-pulse{0%,100%{opacity:.18}12%{opacity:1}40%{opacity:.18}}
+.iso-line[data-flow]{animation:iso-flow 1600ms linear infinite}
+.iso-dots circle[data-pulse]{animation:iso-pulse 1600ms steps(1,end) infinite;animation-delay:var(--pulse-at,0ms)}
+.iso-figure{margin:32px 0 36px}
+.iso-plate{position:relative;padding:52px 24px;border-radius:0;background:var(--anatomy-card);box-shadow:0 0 0 1px var(--anatomy-mid);--anatomy-paper:var(--anatomy-card)}
+.iso-plate-corners{position:absolute;inset:18px 20px;pointer-events:none}
+.iso-plate-corner{position:absolute;color:var(--anatomy-muted);font-family:var(--anatomy-mono);font-size:10.5px;line-height:1;letter-spacing:.04em;white-space:nowrap}
+.iso-plate-corner[data-corner="fig"]{top:0;left:0;color:var(--anatomy-text)}
+.iso-plate-corner[data-corner="title"]{top:0;right:0;text-transform:uppercase;letter-spacing:.1em}
+.iso-plate-corner[data-corner="hint"]{bottom:0;left:0;text-transform:uppercase;letter-spacing:.1em}
+.iso-plate-corner[data-corner="readout"]{right:0;bottom:0;color:var(--anatomy-text);font-variant-numeric:tabular-nums}
+.iso-plate .iso-svg{margin:0 auto}
+.iso-legend{display:grid;gap:8px;margin-top:12px;color:var(--anatomy-muted);font-size:13px;line-height:1.55}
+.iso-keys{display:flex;flex-wrap:wrap;gap:6px 18px}
+.iso-key{display:inline-flex;align-items:center;gap:7px}
+.iso-swatch{width:16px;height:10px;flex:none;overflow:visible}
+.iso-swatch path{fill:none;stroke:var(--anatomy-hi);stroke-width:1;vector-effect:non-scaling-stroke;stroke-linejoin:round;stroke-linecap:round}
+.iso-swatch[data-mark="raised"] path,.iso-swatch[data-mark="flat"] path{stroke:var(--anatomy-mid)}
+.iso-swatch[data-mark="lit"] path{stroke:var(--anatomy-lit)}
+.iso-swatch[data-mark="dim"] path{stroke:var(--anatomy-lo)}
+.iso-swatch[data-mark="dotted"] path{stroke-dasharray:.01 3;stroke-width:1.4}
+.iso-swatch[data-mark="dashed"] path{stroke-dasharray:3 2.5}
+.iso-swatch[data-mark="red"] path{stroke:var(--anatomy-red)}
+.iso-swatch[data-mark="green"] path{stroke:var(--anatomy-green)}
+.iso-swatch[data-mark="blue"] path{stroke:var(--anatomy-blue)}
+.iso-swatch-crease{stroke:var(--anatomy-lo)!important}
+@media (max-width:560px){.iso-plate{padding:48px 12px 70px}.iso-plate-corner[data-corner="hint"]{bottom:18px}}
+@media (prefers-reduced-motion:reduce){.iso-line[data-flow],.iso-dots circle[data-pulse]{animation:none}}
+`;
+
+{ // the figure's own scope, so nothing collides with the inlined kit
+const D = {"P":{"origin":[371.3702654861087,348.9527568999026],"scale":0.9641387824996139,"azimuth":40,"elevation":27},"KS":1.2195498132801876,"W":700,"H":500,"MODEL":{"pixels":23000000,"cameras":12,"sensors":5,"mics":6,"r1Ms":12,"displays":2,"half":[94,46],"frameDepth":28},"BRAND":{"name":"Vision Pro","heading":"The Vision Pro","logo":"M50 30C55 26 63 22 71 23C79 24 85 28 89 34A20 20 0 0 0 90 67C87 76 82 86 76 92C71 97 65 99 60 97C56 95.5 53 95 50 95C47 95 44 95.5 40 97C35 99 29 97 24 92C15 83 9 70 9 56C9 38 21 25 35 25C41 25 46 28 50 30ZM50 21C50 12 57 4 66 3C67 12 59 20 50 21Z"},"SHADOW":[-0.06,0.17],"MAT_T":3,"AZ":40,"EL":27,"PSI":{"rest":-27,"apart":-40},"C0":[0,0]};
+// Shared runtime for the figures, inlined after the kit (iso, ring, lineOnTop, translateAlong exist).
+// A figure's live.js defines its state, UPDATE and draw, then calls tour({...}).
+
+const P = D.P;
+const svg = document.querySelector(".stage svg");
+const part = (name) => svg.querySelector(`[data-part="${name}"]`);
+const slot = (name) => svg.querySelector(`[data-slot="${name}"]`);
+const chip = (name) => document.querySelector(`[data-chip="${name}"]`);
+const chipHot = (name, on) => document.querySelector(`[data-chipbox="${name}"]`)?.toggleAttribute("data-hot", !!on);
+const still = matchMedia("(prefers-reduced-motion: reduce)");
+const f1 = (n) => Math.round(n * 10) / 10;
+const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+const ease = (x) => { const t = clamp(x); return t * t * (3 - 2 * t); };
+const seg = (u, a, b) => clamp((u - a) / (b - a));
+const lerp = (a, b, t) => a + (b - a) * t;
+const lerp3 = (a, b, t) => a.map((v, i) => lerp(v, b[i], t));
+const pathOf = (pts, close = true) => (pts.length ? "M" + pts.map((p) => f1(p[0]) + " " + f1(p[1])).join("L") + (close ? "Z" : "") : "");
+const at = (p) => iso(p, P);
+const toward = towardViewer(P);
+function hull(points) {
+  const pts = [...points].sort((a, b) => a[0] - b[0] || a[1] - b[1]);
+  if (pts.length < 3) return pts;
+  const cross = (o, a, b) => (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0]);
+  const lo = [];
+  for (const p of pts) { while (lo.length >= 2 && cross(lo[lo.length - 2], lo[lo.length - 1], p) <= 0) lo.pop(); lo.push(p); }
+  const hi = [];
+  for (const p of pts.reverse()) { while (hi.length >= 2 && cross(hi[hi.length - 2], hi[hi.length - 1], p) <= 0) hi.pop(); hi.push(p); }
+  return lo.slice(0, -1).concat(hi.slice(0, -1));
+}
+const circle3 = (cx, cy, r, z, n = 36) => Array.from({ length: n }, (_, i) => { const a = (i / n) * Math.PI * 2; return [cx + r * Math.cos(a), cy + r * Math.sin(a), z]; });
+const cylPath = (cx, cy, r, z0, z1, n = 36) => pathOf(hull([...circle3(cx, cy, r, z0, n), ...circle3(cx, cy, r, z1, n)].map(at)));
+const discPath = (cx, cy, r, z, n = 44) => pathOf(circle3(cx, cy, r, z, n).map(at));
+// a circle in a vertical plane: axis "x" means the circle lies in the plane x = c[0]
+const vcircle = (c, r, axis = "x", n = 36) => Array.from({ length: n }, (_, i) => { const a = (i / n) * Math.PI * 2; return axis === "x" ? [c[0], c[1] + r * Math.cos(a), c[2] + r * Math.sin(a)] : [c[0] + r * Math.cos(a), c[1], c[2] + r * Math.sin(a)]; });
+// a straight rod between two world points, as a screen quad with round ends; r in world units
+function rodPath(a, b, r) {
+  const A = at(a), B = at(b), KS = D.KS;
+  const dx = B[0] - A[0], dy = B[1] - A[1], len = Math.hypot(dx, dy) || 1;
+  const nx = (-dy / len) * r * KS, ny = (dx / len) * r * KS, R = r * KS;
+  return `M${f1(A[0] + nx)} ${f1(A[1] + ny)}L${f1(B[0] + nx)} ${f1(B[1] + ny)}A${f1(R)} ${f1(R)} 0 0 1 ${f1(B[0] - nx)} ${f1(B[1] - ny)}L${f1(A[0] - nx)} ${f1(A[1] - ny)}A${f1(R)} ${f1(R)} 0 0 1 ${f1(A[0] + nx)} ${f1(A[1] + ny)}Z`;
+}
+const mixHex = (a, b, t) => {
+  const h = (x) => [1, 3, 5].map((i) => parseInt(x.slice(i, i + 2), 16));
+  const A = h(a), B = h(b);
+  return "#" + A.map((v, i) => Math.round(v + (B[i] - v) * t).toString(16).padStart(2, "0")).join("");
+};
+const along = (pts, u) => {
+  const n = pts.length - 1;
+  const x = clamp(u) * n;
+  const i = Math.min(n - 1, Math.floor(x));
+  return lerp3(pts[i], pts[i + 1], ease(x - i));
+};
+const lapseEl = document.querySelector("[data-lapse]");
+function setLapse(text) {
+  if (text) { if (lapseEl.textContent !== text) lapseEl.textContent = text; lapseEl.setAttribute("data-on", ""); } else lapseEl.removeAttribute("data-on");
+}
+const soundsG = part("sounds");
+function setWord(w) {
+  if (!w) { if (soundsG.firstChild) soundsG.textContent = ""; return; }
+  const [x, y] = at(w.p);
+  let t = soundsG.querySelector("text");
+  if (!t) { t = document.createElementNS("http://www.w3.org/2000/svg", "text"); t.setAttribute("class", "word"); soundsG.appendChild(t); }
+  if (t.textContent !== w.text) t.textContent = w.text;
+  t.setAttribute("x", f1(x)); t.setAttribute("y", f1(y));
+  t.setAttribute("font-size", w.size || 15);
+}
+const setText = (el, text) => { if (el && el.textContent !== text) el.textContent = text; };
+
+// Steps, buttons, the idle tour, the drawn cursor and window.seek(t) for frame-exact recording.
+function tour({ STEPS, ORDER, update, reset, onBegin = () => {}, onFinish = () => {}, draw, paint, probe = () => null, gap = 0.7, lead = 0.2, tail = 1.0 }) {
+  const buttons = [...document.querySelectorAll("[data-step]")];
+  const hintEl = document.querySelector("[data-hint]");
+  const INTRO = hintEl.textContent;
+  let next = 0, run = null, idle = 0, last = 0, auto = true;
+  const setButtons = () => buttons.forEach((b, i) => {
+    b.disabled = !!run || i !== next;
+    b.toggleAttribute("data-on", !!run && ORDER[i] === run.id);
+    b.toggleAttribute("data-done", !run && i < next && next !== 0);
+  });
+  const begin = (id) => { run = { id, t: 0 }; onBegin(id); hintEl.textContent = STEPS[id].hint; };
+  const finish = () => { const id = run.id; update(id, 1); onFinish(id); run = null; next = (next + 1) % ORDER.length; idle = 0; setButtons(); };
+  const start = (id) => { if (run || ORDER[next] !== id) return; begin(id); setButtons(); if (still.matches) finish(); };
+  // two modes: Auto runs the steps on a loop, Manual waits for the visitor to press each one in order
+  const modeEls = [...document.querySelectorAll("[data-mode]")];
+  const INTRO_MANUAL = INTRO.split(/(?<=[.?!])\s+/)[0] + " Press the steps in order.";
+  const setAuto = (on, save = true) => {
+    auto = on;
+    idle = 0;
+    document.body.classList.toggle("manual", !on);
+    modeEls.forEach((m) => m.setAttribute("aria-checked", String((m.dataset.mode === "auto") === on)));
+    if (save) try { localStorage.setItem("fig-mode2", on ? "auto" : "manual"); } catch {}
+  };
+  const restart = () => { reset(); run = null; next = 0; hintEl.textContent = auto ? INTRO : INTRO_MANUAL; idle = 0; setButtons(); };
+  modeEls.forEach((m) => m.addEventListener("click", () => {
+    const on = m.dataset.mode === "auto";
+    if (on === auto) return;
+    setAuto(on);
+    // Manual starts the visitor from step 1; Auto picks up from wherever the machine stands
+    if (!on) restart(); else idle = gap;
+  }));
+  buttons.forEach((b) => b.addEventListener("click", () => { if (auto) setAuto(false); start(b.dataset.step); }));
+  // a press on a step that is still greyed out also switches to Manual once the running step ends
+  document.querySelector(".steps")?.addEventListener("pointerdown", () => { if (auto) setAuto(false); });
+  document.querySelector("[data-restart]")?.addEventListener("click", restart);
+  document.addEventListener("keydown", (e) => {
+    if (e.target.closest?.("button,input,a,select,textarea")) return;
+    if (e.key === " " || e.key === "Enter") { e.preventDefault(); setAuto(false); start(ORDER[next]); }
+  });
+  function tick(now) {
+    const dt = last ? Math.min((now - last) / 1000, 1 / 20) : 1 / 60;
+    last = now;
+    if (run) { run.t += dt; const u = run.t / STEPS[run.id].dur; update(run.id, Math.min(1, u)); if (u >= 1) finish(); }
+    else if (auto && !still.matches) { idle += dt; if (idle > gap) start(ORDER[next]); }
+    draw(now / 1000);
+    requestAnimationFrame(tick);
+  }
+  const PLAN = [];
+  { let t = lead; for (const id of ORDER) { t += gap; PLAN.push({ id, t0: t, t1: t + STEPS[id].dur }); t += STEPS[id].dur; } }
+  const TOTAL = PLAN[PLAN.length - 1].t1 + tail;
+  const cursor = document.createElement("div");
+  cursor.className = "cursor";
+  cursor.innerHTML = '<svg viewBox="0 0 24 24" width="28" height="28"><path d="M3 2l15.5 9.2-6.6 1.5 3.4 7.4-3.1 1.4-3.3-7.4L3 18.6z" fill="#fff" stroke="#23263a" stroke-width="1.6" stroke-linejoin="round"/></svg>';
+  const aim = (i) => { const r = buttons[i].getBoundingClientRect(); return [r.left + r.width * 0.62, r.top + r.height * 0.55]; };
+  const restPoint = () => { const r = document.querySelector(".stage").getBoundingClientRect(); return [r.left + r.width * 0.55, r.top + r.height * 0.62]; };
+  function placeCursor(time) {
+    let from = restPoint(), to = from, u = 0, press = -1;
+    for (let i = 0; i < PLAN.length; i++) {
+      const p = PLAN[i];
+      const leave = i ? PLAN[i - 1].t1 - 0.35 : 0.05, arrive = p.t0 - 0.16;
+      if (time < leave) break;
+      from = i ? aim(i - 1) : restPoint();
+      to = aim(i);
+      u = ease((time - leave) / (arrive - leave));
+      if (time > p.t0 - 0.12 && time < p.t0 + 0.08) press = i;
+    }
+    const x = lerp(from[0], to[0], u) + Math.sin(u * Math.PI) * 18, y = lerp(from[1], to[1], u) - Math.sin(u * Math.PI) * 10;
+    cursor.style.transform = `translate(${f1(x - 3.3)}px, ${f1(y - 2.2)}px) scale(${press >= 0 ? 0.86 : 1})`;
+    buttons.forEach((b, i) => b.toggleAttribute("data-press", i === press));
+  }
+  function seekTo(time) {
+    reset();
+    run = null;
+    next = 0;
+    hintEl.textContent = INTRO;
+    for (const p of PLAN) {
+      if (time < p.t0) break;
+      begin(p.id);
+      if (time >= p.t1) { run.t = STEPS[p.id].dur; finish(); continue; }
+      run.t = time - p.t0;
+      update(p.id, run.t / STEPS[p.id].dur);
+      break;
+    }
+    setButtons();
+    draw(time);
+    placeCursor(time);
+  }
+  // colour swatches
+  document.querySelectorAll("[data-swatch]").forEach((sw) => sw.addEventListener("click", () => {
+    document.querySelectorAll("[data-swatch]").forEach((o) => o.toggleAttribute("data-on", o === sw));
+    paintBody(sw.dataset.swatch);
+  }));
+  function paintBody(c) {
+    const t = (x) => ({ f: x, t: mixHex(x, "#ffffff", 0.42), s3: mixHex(x, "#ffffff", 0.18), s1: mixHex(x, "#1b1d2c", 0.13), s0: mixHex(x, "#1b1d2c", 0.26) });
+    const set = (name, x) => { const v = t(x); const s = document.body.style; s.setProperty(`--${name}`, v.f); s.setProperty(`--${name}-t`, v.t); s.setProperty(`--${name}-3`, v.s3); s.setProperty(`--${name}-1`, v.s1); s.setProperty(`--${name}-0`, v.s0); };
+    set("body", c);
+    set("alt", paint ? paint(c) : c);
+  }
+  paintBody(document.querySelector("[data-swatch]").dataset.swatch);
+  reset();
+  setButtons();
+  draw(0);
+  // probe() hands the figure state to tools outside the page (videos/_kit/timeline.mjs samples it for the score)
+  window.__fig = { start, seek: seekTo, total: TOTAL, plan: PLAN, get state() { return probe(); } };
+  if (location.search.includes("render")) {
+    document.body.classList.add("render");
+    document.body.appendChild(cursor);
+    window.DURATION = TOTAL;
+    window.seek = seekTo;
+    seekTo(0);
+  } else {
+    // Manual is the default; Auto only when the visitor picked it on an earlier page
+    let saved = null;
+    try { saved = localStorage.getItem("fig-mode2"); } catch {}
+    // ?auto in the address starts the tour by itself (pages shown side by side), without touching the saved choice
+    setAuto(/[?&]auto\b/.test(location.search) || saved === "auto", false);
+    hintEl.textContent = auto ? INTRO : INTRO_MANUAL;
+    requestAnimationFrame(tick);
+  }
+}
+
+// Live code for the headset. Runs inside the figure scope after _kit/runtime.js.
+// The headset is real 3D: every part is a mesh in the headset's own frame (x to its right as you face its front, y
+// forward out of the glass, z up). Every frame each part is placed by its pose, its facets that face you are shaded by
+// facing (a little specular on the glass and the aluminium), inked where a facet that faces you meets one that does
+// not or where two facets meet at a hard angle, and painted back to front: parts by a key, the pieces inside a part by
+// their side of the part, facets by depth. Flat details (chip printing, lenses, the logo, the vents) are laid on their
+// faces with a 2 × 2 screen matrix built from the face's two in-plane axes. Every frame is a pure function of
+// (S.step, S.u), so window.seek(t) lands on the same picture.
+const M = D.MODEL;
+const BRAND = D.BRAND;
+const MAT_T = D.MAT_T;
+const DEG = Math.PI / 180;
+const TAU = Math.PI * 2;
+
+// ---------------------------------------------------------------- vectors and the camera
+const add3 = (a, b) => [a[0] + b[0], a[1] + b[1], a[2] + b[2]];
+const sub3 = (a, b) => [a[0] - b[0], a[1] - b[1], a[2] - b[2]];
+const mul3 = (a, s) => [a[0] * s, a[1] * s, a[2] * s];
+const dot3 = (a, b) => a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
+const cross3 = (a, b) => [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]];
+const unit3 = (a) => { const l = Math.hypot(a[0], a[1], a[2]) || 1; return [a[0] / l, a[1] / l, a[2] / l]; };
+const CAM = cameraOf(P);
+const SA = CAM.sinA, CA = CAM.cosA, SE = CAM.sinE, CE = CAM.cosE, KK = CAM.k, OX = P.origin[0], OY = P.origin[1];
+const pr = (p) => [OX + (p[0] * SA - p[1] * CA) * KK, OY + ((p[0] * CA + p[1] * SA) * SE - p[2] * CE) * KK];
+const prv = (v) => [(v[0] * SA - v[1] * CA) * KK, ((v[0] * CA + v[1] * SA) * SE - v[2] * CE) * KK];
+const VIEW = [CA * CE, SA * CE, SE];
+const LIGHT = unit3([-SA, CA, 1.2]);
+const HALF = unit3(add3(LIGHT, VIEW));
+const r1 = (n) => Math.round(n * 10) / 10;
+const r2 = (n) => Math.round(n * 100) / 100;
+const r3 = (n) => Math.round(n * 1000) / 1000;
+const P1 = (p) => r1(p[0]) + " " + r1(p[1]);
+const polyD = (pts) => { let s = "M" + P1(pts[0]); for (let i = 1; i < pts.length; i++) s += "L" + P1(pts[i]); return s + "Z"; };
+const lineD1 = (pts) => { let s = "M" + P1(pts[0]); for (let i = 1; i < pts.length; i++) s += "L" + P1(pts[i]); return s; };
+const loc = (pts, close = true) => "M" + pts.map((p) => r3(p[0]) + " " + r3(p[1])).join("L") + (close ? "Z" : "");
+const smoother = (x) => { const t = clamp(x); return t * t * t * (t * (t * 6 - 15) + 10); };
+const Hv = [CA, SA, 0], Rv = [SA, -CA, 0], UP = [0, 0, 1];
+const heading = (psi) => add3(mul3(Hv, Math.cos(psi * DEG)), mul3(Rv, Math.sin(psi * DEG)));
+const NS = "http://www.w3.org/2000/svg";
+function rng(seed) { let a = seed >>> 0; return () => { a = (a + 0x6d2b79f5) >>> 0; let t = a; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
+
+// ---------------------------------------------------------------- colours, shaded by facing
+const rgbOf = (h) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16));
+const hexOf = (c) => "#" + c.map((v) => Math.round(Math.max(0, Math.min(255, v))).toString(16).padStart(2, "0")).join("");
+const WHITE = [255, 255, 255], DARK = [27, 29, 44];
+const MATS = {
+  alu: { c: "#c3c7ce", hi: 0.42, lo: 0.34, spec: 0.5, pw: 18 }, // the frame and the battery
+  aluIn: { c: "#7a7e88", hi: 0.18, lo: 0.3 }, // the inside of the frame
+  glass: { c: "#262a36", hi: 0.22, lo: 0.25, spec: 0.75, pw: 40 }, // the laminated front glass, dark over the display
+  black: { c: "#2b2d37", hi: 0.22, lo: 0.3, spec: 0.25, pw: 20 },
+  dark: { c: "#3c3f4b", hi: 0.28, lo: 0.3 },
+  pcb: { c: "#2e6a51", hi: 0.3, lo: 0.3 },
+  chip: { c: "#3a3c47", hi: 0.32, lo: 0.3, spec: 0.3, pw: 14 },
+  sub: { c: "#5f6d56", hi: 0.3, lo: 0.3 }, // a chip's substrate
+  steel: { c: "#c3cad3", hi: 0.5, lo: 0.32, spec: 0.4, pw: 16 },
+  seal: { c: "#d2d0c9", hi: 0.32, lo: 0.32 }, // the Light Seal's fabric
+  sealFrame: { c: "#a3a4a6", hi: 0.3, lo: 0.3 }, // the thin frame it clips on with
+  knit: { c: "#7f838d", hi: 0.36, lo: 0.34 }, // the Solo Knit Band (the swatches recolour it)
+  strap: { c: "#ecebe6", hi: 0.4, lo: 0.24 }, // the audio straps
+  lens: { c: "#55627c", hi: 0.45, lo: 0.3, spec: 0.6, pw: 30 },
+  cable: { c: "#dedcd5", hi: 0.38, lo: 0.3 }, // the woven cable
+  fan: { c: "#34363f", hi: 0.25, lo: 0.3 },
+  orange: { c: "#e8793a", hi: 0.35, lo: 0.3 },
+  flex: { c: "#d08a3f", hi: 0.34, lo: 0.3 },
+};
+for (const m of Object.values(MATS)) m.rgb = rgbOf(m.c);
+const shadeCache = new Map();
+// q: the cosine between the facet's normal and the light; s: the cosine with the half vector, for the glint
+function shadeQ(mat, q, s = 0) {
+  const m = MATS[mat];
+  const qq = Math.round((q + 1) * 70) / 70 - 1;
+  const ss = m.spec ? Math.round(Math.max(0, s) ** m.pw * 24) / 24 : 0;
+  const key = mat + "|" + qq + "|" + ss;
+  let v = shadeCache.get(key);
+  if (v) return v;
+  const w = qq >= 0 ? m.hi * Math.min(1, qq / 0.8) ** 1.4 : 0;
+  const k = qq < 0 ? m.lo * Math.min(1, -qq) ** 0.8 : 0;
+  let c = m.rgb.map((x, i) => x + (WHITE[i] - x) * w + (DARK[i] - x) * k);
+  if (ss) c = c.map((x) => x + (255 - x) * ss * m.spec);
+  v = hexOf(c);
+  shadeCache.set(key, v);
+  return v;
+}
+
+// ---------------------------------------------------------------- frames
+// A frame: world axes ex, ey, ez and origin o, with their screen images and their dot products with the view, the
+// light and the half vector, so a local point or normal needs no world step.
+function frameOf(o, ex, ey, ez) {
+  return {
+    o, ex, ey, ez, O: pr(o), mx: prv(ex), my: prv(ey), mz: prv(ez),
+    vx: dot3(ex, VIEW), vy: dot3(ey, VIEW), vz: dot3(ez, VIEW), lx: dot3(ex, LIGHT), ly: dot3(ey, LIGHT), lz: dot3(ez, LIGHT),
+    hx: dot3(ex, HALF), hy: dot3(ey, HALF), hz: dot3(ez, HALF), d0: dot3(o, VIEW),
+  };
+}
+const scr = (F, p) => [F.O[0] + p[0] * F.mx[0] + p[1] * F.my[0] + p[2] * F.mz[0], F.O[1] + p[0] * F.mx[1] + p[1] * F.my[1] + p[2] * F.mz[1]];
+const dep = (F, p) => F.d0 + p[0] * F.vx + p[1] * F.vy + p[2] * F.vz;
+const facing = (F, n) => n[0] * F.vx + n[1] * F.vy + n[2] * F.vz;
+const lightQ = (F, n) => n[0] * F.lx + n[1] * F.ly + n[2] * F.lz;
+const specQ = (F, n) => n[0] * F.hx + n[1] * F.hy + n[2] * F.hz;
+const worldOf = (F, p) => add3(F.o, add3(mul3(F.ex, p[0]), add3(mul3(F.ey, p[1]), mul3(F.ez, p[2]))));
+const dirOf = (F, v) => add3(mul3(F.ex, v[0]), add3(mul3(F.ey, v[1]), mul3(F.ez, v[2])));
+// the screen matrix of a plane through local point o with local unit axes u and v (art drawn with v up)
+function planeM(F, o, u, v) {
+  const O = scr(F, o);
+  const U = [u[0] * F.mx[0] + u[1] * F.my[0] + u[2] * F.mz[0], u[0] * F.mx[1] + u[1] * F.my[1] + u[2] * F.mz[1]];
+  const V = [v[0] * F.mx[0] + v[1] * F.my[0] + v[2] * F.mz[0], v[0] * F.mx[1] + v[1] * F.my[1] + v[2] * F.mz[1]];
+  return `matrix(${U[0].toFixed(4)} ${U[1].toFixed(4)} ${V[0].toFixed(4)} ${V[1].toFixed(4)} ${O[0].toFixed(3)} ${O[1].toFixed(3)})`;
+}
+// a child frame: moved by off and turned by yaw about the parent's z, then pitched about x, both through pivot
+function childOf(F, off = [0, 0, 0], piv = [0, 0, 0], yaw = 0, pitch = 0) {
+  const cy = Math.cos(yaw * DEG), sy = Math.sin(yaw * DEG), cp = Math.cos(pitch * DEG), sp = Math.sin(pitch * DEG);
+  const c0 = [cy, sy, 0], c1 = [-sy * cp, cy * cp, sp], c2 = [sy * sp, -cy * sp, cp];
+  const Rp = add3(add3(mul3(c0, piv[0]), mul3(c1, piv[1])), mul3(c2, piv[2]));
+  return frameOf(worldOf(F, sub3(add3(piv, off), Rp)), dirOf(F, c0), dirOf(F, c1), dirOf(F, c2));
+}
+
+// ---------------------------------------------------------------- meshes
+// A mesh: vertices, facets (vertex lists with a normal, a centre and a material), the edges between facets (for the
+// ink), art laid on a face (A) and short inked marks on a surface (K: polylines with the normal they sit on).
+const meshOf = (o = {}) => ({ V: [], F: [], A: [], K: [], E: null, ...o });
+const vAdd = (m, p) => (m.V.push(p), m.V.length - 1);
+function fAdd(m, vs, mat, hint, extra = {}) {
+  const v = vs.filter((x, i) => x !== vs[(i + vs.length - 1) % vs.length]);
+  if (v.length < 3) return;
+  const pts = v.map((i) => m.V[i]);
+  let n = [0, 0, 0];
+  for (let k = 0; k < pts.length; k++) { const a = pts[k], b = pts[(k + 1) % pts.length]; n[0] += (a[1] - b[1]) * (a[2] + b[2]); n[1] += (a[2] - b[2]) * (a[0] + b[0]); n[2] += (a[0] - b[0]) * (a[1] + b[1]); }
+  if (Math.hypot(...n) < 1e-9) return;
+  n = unit3(n);
+  const c = mul3(pts.reduce(add3, [0, 0, 0]), 1 / pts.length);
+  const h = hint.from ? sub3(c, hint.from) : hint;
+  if (dot3(n, h) < 0) { v.reverse(); n = mul3(n, -1); }
+  m.F.push({ v, n, c, mat, ...extra });
+}
+function edgesOf(m) {
+  if (m.E) return m.E;
+  const map = new Map();
+  m.F.forEach((f, fi) => {
+    for (let k = 0; k < f.v.length; k++) {
+      const a = f.v[k], b = f.v[(k + 1) % f.v.length];
+      const key = a < b ? a * 100003 + b : b * 100003 + a;
+      let e = map.get(key);
+      if (!e) map.set(key, (e = { a, b, f: [] }));
+      e.f.push(fi);
+    }
+  });
+  return (m.E = [...map.values()]);
+}
+// rings of points joined into facets; a ring of one point is an apex
+function grid(m, rings, mat, hintOf, { closed = true, matOf = null, capA = null, capB = null } = {}) {
+  const ids = rings.map((r) => r.map((p) => vAdd(m, p)));
+  const N = Math.max(...ids.map((r) => r.length));
+  const at = (j, i) => (ids[j].length === 1 ? ids[j][0] : ids[j][closed ? (i + N) % N : i]);
+  for (let j = 0; j < ids.length - 1; j++) for (let i = 0; i < (closed ? N : N - 1); i++) fAdd(m, [at(j, i), at(j, i + 1), at(j + 1, i + 1), at(j + 1, i)], matOf ? matOf(j, i) : mat, hintOf(j, i), { j, i });
+  if (capA) fAdd(m, ids[0].slice(), capA.mat || mat, capA.hint);
+  if (capB) fAdd(m, ids[ids.length - 1].slice(), capB.mat || mat, capB.hint);
+  return ids;
+}
+const area2 = (pts) => { let a = 0; for (let i = 0; i < pts.length; i++) { const p = pts[i], q = pts[(i + 1) % pts.length]; a += p[0] * q[1] - q[0] * p[1]; } return a / 2; };
+// a prism: an outline in the (U, V) plane at local o, from h0 to h1 along A; walls face out by the outline's normal
+function prism(m, pts, o, U, V, A, h0, h1, mat, { capMat = mat, capMat0 = capMat } = {}) {
+  const ccw = area2(pts) > 0;
+  const p3 = (p, h) => [o[0] + p[0] * U[0] + p[1] * V[0] + h * A[0], o[1] + p[0] * U[1] + p[1] * V[1] + h * A[1], o[2] + p[0] * U[2] + p[1] * V[2] + h * A[2]];
+  const i0 = pts.map((p) => vAdd(m, p3(p, h0))), i1 = pts.map((p) => vAdd(m, p3(p, h1)));
+  const n = pts.length;
+  for (let i = 0; i < n; i++) {
+    const j = (i + 1) % n, ex = pts[j][0] - pts[i][0], ey = pts[j][1] - pts[i][1];
+    const n2 = ccw ? [ey, -ex] : [-ey, ex];
+    fAdd(m, [i0[i], i0[j], i1[j], i1[i]], mat, add3(mul3(U, n2[0]), mul3(V, n2[1])));
+  }
+  const dA = h1 > h0 ? A : mul3(A, -1);
+  fAdd(m, i0.slice(), capMat0, mul3(dA, -1));
+  fAdd(m, i1.slice(), capMat, dA);
+  return p3([0, 0], h1);
+}
+// a frame (U, V) square to an axis A
+function basisOf(A) {
+  const a = unit3(A);
+  const ref = Math.abs(a[2]) < 0.9 ? [0, 0, 1] : [1, 0, 0];
+  const U = unit3(cross3(ref, a));
+  return [U, cross3(a, U), a];
+}
+// a tube swept along a path with a 2D profile (a outward from the bend, b up), its facets facing out from the path
+function tube(m, path, prof, mat, { up = [0, 0, 1], capA = false, capB = false } = {}) {
+  const n = path.length;
+  const rings = path.map((c, j) => {
+    const T = unit3(sub3(path[Math.min(n - 1, j + 1)], path[Math.max(0, j - 1)]));
+    const B = unit3(sub3(up, mul3(T, dot3(up, T))));
+    const N = cross3(B, T);
+    return prof.map(([a, b]) => add3(c, add3(mul3(N, a), mul3(B, b))));
+  });
+  const hintOf = (j) => ({ from: mul3(add3(path[j], path[Math.min(n - 1, j + 1)]), 0.5) });
+  const T0 = unit3(sub3(path[1], path[0])), T1 = unit3(sub3(path[n - 1], path[n - 2]));
+  grid(m, rings, mat, hintOf, { capA: capA ? { hint: mul3(T0, -1) } : null, capB: capB ? { hint: T1 } : null });
+  return rings;
+}
+function rrPts(cx, cy, w, h, r, per = 5) {
+  r = Math.min(r, w / 2, h / 2);
+  const out = [];
+  for (const [ox, oy, a0] of [[w / 2 - r, -h / 2 + r, -90], [w / 2 - r, h / 2 - r, 0], [-w / 2 + r, h / 2 - r, 90], [-w / 2 + r, -h / 2 + r, 180]])
+    for (let i = 0; i <= per; i++) { const a = (a0 + (90 * i) / per) * DEG; out.push([cx + ox + r * Math.cos(a), cy + oy + r * Math.sin(a)]); }
+  return out;
+}
+const circPts = (cx, cy, r, n = 24, a0 = 0) => Array.from({ length: n }, (_, i) => { const a = a0 + (i / n) * TAU; return [cx + r * Math.cos(a), cy + r * Math.sin(a)]; });
+// flat art, authored with y up
+const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+const txt = (x, y, s, size, cls, anchor = "middle", extra = "") => `<text class="${cls}" x="${r3(x)}" y="${r3(-y)}" font-size="${size}" text-anchor="${anchor}" transform="scale(1 -1)"${extra}>${esc(s)}</text>`;
+const rect = (x, y, w, h, cls, extra = "") => `<rect class="${cls}" x="${r3(x - w / 2)}" y="${r3(y - h / 2)}" width="${r3(w)}" height="${r3(h)}"${extra}/>`;
+const circle = (x, y, r, cls, extra = "") => `<circle class="${cls}" cx="${r3(x)}" cy="${r3(y)}" r="${r3(r)}"${extra}/>`;
+const logoAt = (cx, cy, h, cls, extra = "") => { const k = h / 100; return `<g transform="matrix(${r3(k)} 0 0 ${r3(-k)} ${r3(cx - 50 * k)} ${r3(cy + 50 * k)})"><path d="${BRAND.logo}" class="${cls}"${extra}/></g>`; };
+const art = (m, o, u, v, svg, n = null) => m.A.push({ o, u, v, n: n || unit3(cross3(v, u)), svg });
+// a lens seen head on: barrel ring, dark glass, a blue coat and two glints
+const lensArt = (r) => circle(0, 0, r, "lens-g") + circle(0, 0, r * 0.78, "lens-r") + circle(0, 0, r * 0.5, "lens-c") + circle(0, 0, r * 0.28, "lens-g") + circle(-r * 0.32, r * 0.3, r * 0.16, "lens-hi") + circle(r * 0.25, -r * 0.22, r * 0.07, "lens-hi");
+
+// ---------------------------------------------------------------- the shape of the front
+const [A_, B_] = M.half;
+const NO = 72;
+const OUTL = Array.from({ length: NO }, (_, i) => {
+  const t = (i / NO) * TAU, c = Math.cos(t), s = Math.sin(t), p = 2.7;
+  const x = A_ * Math.sign(c) * Math.abs(c) ** (2 / p);
+  let z = B_ * Math.sign(s) * Math.abs(s) ** (2 / p);
+  if (z < 0) z += 11 * Math.exp(-((x / 26) ** 2)) * clamp((-z / B_) * 1.2); // the bridge over the nose
+  return [x, z];
+});
+// the front bows forward in plan and a little top to bottom
+const yf = (x, z) => 33 - 27 * (x / A_) ** 2 - 6 * (z / B_) ** 2;
+const FD = M.frameDepth;
+const yb = (x, z) => yf(x, z) - FD; // the back edge of the frame follows the front
+const radial = ([x, z]) => unit3([x / A_ ** 2, 0, z / B_ ** 2]);
+const ztop = (x) => B_ * Math.max(0, 1 - Math.abs(x / A_) ** 2.7) ** (1 / 2.7);
+// a plane tangent to the glass at (x, z), lifted by `by`
+function glassPlane(x, z, by = 0.3) {
+  const gx = (-54 * x) / A_ ** 2, gz = (-12 * z) / B_ ** 2;
+  const n = unit3([-gx, 1, -gz]);
+  const u = unit3([1, gx, 0]);
+  return { o: add3([x, yf(x, z), z], mul3(n, by)), u, v: unit3(cross3(u, n)), n };
+}
+
+// ================================================================= THE PARTS
+const PARTS = {};
+const defPart = (id, o) => (PARTS[id] = { id, meshes: [], bias: 0, ...o });
+const piece = (p, m, layer = 0, tag = null) => { m.layer = layer; m.tag = tag; p.meshes.push(m); return m; };
+
+// ---- the front glass: a dome over the outline, its edge rolled back onto the frame; the startup logo glows on the
+// display behind it, the two main cameras and the depth sensors show through at the bottom
+{
+  const p = defPart("glass", { side: [0, 1, 0] });
+  const m = piece(p, meshOf());
+  const S_ = [1, 0.992, 0.96, 0.88, 0.74, 0.55, 0.32, 0.12, 0];
+  const rings = S_.map((s, k) => (s === 0 ? [[0, yf(0, 0) + 0.3, 0]] : OUTL.map(([x, z]) => (k === 0 ? [x, yf(x, z) - 2.2, z] : [s * x, yf(s * x, s * z) + 0.3 * (1 - s), s * z]))));
+  grid(m, rings, "glass", () => ({ from: [0, -40, 0] }));
+  // the logo, as on a startup screen: a soft glow and the mark over it, big enough to read across a room
+  const L = glassPlane(0, 3, 0.4);
+  art(m, L.o, L.u, L.v, `<g filter="url(#vp-glow)" opacity=".75">${logoAt(0, 1, 40, "logo-glow")}</g>${logoAt(0, 1, 34, "logo-face")}`, L.n);
+  // the glare across the curved glass: a broad soft sweep and a thin bright line along the top
+  const onGlass = (x, z, by = 0.6) => [x, yf(x, z) + by, z];
+  const sweep = (x0, x1, za, zb, n = 14) => { const top = [], bot = []; for (let i = 0; i <= n; i++) { const t = i / n, x = x0 + (x1 - x0) * t, w = Math.sin(Math.PI * t); top.push(onGlass(x, za(x) + 2.4 * w)); bot.push(onGlass(x, zb(x) - 1.2 * w)); } return [...top, ...bot.reverse()]; };
+  m.K.push({ cls: "glare", op: 0.1, n: [0, 1, 0], lines: [sweep(-78, 58, (x) => 0.9 * ztop(x) - 3, (x) => 0.9 * ztop(x) - 17)] });
+  m.K.push({ cls: "glare", op: 0.3, n: [0, 1, 0], lines: [sweep(-62, 46, (x) => 0.955 * ztop(x) - 1.2, (x) => 0.955 * ztop(x) - 2.6)] });
+  for (const sx of [-1, 1]) {
+    const C = glassPlane(sx * 22, -27, 0.35);
+    art(m, C.o, C.u, C.v, circle(0, 0, 5, "lens-g", ' opacity=".3"') + circle(0, 0, 3, "lens-r", ' opacity=".35"'), C.n);
+  }
+  const T = glassPlane(0, -20, 0.35);
+  art(m, T.o, T.u, T.v, rect(-9, 0, 7, 5.4, "lens-g", ' rx="1.6" opacity=".3"') + rect(9, 0, 11, 5, "lens-g", ' rx="2.4" opacity=".3"'), T.n);
+}
+
+// ---- the aluminium frame: an outer band with a lip front and back, and the inner wall you see once the glass is off
+const FR = { s0: 1.0, s1: 1.018, lip: 0.972 };
+{
+  const outer = defPart("shell", { side: [0, 1, 0] });
+  const m = piece(outer, meshOf());
+  const ring = (s, y) => OUTL.map(([x, z]) => [s * x, y(x, z), s * z]);
+  const rings = [
+    ring(FR.lip, (x, z) => yf(x, z) - 3.4),
+    ring(FR.s0, (x, z) => yf(x, z) - 2.4),
+    ring(FR.s1, (x, z) => yf(x, z) - 5.5),
+    ring(FR.s1, (x, z) => yb(x, z) + 3.5),
+    ring(FR.s0, (x, z) => yb(x, z)),
+    ring(FR.lip, (x, z) => yb(x, z) + 0.6),
+  ];
+  grid(m, rings, "alu", (j, i) => (j === 0 ? [0, 1, 0] : j === 4 ? [0, -1, 0] : radial(OUTL[i])));
+  // the vents along the top: rows of small holes, following the curve
+  const holes = [];
+  for (let row = 0; row < 4; row++) for (let c = -26; c <= 26; c++) {
+    const x = c * 1.9 + (row % 2) * 0.95;
+    if (Math.abs(x) > 50) continue;
+    const zt = ztop(x / FR.s1) * FR.s1 + 0.15;
+    const y = (yf(x / FR.s1, zt / FR.s1) - 5.5 + yb(x / FR.s1, zt / FR.s1) + 3.5) / 2 + (row - 1.5) * 1.9;
+    holes.push(circPts(0, 0, 0.5, 6).map(([a, b]) => [x + a, y + b, zt]));
+  }
+  m.K.push({ n: [0, 0, 1], cls: "hole", fill: true, lines: holes });
+  // the Digital Crown on the top right, the top button on the top left
+  const cx = 66, cz = ztop(cx / FR.s1) * FR.s1;
+  const cyc = (yf(cx, cz) - 5.5 + yb(cx, cz) + 3.5) / 2;
+  const crown = piece(outer, meshOf(), 1, "crown");
+  prism(crown, circPts(0, 0, 6.6, 28), [cx, cyc, cz - 1], [1, 0, 0], [0, 1, 0], [0, 0, 1], 0, 5.4, "alu");
+  const kn = [];
+  for (let a = 0; a < 36; a++) { const t = (a / 36) * TAU; kn.push({ n: [Math.cos(t), Math.sin(t), 0], pts: [[cx + 6.65 * Math.cos(t), cyc + 6.65 * Math.sin(t), cz + 0.4], [cx + 6.65 * Math.cos(t), cyc + 6.65 * Math.sin(t), cz + 4.0]] }); }
+  crown.K.push({ cls: "hair", each: kn });
+  art(crown, [cx, cyc, cz + 4.4], [1, 0, 0], [0, -1, 0], circle(0, 0, 4.6, "hair") + circle(-1.8, 1.8, 0.9, "hi", ' opacity=".5"'));
+  const bx = -64, bz = ztop(-bx / FR.s1) * FR.s1;
+  const byc = (yf(bx, bz) - 5.5 + yb(bx, bz) + 3.5) / 2;
+  const btn = piece(outer, meshOf(), 1, "button");
+  prism(btn, rrPts(0, 0, 20, 5.4, 2.7), [bx, byc, bz - 1], [1, 0, 0], [0, 1, 0], [0, 0, 1], 0, 2.4, "alu");
+  // the inner wall, painted before everything inside
+  const inner = defPart("shellIn", { side: [0, 1, 0] });
+  const mi = piece(inner, meshOf());
+  grid(mi, [rings[0], rings[5]], "aluIn", (j, i) => mul3(radial(OUTL[i]), -1));
+}
+
+// ---- the camera array behind the glass: a bracket along the lower edge with 8 cameras looking out (2 main and 6 for
+// tracking), the LiDAR scanner and the TrueDepth camera at the bridge, and 2 small light sensors at the top
+const CAMS = [];
+{
+  const p = defPart("cams", { side: [0, 1, 0] });
+  const behind = (x, z, by = 6) => [x, yf(x, z) - by, z];
+  const path = [[-80, -21], [-66, -30], [-48, -37], [-22, -29], [-10, -21], [10, -21], [22, -29], [48, -37], [66, -30], [80, -21]].map(([x, z]) => behind(x, z, 7.5));
+  const bar = piece(p, meshOf(), 0);
+  // the bracket: a flat strip along the lower edge
+  const fine = [];
+  for (let i = 0; i < path.length - 1; i++) for (let k = 0; k < 6; k++) { const t = k / 6; fine.push(add3(mul3(path[i], 1 - t), mul3(path[i + 1], t))); }
+  fine.push(path[path.length - 1]);
+  tube(bar, fine, rrPts(0, 0, 8, 2.6, 1.2, 2), "dark", { up: [0, 1, 0], capA: true, capB: true });
+  // [x, z, look direction, radius, kind]
+  const look = (x, z, out, down) => unit3([Math.sign(x) * out, 1 - Math.max(out, down) * 0.6, -down]);
+  const list = [
+    [-22, -27, [0, 1, -0.12], 5.6, "main"], [22, -27, [0, 1, -0.12], 5.6, "main"],
+    [-80, -20, look(-80, -20, 1, 0.25), 4.2, "track"], [80, -20, look(80, -20, 1, 0.25), 4.2, "track"],
+    [-48, -36, look(-48, -36, 0.2, 1), 4.2, "track"], [48, -36, look(48, -36, 0.2, 1), 4.2, "track"],
+    [-64, -29, look(-64, -29, 0.45, 0.6), 4.2, "track"], [64, -29, look(64, -29, 0.45, 0.6), 4.2, "track"],
+  ];
+  for (const [x, z, dir, r, kind] of list) {
+    const m = piece(p, meshOf(), 1, "cam");
+    const [U, V, A] = basisOf(dir);
+    const o = behind(x, z, 9);
+    const tip = prism(m, circPts(0, 0, r, 20), o, U, V, A, 0, 7, "black");
+    // the module's square base on the bracket
+    prism(m, rrPts(0, 0, r * 2.4, r * 2.4, 1.2, 2), add3(o, mul3(A, -1.6)), U, V, A, 0, 2, "dark");
+    art(m, tip, U, V, lensArt(r * 0.86), A);
+    CAMS.push({ x, z, dir, kind, tip, r });
+  }
+  // the LiDAR scanner and the TrueDepth camera at the bridge
+  for (const [x, w, h, kind] of [[-10, 8, 7, "lidar"], [10, 13, 6.4, "truedepth"]]) {
+    const m = piece(p, meshOf(), 1, "sensor");
+    const o = behind(x, -20, 9);
+    const top = prism(m, rrPts(0, 0, w, h, 1.6, 2), o, [1, 0, 0], [0, 0, 1], [0, 1, 0], 0, 6.2, "black");
+    art(m, top, [1, 0, 0], [0, 0, 1], kind === "lidar" ? circle(-1.6, 0, 1.6, "lens-g") + circle(1.9, 0, 1.3, "ir") + circle(-2, 0.5, 0.4, "lens-hi") : circle(-3.6, 0, 1.6, "lens-g") + circle(0.2, 0, 1.2, "ir") + circle(3.6, 0, 1.6, "lens-g") + circle(-4, 0.5, 0.45, "lens-hi"), [0, 1, 0]);
+  }
+}
+
+// ---- the logic board: M2 on the left, R1 on the right, their memory, connectors and the two fans above
+const BOARD_Y = 6;
+{
+  const p = defPart("board", { side: [0, 1, 0] });
+  const b = piece(p, meshOf(), 0);
+  const out = [[-70, -12], [-14, -12], [-10, -4], [10, -4], [14, -12], [70, -12], [74, -6], [74, 14], [66, 21], [-66, 21], [-74, 14], [-74, -6]];
+  const front = prism(b, out, [0, BOARD_Y - 1.4, 0], [1, 0, 0], [0, 0, 1], [0, 1, 0], 0, 1.4, "pcb");
+  // the copper and the small parts on the board, laid out once
+  const rnd = rng(28);
+  let tr = "", parts = "";
+  for (let i = 0; i < 46; i++) {
+    const x0 = -66 + rnd() * 132, z0 = -9 + rnd() * 28;
+    if (Math.abs(x0 + 36) < 13 && Math.abs(z0 - 3) < 12) continue;
+    if (Math.abs(x0 - 30) < 11 && Math.abs(z0 - 3) < 11) continue;
+    const x1 = x0 + (rnd() - 0.5) * 22, z1 = z0;
+    tr += `M${r2(x0)} ${r2(z0)}L${r2(x1)} ${r2(z1)}L${r2(x1 + 2)} ${r2(z1 + (rnd() > 0.5 ? 3 : -3))}`;
+  }
+  for (let i = 0; i < 70; i++) {
+    const x = -68 + rnd() * 136, z = -9 + rnd() * 28;
+    if ((Math.abs(x + 36) < 13 && Math.abs(z - 3) < 12) || (Math.abs(x - 30) < 11 && Math.abs(z - 3) < 11) || (Math.abs(x + 56) < 6 && Math.abs(z - 3) < 8) || (Math.abs(x - 47) < 6 && Math.abs(z - 3) < 7)) continue;
+    if (Math.abs(x) < 12 && z < -2) continue;
+    parts += rnd() > 0.45 ? rect(x, z, 1.6, 0.9, "cap") : rect(x, z, 1.1, 0.6, "res");
+  }
+  art(b, front, [1, 0, 0], [0, 0, 1], `<path class="trace" d="${tr}"/>${parts}${txt(-60, -9.4, "M2", 1.8, "silk", "start")}${txt(52, -9.4, "R1", 1.8, "silk", "start")}` + [[-66, 17], [66, 17], [-66, -8], [66, -8]].map(([x, z]) => circle(x, z, 1.6, "pad") + circle(x, z, 0.8, "ink")).join(""), [0, 1, 0]);
+  const chip = (x, z, w, h, t, name, tag) => {
+    const m = piece(p, meshOf(), 1, tag);
+    const s = prism(m, rrPts(0, 0, w + 3, h + 3, 0.6, 1), [x, BOARD_Y, z], [1, 0, 0], [0, 0, 1], [0, 1, 0], 0, 0.7, "sub");
+    const top = prism(m, rrPts(0, 0, w, h, 0.8, 1), s, [1, 0, 0], [0, 0, 1], [0, 1, 0], 0, t, "chip");
+    if (name) art(m, top, [1, 0, 0], [0, 0, 1], logoAt(-w * 0.18, h * 0.12, w * 0.34, "chiplogo") + txt(w * 0.16, -h * 0.02, name, w * 0.26, "chipprint", "start") + circle(-w / 2 + 1.4, -h / 2 + 1.4, 0.45, "chiplogo"), [0, 1, 0]);
+    return m;
+  };
+  chip(-36, 3, 17, 17, 1.4, "M2", "m2");
+  chip(30, 3, 14, 14, 1.4, "R1", "r1");
+  chip(-56, 7, 6.5, 9, 1.1, null, "mem");
+  chip(-56, -3.5, 6.5, 9, 1.1, null, "mem");
+  chip(47, 3, 7, 10, 1.1, null, "mem");
+  for (const [x, z] of [[-14, 15], [10, 15], [62, 8]]) {
+    const m = piece(p, meshOf(), 1, "conn");
+    const top = prism(m, rrPts(0, 0, 10, 3.6, 0.4, 1), [x, BOARD_Y, z], [1, 0, 0], [0, 0, 1], [0, 1, 0], 0, 1.8, "dark");
+    let d = "";
+    for (let i = 0; i < 9; i++) d += `M${r2(-4 + i)} 1.2L${r2(-4 + i)} 0.6M${r2(-4 + i)} -1.2L${r2(-4 + i)} -0.6`;
+    art(m, top, [1, 0, 0], [0, 0, 1], `<path class="pins" d="${d}"/>`, [0, 1, 0]);
+  }
+  // the two fans above the board, blowing up through the vents
+  for (const sx of [-1, 1]) {
+    const m = piece(p, meshOf(), 1, "fan");
+    const c = [sx * 24, BOARD_Y - 5, 31];
+    const top = prism(m, circPts(0, 0, 12.6, 30), c, [1, 0, 0], [0, 0, 1], [0, 1, 0], 0, 6, "fan");
+    let blades = "";
+    for (let k = 0; k < 11; k++) {
+      const a = (k / 11) * TAU;
+      const pt = (rr, da) => [rr * Math.cos(a + da), rr * Math.sin(a + da)];
+      const q = [pt(4.4, 0), pt(8, 0.28 * sx), pt(11.2, 0.62 * sx), pt(11.2, 0.82 * sx), pt(8, 0.5 * sx), pt(4.4, 0.36)];
+      blades += `<path class="blade" d="${loc(q)}"/>`;
+    }
+    art(m, top, [1, 0, 0], [0, 0, 1], circle(0, 0, 11.9, "ink", ' opacity=".85"') + `<g data-spin transform="rotate(0)">${blades}${circle(0, 0, 4.4, "hub")}${rect(0, 2.2, 0.9, 2.6, "hi", ' opacity=".35"')}</g>` + circle(0, 0, 12.2, "hair"), [0, 1, 0]);
+  }
+}
+
+// ---- the two micro-OLED displays, one per eye: their backs face the board, the image faces the eye
+const DISP = { w: 27, h: 22, t: 2.6, y: -5, z: 4, x: 32 };
+for (const sx of [-1, 1]) {
+  const p = defPart(sx < 0 ? "dispL" : "dispR", { side: [0, 1, 0] });
+  const m = piece(p, meshOf());
+  const c = [sx * DISP.x, DISP.y, DISP.z];
+  prism(m, rrPts(0, 0, DISP.w, DISP.h, 1.6, 2), c, [1, 0, 0], [0, 0, 1], [0, 1, 0], -DISP.t, 0, "black");
+  // the back: a steel plate and the flex tail
+  art(m, add3(c, [0, 0.05, 0]), [1, 0, 0], [0, 0, 1], rect(0, -1, DISP.w - 5, DISP.h - 7, "screw", ' rx="1" opacity=".9"') + rect(0, DISP.h / 2 - 1.6, 9, 3.2, "flex") + rect(0, DISP.h / 2 + 0.6, 6, 1.6, "flex"), [0, 1, 0]);
+  // the face: the active area, dark until it is shown
+  let d = "";
+  for (let i = -10; i <= 10; i++) d += `M${-11} ${r2(i * 0.85)}L11 ${r2(i * 0.85)}`;
+  const gid = `vp-sky${sx < 0 ? "L" : "R"}`;
+  const lit = `<g data-lit style="opacity:0"><defs><linearGradient id="${gid}" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#7fb9e9"/><stop offset=".62" stop-color="#cfe6f7"/><stop offset="1" stop-color="#ffd9a6"/></linearGradient></defs>` +
+    rect(0, 0, DISP.w - 2.4, DISP.h - 2.4, "", ` rx="0.6" fill="url(#${gid})"`) + circle(6.5, 3.2, 2.6, "", ' fill="#fff4d6"') +
+    `<path d="M-12.3 -3.5C-7 -1 -3 -2.5 1 -4.2S9 -5 12.3 -2.6V-9.6H-12.3Z" fill="#5fae7b"/><path d="M-12.3 -6.4C-5 -4.6 3 -7.8 12.3 -5.6V-9.6H-12.3Z" fill="#3f8f5c"/></g>`;
+  art(m, add3(c, [0, -DISP.t - 0.05, 0]), [-1, 0, 0], [0, 0, 1], rect(0, 0, DISP.w - 2.4, DISP.h - 2.4, "oled-on", ' rx="0.6"') + `<path d="${d}" stroke="#3a3f55" stroke-width=".25" opacity=".55" fill="none"/>` + lit + rect(-6, 5, 6, 2.2, "glare", ' opacity=".14"'), [0, -1, 0]);
+  p.centre = c;
+}
+
+// ---- the two lens modules, each with a ring of infrared lights and 2 eye-tracking cameras on the eye side
+const LENS = { r: 21, y0: -25, y1: -11, z: 2, x: 32 };
+{
+  const p = defPart("lenses", { side: [0, 1, 0] });
+  for (const sx of [-1, 1]) {
+    const m = piece(p, meshOf(), 0);
+    const c = [sx * LENS.x, LENS.y0, LENS.z];
+    const top = prism(m, circPts(0, 0, LENS.r, 36), c, [1, 0, 0], [0, 0, 1], [0, 1, 0], 0, LENS.y1 - LENS.y0, "black", { capMat: "lens", capMat0: "lens" });
+    art(m, top, [1, 0, 0], [0, 0, 1], lensArt(LENS.r - 1.4) + circle(0, 0, LENS.r - 0.6, "hair"), [0, 1, 0]);
+    let leds = "";
+    for (let k = 0; k < 10; k++) { const a = (k / 10) * TAU + 0.3; leds += circle((LENS.r - 0.9) * Math.cos(a), (LENS.r - 0.9) * Math.sin(a), 0.7, "ir"); }
+    let glow = "";
+    for (let k = 0; k < 10; k++) { const a = (k / 10) * TAU + 0.3; glow += circle((LENS.r - 0.9) * Math.cos(a), (LENS.r - 0.9) * Math.sin(a), 2.2, "", ' fill="#ff4f5e"'); }
+    const irG = `<g data-ir style="opacity:0"><g filter="url(#vp-soft)">${glow}</g>${circle(-sx * 9, -15.5, 0.8, "", ' fill="#fff"')}${circle(sx * 9, -15.5, 0.8, "", ' fill="#fff"')}</g>`;
+    art(m, [c[0], LENS.y0 - 0.05, c[2]], [-1, 0, 0], [0, 0, 1], lensArt(LENS.r - 2.6) + leds + circle(-sx * 9, -15.5, 1.8, "lens-g") + circle(sx * 9, -15.5, 1.8, "lens-g") + irG, [0, -1, 0]);
+  }
+}
+
+// ---- the Light Seal: a thick fabric cushion on a thin frame, behind the aluminium frame, arched over the nose
+// the outline's outward normal in the (x, z) plane, for insets that keep the cushion one width all round
+const N2 = OUTL.map((p, i) => {
+  const a = OUTL[(i + NO - 1) % NO], b = OUTL[(i + 1) % NO];
+  let n = [b[1] - a[1], -(b[0] - a[0])];
+  const l = Math.hypot(...n) || 1;
+  n = [n[0] / l, n[1] / l];
+  return n[0] * p[0] + n[1] * p[1] < 0 ? [-n[0], -n[1]] : n;
+});
+{
+  const p = defPart("seal", { side: [0, 1, 0] });
+  const m = piece(p, meshOf());
+  const nose = (x, z, w) => (z < 0 ? 15 * w * Math.exp(-((x / 22) ** 2)) * clamp((-z / B_) * 1.3) : 0);
+  // the cross-section: [inset from the outline, depth behind the frame, how much of the nose arch]
+  const PROF = [[1.2, 0.4, 0], [0, 7, 0.3], [0.8, 16, 0.6], [3.5, 23, 0.85], [9, 26.5, 1], [16, 25.5, 1], [21, 20, 1], [22.5, 10, 0.9], [21.5, 2.5, 0.6], [16, 0.4, 0.4], [8, 0.4, 0.2]];
+  const at = (i, [d, dy, w]) => { const [x, z] = OUTL[i]; return [x - N2[i][0] * d, yb(x, z) - dy, z - N2[i][1] * d + nose(x, z, w)]; };
+  const rings = PROF.map((q) => OUTL.map((_, i) => at(i, q)));
+  rings.push(rings[0].map((v) => v.slice()));
+  const mid = (i) => at(i, [11, 13, 1]);
+  grid(m, rings, "seal", (j, i) => ({ from: mid(i) }), { matOf: (j) => (j >= 9 ? "sealFrame" : "seal") });
+  // the fabric's fine rib round the outer wall, and the stitch line along the rolled edge
+  const lines = [];
+  for (const dy of [4, 8, 12, 16]) lines.push(OUTL.map((_, i) => at(i, [dy > 14 ? 1.1 : 0.05, dy, dy / 26])));
+  m.K.push({ cls: "fabric", along: lines, n: OUTL.map((q) => radial(q)) });
+}
+
+// ---- the audio straps with their speaker pods, and the Solo Knit Band looped behind with its Fit Dial
+const STRAP = { y0: -12, y1: -64, x: 97 };
+for (const sx of [-1, 1]) {
+  const p = defPart(sx < 0 ? "strapL" : "strapR", { side: [sx, 0, 0] });
+  const m = piece(p, meshOf(), 0);
+  const path = [];
+  for (let k = 0; k <= 10; k++) { const t = k / 10; path.push([sx * (STRAP.x - 0.6 + 1.6 * t), STRAP.y0 + (STRAP.y1 - 7 - STRAP.y0) * t, -2 - 3 * t]); }
+  tube(m, path, rrPts(0, 0, 4.4, 12, 2, 2), "strap", { up: [0, 0, 1], capA: true, capB: true });
+  // the speaker pod by the ear, its grille facing out
+  const pod = piece(p, meshOf(), 1, "pod");
+  const face = prism(pod, rrPts(-36, -15, 19, 12, 5.5, 3), [sx * (STRAP.x - 1.8), 0, 0], [0, 1, 0], [0, 0, 1], [sx, 0, 0], 0, 5.6, "strap");
+  let g = "";
+  for (let k = 0; k < 6; k++) g += rect(sx * 36 - 5 + k * 2, -15, 0.7, 6.4, "grille", ' rx=".35"');
+  art(pod, face, [0, -sx, 0], [0, 0, 1], g, [sx, 0, 0]);
+}
+const bandPath = (depth) => {
+  const pts = [];
+  for (let k = 0; k <= 40; k++) {
+    const a = (k / 40) * Math.PI;
+    pts.push([(STRAP.x + 1) * Math.cos(a) * (1 + 0.04 * Math.sin(a)), STRAP.y1 - depth * Math.sin(a), -5 - 19 * Math.sin(a) ** 1.4]);
+  }
+  return pts;
+};
+function bandMesh(depth) {
+  const m = meshOf();
+  const path = bandPath(depth);
+  tube(m, path, rrPts(0, 0, 5, 34, 2.4, 2), "knit", { up: [0, 0, 1], capA: true, capB: true });
+  // the knit's ribs along the band, on the outside
+  const lines = [];
+  const normals = [];
+  for (let k = 0; k < path.length; k++) {
+    const T = unit3(sub3(path[Math.min(path.length - 1, k + 1)], path[Math.max(0, k - 1)]));
+    normals.push(unit3(cross3(UP, T)));
+  }
+  for (const b of [-13, -9.5, -6, -2.5, 1, 4.5, 8, 11.5, 15]) lines.push(path.map((c, k) => add3(add3(c, mul3(normals[k], 2.62)), [0, 0, b])));
+  m.K.push({ cls: "knit", along: lines, n: normals });
+  m.K.push({ cls: "knit-l", along: lines.map((l) => l.map((q) => add3(q, [0, 0, 0.6]))), n: normals });
+  // the Fit Dial on the right side and the orange pull tab at the right end
+  const dial = meshOf();
+  const k0 = 4, c = path[k0], N = normals[k0];
+  const [U, V] = basisOf(N);
+  const top = prism(dial, circPts(0, 0, 9.5, 30), add3(c, mul3(N, 2.2)), U, V, N, 0, 5, "knit");
+  art(dial, top, U, V, circle(0, 0, 9.1, "hair") + circle(0, 0, 6.2, "hair") + circle(-2.6, 2.6, 1.2, "hi", ' opacity=".35"'), N);
+  const kn = [];
+  for (let a = 0; a < 40; a++) { const t = (a / 40) * TAU, d = add3(mul3(U, Math.cos(t)), mul3(V, Math.sin(t))); const q = add3(c, mul3(N, 2.2)); kn.push({ n: d, pts: [add3(q, mul3(d, 9.55)), add3(add3(q, mul3(d, 9.55)), mul3(N, 5))] }); }
+  dial.K.push({ cls: "hair", each: kn });
+  const tab = meshOf();
+  prism(tab, rrPts(0, 0, 9, 3, 1, 1), [STRAP.x + 1.2, STRAP.y1 - 6, 11], [0, 1, 0], [1, 0, 0], [0, 0, 1], 0, 8.5, "orange");
+  return [m, dial, tab];
+}
+const BAND = { rest: 112, apart: 84 };
+const bandCache = new Map();
+function bandFor(depth) {
+  const key = Math.round(depth);
+  if (!bandCache.has(key)) { const [m, dial, tab] = bandMesh(key); m.layer = 0; dial.layer = 1; tab.layer = 1; dial.tag = "dial"; bandCache.set(key, [m, dial, tab]); }
+  return bandCache.get(key);
+}
+defPart("band", { side: [0, -1, 0] });
+
+// ---- the battery, lying on the mat, and its woven cable
+const BAT = { w: 96, d: 62, t: 15.5 };
+{
+  const p = defPart("battery", { side: [0, 0, 1] });
+  const m = piece(p, meshOf());
+  const top = prism(m, rrPts(0, 0, BAT.w, BAT.d, 9, 4), [0, 0, 0.4], [1, 0, 0], [0, 1, 0], [0, 0, 1], 0, BAT.t, "alu");
+  // the logo, polished into the top
+  art(m, add3(top, [0, 0, 0.05]), [-1, 0, 0], [0, 1, 0], logoAt(0, 2, 34, "logo-alu") + rect(0, -BAT.d / 2 + 4.5, 70, 0.5, "hair", ' opacity=".35"'), [0, 0, 1]);
+  // the strain relief where the cable leaves
+  const sr = piece(p, meshOf(), 1);
+  prism(sr, circPts(0, 0, 4.2, 18), [BAT.w / 2 - 0.5, 0, BAT.t / 2 + 0.4], [0, 1, 0], [0, 0, 1], [1, 0, 0], 0, 10, "cable");
+}
+
+// ---------------------------------------------------------------- drawing one part
+const CREASE = Math.cos(32 * DEG);
+function meshSvg(F, m, out) {
+  const sp = m.V.map((p) => scr(F, p));
+  const fs = m.F;
+  const vis = new Uint8Array(fs.length);
+  const list = [];
+  for (let k = 0; k < fs.length; k++) {
+    const f = fs[k];
+    if (facing(F, f.n) > 1e-4) { vis[k] = 1; list.push({ f, d: dep(F, f.c), col: shadeQ(f.mat, lightQ(F, f.n), specQ(F, f.n)) }); }
+  }
+  list.sort((a, b) => a.d - b.d);
+  let cur = null, d = "";
+  for (const it of list) {
+    if (it.col !== cur) { if (d) out.push(`<path d="${d}" fill="${cur}" stroke="${cur}" stroke-width=".45"/>`); cur = it.col; d = ""; }
+    d += polyD(it.f.v.map((i) => sp[i]));
+  }
+  if (d) out.push(`<path d="${d}" fill="${cur}" stroke="${cur}" stroke-width=".45"/>`);
+  // marks on the surface: rows of holes, ribs, knurling
+  for (const k of m.K) {
+    let dd = "";
+    if (k.lines) { if (facing(F, k.n) > 0.02) for (const l of k.lines) dd += polyD(l.map((p) => scr(F, p))); if (dd && k.op) { out.push(`<path class="${k.cls}" opacity="${k.op}" d="${dd}"/>`); continue; } }
+    else if (k.each) { for (const e of k.each) if (facing(F, e.n) > 0.05) dd += lineD1(e.pts.map((p) => scr(F, p))); }
+    else if (k.along) {
+      for (const l of k.along) {
+        let run = [];
+        for (let i = 0; i < l.length; i++) {
+          const ok = facing(F, k.n[i % k.n.length]) > 0.04;
+          if (ok) run.push(scr(F, l[i]));
+          if ((!ok || i === l.length - 1) && run.length > 1) { dd += lineD1(run); run = []; } else if (!ok) run = [];
+        }
+      }
+    }
+    if (dd) out.push(`<path class="${k.cls}" d="${dd}"/>`);
+  }
+  // the ink: the silhouette, the open rims and the hard creases
+  let ink = "", cr = "";
+  for (const e of edgesOf(m)) {
+    const a = vis[e.f[0]];
+    if (e.f.length === 1) { if (a) ink += lineD1([sp[e.a], sp[e.b]]); continue; }
+    const b = vis[e.f[1]];
+    if (a !== b) ink += lineD1([sp[e.a], sp[e.b]]);
+    else if (a && dot3(fs[e.f[0]].n, fs[e.f[1]].n) < CREASE) cr += lineD1([sp[e.a], sp[e.b]]);
+  }
+  if (cr) out.push(`<path class="cr" d="${cr}"/>`);
+  if (ink) out.push(`<path class="ol" d="${ink}"/>`);
+  for (const a of m.A) if (facing(F, a.n) > 0.03) out.push(`<g transform="${planeM(F, a.o, a.u, a.v)}">${a.svg}</g>`);
+}
+function partSvg(pt, F, only = null) {
+  const out = [];
+  const litA = pt.lit || 0;
+  const flip = facing(F, pt.side) < 0;
+  const ms = (only ? pt.meshes.filter((m) => m.tag === only) : pt.meshes).map((m) => ({ m, d: dep(F, m.F.length ? m.F[0].c : [0, 0, 0]), layer: flip ? -m.layer : m.layer }));
+  for (const x of ms) { let c = [0, 0, 0]; for (const f of x.m.F) c = add3(c, f.c); x.d = dep(F, mul3(c, 1 / Math.max(1, x.m.F.length))); }
+  ms.sort((a, b) => a.layer - b.layer || a.d - b.d);
+  for (const x of ms) meshSvg(F, x.m, out);
+  let html = out.join("");
+  if (litA > 0.002) html = html.replace(/data-lit style="opacity:0"/g, `data-lit style="opacity:${r3(litA)}"`);
+  if (pt.spin) html = html.replace(/data-spin transform="rotate\(0\)"/g, `data-spin transform="rotate(${r2(pt.spin % 360)})"`);
+  if (pt.ir > 0.002) html = html.replace(/data-ir style="opacity:0"/g, `data-ir style="opacity:${r3(pt.ir)}"`);
+  return html;
+}
+// every vertex of the visible meshes on screen (thinned), for the camera and the highlight
+function screenPts(pt, F, only = null, step = 2) {
+  const out = [];
+  for (const m of pt.meshes) { if (only && m.tag !== only) continue; for (let i = 0; i < m.V.length; i += step) out.push(scr(F, m.V[i])); }
+  return out;
+}
+function worldPts(pt, F, step = 3) {
+  const out = [];
+  for (const m of pt.meshes) for (let i = 0; i < m.V.length; i += step) out.push(worldOf(F, m.V[i]));
+  return out;
+}
+
+// ---------------------------------------------------------------- poses
+const PSI = D.PSI;
+const REST_H = B_ + 0.4; // the headset stands on the bottom of its frame
+// the explode, front to back: where each layer goes (forward, up), relative to the board which stays
+const LAYERS = ["glass", "cams", "shell", "board", "disp", "lenses", "seal", "band"];
+const EXY = { glass: 0, cams: 150, shell: 76, board: 0, disp: -52, lenses: -84, seal: -160, band: -236 };
+const EXZ = { glass: 0, cams: -26, shell: -6, board: 0, disp: 6, lenses: 8, seal: 16, band: 24 };
+const GLASS_LIFT = [0, 14, 126]; // the glass lifted straight off the front
+const GLASS_APART = [-30, 236, 96]; // and while the stack is apart, above its front
+const DISP_OUT = [64, 118, 14]; // the right display drawn out toward you
+const LENS_OUT = [-4, 146, 34]; // the lens pair drawn out and turned to show the eye side
+const LENS_PIV = [0, (LENS.y0 + LENS.y1) / 2, LENS.z];
+const BAT_AT = { x: -66, y: 118, yaw: 200 };
+const PLUG_AT = [-(A_ * FR.s1 + 0.4), -14, -16]; // the battery cable's twist-lock socket on the frame's left side
+const LAYER_OF = { glass: "glass", cams: "cams", shell: "shell", shellIn: "shell", board: "board", dispL: "disp", dispR: "disp", lenses: "lenses", seal: "seal", band: "band", strapL: "band", strapR: "band" };
+
+const ORDER = ["open", "sees", "apart", "pixels", "eyes", "air", "together"];
+const DUR = { open: 4.0, sees: 5.0, apart: 4.6, pixels: 5.0, eyes: 4.4, air: 4.4, together: 3.4 };
+const N_ = BRAND.name;
+const STEPS = {
+  open: { dur: DUR.open, hint: `The front glass lifts off. Behind it sit the cameras and sensors, and a board with two chips: M2 runs the apps, R1 takes in what the cameras, sensors and microphones pick up.` },
+  sees: { dur: DUR.sees, hint: `The glass goes back on and the cameras look out into the room (cone layout typical). Apple counts ${M.cameras} cameras, ${M.sensors} sensors and ${M.mics} microphones, and says R1 streams new images to the displays within ${M.r1Ms} ms.` },
+  apart: { dur: DUR.apart, hint: `Front to back: the glass, the outward cameras, the aluminium frame, the board with M2 and R1, the 2 displays, the 2 lens modules, the Light Seal and the band. (Layout typical, drawn from the outside in.)` },
+  pixels: { dur: DUR.pixels, hint: `One of the 2 micro-OLED displays, about the size of a postage stamp. The pair carries ${(M.pixels / 1e6).toFixed(0)} million pixels (Apple's figure).` },
+  eyes: { dur: DUR.eyes, hint: `The lens modules turn round to show the side that faces your eyes: a ring of infrared lights and eye-tracking cameras round each lens. The light is invisible; it is drawn in red. (Layout typical.)` },
+  air: { dur: DUR.air, hint: `The glass goes back on. Fans draw air in underneath and push it out of the vents on top, and the pod in each strap plays sound toward your ears. (Fans and pods typical.)` },
+  together: { dur: DUR.together, hint: `The headset settles, the battery cable's plug twists to lock, and the ${N_} is one headset again.` },
+};
+
+// ---------------------------------------------------------------- the state as a function of (step, u)
+// Each step starts exactly where the one before it ends, and the last ends on the start state.
+const fresh = () => ({ step: null, u: 0 });
+let S = fresh();
+const ZERO_EX = Object.fromEntries(LAYERS.map((n) => [n, 0]));
+const base = () => ({
+  psi: PSI.rest, lift: 0, glass: 0, exL: { ...ZERO_EX }, ex: 0, disp: 0, loupe: 0, lens: 0, ir: 0, eyeTag: 0, hl: null, hlA: 0, readout: 0, feed: 0, feedT: 0,
+  tags: 0, away: 0, coneU: -1, coneV: 0, ms: 0, msTag: 0, fan: 0, air: 0, airT: 0, sound: 0, soundT: 0, plugOut: 0, plugRot: 0, hot: [],
+});
+function scene() {
+  const st = S.step, u = S.u, Z = base();
+  if (!st) return Z;
+  if (st === "open") {
+    Z.glass = smoother(seg(u, 0, 0.55));
+    Z.hl = "r1";
+    Z.hlA = ease(seg(u, 0.5, 0.72));
+    Z.feed = Z.hlA;
+    Z.feedT = u;
+    Z.readout = ease(seg(u, 0.62, 0.84));
+    Z.hot = ["r1", "cams", "sensors"];
+    return Z;
+  }
+  if (st === "sees") {
+    Z.glass = 1 - smoother(seg(u, 0, 0.26));
+    Z.hl = "r1";
+    Z.hlA = 1 - ease(seg(u, 0, 0.14));
+    Z.feed = Z.hlA;
+    Z.feedT = 1 + u;
+    Z.readout = Z.hlA;
+    Z.lift = 46 * (smoother(seg(u, 0.16, 0.4)) - smoother(seg(u, 0.84, 1)));
+    Z.coneU = u;
+    Z.coneV = ease(seg(u, 0.3, 0.42)) * (1 - ease(seg(u, 0.86, 0.97)));
+    Z.ms = M.r1Ms * smoother(seg(u, 0.52, 0.78));
+    Z.msTag = ease(seg(u, 0.46, 0.56)) * (1 - ease(seg(u, 0.86, 0.97)));
+    Z.hot = ["cams", "sensors", "mics", "r1"];
+    return Z;
+  }
+  if (st === "apart") {
+    const k = smoother(seg(u, 0, 0.92));
+    LAYERS.forEach((n, i) => (Z.exL[n] = smoother(seg(u, 0.03 + 0.055 * i, 0.5 + 0.055 * i))));
+    Z.ex = k;
+    Z.psi = lerp(PSI.rest, PSI.apart, k);
+    Z.lift = 36 * k;
+    Z.away = k;
+    Z.tags = ease(seg(u, 0.86, 1));
+    Z.hot = ["parts"];
+    return Z;
+  }
+  if (st === "pixels") {
+    const k = smoother(seg(u, 0, 0.5));
+    // back first: the band seats first, the glass last, up to its lifted place
+    LAYERS.forEach((n, i) => (Z.exL[n] = 1 - smoother(seg(u, 0.02 + 0.045 * (7 - i), 0.24 + 0.045 * (7 - i)))));
+    Z.glass = 1 - Z.exL.glass;
+    Z.ex = 1 - k;
+    Z.psi = lerp(PSI.apart, PSI.rest, k);
+    Z.lift = 36 * (1 - k);
+    Z.away = 1 - k;
+    Z.tags = 1 - ease(seg(u, 0, 0.12));
+    Z.disp = smoother(seg(u, 0.5, 0.8));
+    Z.hl = "disp";
+    Z.hlA = ease(seg(u, 0.64, 0.84));
+    Z.loupe = ease(seg(u, 0.74, 0.94));
+    Z.hot = ["px"];
+    return Z;
+  }
+  if (st === "eyes") {
+    Z.glass = 1;
+    Z.disp = 1 - smoother(seg(u, 0, 0.3));
+    Z.loupe = 1 - ease(seg(u, 0, 0.14));
+    if (u < 0.25) { Z.hl = "disp"; Z.hlA = 1 - ease(seg(u, 0, 0.2)); } else { Z.hl = "lens"; Z.hlA = ease(seg(u, 0.42, 0.62)); }
+    Z.lens = smoother(seg(u, 0.25, 0.66));
+    Z.ir = ease(seg(u, 0.62, 0.74)) * (0.7 + 0.3 * Math.cos(TAU * 4 * seg(u, 0.6, 1)));
+    Z.eyeTag = ease(seg(u, 0.7, 0.88));
+    Z.hot = ["cams"];
+    return Z;
+  }
+  if (st === "air") {
+    Z.glass = 1 - smoother(seg(u, 0.24, 0.5));
+    Z.lens = 1 - smoother(seg(u, 0, 0.3));
+    Z.ir = 1 - ease(seg(u, 0, 0.14));
+    Z.eyeTag = 1 - ease(seg(u, 0, 0.12));
+    if (u < 0.3) { Z.hl = "lens"; Z.hlA = 1 - ease(seg(u, 0, 0.2)); } else { Z.hl = "fans"; Z.hlA = ease(seg(u, 0.46, 0.62)); }
+    Z.lift = 30 * smoother(seg(u, 0.4, 0.62));
+    Z.fan = 2520 * seg(u, 0.46, 1) ** 1.6;
+    Z.air = ease(seg(u, 0.56, 0.7));
+    Z.airT = u;
+    Z.sound = ease(seg(u, 0.64, 0.78));
+    Z.soundT = u;
+    Z.hot = ["mics"];
+    return Z;
+  }
+  if (st === "together") {
+    Z.hl = "fans";
+    Z.hlA = 1 - ease(seg(u, 0, 0.2));
+    Z.fan = 2520 + 720 * (1 - (1 - seg(u, 0, 0.3)) ** 2);
+    Z.air = 1 - ease(seg(u, 0, 0.2));
+    Z.airT = 1 + u;
+    Z.sound = 1 - ease(seg(u, 0, 0.2));
+    Z.soundT = 1 + u;
+    Z.lift = 30 * (1 - smoother(seg(u, 0.12, 0.42)));
+    if (u >= 0.3) { Z.hl = "plug"; Z.hlA = ease(seg(u, 0.36, 0.48)) * (1 - ease(seg(u, 0.9, 1))); }
+    Z.plugOut = 6 * (smoother(seg(u, 0.48, 0.58)) - smoother(seg(u, 0.62, 0.7)));
+    Z.plugRot = -90 * smoother(seg(u, 0.5, 0.6)) + 90 * smoother(seg(u, 0.7, 0.84));
+    return Z;
+  }
+  return Z;
+}
+
+// where everything is for a state
+function layout(Z) {
+  const H = frameOf([D.C0[0], D.C0[1], MAT_T + REST_H + Z.lift], heading(Z.psi + 90), heading(Z.psi), UP);
+  const L = (name) => [0, EXY[name] * Z.exL[name], EXZ[name] * Z.exL[name]];
+  const fr = { H };
+  fr.glass = childOf(H, add3(mul3(GLASS_APART, Z.exL.glass), mul3(GLASS_LIFT, Z.glass)));
+  fr.cams = childOf(H, L("cams"));
+  fr.shell = fr.shellIn = childOf(H, L("shell"));
+  fr.board = childOf(H, L("board"));
+  fr.dispL = childOf(H, L("disp"));
+  // a part drawn out toward you turns the side that faces the eye to you
+  const yawTo = Math.atan2(H.vx, -H.vy) / DEG;
+  fr.dispR = childOf(H, add3(L("disp"), mul3(DISP_OUT, Z.disp)), PARTS.dispR.centre, yawTo * Z.disp, -(D.EL + 6) * Z.disp);
+  fr.lenses = childOf(H, add3(L("lenses"), mul3(LENS_OUT, Z.lens)), LENS_PIV, yawTo * Z.lens, -(D.EL + 6) * Z.lens);
+  fr.seal = childOf(H, L("seal"));
+  fr.band = fr.strapL = fr.strapR = childOf(H, L("band"));
+  const floor = frameOf([D.C0[0], D.C0[1], MAT_T], heading(PSI.rest + 90), heading(PSI.rest), UP);
+  fr.battery = childOf(floor, [BAT_AT.x, BAT_AT.y, 0], [0, 0, 0], BAT_AT.yaw);
+  fr.floor = floor;
+  return fr;
+}
+
+// the woven cable from the battery to the twist-lock on the frame's left side, lying on the mat on the way
+function catmull(pts, per = 8) {
+  const out = [];
+  for (let i = 0; i < pts.length - 1; i++) {
+    const p0 = pts[Math.max(0, i - 1)], p1 = pts[i], p2 = pts[i + 1], p3 = pts[Math.min(pts.length - 1, i + 2)];
+    for (let k = 0; k < per; k++) {
+      const t = k / per, t2 = t * t, t3 = t2 * t;
+      out.push([0, 1, 2].map((c) => 0.5 * (2 * p1[c] + (-p0[c] + p2[c]) * t + (2 * p0[c] - 5 * p1[c] + 4 * p2[c] - p3[c]) * t2 + (-p0[c] + 3 * p1[c] - 3 * p2[c] + p3[c]) * t3)));
+    }
+  }
+  out.push(pts[pts.length - 1]);
+  return out;
+}
+const CR = 2.3;
+function cableMesh(fr, Z) {
+  const B = fr.battery, Fs = fr.shell, FL = fr.floor;
+  const e0 = worldOf(B, [BAT.w / 2 + 9.5, 0, BAT.t / 2 + 0.4]);
+  const out = mul3(Fs.ex, -1);
+  const c4 = add3(worldOf(Fs, PLUG_AT), mul3(out, Z.plugOut));
+  const g = (x, y) => worldOf(FL, [x, y, CR]);
+  const down = add3(worldOf(Fs, [PLUG_AT[0] - 22, PLUG_AT[1], PLUG_AT[2] - 12]), mul3(out, Z.plugOut));
+  const pts = [e0, add3(e0, mul3(B.ex, 12)), g(-150, 66), g(-138, 16), [down[0], down[1], lerp(MAT_T + CR, down[2], 0.35)], down, c4];
+  const path = catmull(pts, 9);
+  const m = meshOf();
+  tube(m, path, circPts(0, 0, CR, 10), "cable", { up: [0, 0, 1] });
+  // the weave: short diagonal ticks round the tube
+  const each = [];
+  for (let k = 1; k < path.length - 1; k++) {
+    const T = unit3(sub3(path[k + 1], path[k - 1]));
+    const [U, V] = basisOf(T);
+    for (let a = 0; a < 6; a++) {
+      const t = (a / 6) * TAU + (k % 2) * 0.5;
+      const d = add3(mul3(U, Math.cos(t)), mul3(V, Math.sin(t)));
+      const q = add3(path[k], mul3(d, CR + 0.02));
+      each.push({ n: d, pts: [q, add3(add3(q, mul3(T, 1.6)), mul3(add3(mul3(U, -Math.sin(t)), mul3(V, Math.cos(t))), 1.2))] });
+    }
+  }
+  m.K.push({ cls: "weave", each });
+  // the twist-lock plug, with a key on its side that shows the turn
+  const plug = meshOf();
+  const [U, V] = basisOf(out);
+  prism(plug, circPts(0, 0, 4.6, 18), c4, U, V, out, 0, 9, "alu");
+  const th = (Z.plugRot + 90) * DEG, kd = add3(mul3(U, Math.cos(th)), mul3(V, Math.sin(th)));
+  const kb = basisOf(kd);
+  prism(plug, rrPts(0, 0, 2.2, 5, 0.8, 1), add3(add3(c4, mul3(out, 4.5)), mul3(kd, 4.2)), kb[0], kb[1], kd, 0, 1.8, "alu");
+  plug.layer = 1;
+  plug.tag = "plug";
+  m.layer = 0;
+  return { id: "cable", meshes: [m, plug], side: [0, 0, 1] };
+}
+
+// ---------------------------------------------------------------- the frame
+const artG = svg.querySelector("g.art");
+const vpG = part("vp");
+const fxG = part("fx");
+const shadowEl = part("shadow-live"), shadowFl = part("shadow-float");
+const PAD = 16;
+const WORLD = frameOf([0, 0, 0], [1, 0, 0], [0, 1, 0], [0, 0, 1]);
+const boxOf = (pts) => { let x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9; for (const p of pts) { if (p[0] < x0) x0 = p[0]; if (p[0] > x1) x1 = p[0]; if (p[1] < y0) y0 = p[1]; if (p[1] > y1) y1 = p[1]; } return [x0, y0, x1, y1]; };
+const unionBox = (a, b) => [Math.min(a[0], b[0]), Math.min(a[1], b[1]), Math.max(a[2], b[2]), Math.max(a[3], b[3])];
+const lerpBox = (a, b, t) => a.map((v, i) => lerp(v, b[i], t));
+const fitOf = (b, fill = 1) => Math.min(((D.W - 2 * PAD) * fill) / (b[2] - b[0]), ((D.H - 2 * PAD) * fill) / (b[3] - b[1]));
+const midOf = (b) => [(b[0] + b[2]) / 2, (b[1] + b[3]) / 2];
+const toMat = (p) => pr([p[0] + D.SHADOW[0] * (p[2] - MAT_T), p[1] + D.SHADOW[1] * (p[2] - MAT_T), MAT_T]);
+const DRAWN = {};
+const LABEL = {
+  glass: "front glass", cams: "outward cameras · LiDAR", shell: "aluminium frame", board: "M2 + R1 · fans",
+  disp: "2 micro-OLED displays", lenses: "lenses · eye tracking", seal: "Light Seal", band: "Solo Knit Band",
+};
+// a tag: a label in a pill at a fixed size on the stage, its leader drawn to a point on the part
+const tagWH = (text, sub) => [Math.max(text.length * 6.7, sub ? sub.length * 5.5 : 0) + 14, sub ? 30 : 19];
+function tagSvg(anchor, dx, dy, text, sub, cs) {
+  const k = 1 / cs;
+  const [w, h] = tagWH(text, sub);
+  const x = anchor[0] + dx * k, y = anchor[1] + dy * k;
+  return `<path class="lead" d="M${r2(anchor[0])} ${r2(anchor[1])}L${r2(x)} ${r2(y)}"/><circle class="lead-dot" cx="${r2(anchor[0])}" cy="${r2(anchor[1])}" r="${r2(2.2 * k)}"/>` +
+    `<g transform="translate(${r2(x)} ${r2(y)}) scale(${r3(k)})"><rect class="tag" x="${r2(-w / 2)}" y="${r2(-h / 2)}" width="${r2(w)}" height="${r2(h)}" rx="6"/>` +
+    `<text class="tag-t" x="0" y="${sub ? -1.5 : 4}" text-anchor="middle">${esc(text)}</text>${sub ? `<text class="tag-s" x="0" y="10.5" text-anchor="middle">${esc(sub)}</text>` : ""}</g>`;
+}
+// the box a tag takes, in pre-camera units, for a camera scale cs
+function tagBox(anchor, dx, dy, text, sub, cs) {
+  const k = 1 / cs, [w, h] = tagWH(text, sub);
+  const x = anchor[0] + dx * k, y = anchor[1] + dy * k;
+  return [x - (w / 2) * k, y - (h / 2) * k, x + (w / 2) * k, y + (h / 2) * k];
+}
+function scaleAbout(pts, s) { const b = boxOf(pts), c = midOf(b); return `translate(${r2(c[0])} ${r2(c[1])}) scale(${s}) translate(${r2(-c[0])} ${r2(-c[1])})`; }
+
+// the cameras' view into the room: a soft cone from each outward camera, cut where it meets the mat
+function conesOf(fr, Z) {
+  if (Z.coneV <= 0.001) return [];
+  return CAMS.map((c, i) => {
+    const v = ease(seg(Z.coneU, 0.3 + 0.045 * i, 0.42 + 0.045 * i)) * (1 - ease(seg(Z.coneU, 0.86, 0.97)));
+    const a = worldOf(fr.cams, c.tip), d = unit3(dirOf(fr.cams, c.dir));
+    let L = 104 * (0.3 + 0.7 * v);
+    if (d[2] < -0.01) L = Math.min(L, (a[2] - MAT_T - 0.5) / -d[2]);
+    const [U, V] = basisOf(d);
+    const far = add3(a, mul3(d, L));
+    const ring = circPts(0, 0, L * 0.33, 28).map(([p, q]) => pr(add3(far, add3(mul3(U, p), mul3(V, q)))));
+    return { i, v, a, d, L, A: pr(a), ring };
+  }).filter((c) => c.v > 0.005);
+}
+function conesSvg(cones, Z, cs) {
+  let out = "";
+  for (const c of cones) out += `<g opacity="${r3(c.v)}"><path class="cone" d="${polyD(hull([c.A, ...c.ring]))}"/><path class="cone-rim" d="${polyD(c.ring)}"/></g>`;
+  // pulses: what each camera sees runs back toward the headset
+  if (Z.coneU > 0.48 && Z.coneU < 0.9) {
+    let d = "";
+    const fade = ease(seg(Z.coneU, 0.48, 0.54)) * (1 - ease(seg(Z.coneU, 0.82, 0.9)));
+    const r = 2.4 / cs;
+    for (const c of cones) for (const k of [0, 0.5]) {
+      const t = 1 - ((((Z.coneU - 0.48) * 5 + c.i * 0.13 + k) % 1) + 1) % 1;
+      const p = pr(add3(c.a, mul3(c.d, c.L * t)));
+      d += `M${r2(p[0] + r)} ${r2(p[1])}A${r2(r)} ${r2(r)} 0 1 0 ${r2(p[0] - r)} ${r2(p[1])}A${r2(r)} ${r2(r)} 0 1 0 ${r2(p[0] + r)} ${r2(p[1])}Z`;
+    }
+    out += `<path class="pulse" d="${d}" opacity="${r3(fade)}"/>`;
+  }
+  return out;
+}
+// the loupe hangs beside the display, its size in world units so the camera can frame it
+function loupeAt(fr) {
+  const F = fr.dispR, c = PARTS.dispR.centre;
+  const p = pr(worldOf(F, [c[0], c[1] - DISP.t, c[2]]));
+  return { p, c: [p[0] + 92 * KK, p[1] - 22 * KK], r: 40 * KK };
+}
+function stampOf(fr) {
+  const F = fr.dispR, c = PARTS.dispR.centre;
+  const sc = [c[0], c[1] - DISP.t - 0.3, c[2]];
+  const sw = 25, sh = 30, per = [];
+  const edge = (x0, z0, x1, z1, n) => { for (let i = 0; i < n; i++) { const t = i / n; per.push([x0 + (x1 - x0) * t, z0 + (z1 - z0) * t]); } };
+  edge(-sw / 2, -sh / 2, sw / 2, -sh / 2, 10); edge(sw / 2, -sh / 2, sw / 2, sh / 2, 12); edge(sw / 2, sh / 2, -sw / 2, sh / 2, 10); edge(-sw / 2, sh / 2, -sw / 2, -sh / 2, 12);
+  return per.map(([x, z]) => scr(F, [sc[0] - x, sc[1], sc[2] + z]));
+}
+function loupeSvg(fr, cs) {
+  const L = loupeAt(fr);
+  const stampPts = stampOf(fr);
+  // a patch of RGB subpixels
+  const g = [];
+  const pitch = 13 / cs, n = Math.ceil((L.r * 2) / pitch) + 1;
+  const x0 = L.c[0] - L.r, y0 = L.c[1] - L.r;
+  for (let i = 0; i < n; i++) for (let j = 0; j < n; j++) {
+    const x = x0 + i * pitch, y = y0 + j * pitch, w = pitch * 0.26, hh = pitch * 0.78;
+    g.push(`<rect class="px-r" x="${r2(x + pitch * 0.06)}" y="${r2(y + pitch * 0.11)}" width="${r2(w)}" height="${r2(hh)}" rx="${r2(w * 0.3)}"/><rect class="px-g" x="${r2(x + pitch * 0.37)}" y="${r2(y + pitch * 0.11)}" width="${r2(w)}" height="${r2(hh)}" rx="${r2(w * 0.3)}"/><rect class="px-b" x="${r2(x + pitch * 0.68)}" y="${r2(y + pitch * 0.11)}" width="${r2(w)}" height="${r2(hh)}" rx="${r2(w * 0.3)}"/>`);
+  }
+  const tg = (sgn) => { const dx = L.c[0] - L.p[0], dy = L.c[1] - L.p[1], d = Math.hypot(dx, dy); const a = Math.atan2(dy, dx) + sgn * Math.asin(Math.min(0.99, L.r / d)); const t = Math.sqrt(Math.max(0, d * d - L.r * L.r)); return [L.p[0] + t * Math.cos(a), L.p[1] + t * Math.sin(a)]; };
+  const id = "vp-loupe-clip";
+  return `<path class="stamp" d="${polyD(stampPts)}"/>` +
+    `<path class="lead" d="M${r2(L.p[0])} ${r2(L.p[1])}L${P1(tg(1))}M${r2(L.p[0])} ${r2(L.p[1])}L${P1(tg(-1))}"/>` +
+    `<defs><clipPath id="${id}"><circle cx="${r2(L.c[0])}" cy="${r2(L.c[1])}" r="${r2(L.r)}"/></clipPath></defs>` +
+    `<circle class="loupe" cx="${r2(L.c[0])}" cy="${r2(L.c[1])}" r="${r2(L.r)}"/><g clip-path="url(#${id})">${g.join("")}</g>` +
+    `<circle class="loupe-rim" cx="${r2(L.c[0])}" cy="${r2(L.c[1])}" r="${r2(L.r + 1.5 / cs)}"/><circle cx="${r2(L.c[0])}" cy="${r2(L.c[1])}" r="${r2(L.r + 3 / cs)}" fill="none" stroke="#23263a" stroke-width="1.6" vector-effect="non-scaling-stroke"/>`;
+}
+// air through the frame: cool lines rising into the bottom, warm lines out of the vents on top, flowing
+function airPaths(fr, k = 1) {
+  // k grows the lines out of the vents as the air starts, and pulls them back as it stops
+  const F = fr.shell, warm = [], cool = [];
+  k = Math.max(0.02, k);
+  for (const x of [-40, -20, 0, 20, 40]) {
+    const zt = ztop(x / FR.s1) * FR.s1, yv = (yf(x, zt) - 5.5 + yb(x, zt) + 3.5) / 2;
+    warm.push(Array.from({ length: 15 }, (_, j) => { const t = (k * j) / 14; return pr(worldOf(F, [x * (1 + 0.3 * t), yv - 34 * t ** 1.5, zt + 3 + 76 * t])); }));
+  }
+  for (const x of [-44, -18, 18, 44]) {
+    const zb = -ztop(x / FR.s1) * FR.s1 + 11 * Math.exp(-((x / 26) ** 2)), yv = (yf(x, zb) - 5.5 + yb(x, zb) + 3.5) / 2;
+    cool.push(Array.from({ length: 12 }, (_, j) => { const t = 1 - k + (k * j) / 11; return pr(worldOf(F, [x * (1.3 - 0.3 * t), yv + 26 * (1 - t) ** 1.4, zb - 3 - 30 * (1 - t)])); }));
+  }
+  return { warm, cool };
+}
+const arrowAt = (pts, cs) => {
+  const a = pts[pts.length - 2], b = pts[pts.length - 1], dx = b[0] - a[0], dy = b[1] - a[1], l = Math.hypot(dx, dy) || 1, ux = dx / l, uy = dy / l, s = 6 / cs;
+  return `M${r2(b[0] + ux * s)} ${r2(b[1] + uy * s)}L${r2(b[0] - uy * s * 0.6)} ${r2(b[1] + ux * s * 0.6)}L${r2(b[0] + uy * s * 0.6)} ${r2(b[1] - ux * s * 0.6)}Z`;
+};
+function airSvg(fr, Z, cs) {
+  const { warm, cool } = airPaths(fr, Z.air);
+  const off = r2((-Z.airT * 90) / cs);
+  return `<g opacity="${r3(Z.air)}"><path class="air-c" d="${cool.map(lineD1).join("")}" stroke-dashoffset="${off}"/><path class="air-c-h" d="${cool.map((p) => arrowAt(p, cs)).join("")}"/>` +
+    `<path class="air-w" d="${warm.map(lineD1).join("")}" stroke-dashoffset="${off}"/><path class="air-w-h" d="${warm.map((p) => arrowAt(p, cs)).join("")}"/></g>`;
+}
+// sound: arcs leaving the near strap's pod toward the back, where an ear would be
+function soundSvg(fr, Z) {
+  const F = fr.strapR;
+  const c = pr(worldOf(F, [STRAP.x + 4, -36, -15]));
+  const dv = prv(dirOf(F, [-0.25, -1, 0])), a0 = Math.atan2(dv[1], dv[0]);
+  let out = "";
+  for (let k = 0; k < 3; k++) {
+    const f = (((Z.soundT * 2.6 + k / 3) % 1) + 1) % 1;
+    const r = (8 + 26 * f) * KK;
+    const pts = [];
+    for (let j = 0; j <= 12; j++) { const a = a0 - 0.75 + (1.5 * j) / 12; pts.push([c[0] + r * Math.cos(a), c[1] + r * Math.sin(a)]); }
+    out += `<path class="snd" d="${lineD1(pts)}" opacity="${r3(Z.sound * Math.sin(Math.PI * f))}"/>`;
+  }
+  return out;
+}
+
+function draw() {
+  const Z = scene();
+  DRAWN.hlBox = null;
+  const fr = layout(Z);
+  // the band's loop relaxes while the stack is apart
+  PARTS.band.meshes = bandFor(lerp(BAND.rest, BAND.apart, Z.exL.band));
+  PARTS.dispR.lit = Z.disp;
+  PARTS.board.spin = Z.fan;
+  PARTS.lenses.ir = Z.ir;
+  const cable = cableMesh(fr, Z);
+  // the inside shows only while the glass is off or the stack is apart
+  const open = Z.glass > 0.002 || LAYERS.some((n) => Z.exL[n] > 0.002);
+  const vis = { glass: 1, shell: 1, shellIn: open, cams: open, board: open, dispL: open, dispR: open, lenses: open, seal: 1, band: 1, strapL: 1, strapR: 1, battery: 1 };
+  // the order: parts by depth, nudged while a part is home so the frame wraps what is inside it
+  const BIAS = { band: -900, strapL: -800, seal: -700, shellIn: -600, shell: 500, glass: 620, strapR: 700 };
+  const items = [];
+  for (const id of Object.keys(vis)) {
+    if (!vis[id]) continue;
+    const pt = PARTS[id], F = fr[id];
+    let c = [0, 0, 0], n = 0;
+    for (const m of pt.meshes) for (const f of m.F) { c = add3(c, f.c); n++; }
+    c = mul3(c, 1 / Math.max(1, n));
+    const home = LAYER_OF[id] ? 1 - Z.exL[LAYER_OF[id]] : 1;
+    items.push({ pt, F, key: dep(F, c) + (BIAS[id] || 0) * home, grp: id === "battery" && Z.away < 0.5 ? 1 : 0 });
+  }
+  items.sort((a, b) => a.grp - b.grp || a.key - b.key);
+  const fade = (s) => (Z.away > 0.001 ? `<g opacity="${r3(1 - Z.away)}">${s}</g>` : s);
+  const out = [];
+  if (Z.away < 0.995) out.push(fade(partSvg(cable, WORLD)));
+  for (const it of items) {
+    if (it.pt.id === "battery") { if (Z.away < 0.995) out.push(fade(partSvg(it.pt, it.F))); }
+    else out.push(partSvg(it.pt, it.F));
+  }
+  // the highlight dims everything but the glass, so the logo stays bright
+  if (Z.hl && Z.hlA > 0.002) {
+    out.push(`<rect class="dim" x="-4000" y="-4000" width="8000" height="8000" opacity="${r3(0.55 * Z.hlA)}"/>`);
+    out.push(partSvg(PARTS.glass, fr.glass));
+  }
+  vpG.innerHTML = out.join("");
+
+  // the shadows on the mat: low parts solid, raised parts fainter
+  {
+    let low = "", high = "";
+    const all = items.filter((it) => Z.away < 0.5 || it.pt.id !== "battery").map((it) => ({ pt: it.pt, F: it.F }));
+    if (Z.away < 0.5) all.push({ pt: cable, F: WORLD });
+    for (const { pt, F } of all) {
+      for (const m of pt.meshes) {
+        const chunk = m.V.length > 400 ? 120 : m.V.length;
+        for (let s0 = 0; s0 < m.V.length; s0 += chunk) {
+          const w3 = [];
+          let z0 = 1e9;
+          for (let i = s0; i < Math.min(m.V.length, s0 + chunk + 12); i += 2) { const p = worldOf(F, m.V[i]); w3.push(p); if (p[2] < z0) z0 = p[2]; }
+          if (w3.length < 3) continue;
+          const d = polyD(hull(w3.map(toMat)));
+          if (z0 - MAT_T < 12) low += d; else high += d;
+        }
+      }
+    }
+    shadowEl.setAttribute("d", low);
+    shadowFl.setAttribute("d", high);
+  }
+
+  // the camera: what is drawn, closing in on the subject of the step; every blend is continuous
+  const ptsOf = (ids) => { const o = []; for (const it of items) if (!ids || ids.includes(it.pt.id)) o.push(...screenPts(it.pt, it.F, null, 3)); return o; };
+  const heads = items.filter((it) => it.pt.id !== "battery").map((it) => it.pt.id);
+  let bb = lerpBox(unionBox(boxOf(ptsOf(null)), boxOf(screenPts(cable, WORLD, null, 4))), boxOf(ptsOf(heads)), Z.away);
+  const cones = conesOf(fr, Z);
+  if (cones.length) { let cb = bb; for (const c of cones) cb = unionBox(cb, boxOf([c.A, ...c.ring])); bb = lerpBox(bb, cb, Z.coneV); }
+  if (Z.disp > 0.001) {
+    const lp = loupeAt(fr);
+    const near = unionBox(unionBox(boxOf(ptsOf(["glass", "shell", "dispR", "battery"])), boxOf(screenPts(cable, WORLD, null, 4))), [lp.c[0] - lp.r, lp.c[1] - lp.r, lp.c[0] + lp.r, lp.c[1] + lp.r]);
+    bb = lerpBox(bb, near, Z.disp);
+  }
+  if (Z.lens > 0.001) bb = lerpBox(bb, unionBox(boxOf(ptsOf(["glass", "shell", "lenses", "battery"])), boxOf(screenPts(cable, WORLD, null, 4))), Z.lens);
+  if (Z.air > 0.001) { const { warm, cool } = airPaths(fr, Z.air); const pad = 7 / fitOf(bb, 0.97); const ab = boxOf([...warm.flat(), ...cool.flat()]); bb = unionBox(bb, [ab[0] - pad, ab[1] - pad, ab[2] + pad, ab[3] + pad]); }
+
+  // the highlight: the part comes forward with a warm glow and a coloured rim
+  const fx = [];
+  if (Z.hl && Z.hlA > 0.002) {
+    const target = Z.hl === "r1" ? { pt: PARTS.board, F: fr.board, only: "r1" } : Z.hl === "disp" ? { pt: PARTS.dispR, F: fr.dispR, only: null } : Z.hl === "lens" ? { pt: PARTS.lenses, F: fr.lenses, only: null } : Z.hl === "fans" ? { pt: PARTS.board, F: fr.board, only: "fan" } : { pt: cable, F: WORLD, only: "plug" };
+    const sp = screenPts(target.pt, target.F, target.only, 1);
+    const hb = hull(sp);
+    DRAWN.hlBox = boxOf(hb);
+    fx.push(`<g opacity="${r3(Z.hlA)}"><path class="halo" d="${polyD(hb)}" fill="#ffb648" filter="url(#vp-glow)" opacity=".95" transform="${scaleAbout(hb, Z.hl === "plug" ? 1.9 : 1.3)}"/></g>`);
+    if (Z.hl === "r1" && Z.feed > 0.002) {
+      const r1c = midOf(DRAWN.hlBox);
+      let d = "";
+      for (const c of CAMS) { const t = scr(fr.cams, c.tip); d += `M${P1(t)}Q${r1(lerp(t[0], r1c[0], 0.5))} ${r1(Math.max(t[1], r1c[1]) + 12)} ${P1(r1c)}`; }
+      fx.push(`<path class="feed" d="${d}" opacity="${r3(0.85 * Z.feed)}" stroke-dashoffset="${r2(-Z.feedT * 40)}"/>`);
+    }
+    fx.push(`<g opacity="${r3(Math.min(1, Z.hlA * 1.6))}">${partSvg(target.pt, target.F, target.only)}</g>`);
+    fx.push(`<path class="rim" d="${polyD(hb)}" stroke="#e5583e" opacity="${r3(Z.hlA)}"/>`);
+  }
+  // the readouts, each a tag whose box also keeps the camera honest
+  const tags = [];
+  if (Z.readout > 0.01 && Z.hl === "r1" && DRAWN.hlBox) { const b = DRAWN.hlBox; tags.push({ a: Z.readout, args: [[b[2], (b[1] + b[3]) / 2], 70, -64, `R1 · ${M.r1Ms} ms`, "new images to the displays, Apple"] }); }
+  if (Z.msTag > 0.01) tags.push({ a: Z.msTag, args: [scr(fr.glass, [56, yf(56, 30), 30]), 60, -60, `R1 · ${Math.round(Z.ms)} ms`, `${M.cameras} cameras · ${M.sensors} sensors · ${M.mics} mics, Apple`] });
+  if (Z.eyeTag > 0.01) tags.push({ a: Z.eyeTag, args: [scr(fr.lenses, [LENS.x, LENS.y0, LENS.z + 14]), 96, -50, "eye tracking", "infrared lights + cameras round each lens"] });
+  if (Z.hl === "plug" && Z.hlA > 0.01 && DRAWN.hlBox) { const b = DRAWN.hlBox; tags.push({ a: Z.hlA, args: [[b[0], b[1]], -30, -50, "twist to lock", "the battery cable's plug"] }); }
+  if (Z.loupe > 0.01) {
+    const lp = loupeAt(fr), sp = stampOf(fr);
+    tags.push({ a: Z.loupe, args: [[lp.c[0], lp.c[1] + lp.r], 0, 30, `${(M.pixels / 1e6).toFixed(0)} million pixels`, "across the 2 displays, Apple"] });
+    tags.push({ a: Z.loupe, args: [sp[Math.floor(sp.length * 0.62)], -96, 40, "≈ a postage stamp", null] });
+  }
+  if (Z.tags > 0.01) {
+    const bandBack = [0, STRAP.y1 - lerp(BAND.rest, BAND.apart, Z.exL.band), 10];
+    for (const [name, id, p, dx, dy] of [
+      ["glass", "glass", [-40, yf(-40, 34), 34], 46, -44], ["cams", "cams", [-48, yf(-48, -36) - 6, -40], -30, 44],
+      ["shell", "shell", [-40, yf(-40, 44) - 12, 45], -30, -44], ["board", "board", [-36, BOARD_Y + 1.5, 3], -10, 64],
+      ["disp", "dispL", [-32, DISP.y, DISP.z + 10], 6, -78], ["lenses", "lenses", [32, LENS.y1, LENS.z - 20], 20, 58],
+      ["seal", "seal", [44, yb(44, 40) - 14, 34], 10, -50], ["band", "band", bandBack, -80, -34],
+    ]) tags.push({ a: Z.tags, args: [scr(fr[id], p), dx, dy, LABEL[name], null] });
+  }
+  // fit the camera to the subject and every tag that is showing; tags are a fixed size on the stage, so fit twice
+  let cs = fitOf(bb, 0.97), bbT = bb;
+  for (let pass = 0; pass < 3; pass++) {
+    bbT = bb;
+    for (const t of tags) bbT = lerpBox(bbT, unionBox(bbT, tagBox(...t.args, cs)), clamp(t.a * 3));
+    cs = fitOf(bbT, 0.97);
+  }
+  const Fc = midOf(bbT);
+  artG.setAttribute("transform", `translate(${D.W / 2} ${D.H / 2}) scale(${cs.toFixed(4)}) translate(${(-Fc[0]).toFixed(3)} ${(-Fc[1]).toFixed(3)})`);
+  DRAWN.cam = { cs, Fc };
+  if (cones.length) fx.unshift(conesSvg(cones, Z, cs));
+  if (Z.air > 0.001) fx.push(airSvg(fr, Z, cs));
+  if (Z.sound > 0.001) fx.push(soundSvg(fr, Z));
+  if (Z.loupe > 0.01) fx.push(`<g opacity="${r3(Z.loupe)}">${loupeSvg(fr, cs)}</g>`);
+  for (const t of tags) fx.push(`<g opacity="${r3(t.a)}">${tagSvg(...t.args, cs)}</g>`);
+  fxG.innerHTML = fx.join("");
+
+  // readouts
+  const outN = LAYERS.filter((n) => Z.exL[n] > 0.5).length;
+  setText(chip("parts"), outN >= 2 ? `${outN} layers` : Z.glass > 0.05 ? "glass off" : "1 headset");
+  ["cams", "sensors", "mics", "r1", "px", "parts"].forEach((n) => chipHot(n, Z.hot.includes(n)));
+  DRAWN.Z = Z;
+  DRAWN.out = outN;
+  DRAWN.cones = cones.filter((c) => c.v > 0.5).length;
+  DRAWN.bbox = bbT;
+  return Z;
+}
+
+const UPDATE = Object.fromEntries(ORDER.map((id) => [id, (u) => { S.step = id; S.u = u; }]));
+
+// the swatches pick the band's knit; the mat takes a soft colour that sets it off
+const FINISHES = [
+  ["slate", "#7f838d", "#a9cdb4"],
+  ["sand", "#c9b994", "#9fc4e6"],
+  ["coral", "#e07a62", "#c9d6a3"],
+  ["midnight", "#3a4258", "#f2d58c"],
+  ["sky", "#8fb3d9", "#f4c59a"],
+];
+document.querySelectorAll("[data-swatch]").forEach((b, i) => { const [name, c] = FINISHES[i % FINISHES.length]; b.dataset.swatch = c; b.title = name; b.setAttribute("aria-label", name); b.style.background = c; });
+
+tour({
+  STEPS,
+  ORDER,
+  gap: 0.6,
+  update: (id, u) => UPDATE[id](u),
+  reset: () => { S = fresh(); },
+  onFinish: (id) => { if (id === "together") S = fresh(); },
+  draw,
+  paint: (c) => {
+    const f = FINISHES.find((x) => x[1] === c.toLowerCase()) || FINISHES[0];
+    MATS.knit.c = c;
+    MATS.knit.rgb = rgbOf(c);
+    shadeCache.clear();
+    return mixHex(f[2], "#f5f0e5", 0.25);
+  },
+  probe: () => {
+    const Z = DRAWN.Z || scene();
+    return {
+      step: S.step, u: S.u, glass: Z.glass, out: DRAWN.out || 0, disp: Z.disp, loupe: Z.loupe, lens: Z.lens, ir: Z.ir, cones: DRAWN.cones || 0, ms: Math.round(Z.ms),
+      fan: Z.fan, air: Z.air, sound: Z.sound, plug: Z.plugRot, plugOut: Z.plugOut, lift: Z.lift, hlA: Z.hlA, hl: Z.hl, cam: DRAWN.cam, bbox: DRAWN.bbox,
+    };
+  },
+});
+
+}
+</script></body></html>

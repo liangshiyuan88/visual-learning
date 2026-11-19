@@ -1,0 +1,2422 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>NVIDIA DGX Spark · Visual Learning</title><script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
+<meta name="description" content="The CPU and the GPU sit side by side in one chip package and share one pool of">
+<meta property="og:type" content="website"><meta property="og:title" content="NVIDIA DGX Spark · Visual Learning"><meta property="og:description" content="The CPU and the GPU sit side by side in one chip package and share one pool of">
+<meta property="og:image" content="https://visual-learning.app/dgx-spark-og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:url" content="https://visual-learning.app/dgx-spark">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="NVIDIA DGX Spark · Visual Learning"><meta name="twitter:description" content="The CPU and the GPU sit side by side in one chip package and share one pool of"><meta name="twitter:image" content="https://visual-learning.app/dgx-spark-og.png">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20x%3D%223%22%20y%3D%223%22%20width%3D%2226%22%20height%3D%2226%22%20rx%3D%226%22%20fill%3D%22%23f2c14e%22%20stroke%3D%22%2323263a%22%20stroke-width%3D%222.4%22%2F%3E%3Ccircle%20cx%3D%2216%22%20cy%3D%2216%22%20r%3D%226%22%20fill%3D%22%23fffaf0%22%20stroke%3D%22%2323263a%22%20stroke-width%3D%222.4%22%2F%3E%3C%2Fsvg%3E"><style>
+.site{width:min(980px,100% - 32px);margin:22px auto 0;padding:0 20px;display:flex;align-items:center;gap:10px;font:600 12px ui-monospace,"SF Mono",Menlo,Consolas,monospace;color:#23263a;position:relative;z-index:5}
+.site a{color:inherit;text-decoration:none}
+.site .home{font:700 15px ui-sans-serif,system-ui,"Segoe UI",sans-serif;white-space:nowrap;margin-right:auto}
+.site .home:hover{text-decoration:underline;text-underline-offset:3px}
+.pill{background:#fffaf0;border:1.3px solid #23263a;border-radius:999px;padding:5px 11px;white-space:nowrap;box-shadow:2px 2px 0 #23263a;transition:transform .12s,box-shadow .12s;cursor:pointer}
+.pill:hover{transform:translate(-1px,-1px);box-shadow:3px 3px 0 #23263a}
+.menu{position:relative}
+.menu summary{list-style:none;display:flex;align-items:center;gap:7px}
+.menu summary::-webkit-details-marker{display:none}
+.menu summary b{opacity:.5}
+.menu summary i{font-style:normal;font-size:9px;opacity:.6;transition:transform .15s}
+.menu[open] summary{background:#23263a;color:#fffaf0}
+.menu[open] summary i{transform:rotate(180deg)}
+.panel{position:absolute;right:0;top:calc(100% + 10px);width:min(560px,calc(100vw - 32px));background:#f5f0e5;border:1.4px solid #23263a;border-radius:8px;box-shadow:4px 4px 0 #23263a;padding:10px;display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.panel a{display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 6px 8px;border-radius:6px;border:1.2px solid transparent;text-align:center}
+.panel a:hover{border-color:#23263a;background:#fffaf0}
+.panel a[aria-current]{background:#efe8d8;border-color:#23263a}
+.panel img{width:100%;aspect-ratio:1/1;object-fit:contain}
+.panel b{font-size:10px;opacity:.55;letter-spacing:.06em}
+.panel span{font:600 12px/1.25 ui-sans-serif,system-ui,"Segoe UI",sans-serif}
+.arrows{display:flex;gap:6px}
+.arrows a{padding:5px 10px}
+.iso-page{padding-top:16px!important}
+.credit{margin:16px 2px 0;font:500 12px/1.5 ui-sans-serif,system-ui,"Segoe UI",sans-serif;color:#7b7666}
+.credit a{color:inherit;text-underline-offset:2px}
+.keys{font:600 11px ui-monospace,Menlo,Consolas,monospace;color:#8a8676}
+@media (max-width:760px){
+.site{width:100%;padding:10px 10px 0;margin-top:0;gap:6px;flex-wrap:wrap}
+.site .badges{order:-2;margin-left:auto}
+.site .maker,.site .guide{font-size:11px;padding:4px 10px}
+.site::after{content:"";order:-1;flex-basis:100%;height:0}
+.site .home{font-size:14px}
+.menu summary .nm{display:none}
+.panel{position:fixed;left:10px;right:10px;top:52px;width:auto;max-height:calc(100vh - 70px);overflow:auto;grid-template-columns:repeat(3,1fr);gap:4px;padding:8px}
+.panel span{font-size:11px}
+.iso-page{padding-top:10px!important}
+.keys{display:none}
+.credit{margin:12px 2px 0}
+}
+.render .site,.render .credit{display:none}
+.embed .site,.embed .credit{display:none!important}
+.embed .iso-page{margin:0 auto!important;padding:6px!important;width:100%!important}
+.embed.fill .iso-page{height:100vh;display:flex;flex-direction:column}
+.embed.fill .card{flex:1;grid-template-rows:auto 1fr auto}
+.embed.fill .main{display:flex;flex-direction:column}
+.embed.fill .stage{flex:1;display:grid;place-items:center}
+a.guide,.site a.guide{font:700 12px ui-monospace,"SF Mono",Menlo,Consolas,monospace;white-space:nowrap;text-decoration:none;color:#23263a;background:#f2c14e;border:1.3px solid #23263a;border-radius:999px;padding:5px 12px;box-shadow:2px 2px 0 #23263a;transition:transform .12s,box-shadow .12s}
+a.guide:hover{transform:translate(-1px,-1px);box-shadow:3px 3px 0 #23263a}
+.badges{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+a.maker,.site a.maker{font:600 12px ui-monospace,"SF Mono",Menlo,Consolas,monospace;white-space:nowrap;text-decoration:none;color:#fffaf0;background:#23263a;border:1.3px solid #23263a;border-radius:999px;padding:5px 12px;box-shadow:2px 2px 0 #23263a55;transition:transform .12s}
+.maker b{font-weight:700;color:#f2c14e}
+.maker:hover{transform:translate(-1px,-1px)}
+</style><style>
+.iso{
+  --anatomy-page:#0b0b0b;--anatomy-card:#131313;--anatomy-text:#a3a3a3;--anatomy-strong:#e6e6e6;--anatomy-muted:#6e6e6e;
+  --anatomy-paper:#131313;--anatomy-face:#1b1b1b;--anatomy-top:#1c1c1c;
+  --anatomy-shade-0:#0f0f0f;--anatomy-shade-1:#121212;--anatomy-shade-2:#151515;--anatomy-shade-3:#181818;
+  --anatomy-lit-top:#262626;--anatomy-lit-shade:#1d1d1d;
+  --anatomy-hi:#d4d4d4;--anatomy-mid:#6a6a6a;--anatomy-lo:#3e3e3e;--anatomy-faint:#2a2a2a;--anatomy-lit:#ffffff;
+  --anatomy-halo:#050505;--anatomy-halo-opacity:.9;--anatomy-dot:#e6e6e6;
+  --anatomy-red:#ff6b6b;--anatomy-green:#6be0a0;--anatomy-blue:#6b9bff;
+  --anatomy-weight:.6px;--anatomy-ease:cubic-bezier(.32,.72,0,1);
+  --anatomy-mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --anatomy-lift:inset 0 1px 0 0 #ffffff0a,inset 0 0 0 1px #ffffff06,0 0 0 1px #00000026,0 1px 1px -.5px #00000014,0 3px 3px -1.5px #00000014,0 6px 6px -3px #00000014,0 12px 12px -6px #00000014;
+}
+.iso[data-theme="light"]{
+  --anatomy-page:#f2f2ef;--anatomy-card:#fbfbfa;--anatomy-text:#57575a;--anatomy-strong:#18181a;--anatomy-muted:#8c8c90;
+  --anatomy-paper:#fbfbfa;--anatomy-face:#ffffff;--anatomy-top:#ffffff;
+  --anatomy-shade-0:#dcdcd9;--anatomy-shade-1:#e5e5e2;--anatomy-shade-2:#ededea;--anatomy-shade-3:#f4f4f1;
+  --anatomy-lit-top:#ffffff;--anatomy-lit-shade:#eeeeeb;
+  --anatomy-hi:#26262a;--anatomy-mid:#8a8a8f;--anatomy-lo:#b4b4b8;--anatomy-faint:#d4d4d6;--anatomy-lit:#000000;
+  --anatomy-halo:#8a8a80;--anatomy-halo-opacity:.32;--anatomy-dot:#3a3a3e;
+  --anatomy-red:#e5484d;--anatomy-green:#30a46c;--anatomy-blue:#3e63dd;
+  --anatomy-lift:inset 0 1px 0 0 #ffffff,0 0 0 1px #0000000f,0 1px 1px -.5px #0000000a,0 3px 3px -1.5px #0000000a,0 6px 6px -3px #0000000a,0 12px 12px -6px #0000000a;
+}
+.iso-svg{display:block;width:100%;height:auto;overflow:visible}
+.iso-svg path,.iso-svg circle{vector-effect:non-scaling-stroke}
+.iso-fill{fill:var(--anatomy-paper);stroke:none}
+.iso-solid[data-lit]>.iso-fill{fill:var(--anatomy-face)}
+.iso-shade,.iso-top{stroke:none}
+.iso-shade[data-shade="0"]{fill:var(--anatomy-shade-0)}
+.iso-shade[data-shade="1"]{fill:var(--anatomy-shade-1)}
+.iso-shade[data-shade="2"]{fill:var(--anatomy-shade-2)}
+.iso-shade[data-shade="3"]{fill:var(--anatomy-shade-3)}
+.iso-top{fill:var(--anatomy-top)}
+.iso-solid[data-lit]>.iso-top{fill:var(--anatomy-lit-top)}
+.iso-solid[data-lit]>.iso-shade{fill:var(--anatomy-lit-shade)}
+.iso-solid[data-seamless]>.iso-shade,.iso-solid[data-seamless]>.iso-top{stroke-width:.4;stroke-linejoin:round}
+.iso-solid[data-seamless]>.iso-shade[data-shade="0"]{stroke:var(--anatomy-shade-0)}
+.iso-solid[data-seamless]>.iso-shade[data-shade="1"]{stroke:var(--anatomy-shade-1)}
+.iso-solid[data-seamless]>.iso-shade[data-shade="2"]{stroke:var(--anatomy-shade-2)}
+.iso-solid[data-seamless]>.iso-shade[data-shade="3"]{stroke:var(--anatomy-shade-3)}
+.iso-solid[data-seamless]>.iso-top{stroke:var(--anatomy-top)}
+.iso-solid[data-seamless][data-lit]>.iso-top{stroke:var(--anatomy-lit-top)}
+.iso-solid[data-seamless][data-lit]>.iso-shade{stroke:var(--anatomy-lit-shade)}
+.iso-solid[data-lit]>.iso-edge{stroke:var(--anatomy-lit)}
+.iso-halo{fill:var(--anatomy-halo);stroke:none;filter:blur(9px);opacity:var(--anatomy-halo-opacity);transform:translateY(3px)}
+.iso-line{fill:none;stroke:var(--anatomy-lo);stroke-width:var(--anatomy-weight);stroke-linecap:round;stroke-linejoin:round}
+.iso-line[data-tone="hi"]{stroke:var(--anatomy-hi)}
+.iso-line[data-tone="mid"]{stroke:var(--anatomy-mid)}
+.iso-line[data-tone="lo"]{stroke:var(--anatomy-lo)}
+.iso-line[data-tone="faint"]{stroke:var(--anatomy-faint)}
+.iso-line[data-tone="lit"]{stroke:var(--anatomy-lit)}
+.iso-line[data-tone="red"]{stroke:var(--anatomy-red)}
+.iso-line[data-tone="green"]{stroke:var(--anatomy-green)}
+.iso-line[data-tone="blue"]{stroke:var(--anatomy-blue)}
+.iso-line[data-dotted]{stroke-dasharray:.01 3.5;stroke-width:1}
+.iso-line[data-dashed]{stroke-dasharray:3 3}
+.iso-line[data-flow]{stroke-dasharray:2 6}
+.iso-wire-end{fill:var(--anatomy-paper);stroke:var(--anatomy-lo);stroke-width:var(--anatomy-weight)}
+.iso-wire[data-tone="hi"] .iso-wire-end{stroke:var(--anatomy-hi)}
+.iso-wire[data-tone="mid"] .iso-wire-end{stroke:var(--anatomy-mid)}
+.iso-wire[data-tone="faint"] .iso-wire-end{stroke:var(--anatomy-faint)}
+.iso-wire[data-tone="lit"] .iso-wire-end{stroke:var(--anatomy-lit)}
+.iso-dots circle{fill:var(--anatomy-dot);stroke:none;opacity:.32}
+.iso-dots[data-tone="hi"] circle{opacity:.85}
+.iso-dots[data-tone="mid"] circle{opacity:.45}
+.iso-dots[data-tone="lo"] circle{opacity:.22}
+.iso-dots[data-tone="faint"] circle{opacity:.12}
+.iso-face-text{fill:var(--anatomy-mid);font-family:var(--anatomy-mono);letter-spacing:.04em}
+.iso-face-text[data-tone="hi"]{fill:var(--anatomy-hi)}
+.iso-face-text[data-tone="lo"]{fill:var(--anatomy-lo)}
+.iso-face-text[data-tone="faint"]{fill:var(--anatomy-faint)}
+.tb-body{fill:var(--anatomy-shade-2);stroke:none}
+.tb-shine{fill:var(--anatomy-top);stroke:none}
+.tb-shade{fill:var(--anatomy-shade-0);stroke:none}
+.tb-ring{fill:none;stroke:var(--anatomy-lo);stroke-width:.45;stroke-linecap:butt;stroke-linejoin:round}
+.tb-ring[data-tone="mid"]{stroke:var(--anatomy-mid)}
+.tb-ring[data-tone="faint"]{stroke:var(--anatomy-faint)}
+.tb-ring[data-tone="hi"]{stroke:var(--anatomy-hi)}
+@keyframes iso-flow{to{stroke-dashoffset:-32}}
+@keyframes iso-pulse{0%,100%{opacity:.18}12%{opacity:1}40%{opacity:.18}}
+.iso-line[data-flow]{animation:iso-flow 1600ms linear infinite}
+.iso-dots circle[data-pulse]{animation:iso-pulse 1600ms steps(1,end) infinite;animation-delay:var(--pulse-at,0ms)}
+.iso-figure{margin:32px 0 36px}
+.iso-plate{position:relative;padding:52px 24px;border-radius:0;background:var(--anatomy-card);box-shadow:0 0 0 1px var(--anatomy-mid);--anatomy-paper:var(--anatomy-card)}
+.iso-plate-corners{position:absolute;inset:18px 20px;pointer-events:none}
+.iso-plate-corner{position:absolute;color:var(--anatomy-muted);font-family:var(--anatomy-mono);font-size:10.5px;line-height:1;letter-spacing:.04em;white-space:nowrap}
+.iso-plate-corner[data-corner="fig"]{top:0;left:0;color:var(--anatomy-text)}
+.iso-plate-corner[data-corner="title"]{top:0;right:0;text-transform:uppercase;letter-spacing:.1em}
+.iso-plate-corner[data-corner="hint"]{bottom:0;left:0;text-transform:uppercase;letter-spacing:.1em}
+.iso-plate-corner[data-corner="readout"]{right:0;bottom:0;color:var(--anatomy-text);font-variant-numeric:tabular-nums}
+.iso-plate .iso-svg{margin:0 auto}
+.iso-legend{display:grid;gap:8px;margin-top:12px;color:var(--anatomy-muted);font-size:13px;line-height:1.55}
+.iso-keys{display:flex;flex-wrap:wrap;gap:6px 18px}
+.iso-key{display:inline-flex;align-items:center;gap:7px}
+.iso-swatch{width:16px;height:10px;flex:none;overflow:visible}
+.iso-swatch path{fill:none;stroke:var(--anatomy-hi);stroke-width:1;vector-effect:non-scaling-stroke;stroke-linejoin:round;stroke-linecap:round}
+.iso-swatch[data-mark="raised"] path,.iso-swatch[data-mark="flat"] path{stroke:var(--anatomy-mid)}
+.iso-swatch[data-mark="lit"] path{stroke:var(--anatomy-lit)}
+.iso-swatch[data-mark="dim"] path{stroke:var(--anatomy-lo)}
+.iso-swatch[data-mark="dotted"] path{stroke-dasharray:.01 3;stroke-width:1.4}
+.iso-swatch[data-mark="dashed"] path{stroke-dasharray:3 2.5}
+.iso-swatch[data-mark="red"] path{stroke:var(--anatomy-red)}
+.iso-swatch[data-mark="green"] path{stroke:var(--anatomy-green)}
+.iso-swatch[data-mark="blue"] path{stroke:var(--anatomy-blue)}
+.iso-swatch-crease{stroke:var(--anatomy-lo)!important}
+@media (max-width:560px){.iso-plate{padding:48px 12px 70px}.iso-plate-corner[data-corner="hint"]{bottom:18px}}
+@media (prefers-reduced-motion:reduce){.iso-line[data-flow],.iso-dots circle[data-pulse]{animation:none}}
+
+*{box-sizing:border-box}
+html{color-scheme:dark}
+body[data-theme="light"]{color-scheme:light}
+body{margin:0;background:var(--anatomy-page);color:var(--anatomy-text);font:14px/1.6 ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+.iso-page{width:min(980px,100% - 32px);margin:64px auto 96px}
+</style></head><body class="iso" data-theme="light"><header class="site">
+  <a class="home" href="/">← Visual Learning</a>
+  <details class="menu"><summary class="pill"><b>25</b><span class="nm">NVIDIA DGX Spark</span><span>· all 40</span><i>▼</i></summary>
+    <nav class="panel"><a href="/dji-drone"><img src="/thumbs/dji-drone.webp" alt="" loading="lazy"><b>FIG. 29</b><span>DJI drone</span></a><a href="/dji-neo"><img src="/thumbs/dji-neo.webp" alt="" loading="lazy"><b>FIG. 36</b><span>DJI Neo</span></a><a href="/vision-pro"><img src="/thumbs/vision-pro.webp" alt="" loading="lazy"><b>FIG. 28</b><span>Vision Pro</span></a><a href="/rolex"><img src="/thumbs/rolex.webp" alt="" loading="lazy"><b>FIG. 38</b><span>Rolex Submariner</span></a><a href="/meta-glasses"><img src="/thumbs/meta-glasses.webp" alt="" loading="lazy"><b>FIG. 37</b><span>Meta Ray-Ban Display</span></a><a href="/ipad-pro"><img src="/thumbs/ipad-pro.webp" alt="" loading="lazy"><b>FIG. 41</b><span>iPad Pro</span></a><a href="/dgx-spark" aria-current="page"><img src="/thumbs/dgx-spark.webp" alt="" loading="lazy"><b>FIG. 25</b><span>NVIDIA DGX Spark</span></a><a href="/spot"><img src="/thumbs/spot.webp" alt="" loading="lazy"><b>FIG. 30</b><span>Spot robot dog</span></a><a href="/robot-vacuum"><img src="/thumbs/robot-vacuum.webp" alt="" loading="lazy"><b>FIG. 40</b><span>Robot vacuum with an arm</span></a><a href="/atlas"><img src="/thumbs/atlas.webp" alt="" loading="lazy"><b>FIG. 35</b><span>Atlas robot</span></a><a href="/combination-lock"><img src="/thumbs/combination-lock.webp" alt="" loading="lazy"><b>FIG. 39</b><span>Combination lock</span></a><a href="/starlink"><img src="/thumbs/starlink.webp" alt="" loading="lazy"><b>FIG. 33</b><span>Starlink dish</span></a><a href="/switch-2"><img src="/thumbs/switch-2.webp" alt="" loading="lazy"><b>FIG. 32</b><span>Nintendo Switch 2</span></a><a href="/f1-wheel"><img src="/thumbs/f1-wheel.webp" alt="" loading="lazy"><b>FIG. 34</b><span>F1 steering wheel</span></a><a href="/ps-controller"><img src="/thumbs/ps-controller.webp" alt="" loading="lazy"><b>FIG. 24</b><span>PlayStation controller</span></a><a href="/iphone"><img src="/thumbs/iphone.webp" alt="" loading="lazy"><b>FIG. 20</b><span>iPhone</span></a><a href="/macbook"><img src="/thumbs/macbook.webp" alt="" loading="lazy"><b>FIG. 21</b><span>MacBook</span></a><a href="/rtx-5090"><img src="/thumbs/rtx-5090.webp" alt="" loading="lazy"><b>FIG. 27</b><span>RTX 5090</span></a><a href="/mac-mini"><img src="/thumbs/mac-mini.webp" alt="" loading="lazy"><b>FIG. 26</b><span>Mac mini</span></a><a href="/apple-watch"><img src="/thumbs/apple-watch.webp" alt="" loading="lazy"><b>FIG. 23</b><span>Apple Watch</span></a><a href="/airpods"><img src="/thumbs/airpods.webp" alt="" loading="lazy"><b>FIG. 22</b><span>AirPods Pro</span></a><a href="/mechanical-watch"><img src="/thumbs/mechanical-watch.webp" alt="" loading="lazy"><b>FIG. 18</b><span>Mechanical watch</span></a><a href="/rubiks-cube"><img src="/thumbs/rubiks-cube.webp" alt="" loading="lazy"><b>FIG. 15</b><span>Rubik's cube</span></a><a href="/instant-camera"><img src="/thumbs/instant-camera.webp" alt="" loading="lazy"><b>FIG. 16</b><span>Instant camera</span></a><a href="/atom"><img src="/thumbs/atom.webp" alt="" loading="lazy"><b>FIG. 19</b><span>The atom</span></a><a href="/lava-lamp"><img src="/thumbs/lava-lamp.webp" alt="" loading="lazy"><b>FIG. 17</b><span>Lava lamp</span></a><a href="/claw-machine"><img src="/thumbs/claw-machine.webp" alt="" loading="lazy"><b>FIG. 02</b><span>Claw machine</span></a><a href="/microwave"><img src="/thumbs/microwave.webp" alt="" loading="lazy"><b>FIG. 07</b><span>Microwave</span></a><a href="/espresso-machine"><img src="/thumbs/espresso-machine.webp" alt="" loading="lazy"><b>FIG. 01</b><span>Espresso machine</span></a><a href="/car-engine"><img src="/thumbs/car-engine.webp" alt="" loading="lazy"><b>FIG. 03</b><span>Car engine</span></a><a href="/vending-machine"><img src="/thumbs/vending-machine.webp" alt="" loading="lazy"><b>FIG. 04</b><span>Vending machine</span></a><a href="/washing-machine"><img src="/thumbs/washing-machine.webp" alt="" loading="lazy"><b>FIG. 05</b><span>Washing machine</span></a><a href="/toaster"><img src="/thumbs/toaster.webp" alt="" loading="lazy"><b>FIG. 06</b><span>Toaster</span></a><a href="/pencil-sharpener"><img src="/thumbs/pencil-sharpener.webp" alt="" loading="lazy"><b>FIG. 08</b><span>Pencil sharpener</span></a><a href="/smoke-alarm"><img src="/thumbs/smoke-alarm.webp" alt="" loading="lazy"><b>FIG. 09</b><span>Smoke alarm</span></a><a href="/fridge"><img src="/thumbs/fridge.webp" alt="" loading="lazy"><b>FIG. 10</b><span>Fridge</span></a><a href="/capsule-toy-machine"><img src="/thumbs/capsule-toy-machine.webp" alt="" loading="lazy"><b>FIG. 11</b><span>Capsule toy machine</span></a><a href="/photo-booth"><img src="/thumbs/photo-booth.webp" alt="" loading="lazy"><b>FIG. 12</b><span>Photo booth</span></a><a href="/roller-coaster"><img src="/thumbs/roller-coaster.webp" alt="" loading="lazy"><b>FIG. 13</b><span>Roller coaster</span></a><a href="/elevator"><img src="/thumbs/elevator.webp" alt="" loading="lazy"><b>FIG. 14</b><span>Elevator</span></a></nav>
+  </details>
+  <span class="arrows"><a class="pill" href="/ipad-pro" data-go="prev" title="iPad Pro (←)">←</a><a class="pill" href="/spot" data-go="next" title="Spot robot dog (→)">→</a></span>
+  <span class="badges"><a class="guide" href="https://x.com/elvar_official/status/2111831136171151589" target="_blank" rel="noopener">Full guide ↗</a><a class="maker" href="https://x.com/elvar_official" target="_blank" rel="noopener">Made by <b>@elvar_official</b></a></span>
+</header><main class="iso-page"><style>.c-chrome{--f:#cfd7e0;--t:#e3e8ed;--s3:#d8dee6;--s2:#cfd7e0;--s1:#b8bfc9;--s0:#a0a7b1}
+.c-steel{--f:#bcc5cf;--t:#d8dde3;--s3:#c8cfd8;--s2:#bcc5cf;--s1:#a7afba;--s0:#9299a5}
+.c-dark{--f:#8e98a6;--t:#bdc3cb;--s3:#a2abb6;--s2:#8e98a6;--s1:#7f8896;--s0:#707886}
+.c-iron{--f:#7d8593;--t:#b4b8c0;--s3:#949ba6;--s2:#7d8593;--s1:#707786;--s0:#646a78}
+.c-brass{--f:#e3b866;--t:#efd6a6;--s3:#e8c582;--s2:#e3b866;--s1:#c9a45e;--s0:#af9057}
+.c-copper{--f:#d98a5a;--t:#e9bb9f;--s3:#e09f78;--s2:#d98a5a;--s1:#c07c54;--s0:#a86e4e}
+.c-black{--f:#383a4e;--t:#8c8d98;--s3:#5c5d6e;--s2:#383a4e;--s1:#34364a;--s0:#303245}
+.c-rubber{--f:#44465a;--t:#93949f;--s3:#666778;--s2:#44465a;--s1:#3f4154;--s0:#393b4e}
+.c-wood{--f:#cf9460;--t:#e3c1a3;--s3:#d8a77d;--s2:#cf9460;--s1:#b88559;--s0:#a07552}
+.c-porcelain{--f:#f7f3ea;--t:#faf8f3;--s3:#f8f5ee;--s2:#f7f3ea;--s1:#dad7d1;--s0:#bebbb9}
+.c-glass{--f:#d9eef5;--t:#e9f5f9;--s3:#e0f1f7;--s2:#d9eef5;--s1:#c0d3db;--s0:#a8b8c1}
+.c-amber{--f:#ffb648;--t:#ffd595;--s3:#ffc369;--s2:#ffb648;--s1:#e1a244;--s0:#c48e41}
+.c-mint{--f:#86d3ad;--t:#b9e5cf;--s3:#9cdbbc;--s2:#86d3ad;--s1:#78bb9c;--s0:#6aa48b}
+.c-butter{--f:#f2c14e;--t:#f7db98;--s3:#f4cc6e;--s2:#f2c14e;--s1:#d6ac4a;--s0:#ba9645}
+.c-tomato{--f:#e5583e;--t:#f09e8f;--s3:#ea7661;--s2:#e5583e;--s1:#cb503c;--s0:#b04939}
+.c-sky{--f:#7fb9e9;--t:#b5d6f2;--s3:#96c6ed;--s2:#7fb9e9;--s1:#72a5d0;--s0:#6590b8}
+.c-rose{--f:#f2a5bf;--t:#f7cbda;--s3:#f4b5cb;--s2:#f2a5bf;--s1:#d693ac;--s0:#ba8299}
+.c-lilac{--f:#b9a6e8;--t:#d6cbf2;--s3:#c6b6ec;--s2:#b9a6e8;--s1:#a494d0;--s0:#9082b7}
+.c-cream{--f:#f6eedb;--t:#faf5ea;--s3:#f8f1e1;--s2:#f6eedb;--s1:#dad3c4;--s0:#bdb8ae}
+.c-paper{--f:#fbf7ee;--t:#fdfaf5;--s3:#fcf8f1;--s2:#fbf7ee;--s1:#dedbd5;--s0:#c1bebc}
+.c-green{--f:#5fae7b;--t:#a2d0b2;--s3:#7cbd93;--s2:#5fae7b;--s1:#569b71;--s0:#4d8866}
+.c-pcb{--f:#3f8f5c;--t:#90bea0;--s3:#62a379;--s2:#3f8f5c;--s1:#3a8056;--s0:#367150}
+.c{--anatomy-paper:var(--f);--anatomy-face:var(--f);--anatomy-top:var(--t);--anatomy-shade-3:var(--s3);--anatomy-shade-2:var(--s2);--anatomy-shade-1:var(--s1);--anatomy-shade-0:var(--s0);--anatomy-lit-top:var(--t);--anatomy-lit-shade:var(--s2)}
+.c-body{--f:var(--body);--t:var(--body-t);--s3:var(--body-3);--s2:var(--body);--s1:var(--body-1);--s0:var(--body-0)}
+.c-alt{--f:var(--alt);--t:var(--alt-t);--s3:var(--alt-3);--s2:var(--alt);--s1:var(--alt-1);--s0:var(--alt-0)}
+.iso[data-theme="light"]{--anatomy-page:#ece6d8;--anatomy-card:#f5f0e5;--anatomy-hi:#23263a;--anatomy-mid:#23263aa8;--anatomy-lo:#23263a70;--anatomy-faint:#23263a45;--anatomy-lit:#23263a;--anatomy-dot:#23263a;--anatomy-weight:1.15px;--anatomy-halo-opacity:0;--anatomy-text:#4a4c5e;--anatomy-strong:#23263a;--anatomy-muted:#8a8676}
+body.iso{background:var(--anatomy-page);margin:0}
+.iso-page{max-width:980px;margin:0 auto;padding:28px 20px 40px;font-family:ui-sans-serif,system-ui,"Segoe UI",sans-serif;color:var(--anatomy-text)}
+.card{background:var(--anatomy-card);border:1.4px solid #23263a;border-radius:6px;box-shadow:4px 4px 0 #23263a;display:grid;grid-template-columns:200px 1fr;overflow:hidden}
+.side{border-right:1.4px solid #23263a;padding:18px 16px;display:flex;flex-direction:column;gap:10px;background:#efe8d8}
+.fig{font:600 11px var(--anatomy-mono);letter-spacing:.08em;text-transform:uppercase;color:#6b6656}
+.title{font:700 21px/1.15 ui-sans-serif,system-ui,"Segoe UI",sans-serif;color:#23263a;margin:2px 0 6px}
+.steps{display:flex;flex-direction:column;gap:7px;margin-top:4px}
+.step{appearance:none;text-align:left;font:600 12.5px var(--anatomy-mono);color:#23263a;background:#fffaf0;border:1.3px solid #23263a;border-radius:999px;padding:7px 12px 7px 10px;cursor:pointer;display:flex;gap:8px;align-items:center;box-shadow:2px 2px 0 #23263a;transition:transform .12s,box-shadow .12s,background .2s,opacity .2s}
+.step b{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;background:#23263a;color:#fffaf0;font-size:10px;flex:none}
+.step:hover:not([disabled]){transform:translate(-1px,-1px);box-shadow:3px 3px 0 #23263a}
+.step:active:not([disabled]),.step[data-press]{transform:translate(2px,2px);box-shadow:0 0 0 #23263a}
+.step[disabled]{opacity:.38;cursor:default;box-shadow:none}
+.step[data-on]{background:var(--body);opacity:1;box-shadow:2px 2px 0 #23263a}
+.step[data-done]{opacity:.55;box-shadow:none}
+.main{position:relative;padding:14px 18px 12px}
+.hint{font:500 13.5px/1.45 ui-sans-serif,system-ui,"Segoe UI",sans-serif;color:#23263a;min-height:40px;max-width:600px}
+.lapse{display:inline-block;margin-left:8px;font:700 11px var(--anatomy-mono);background:#23263a;color:#fffaf0;border-radius:4px;padding:2px 6px;vertical-align:1px;opacity:0;transition:opacity .2s}
+.lapse[data-on]{opacity:1}
+.stage svg{display:block;width:100%;height:auto;overflow:visible}
+.chips{display:flex;flex-wrap:wrap;gap:6px 8px;margin-top:4px}
+.chip{font:600 11.5px var(--anatomy-mono);color:#23263a;background:#fffaf0;border:1.2px solid #23263a;border-radius:6px;padding:5px 8px;font-variant-numeric:tabular-nums;white-space:nowrap;transition:background .25s}
+.chip i{font-style:normal;color:#7b7666;font-weight:500;margin-right:5px;text-transform:uppercase;font-size:10px;letter-spacing:.06em}
+.chip[data-hot]{background:var(--body)}
+.foot{display:flex;align-items:center;gap:18px;flex-wrap:wrap;border-top:1.4px solid #23263a;padding:10px 18px;grid-column:1/-1;background:#efe8d8}
+.idea{font:500 13px/1.45 ui-sans-serif,system-ui,"Segoe UI",sans-serif;color:#23263a;flex:1 1 340px}
+.idea b{font-weight:700}
+.ctl{display:flex;align-items:center;gap:8px;font:600 10px var(--anatomy-mono);letter-spacing:.07em;text-transform:uppercase;color:#6b6656}
+.sw{width:18px;height:18px;border-radius:50%;border:1.3px solid #23263a;cursor:pointer;padding:0}
+.sw[data-on]{box-shadow:0 0 0 2px #f5f0e5,0 0 0 3.4px #23263a}
+.shadow{fill:#ddd4c3}
+.slot{fill:#23263a;opacity:.62}
+.plate{fill:#e3b866;stroke:#23263a;stroke-width:1px;vector-effect:non-scaling-stroke}
+.dial-face{fill:#fffdf6;stroke:#23263a;stroke-width:1px;vector-effect:non-scaling-stroke}
+.dial-red{fill:none;stroke:#e5583e;stroke-width:2.2px;stroke-linecap:round;vector-effect:non-scaling-stroke}
+.glint{fill:none;stroke:#fff;stroke-width:1.6px;stroke-linecap:round;opacity:.85;vector-effect:non-scaling-stroke}
+.needle{fill:none;stroke:#e5583e;stroke-width:1.6px;stroke-linecap:round;vector-effect:non-scaling-stroke}
+.lcd{fill:#cde7c3;stroke:#23263a;stroke-width:1px;vector-effect:non-scaling-stroke}
+.lcd-text{fill:#23263a;font-family:var(--anatomy-mono);font-weight:700;letter-spacing:.02em}
+.glass .iso-fill,.glass .iso-shade,.glass .iso-top{fill-opacity:.32}
+.ink{fill:none;stroke:#23263a;stroke-width:1.15px;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+.word{font:700 15px "Segoe Print","Bradley Hand","Comic Sans MS",cursive;fill:#23263a;paint-order:stroke;stroke:#f5f0e5;stroke-width:4px;stroke-linejoin:round}
+.cursor{position:fixed;left:0;top:0;z-index:10;pointer-events:none;transform-origin:3px 2px;filter:drop-shadow(1px 2px 0 #23263a55)}
+.render *{transition:none!important}
+.modes{display:flex;gap:2px;padding:2px;background:#fffaf0;border:1.3px solid #23263a;border-radius:999px;box-shadow:2px 2px 0 #23263a;margin:2px 0 6px}
+.mode{flex:1;appearance:none;border:0;background:none;border-radius:999px;padding:5px 6px;font:700 11.5px var(--anatomy-mono);color:#6b6656;cursor:pointer;white-space:nowrap;transition:background .15s,color .15s;display:flex;align-items:center;justify-content:center;gap:6px}
+.mode:hover:not([aria-checked="true"]){color:#23263a}
+.mode[aria-checked="true"]{background:#23263a;color:#fffaf0}
+.restart{appearance:none;background:none;border:0;padding:2px 0;margin-top:auto;align-self:flex-start;font:600 11px var(--anatomy-mono);color:#6b6656;cursor:pointer;text-decoration:underline;text-decoration-color:#6b665666;text-underline-offset:3px}
+.restart:hover{color:#23263a;text-decoration-color:#23263a}
+.render .modes,.render .restart{display:none}
+.manual .step:not([disabled]):not([data-on]){animation:nudge 1.5s ease-in-out infinite}
+@keyframes nudge{0%,100%{box-shadow:2px 2px 0 #23263a,0 0 0 0 #23263a55}60%{box-shadow:2px 2px 0 #23263a,0 0 0 6px #23263a00}}
+@media (prefers-reduced-motion:reduce){.manual .step{animation:none!important}}
+@media (max-width:760px){
+.iso-page{width:100%;margin:0 auto;padding:10px 10px 28px}
+.card{grid-template-columns:1fr;box-shadow:3px 3px 0 #23263a}
+.side{border-right:0;border-bottom:1.4px solid #23263a;padding:12px 12px 10px;gap:6px}
+.title{font-size:18px;margin:0 0 4px}
+.steps{flex-direction:row;flex-wrap:wrap;gap:6px}
+.step{padding:5px 10px 5px 6px;font-size:11.5px;gap:6px}
+.modes{max-width:280px;margin:0 0 4px}
+.restart{margin-top:2px}
+.main{padding:10px 10px 10px}
+.hint{min-height:57px;font-size:13px}
+.foot{padding:10px 12px;gap:10px 16px}
+.idea{flex-basis:100%}
+}
+
+.stage svg{overflow:hidden}
+.shadow-mat{mix-blend-mode:multiply}
+.dg path,.dg circle,.dg rect,.dg ellipse,.dg line,.dg polyline{vector-effect:non-scaling-stroke;stroke-linejoin:round}
+.dg .ol2{fill:none;stroke:#23263a;stroke-width:2.1px}
+.dg .ol{fill:none;stroke:#23263a;stroke-width:1.05px}
+.dg .capf{stroke:#23263a;stroke-width:.6px}
+.dg .capn{stroke:none}
+.dg text{font-family:ui-sans-serif,system-ui,"Segoe UI",sans-serif;font-weight:700;dominant-baseline:middle}
+.dg .hair{fill:none;stroke:#23263a;stroke-width:.4px;opacity:.55}
+.dg .seam{fill:none;stroke:#23263a;stroke-width:.5px;opacity:.45}
+.dg .lite{fill:none;stroke:#fff;stroke-width:.8px;opacity:.55;stroke-linecap:round}
+.dg .ink{fill:#23263a;stroke:none}
+.dg .hole{fill:#23263a;stroke:#23263a;stroke-width:.4px}
+.dg .logo{stroke:none;fill-rule:evenodd}
+.dg .logo-ol{fill:none;stroke:#23263a;stroke-width:.7px;opacity:.7;fill-rule:evenodd}
+.dg .logo-ol2{fill:none;stroke:#23263a;stroke-width:1.3px}
+.dg .logo-back{fill:#fbf8f0;stroke:none}
+.dg .wordmark{fill:var(--wm,#23263a);font-weight:800;letter-spacing:.07em}
+.dg .model{fill:#5a4a2c;font-weight:600;letter-spacing:.12em;opacity:.8}
+.dg .pore{fill:var(--pore,#8c6a33);stroke:none}
+.dg .core{fill:var(--core,#4a3417);stroke:none}
+.dg .glint{fill:#fff6d8;stroke:none;opacity:.85}
+.dg .rimdark{fill:none;stroke:#5a4320;stroke-width:1px;opacity:.35}
+.dg .silk{fill:#e9efe6;font-weight:600;opacity:.85}
+.dg .silkl{fill:none;stroke:#e9efe6;stroke-width:.45px;opacity:.7}
+.dg .pcb-edge{fill:none;stroke:#d9b45e;stroke-width:.5px;opacity:.55}
+.dg .trace{fill:none;stroke:#d9b45e;stroke-width:.35px;opacity:.55}
+.dg .pad{fill:#e3b866;stroke:#23263a;stroke-width:.3px}
+.dg .gold{fill:#e3b866;stroke:#23263a;stroke-width:.35px}
+.dg .pas{fill:#b9946a;stroke:none}
+.dg .res{fill:#24262f;stroke:none}
+.dg .screw{fill:#c9d0d9;stroke:#23263a;stroke-width:.5px}
+.dg .slot{fill:none;stroke:#23263a;stroke-width:.6px;stroke-linecap:round}
+.dg .hi{fill:#fff;opacity:.7;stroke:none}
+.dg .chipprint{fill:#d8dae2;font-weight:600;opacity:.8}
+.dg .dieprint{fill:#aeb4c4;font-weight:700;letter-spacing:.08em;opacity:.75}
+.dg .sheen{fill:none;stroke:#fff;stroke-width:.6px;opacity:.35}
+.dg .dot{fill:#d8dae2;opacity:.7;stroke:none}
+.dg .ldcap{fill:#9ea4ad;stroke:none;opacity:.9}
+.dg .label{fill:#f4f2ec;stroke:#23263a;stroke-width:.35px}
+.dg .bar{fill:#23263a;stroke:none}
+.dg .lprint{fill:#23263a;font-weight:700}
+.dg .lprint2{fill:#23263a;font-weight:500;opacity:.7}
+.dg .finl{fill:none;stroke:#23263a;stroke-width:.35px;opacity:.55}
+.dg .finh{fill:none;stroke:#fff;stroke-width:.35px;opacity:.55}
+.dg .gap{fill:#23263a;stroke:none;opacity:.55}
+.dg .fanin{fill:#1d1e26;stroke:#23263a;stroke-width:.5px}
+.dg .blade{fill:#3a3c48;stroke:#15161c;stroke-width:.35px}
+.dg .bladeh{fill:none;stroke:#8a8d99;stroke-width:.35px;opacity:.7}
+.dg .hub{fill:#2a2b33;stroke:#15161c;stroke-width:.4px}
+.dg .pipe-end{fill:#c47c4c;stroke:#23263a;stroke-width:.45px}
+.dg .pipe-in{fill:#7a4527;stroke:none}
+.dg .vent{fill:#23263a;stroke:none;opacity:.6}
+.dg .portin{fill:#1d1e26;stroke:#23263a;stroke-width:.4px}
+.dg .tongue{fill:#c3cad3;stroke:none}
+.dg .led-g{fill:#7fd36a;stroke:#23263a;stroke-width:.3px}
+.dg .led-a{fill:#ffb648;stroke:#23263a;stroke-width:.3px}
+.dg .felt{fill:none;stroke:#23263a;stroke-width:.9px;stroke-dasharray:2 2.2;opacity:.45;stroke-linecap:round}
+.dg .feltl{fill:none;stroke:#23263a;stroke-width:.5px;opacity:.3}
+.dg .rib{fill:none;stroke:#23263a;stroke-width:.4px;opacity:.28}
+.dg .cuth{fill:none;stroke:#b1803a;stroke-width:.45px;opacity:.55}
+.dg .hl-glow{stroke-linejoin:round}
+.dg .hl-rim{fill:none;stroke-width:1.8px;stroke-linejoin:round}
+.dg .hl-rim2{fill:none;stroke:#fff;stroke-width:.6px;opacity:.8;stroke-linejoin:round}
+.dg .air-g{fill:none;stroke-linecap:round;stroke-width:6px;opacity:.16}
+.dg .air{fill:none;stroke-linecap:round;stroke-width:1.7px}
+.dg .air-c{fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:1.5px}
+.dg .brush-l{fill:none;stroke:#fff;stroke-width:.35px;opacity:.16}
+.dg .brush-d{fill:none;stroke:#4a3716;stroke-width:.35px;opacity:.09}
+.dg .spec-g{fill:none;stroke:#fffaf0;stroke-width:5px;opacity:.38;stroke-linecap:round}
+.dg .spec{fill:none;stroke:#fff;stroke-width:1.3px;opacity:.95;stroke-linecap:round}
+.dg .edge-dk{fill:none;stroke:#3d2c10;stroke-width:1.1px;opacity:.28;stroke-linecap:round}
+.dg .edge-dk2{fill:none;stroke:#3d2c10;stroke-width:1px;opacity:.35}
+.dg .cellf{fill:#8fd14f;stroke:#23263a;stroke-width:.25px}
+.dg .c2c{fill:#c9f58a;stroke:none}
+.dg .fanblur{fill:#9aa0ad;stroke:none}
+.dg .bit{fill:#f4ffe6;stroke:#5c9a12;stroke-width:.5px}
+.dg .bit-g{fill:#8fd14f;stroke:none}
+.step[data-on],.chip[data-hot]{background:var(--alt)}
+.dg .wpad{fill:#7d8593;opacity:.85;stroke:none}
+</style>
+<div class="card">
+  <aside class="side">
+    <div class="fig">Fig. 25 · AI box</div>
+    <div class="title">The NVIDIA DGX Spark</div>
+    <div class="modes" role="radiogroup" aria-label="Mode"><button class="mode" data-mode="auto" role="radio" aria-checked="false"><svg viewBox="0 0 12 12" width="9" height="9" aria-hidden="true"><path d="M2 1.2v9.6L10.4 6z" fill="currentColor"/></svg>Auto</button><button class="mode" data-mode="manual" role="radio" aria-checked="true"><svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M4 2.5l14.5 8.6-6.2 1.4 3.2 7-2.9 1.3-3.1-7-5.5 4.3z" fill="currentColor"/></svg>Manual</button></div>
+    <div class="steps"><button class="step" data-step="lid" ><b>1</b>Lift the lid</button><button class="step" data-step="chip" disabled><b>2</b>One chip, two brains</button><button class="step" data-step="memory" disabled><b>3</b>128 GB, shared</button><button class="step" data-step="apart" disabled><b>4</b>Take it apart</button><button class="step" data-step="air" disabled><b>5</b>Air through metal</button><button class="step" data-step="link" disabled><b>6</b>Link two</button><button class="step" data-step="close" disabled><b>↺</b>Close it up</button></div>
+    <button class="restart" data-restart>⟲ Start over</button>
+  </aside>
+  <section class="main">
+    <div class="hint"><span data-hint>How does a box the size of a hardback run a 200-billion-parameter AI model? Press the steps, or wait and the machine runs them by itself.</span><span class="lapse" data-lapse>×3</span></div>
+    <div class="stage"><svg xmlns="http://www.w3.org/2000/svg" class="iso-svg" viewBox="0 0 700 500" role="img" aria-label="A small square NVIDIA DGX Spark on a felt desk mat: a champagne-gold box with gold metal-foam panels at the front and the back and the NVIDIA logo on its lid. The lid lifts off to show the board, the one chip with a CPU and a GPU side by side, its memory, the SSD and the cooler; the box comes apart into its layers, and cool air drawn in through the front foam crosses the cooler and leaves warm through the back."><defs></defs><g class="art"><g class="dg" data-part="mat"></g><g class="shadow-mat" data-part="shadows"></g><g class="dg" data-part="box"></g><g data-part="sounds"></g></g></svg></div>
+    <div class="chips"><span class="chip" data-chipbox="size"><i>size, NVIDIA</i><span data-chip="size">150 × 150 × 50.5 mm</span></span><span class="chip" data-chipbox="ai"><i>AI, FP4, NVIDIA</i><span data-chip="ai">up to 1 petaflop</span></span><span class="chip" data-chipbox="mem"><i>unified memory, NVIDIA</i><span data-chip="mem">128 GB</span></span><span class="chip" data-chipbox="model"><i>largest model, NVIDIA</i><span data-chip="model">200B params</span></span><span class="chip" data-chipbox="link"><i>two linked, NVIDIA</i><span data-chip="link">405B params</span></span></div>
+  </section>
+  <footer class="foot">
+    <div class="idea"><b>The big idea:</b> the CPU and the GPU sit side by side in one chip package and share one pool of <b>128 GB</b>, so a model of up to <b>200 billion</b> parameters fits on a desk; two boxes linked run about <b>405 billion</b>. The gold ends are metal foam: the air goes in and out through the metal itself. (All figures are NVIDIA's; the inside layout is drawn as typical.)</div>
+    <div class="ctl">Colour <button class="sw" data-swatch="#f2c14e" title="butter" style="background:#f2c14e" data-on></button><button class="sw" data-swatch="#e5583e" title="tomato" style="background:#e5583e" ></button><button class="sw" data-swatch="#86d3ad" title="mint" style="background:#86d3ad" ></button><button class="sw" data-swatch="#7fb9e9" title="sky" style="background:#7fb9e9" ></button><button class="sw" data-swatch="#f2a5bf" title="rose" style="background:#f2a5bf" ></button></div>
+  </footer>
+</div><p class="credit"><span class="keys">Space or Enter runs the next step · ← → switch machines<br></span>Made by <a target="_blank" rel="noopener" href="https://x.com/elvar_official">@elvar_official</a></p></main><script>
+if (/[?&]embed\b/.test(location.search)) document.body.classList.add("embed");
+addEventListener("keydown", (e) => {
+  if (e.key === "Escape") document.querySelector(".menu").open = false;
+  if (e.altKey || e.ctrlKey || e.metaKey || e.target.closest("input,textarea,select")) return;
+  const go = e.key === "ArrowLeft" ? "prev" : e.key === "ArrowRight" ? "next" : null;
+  if (go) location.href = document.querySelector('[data-go="' + go + '"]').href;
+});
+addEventListener("click", (e) => { const m = document.querySelector(".menu"); if (m.open && !m.contains(e.target)) m.open = false; });
+</script><script type="module">const AZIMUTH = 45;
+const ELEVATION = 30;
+const SHADES = 4;
+const RADIANS = Math.PI / 180;
+const UNIT = Math.sqrt(1.6);
+function cameraOf({ scale, azimuth = AZIMUTH, elevation = ELEVATION }) {
+    const a = azimuth * RADIANS;
+    const e = elevation * RADIANS;
+    return { sinA: Math.sin(a), cosA: Math.cos(a), sinE: Math.sin(e), cosE: Math.cos(e), k: scale * UNIT };
+}
+function iso([x, y, z], projection) {
+    const { origin } = projection;
+    const { sinA, cosA, sinE, cosE, k } = cameraOf(projection);
+    return [origin[0] + (x * sinA - y * cosA) * k, origin[1] + ((x * cosA + y * sinA) * sinE - z * cosE) * k];
+}
+function towardViewer(projection) {
+    const { sinA, cosA } = cameraOf(projection);
+    return [cosA, sinA];
+}
+function depthOf([x, y, z], projection) {
+    const { sinA, cosA, sinE, cosE } = cameraOf(projection);
+    return (x * cosA + y * sinA) * cosE + z * sinE;
+}
+const tenth = (value) => {
+    const text = (Math.round(value * 10) / 10).toFixed(1).replace(/\.0$/, "");
+    return text === "-0" ? "0" : text;
+};
+function pathOf(points, closed = false) {
+    if (!points.length)
+        return "";
+    return points.map(([x, y], at) => `${at ? "L" : "M"}${tenth(x)} ${tenth(y)}`).join("") + (closed ? "Z" : "");
+}
+const joinPaths = (paths) => paths.filter(Boolean).join("");
+function roundedPlan({ x, y, w, d, r }, steps = 8) {
+    const radius = Math.max(0, Math.min(r, w / 2, d / 2));
+    const corners = [
+        [x + w - radius, y + radius, -90],
+        [x + w - radius, y + d - radius, 0],
+        [x + radius, y + d - radius, 90],
+        [x + radius, y + radius, 180],
+    ];
+    const out = [];
+    for (const [cx, cy, start] of corners) {
+        const count = radius > 0 ? steps : 0;
+        for (let step = 0; step <= count; step++) {
+            const angle = (start + (count ? (90 * step) / count : 45)) * RADIANS;
+            out.push([cx + radius * Math.cos(angle), cy + radius * Math.sin(angle)]);
+        }
+    }
+    return out;
+}
+function signedArea(points) {
+    let area = 0;
+    for (let index = 0; index < points.length; index++) {
+        const [ax, ay] = points[index];
+        const [bx, by] = points[(index + 1) % points.length];
+        area += ax * by - bx * ay;
+    }
+    return area / 2;
+}
+const oriented = (points) => (signedArea(points) < 0 ? [...points].reverse() : points);
+function convexHull(points) {
+    const sorted = [...points].sort((a, b) => a[0] - b[0] || a[1] - b[1]);
+    if (sorted.length < 3)
+        return sorted;
+    const cross = (o, a, b) => (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0]);
+    const lower = [];
+    for (const point of sorted) {
+        while (lower.length >= 2 && cross(lower[lower.length - 2], lower[lower.length - 1], point) <= 0)
+            lower.pop();
+        lower.push(point);
+    }
+    const upper = [];
+    for (let index = sorted.length - 1; index >= 0; index--) {
+        const point = sorted[index];
+        while (upper.length >= 2 && cross(upper[upper.length - 2], upper[upper.length - 1], point) <= 0)
+            upper.pop();
+        upper.push(point);
+    }
+    return [...lower.slice(0, -1), ...upper.slice(0, -1)];
+}
+function runsOf(flags, want) {
+    const count = flags.length;
+    const runs = [];
+    const start = flags.findIndex((flag, index) => flag !== flags[(index + count - 1) % count]);
+    if (start < 0)
+        return flags[0] === want ? [Array.from({ length: count + 1 }, (_, index) => index % count)] : [];
+    let run = null;
+    for (let step = 0; step < count; step++) {
+        const index = (start + step) % count;
+        if (flags[index] === want) {
+            if (!run)
+                run = [index];
+            run.push((index + 1) % count);
+        }
+        else if (run) {
+            runs.push(run);
+            run = null;
+        }
+    }
+    if (run)
+        runs.push(run);
+    return runs;
+}
+function extrude(ring, z, height, projection, options = {}) {
+    const convex = options.convex ?? true;
+    const count = ring.length;
+    const counter = signedArea(ring) > 0;
+    const [vx, vy] = towardViewer(projection);
+    const { sinA, cosA } = cameraOf(projection);
+    const normals = ring.map(([ax, ay], index) => {
+        const [bx, by] = ring[(index + 1) % count];
+        const dx = bx - ax;
+        const dy = by - ay;
+        const length = Math.hypot(dx, dy) || 1;
+        return (counter ? [dy / length, -dx / length] : [-dy / length, dx / length]);
+    });
+    const facing = normals.map(([nx, ny]) => nx * vx + ny * vy > 1e-9);
+    const top = ring.map(([x, y]) => iso([x, y, z + height], projection));
+    const bottom = ring.map(([x, y]) => iso([x, y, z], projection));
+    const outline = [];
+    const crease = [];
+    for (const run of runsOf(facing, false))
+        outline.push(pathOf(run.map((index) => top[index])));
+    for (const run of runsOf(facing, true)) {
+        crease.push(pathOf(run.map((index) => top[index])));
+        if (height > 0)
+            outline.push(pathOf(run.map((index) => bottom[index])));
+    }
+    if (height > 0) {
+        for (let index = 0; index < count; index++) {
+            if (facing[(index + count - 1) % count] !== facing[index])
+                outline.push(pathOf([top[index], bottom[index]]));
+        }
+    }
+    let fill;
+    if (convex) {
+        fill = pathOf(convexHull([...top, ...bottom]), true);
+    }
+    else {
+        const parts = [pathOf(oriented(top), true), pathOf(oriented(bottom), true)];
+        for (let index = 0; index < count; index++) {
+            if (!facing[index])
+                continue;
+            const next = (index + 1) % count;
+            parts.push(pathOf(oriented([top[index], top[next], bottom[next], bottom[index]]), true));
+        }
+        fill = parts.join("");
+    }
+    const buckets = Array.from({ length: SHADES }, () => []);
+    if (height > 0) {
+        const [lx, ly] = [-sinA, cosA];
+        for (let index = 0; index < count; index++) {
+            if (!facing[index])
+                continue;
+            const [nx, ny] = normals[index];
+            const lit = (nx * lx + ny * ly + 1) / 2;
+            const shade = Math.min(SHADES - 1, Math.max(0, Math.floor(lit * SHADES)));
+            const next = (index + 1) % count;
+            buckets[shade].push(pathOf(oriented([top[index], top[next], bottom[next], bottom[index]]), true));
+        }
+    }
+    let bevel;
+    if (options.bevel && options.bevel > 0) {
+        const by = options.bevel;
+        const inset = ring.map(([x, y], index) => {
+            const [ax, ay] = normals[(index + count - 1) % count];
+            const [bx, by2] = normals[index];
+            const mx = ax + bx;
+            const my = ay + by2;
+            const length = Math.hypot(mx, my) || 1;
+            return [x - (mx / length) * by, y - (my / length) * by];
+        });
+        const insetTop = inset.map(([x, y]) => iso([x, y, z + height], projection));
+        bevel = runsOf(facing, true)
+            .map((run) => pathOf([top[run[0]], ...run.slice(1, -1).map((index) => insetTop[index]), top[run[run.length - 1]]]))
+            .join("");
+    }
+    return {
+        fill,
+        outline: outline.join(""),
+        crease: crease.join(""),
+        top: pathOf(oriented(top), true),
+        shades: buckets.map((paths) => paths.join("")),
+        bevel,
+    };
+}
+const ringOf = (plan, steps = 8) => roundedPlan(plan, steps);
+function slabOf(plan, z, height, projection, steps = 8, bevel = 0) {
+    return extrude(ringOf(plan, steps), z, height, projection, { convex: true, bevel });
+}
+function circleRing(cx, cy, radius, steps = 40) {
+    return Array.from({ length: steps }, (_, step) => {
+        const angle = (step / steps) * Math.PI * 2;
+        return [cx + radius * Math.cos(angle), cy + radius * Math.sin(angle)];
+    });
+}
+function cylinder(cx, cy, radius, z, height, projection, steps = 32, bevel = 0) {
+    return extrude(circleRing(cx, cy, radius, steps), z, height, projection, { convex: true, bevel });
+}
+const insetPlan = ({ x, y, w, d, r }, by) => ({ x: x + by, y: y + by, w: w - by * 2, d: d - by * 2, r: Math.max(0, r - by) });
+function onTop(points, z, projection, closed = false) {
+    return pathOf(points.map(([x, y]) => iso([x, y, z], projection)), closed);
+}
+const planOutline = (plan, z, projection, steps = 8) => onTop(ringOf(plan, steps), z, projection, true);
+const lineOnTop = (from, to, z, projection) => onTop([from, to], z, projection);
+const segment = (from, to, projection) => pathOf([iso(from, projection), iso(to, projection)]);
+const rise = (at, from, to, projection) => segment([at[0], at[1], from], [at[0], at[1], to], projection);
+const ring = (cx, cy, radius, z, projection, steps = 40) => onTop(circleRing(cx, cy, radius, steps), z, projection, true);
+const pointsAt = (points, projection) => points.map((point) => iso(point, projection));
+function dotGrid(x, y, columns, rows, gap, z, projection) {
+    const dots = [];
+    for (let row = 0; row < rows; row++) {
+        for (let column = 0; column < columns; column++)
+            dots.push(iso([x + column * gap, y + row * gap, z], projection));
+    }
+    return dots;
+}
+function corners({ x, y, w, d }, inset = 0) {
+    return [
+        [x + inset, y + inset],
+        [x + w - inset, y + inset],
+        [x + inset, y + d - inset],
+        [x + w - inset, y + d - inset],
+    ];
+}
+function boxCorners({ x, y, w, d }, z0, z1) {
+    const out = [];
+    for (const px of [x, x + w])
+        for (const py of [y, y + d])
+            for (const z of [z0, z1])
+                out.push([px, py, z]);
+    return out;
+}
+function knurl(cx, cy, radius, z0, z1, count, projection, inset = 0.4) {
+    const [vx, vy] = towardViewer(projection);
+    const lines = [];
+    for (let index = 0; index < count; index++) {
+        const angle = (index / count) * Math.PI * 2;
+        const nx = Math.cos(angle);
+        const ny = Math.sin(angle);
+        if (nx * vx + ny * vy < 0.15)
+            continue;
+        lines.push(segment([cx + radius * nx, cy + radius * ny, z0 + inset], [cx + radius * nx, cy + radius * ny, z1 - inset], projection));
+    }
+    return lines.join("");
+}
+function sideArc(cx, cy, radius, z, projection, steps = 24) {
+    const [vx, vy] = towardViewer(projection);
+    const facing = Math.atan2(vy, vx);
+    const points = [];
+    for (let step = 0; step <= steps; step++) {
+        const angle = facing - Math.PI / 2 + (step / steps) * Math.PI;
+        points.push(iso([cx + radius * Math.cos(angle), cy + radius * Math.sin(angle), z], projection));
+    }
+    return pathOf(points);
+}
+function ringSeam(ring, z, projection) {
+    const count = ring.length;
+    const counter = signedArea(ring) > 0;
+    const [vx, vy] = towardViewer(projection);
+    const facing = ring.map(([ax, ay], index) => {
+        const [bx, by] = ring[(index + 1) % count];
+        const dx = bx - ax;
+        const dy = by - ay;
+        const [nx, ny] = counter ? [dy, -dx] : [-dy, dx];
+        return nx * vx + ny * vy > 1e-9;
+    });
+    return runsOf(facing, true).map((run) => pathOf(run.map((index) => iso([ring[index][0], ring[index][1], z], projection)))).join("");
+}
+const sideSeam = (plan, z, projection, steps = 8) => ringSeam(ringOf(plan, steps), z, projection);
+function sideRing(center, radius, axis, projection, steps = 20) {
+    const [px, py, pz] = center;
+    const points = [];
+    for (let step = 0; step < steps; step++) {
+        const angle = (step / steps) * Math.PI * 2;
+        const u = radius * Math.cos(angle);
+        const v = radius * Math.sin(angle);
+        points.push(iso(axis === "x" ? [px, py + u, pz + v] : [px + u, py, pz + v], projection));
+    }
+    return pathOf(points, true);
+}
+function coil(from, to, center, radius, turns, axis, projection, perTurn = 16) {
+    const count = Math.max(1, Math.round(turns * perTurn));
+    const back = [];
+    const front = [];
+    let run = [];
+    let near = null;
+    for (let index = 0; index <= count; index++) {
+        const share = index / count;
+        const angle = share * turns * Math.PI * 2;
+        const u = radius * Math.cos(angle);
+        const v = radius * Math.sin(angle);
+        const along = from + (to - from) * share;
+        const point = axis === "x" ? [along, center[0] + u, center[1] + v] : [center[0] + u, along, center[1] + v];
+        const normal = axis === "x" ? [0, Math.cos(angle), Math.sin(angle)] : [Math.cos(angle), 0, Math.sin(angle)];
+        const facing = depthOf(normal, projection) > 0;
+        const flat = iso(point, projection);
+        if (near === null)
+            near = facing;
+        if (facing !== near) {
+            run.push(flat);
+            (near ? front : back).push(pathOf(run));
+            run = [flat];
+            near = facing;
+            continue;
+        }
+        run.push(flat);
+    }
+    if (run.length > 1)
+        (near ? front : back).push(pathOf(run));
+    return { back: back.join(""), front: front.join("") };
+}
+function topTicks(from, to, step, every, edge, z, lengths, projection, axis = "x") {
+    const minor = [];
+    const major = [];
+    const first = Math.ceil(from / step) * step;
+    for (let at = first, index = Math.round(first / step); at <= to + 1e-9; at += step, index++) {
+        const big = index % every === 0;
+        const length = big ? lengths[1] : lengths[0];
+        const a = axis === "x" ? [at, edge] : [edge, at];
+        const b = axis === "x" ? [at, edge + length] : [edge + length, at];
+        (big ? major : minor).push(lineOnTop(a, b, z, projection));
+    }
+    return { minor: minor.join(""), major: major.join("") };
+}
+function sideTicks(from, to, step, every, face, top, lengths, projection, axis = "x") {
+    const minor = [];
+    const major = [];
+    const first = Math.ceil(from / step) * step;
+    for (let at = first, index = Math.round(first / step); at <= to + 1e-9; at += step, index++) {
+        const big = index % every === 0;
+        const length = big ? lengths[1] : lengths[0];
+        const a = axis === "x" ? [at, face, top] : [face, at, top];
+        const b = axis === "x" ? [at, face, top - length] : [face, at, top - length];
+        (big ? major : minor).push(segment(a, b, projection));
+    }
+    return { minor: minor.join(""), major: major.join("") };
+}
+function radialTicks(cx, cy, radius, count, every, z, lengths, projection, from = 0, span = Math.PI * 2) {
+    const minor = [];
+    const major = [];
+    const closed = Math.abs(span - Math.PI * 2) < 1e-9;
+    const steps = closed ? count : count + 1;
+    for (let index = 0; index < steps; index++) {
+        const angle = from + (index / count) * span;
+        const big = index % every === 0;
+        const inner = radius - (big ? lengths[1] : lengths[0]);
+        const sx = Math.sin(angle);
+        const sy = -Math.cos(angle);
+        (big ? major : minor).push(lineOnTop([cx + sx * inner, cy + sy * inner], [cx + sx * radius, cy + sy * radius], z, projection));
+    }
+    return { minor: minor.join(""), major: major.join("") };
+}
+const haloOf = (plan, z, height, projection) => slabOf(plan, z, height, projection).fill;
+function axisVector(projection, [dx, dy, dz]) {
+    const origin = iso([0, 0, 0], projection);
+    const moved = iso([dx, dy, dz], projection);
+    return [moved[0] - origin[0], moved[1] - origin[1]];
+}
+const fine = (value) => Math.round(value * 100) / 100;
+function translateAlong(projection, by) {
+    const [x, y] = axisVector(projection, by);
+    return `translate(${fine(x)} ${fine(y)})`;
+}
+const thousandth = (value) => Math.round(value * 1000) / 1000;
+function axesAt(at, z, projection) {
+    const origin = iso([at[0], at[1], z], projection);
+    const along = (point) => {
+        const [px, py] = iso(point, projection);
+        return [px - origin[0], py - origin[1]];
+    };
+    return { origin, x: along([at[0] + 1, at[1], z]), y: along([at[0], at[1] + 1, z]), z: along([at[0], at[1], z + 1]) };
+}
+const matrixOf = (u, v, origin) => `matrix(${thousandth(u[0])} ${thousandth(u[1])} ${thousandth(v[0])} ${thousandth(v[1])} ${thousandth(origin[0])} ${thousandth(origin[1])})`;
+function holdStill(element, [dx, dy]) {
+    const text = dx || dy ? `translate(${-dx} ${-dy})` : "";
+    element.querySelectorAll("[data-hold]").forEach((node) => (text ? node.setAttribute("transform", text) : node.removeAttribute("transform")));
+}
+function topMatrix(at, z, projection, along = "x") {
+    const { origin, x, y } = axesAt(at, z, projection);
+    return along === "x" ? matrixOf(x, y, origin) : matrixOf([-y[0], -y[1]], x, origin);
+}
+function sideMatrix(at, z, projection, face) {
+    const { origin, x, y, z: up } = axesAt(at, z, projection);
+    const down = [-up[0], -up[1]];
+    return face === "left" ? matrixOf(x, down, origin) : matrixOf([-y[0], -y[1]], down, origin);
+}
+function screenRise(height, projection) {
+    const { cosE, k } = cameraOf(projection);
+    return height * cosE * k;
+}
+function fitProjection(points, width, height, { pad = 24, headroom = 0, azimuth = AZIMUTH, elevation = ELEVATION } = {}) {
+    const unit = { origin: [0, 0], scale: 1, azimuth, elevation };
+    const flat = points.map((point) => iso(point, unit));
+    const xs = flat.map(([x]) => x);
+    const ys = flat.map(([, y]) => y);
+    const left = Math.min(...xs);
+    const right = Math.max(...xs);
+    const up = Math.min(...ys);
+    const down = Math.max(...ys);
+    const scale = Math.min((width - pad * 2) / (right - left), (height - pad * 2 - headroom) / (down - up));
+    return {
+        origin: [width / 2 - ((left + right) / 2) * scale, headroom + (height - headroom) / 2 - ((up + down) / 2) * scale],
+        scale,
+        azimuth,
+        elevation,
+    };
+}
+const escape = (text) => text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+const attrs = (pairs) => Object.entries(pairs)
+    .filter(([, value]) => value !== undefined && value !== false)
+    .map(([key, value]) => ` ${key}="${escape(String(value))}"`)
+    .join("");
+function solidSvg(paths, { tone = "hi", crease = "faint", halo = false, lit = false, flat = false, className, inner = "" } = {}) {
+    const parts = [];
+    if (halo)
+        parts.push(`<path class="iso-halo" d="${paths.fill}"/>`);
+    parts.push(`<path class="iso-fill" d="${paths.fill}"/>`);
+    if (!flat) {
+        paths.shades.forEach((d, shade) => {
+            if (d)
+                parts.push(`<path class="iso-shade" data-shade="${shade}" d="${d}"/>`);
+        });
+        parts.push(`<path class="iso-top" d="${paths.top}"/>`);
+    }
+    if (crease !== "none" && paths.crease)
+        parts.push(`<path class="iso-line iso-crease" data-tone="${crease}" d="${paths.crease}"/>`);
+    if (crease !== "none" && paths.bevel)
+        parts.push(`<path class="iso-line iso-bevel" data-tone="${crease}" d="${paths.bevel}"/>`);
+    if (inner)
+        parts.push(inner);
+    parts.push(`<path class="iso-line iso-edge" data-tone="${tone}" d="${paths.outline}"/>`);
+    return `<g${attrs({ class: className ? `iso-solid ${className}` : "iso-solid", "data-lit": lit ? "" : undefined, "data-seamless": paths.seamless ? "" : undefined })}>${parts.join("")}</g>`;
+}
+function lineSvg(d, { tone = "lo", dotted = false, dashed = false, flow = false, className, free } = {}) {
+    if (!d)
+        return "";
+    return `<path${attrs({
+        class: className ? `iso-line ${className}` : "iso-line",
+        "data-tone": tone,
+        "data-free": free === true ? "" : free || undefined,
+        "data-dotted": dotted ? "" : undefined,
+        "data-dashed": dashed ? "" : undefined,
+        "data-flow": flow ? "" : undefined,
+        d,
+    })}/>`;
+}
+function dotsSvg(points, { size = 0.5, tone = "mid", pulse = false } = {}) {
+    const dots = points
+        .map(([x, y, alpha], index) => `<circle cx="${tenth(x)}" cy="${tenth(y)}" r="${size}"${alpha !== undefined && alpha < 1 ? ` fill-opacity="${Math.max(0, alpha).toFixed(2)}"` : ""}${pulse ? ` data-pulse="" style="--pulse-at:${(index * 137) % 1600}ms"` : ""}/>`)
+        .join("");
+    return `<g class="iso-dots" data-tone="${tone}">${dots}</g>`;
+}
+function fadedSvg(list, style = {}) {
+    const groups = new Map();
+    for (const entry of list) {
+        const [d, alpha] = Array.isArray(entry) ? entry : [entry.d, entry.alpha];
+        if (!d || !(alpha > 0.02))
+            continue;
+        const level = Math.min(1, Math.round(alpha * 20) / 20);
+        groups.set(level, (groups.get(level) ?? "") + d);
+    }
+    return [...groups].map(([alpha, d]) => (alpha >= 1 ? lineSvg(d, style) : `<g opacity="${alpha.toFixed(2)}">${lineSvg(d, style)}</g>`)).join("");
+}
+function fadeLineSvg(points, { fade = [0, 0], tone = "lo", className, stops = 6 } = {}) {
+    if (points.length < 2)
+        return "";
+    const ease = (t) => t * t * (3 - 2 * t);
+    const hashOf = (text) => {
+        let hash = 2166136261;
+        for (let index = 0; index < text.length; index++)
+            hash = Math.imul(hash ^ text.charCodeAt(index), 16777619);
+        return (hash >>> 0).toString(36);
+    };
+    const lengths = [0];
+    for (let index = 1; index < points.length; index++)
+        lengths.push(lengths[index - 1] + Math.hypot(points[index][0] - points[index - 1][0], points[index][1] - points[index - 1][1]));
+    const at = (length) => {
+        let index = 1;
+        while (index < points.length - 1 && lengths[index] < length)
+            index++;
+        const span = lengths[index] - lengths[index - 1] || 1;
+        const t = Math.max(0, Math.min(1, (length - lengths[index - 1]) / span));
+        return [points[index - 1][0] + (points[index][0] - points[index - 1][0]) * t, points[index - 1][1] + (points[index][1] - points[index - 1][1]) * t];
+    };
+    const pieceOf = (from, to) => [at(from), ...points.filter((_, index) => lengths[index] > from + 1e-6 && lengths[index] < to - 1e-6), at(to)];
+    const total = lengths[lengths.length - 1];
+    if (total < 1e-6)
+        return "";
+    let [start, end] = Array.isArray(fade) ? fade : [fade, fade];
+    if (start + end > total) {
+        const share = total / (start + end);
+        start *= share;
+        end *= share;
+    }
+    const paint = `var(--anatomy-${tone})`;
+    const ramp = (piece, rising) => {
+        const d = pathOf(piece);
+        const [x1, y1] = piece[0];
+        const [x2, y2] = piece[piece.length - 1];
+        const id = `iso-fade-${hashOf(`${d}|${tone}|${rising}`)}`;
+        const marks = Array.from({ length: stops + 1 }, (_, index) => {
+            const t = index / stops;
+            const alpha = ease(rising ? t : 1 - t);
+            return `<stop offset="${t.toFixed(3)}" stop-opacity="${alpha.toFixed(3)}" style="stop-color:${paint}"/>`;
+        }).join("");
+        const gradient = `<linearGradient id="${id}" gradientUnits="userSpaceOnUse" x1="${tenth(x1)}" y1="${tenth(y1)}" x2="${tenth(x2)}" y2="${tenth(y2)}">${marks}</linearGradient>`;
+        return `<defs>${gradient}</defs><path${attrs({ class: className ? `iso-line ${className}` : "iso-line", "data-tone": tone, "data-free": rising ? "start" : "end", d, style: `stroke:url(#${id})` })}/>`;
+    };
+    const parts = [];
+    if (start > 0.05)
+        parts.push(ramp(pieceOf(0, start), true));
+    if (total - end - start > 0.05)
+        parts.push(lineSvg(pathOf(pieceOf(start, total - end)), { tone, className }));
+    if (end > 0.05)
+        parts.push(ramp(pieceOf(total - end, total), false));
+    return `<g class="iso-fade">${parts.join("")}</g>`;
+}
+function wireSvg(from, to, { via = [], tone = "lo", dotted = false, dashed = false, flow = false, ends = "both", size = 1.2 } = {}) {
+    const d = pathOf([from, ...via, to]);
+    const end = ([x, y]) => `<circle class="iso-wire-end" cx="${tenth(x)}" cy="${tenth(y)}" r="${size}"/>`;
+    return `<g class="iso-wire" data-tone="${tone}">${lineSvg(d, { tone, dotted, dashed, flow })}${ends === "both" || ends === "from" ? end(from) : ""}${ends === "both" || ends === "to" ? end(to) : ""}</g>`;
+}
+function faceTextSvg(transform, text, { size = 3, tone = "mid", anchor = "start" } = {}) {
+    return `<text class="iso-face-text" data-tone="${tone}" transform="${transform}" font-size="${size}" text-anchor="${anchor}">${escape(text)}</text>`;
+}
+function groupSvg(children, extra = {}) {
+    return `<g${attrs(extra)}>${Array.isArray(children) ? children.join("") : children}</g>`;
+}
+function figureSvg({ width, height, label, body, standalone = false, className }) {
+    const style = standalone ? `<style>${ISO_CSS}</style>` : "";
+    return `<svg${attrs({
+        xmlns: "http://www.w3.org/2000/svg",
+        class: `iso-svg${standalone ? " iso" : ""}${className ? ` ${className}` : ""}`,
+        "data-theme": standalone || undefined,
+        viewBox: `0 0 ${width} ${height}`,
+        role: "img",
+        "aria-label": label,
+    })}>${style}${Array.isArray(body) ? body.join("") : body}</svg>`;
+}
+function swatchSvg(mark) {
+    if (mark === "raised" || mark === "flat" || mark === "lit") {
+        const body = mark === "flat" ? "M2 6.5 8 3.5 14 6.5 8 9.5Z" : "M2 4.5 8 1.5 14 4.5 14 6 8 9 2 6Z";
+        const crease = mark === "flat" ? "" : `<path class="iso-swatch-crease" d="M2 4.5 8 7.5 14 4.5"/>`;
+        return `<svg class="iso-swatch" data-mark="${mark}" viewBox="0 0 16 10" aria-hidden="true"><path d="${body}"/>${crease}</svg>`;
+    }
+    return `<svg class="iso-swatch" data-mark="${mark}" viewBox="0 0 16 10" aria-hidden="true"><path d="M1.5 5h13"/></svg>`;
+}
+function plateHtml({ fig, title, hint, readout = "", keys = [], caption, body }) {
+    const corner = (name, text, extra = "") => `<span class="iso-plate-corner" data-corner="${name}"${extra}>${escape(text)}</span>`;
+    const legend = keys.length || caption
+        ? `<figcaption class="iso-legend">${keys.length ? `<span class="iso-keys">${keys.map((key) => `<span class="iso-key">${swatchSvg(key.mark)}${escape(key.label)}</span>`).join("")}</span>` : ""}${caption ? `<span class="iso-caption">${escape(caption)}</span>` : ""}</figcaption>`
+        : "";
+    return `<figure class="iso-figure"><div class="iso-plate"><div class="iso-plate-corners" aria-hidden="true">${corner("fig", fig)}${title ? corner("title", title) : ""}${hint ? corner("hint", hint) : ""}${corner("readout", readout, " data-readout")}</div>${body}</div>${legend}</figure>`;
+}
+function pageHtml({ title, theme = "dark", body, script = "", width = 650 }) {
+    return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>${escape(title)}</title><style>${ISO_CSS}${PAGE_CSS.replace("__WIDTH__", String(width))}</style></head><body class="iso" data-theme="${theme}"><main class="iso-page">${body}</main>${script ? `<script type="module">${script.replace(/<\/(script)/gi, "<\\/$1")}<\/script>` : ""}</body></html>`;
+}
+const PAGE_CSS = `
+*{box-sizing:border-box}
+html{color-scheme:dark}
+body[data-theme="light"]{color-scheme:light}
+body{margin:0;background:var(--anatomy-page);color:var(--anatomy-text);font:14px/1.6 ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+.iso-page{width:min(__WIDTH__px,100% - 32px);margin:64px auto 96px}
+`;
+const ISO_CSS = `
+.iso{
+  --anatomy-page:#0b0b0b;--anatomy-card:#131313;--anatomy-text:#a3a3a3;--anatomy-strong:#e6e6e6;--anatomy-muted:#6e6e6e;
+  --anatomy-paper:#131313;--anatomy-face:#1b1b1b;--anatomy-top:#1c1c1c;
+  --anatomy-shade-0:#0f0f0f;--anatomy-shade-1:#121212;--anatomy-shade-2:#151515;--anatomy-shade-3:#181818;
+  --anatomy-lit-top:#262626;--anatomy-lit-shade:#1d1d1d;
+  --anatomy-hi:#d4d4d4;--anatomy-mid:#6a6a6a;--anatomy-lo:#3e3e3e;--anatomy-faint:#2a2a2a;--anatomy-lit:#ffffff;
+  --anatomy-halo:#050505;--anatomy-halo-opacity:.9;--anatomy-dot:#e6e6e6;
+  --anatomy-red:#ff6b6b;--anatomy-green:#6be0a0;--anatomy-blue:#6b9bff;
+  --anatomy-weight:.6px;--anatomy-ease:cubic-bezier(.32,.72,0,1);
+  --anatomy-mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --anatomy-lift:inset 0 1px 0 0 #ffffff0a,inset 0 0 0 1px #ffffff06,0 0 0 1px #00000026,0 1px 1px -.5px #00000014,0 3px 3px -1.5px #00000014,0 6px 6px -3px #00000014,0 12px 12px -6px #00000014;
+}
+.iso[data-theme="light"]{
+  --anatomy-page:#f2f2ef;--anatomy-card:#fbfbfa;--anatomy-text:#57575a;--anatomy-strong:#18181a;--anatomy-muted:#8c8c90;
+  --anatomy-paper:#fbfbfa;--anatomy-face:#ffffff;--anatomy-top:#ffffff;
+  --anatomy-shade-0:#dcdcd9;--anatomy-shade-1:#e5e5e2;--anatomy-shade-2:#ededea;--anatomy-shade-3:#f4f4f1;
+  --anatomy-lit-top:#ffffff;--anatomy-lit-shade:#eeeeeb;
+  --anatomy-hi:#26262a;--anatomy-mid:#8a8a8f;--anatomy-lo:#b4b4b8;--anatomy-faint:#d4d4d6;--anatomy-lit:#000000;
+  --anatomy-halo:#8a8a80;--anatomy-halo-opacity:.32;--anatomy-dot:#3a3a3e;
+  --anatomy-red:#e5484d;--anatomy-green:#30a46c;--anatomy-blue:#3e63dd;
+  --anatomy-lift:inset 0 1px 0 0 #ffffff,0 0 0 1px #0000000f,0 1px 1px -.5px #0000000a,0 3px 3px -1.5px #0000000a,0 6px 6px -3px #0000000a,0 12px 12px -6px #0000000a;
+}
+.iso-svg{display:block;width:100%;height:auto;overflow:visible}
+.iso-svg path,.iso-svg circle{vector-effect:non-scaling-stroke}
+.iso-fill{fill:var(--anatomy-paper);stroke:none}
+.iso-solid[data-lit]>.iso-fill{fill:var(--anatomy-face)}
+.iso-shade,.iso-top{stroke:none}
+.iso-shade[data-shade="0"]{fill:var(--anatomy-shade-0)}
+.iso-shade[data-shade="1"]{fill:var(--anatomy-shade-1)}
+.iso-shade[data-shade="2"]{fill:var(--anatomy-shade-2)}
+.iso-shade[data-shade="3"]{fill:var(--anatomy-shade-3)}
+.iso-top{fill:var(--anatomy-top)}
+.iso-solid[data-lit]>.iso-top{fill:var(--anatomy-lit-top)}
+.iso-solid[data-lit]>.iso-shade{fill:var(--anatomy-lit-shade)}
+.iso-solid[data-seamless]>.iso-shade,.iso-solid[data-seamless]>.iso-top{stroke-width:.4;stroke-linejoin:round}
+.iso-solid[data-seamless]>.iso-shade[data-shade="0"]{stroke:var(--anatomy-shade-0)}
+.iso-solid[data-seamless]>.iso-shade[data-shade="1"]{stroke:var(--anatomy-shade-1)}
+.iso-solid[data-seamless]>.iso-shade[data-shade="2"]{stroke:var(--anatomy-shade-2)}
+.iso-solid[data-seamless]>.iso-shade[data-shade="3"]{stroke:var(--anatomy-shade-3)}
+.iso-solid[data-seamless]>.iso-top{stroke:var(--anatomy-top)}
+.iso-solid[data-seamless][data-lit]>.iso-top{stroke:var(--anatomy-lit-top)}
+.iso-solid[data-seamless][data-lit]>.iso-shade{stroke:var(--anatomy-lit-shade)}
+.iso-solid[data-lit]>.iso-edge{stroke:var(--anatomy-lit)}
+.iso-halo{fill:var(--anatomy-halo);stroke:none;filter:blur(9px);opacity:var(--anatomy-halo-opacity);transform:translateY(3px)}
+.iso-line{fill:none;stroke:var(--anatomy-lo);stroke-width:var(--anatomy-weight);stroke-linecap:round;stroke-linejoin:round}
+.iso-line[data-tone="hi"]{stroke:var(--anatomy-hi)}
+.iso-line[data-tone="mid"]{stroke:var(--anatomy-mid)}
+.iso-line[data-tone="lo"]{stroke:var(--anatomy-lo)}
+.iso-line[data-tone="faint"]{stroke:var(--anatomy-faint)}
+.iso-line[data-tone="lit"]{stroke:var(--anatomy-lit)}
+.iso-line[data-tone="red"]{stroke:var(--anatomy-red)}
+.iso-line[data-tone="green"]{stroke:var(--anatomy-green)}
+.iso-line[data-tone="blue"]{stroke:var(--anatomy-blue)}
+.iso-line[data-dotted]{stroke-dasharray:.01 3.5;stroke-width:1}
+.iso-line[data-dashed]{stroke-dasharray:3 3}
+.iso-line[data-flow]{stroke-dasharray:2 6}
+.iso-wire-end{fill:var(--anatomy-paper);stroke:var(--anatomy-lo);stroke-width:var(--anatomy-weight)}
+.iso-wire[data-tone="hi"] .iso-wire-end{stroke:var(--anatomy-hi)}
+.iso-wire[data-tone="mid"] .iso-wire-end{stroke:var(--anatomy-mid)}
+.iso-wire[data-tone="faint"] .iso-wire-end{stroke:var(--anatomy-faint)}
+.iso-wire[data-tone="lit"] .iso-wire-end{stroke:var(--anatomy-lit)}
+.iso-dots circle{fill:var(--anatomy-dot);stroke:none;opacity:.32}
+.iso-dots[data-tone="hi"] circle{opacity:.85}
+.iso-dots[data-tone="mid"] circle{opacity:.45}
+.iso-dots[data-tone="lo"] circle{opacity:.22}
+.iso-dots[data-tone="faint"] circle{opacity:.12}
+.iso-face-text{fill:var(--anatomy-mid);font-family:var(--anatomy-mono);letter-spacing:.04em}
+.iso-face-text[data-tone="hi"]{fill:var(--anatomy-hi)}
+.iso-face-text[data-tone="lo"]{fill:var(--anatomy-lo)}
+.iso-face-text[data-tone="faint"]{fill:var(--anatomy-faint)}
+.tb-body{fill:var(--anatomy-shade-2);stroke:none}
+.tb-shine{fill:var(--anatomy-top);stroke:none}
+.tb-shade{fill:var(--anatomy-shade-0);stroke:none}
+.tb-ring{fill:none;stroke:var(--anatomy-lo);stroke-width:.45;stroke-linecap:butt;stroke-linejoin:round}
+.tb-ring[data-tone="mid"]{stroke:var(--anatomy-mid)}
+.tb-ring[data-tone="faint"]{stroke:var(--anatomy-faint)}
+.tb-ring[data-tone="hi"]{stroke:var(--anatomy-hi)}
+@keyframes iso-flow{to{stroke-dashoffset:-32}}
+@keyframes iso-pulse{0%,100%{opacity:.18}12%{opacity:1}40%{opacity:.18}}
+.iso-line[data-flow]{animation:iso-flow 1600ms linear infinite}
+.iso-dots circle[data-pulse]{animation:iso-pulse 1600ms steps(1,end) infinite;animation-delay:var(--pulse-at,0ms)}
+.iso-figure{margin:32px 0 36px}
+.iso-plate{position:relative;padding:52px 24px;border-radius:0;background:var(--anatomy-card);box-shadow:0 0 0 1px var(--anatomy-mid);--anatomy-paper:var(--anatomy-card)}
+.iso-plate-corners{position:absolute;inset:18px 20px;pointer-events:none}
+.iso-plate-corner{position:absolute;color:var(--anatomy-muted);font-family:var(--anatomy-mono);font-size:10.5px;line-height:1;letter-spacing:.04em;white-space:nowrap}
+.iso-plate-corner[data-corner="fig"]{top:0;left:0;color:var(--anatomy-text)}
+.iso-plate-corner[data-corner="title"]{top:0;right:0;text-transform:uppercase;letter-spacing:.1em}
+.iso-plate-corner[data-corner="hint"]{bottom:0;left:0;text-transform:uppercase;letter-spacing:.1em}
+.iso-plate-corner[data-corner="readout"]{right:0;bottom:0;color:var(--anatomy-text);font-variant-numeric:tabular-nums}
+.iso-plate .iso-svg{margin:0 auto}
+.iso-legend{display:grid;gap:8px;margin-top:12px;color:var(--anatomy-muted);font-size:13px;line-height:1.55}
+.iso-keys{display:flex;flex-wrap:wrap;gap:6px 18px}
+.iso-key{display:inline-flex;align-items:center;gap:7px}
+.iso-swatch{width:16px;height:10px;flex:none;overflow:visible}
+.iso-swatch path{fill:none;stroke:var(--anatomy-hi);stroke-width:1;vector-effect:non-scaling-stroke;stroke-linejoin:round;stroke-linecap:round}
+.iso-swatch[data-mark="raised"] path,.iso-swatch[data-mark="flat"] path{stroke:var(--anatomy-mid)}
+.iso-swatch[data-mark="lit"] path{stroke:var(--anatomy-lit)}
+.iso-swatch[data-mark="dim"] path{stroke:var(--anatomy-lo)}
+.iso-swatch[data-mark="dotted"] path{stroke-dasharray:.01 3;stroke-width:1.4}
+.iso-swatch[data-mark="dashed"] path{stroke-dasharray:3 2.5}
+.iso-swatch[data-mark="red"] path{stroke:var(--anatomy-red)}
+.iso-swatch[data-mark="green"] path{stroke:var(--anatomy-green)}
+.iso-swatch[data-mark="blue"] path{stroke:var(--anatomy-blue)}
+.iso-swatch-crease{stroke:var(--anatomy-lo)!important}
+@media (max-width:560px){.iso-plate{padding:48px 12px 70px}.iso-plate-corner[data-corner="hint"]{bottom:18px}}
+@media (prefers-reduced-motion:reduce){.iso-line[data-flow],.iso-dots circle[data-pulse]{animation:none}}
+`;
+
+{ // the figure's own scope, so nothing collides with the inlined kit
+const D = {"P":{"origin":[350,334.36232233174326],"scale":1.395486327737526,"azimuth":40,"elevation":38},"W":700,"H":500,"MODEL":{"size":[150,150,50.5],"pflops":1,"memGB":128,"params":200,"linked":405,"memChips":8,"fans":2},"BRAND":{"name":"DGX Spark","heading":"The NVIDIA DGX Spark","maker":"NVIDIA","color":"#76b900","logo":"M38 20L97 20L97 80L38 80C23 80 10 68 2 50C10 32 23 20 38 20ZM75 37C60 27 33 28 13 50C33 72 60 73 75 63C63 67 42 65 31 50C42 35 63 33 75 37ZM60 50A7.5 7.5 0 1 0 45 50A7.5 7.5 0 1 0 60 50Z"},"AZ":40,"EL":38,"PSI":-34,"FRAME":[[0.9612616959383187,-0.2756373558169993,0],[-0.2756373558169991,-0.9612616959383189,0],[0,0,1]],"ORIGIN":[0,0,5.4],"dims":{"W":150,"D":150,"H":50.5,"T":2.2,"R":7,"FOOT":2.4,"MAT_T":3},"SHADOW":[-0.06,0.17]};
+// Shared runtime for the figures, inlined after the kit (iso, ring, lineOnTop, translateAlong exist).
+// A figure's live.js defines its state, UPDATE and draw, then calls tour({...}).
+
+const P = D.P;
+const svg = document.querySelector(".stage svg");
+const part = (name) => svg.querySelector(`[data-part="${name}"]`);
+const slot = (name) => svg.querySelector(`[data-slot="${name}"]`);
+const chip = (name) => document.querySelector(`[data-chip="${name}"]`);
+const chipHot = (name, on) => document.querySelector(`[data-chipbox="${name}"]`)?.toggleAttribute("data-hot", !!on);
+const still = matchMedia("(prefers-reduced-motion: reduce)");
+const f1 = (n) => Math.round(n * 10) / 10;
+const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+const ease = (x) => { const t = clamp(x); return t * t * (3 - 2 * t); };
+const seg = (u, a, b) => clamp((u - a) / (b - a));
+const lerp = (a, b, t) => a + (b - a) * t;
+const lerp3 = (a, b, t) => a.map((v, i) => lerp(v, b[i], t));
+const pathOf = (pts, close = true) => (pts.length ? "M" + pts.map((p) => f1(p[0]) + " " + f1(p[1])).join("L") + (close ? "Z" : "") : "");
+const at = (p) => iso(p, P);
+const toward = towardViewer(P);
+function hull(points) {
+  const pts = [...points].sort((a, b) => a[0] - b[0] || a[1] - b[1]);
+  if (pts.length < 3) return pts;
+  const cross = (o, a, b) => (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0]);
+  const lo = [];
+  for (const p of pts) { while (lo.length >= 2 && cross(lo[lo.length - 2], lo[lo.length - 1], p) <= 0) lo.pop(); lo.push(p); }
+  const hi = [];
+  for (const p of pts.reverse()) { while (hi.length >= 2 && cross(hi[hi.length - 2], hi[hi.length - 1], p) <= 0) hi.pop(); hi.push(p); }
+  return lo.slice(0, -1).concat(hi.slice(0, -1));
+}
+const circle3 = (cx, cy, r, z, n = 36) => Array.from({ length: n }, (_, i) => { const a = (i / n) * Math.PI * 2; return [cx + r * Math.cos(a), cy + r * Math.sin(a), z]; });
+const cylPath = (cx, cy, r, z0, z1, n = 36) => pathOf(hull([...circle3(cx, cy, r, z0, n), ...circle3(cx, cy, r, z1, n)].map(at)));
+const discPath = (cx, cy, r, z, n = 44) => pathOf(circle3(cx, cy, r, z, n).map(at));
+// a circle in a vertical plane: axis "x" means the circle lies in the plane x = c[0]
+const vcircle = (c, r, axis = "x", n = 36) => Array.from({ length: n }, (_, i) => { const a = (i / n) * Math.PI * 2; return axis === "x" ? [c[0], c[1] + r * Math.cos(a), c[2] + r * Math.sin(a)] : [c[0] + r * Math.cos(a), c[1], c[2] + r * Math.sin(a)]; });
+// a straight rod between two world points, as a screen quad with round ends; r in world units
+function rodPath(a, b, r) {
+  const A = at(a), B = at(b), KS = D.KS;
+  const dx = B[0] - A[0], dy = B[1] - A[1], len = Math.hypot(dx, dy) || 1;
+  const nx = (-dy / len) * r * KS, ny = (dx / len) * r * KS, R = r * KS;
+  return `M${f1(A[0] + nx)} ${f1(A[1] + ny)}L${f1(B[0] + nx)} ${f1(B[1] + ny)}A${f1(R)} ${f1(R)} 0 0 1 ${f1(B[0] - nx)} ${f1(B[1] - ny)}L${f1(A[0] - nx)} ${f1(A[1] - ny)}A${f1(R)} ${f1(R)} 0 0 1 ${f1(A[0] + nx)} ${f1(A[1] + ny)}Z`;
+}
+const mixHex = (a, b, t) => {
+  const h = (x) => [1, 3, 5].map((i) => parseInt(x.slice(i, i + 2), 16));
+  const A = h(a), B = h(b);
+  return "#" + A.map((v, i) => Math.round(v + (B[i] - v) * t).toString(16).padStart(2, "0")).join("");
+};
+const along = (pts, u) => {
+  const n = pts.length - 1;
+  const x = clamp(u) * n;
+  const i = Math.min(n - 1, Math.floor(x));
+  return lerp3(pts[i], pts[i + 1], ease(x - i));
+};
+const lapseEl = document.querySelector("[data-lapse]");
+function setLapse(text) {
+  if (text) { if (lapseEl.textContent !== text) lapseEl.textContent = text; lapseEl.setAttribute("data-on", ""); } else lapseEl.removeAttribute("data-on");
+}
+const soundsG = part("sounds");
+function setWord(w) {
+  if (!w) { if (soundsG.firstChild) soundsG.textContent = ""; return; }
+  const [x, y] = at(w.p);
+  let t = soundsG.querySelector("text");
+  if (!t) { t = document.createElementNS("http://www.w3.org/2000/svg", "text"); t.setAttribute("class", "word"); soundsG.appendChild(t); }
+  if (t.textContent !== w.text) t.textContent = w.text;
+  t.setAttribute("x", f1(x)); t.setAttribute("y", f1(y));
+  t.setAttribute("font-size", w.size || 15);
+}
+const setText = (el, text) => { if (el && el.textContent !== text) el.textContent = text; };
+
+// Steps, buttons, the idle tour, the drawn cursor and window.seek(t) for frame-exact recording.
+function tour({ STEPS, ORDER, update, reset, onBegin = () => {}, onFinish = () => {}, draw, paint, probe = () => null, gap = 0.7, lead = 0.2, tail = 1.0 }) {
+  const buttons = [...document.querySelectorAll("[data-step]")];
+  const hintEl = document.querySelector("[data-hint]");
+  const INTRO = hintEl.textContent;
+  let next = 0, run = null, idle = 0, last = 0, auto = true;
+  const setButtons = () => buttons.forEach((b, i) => {
+    b.disabled = !!run || i !== next;
+    b.toggleAttribute("data-on", !!run && ORDER[i] === run.id);
+    b.toggleAttribute("data-done", !run && i < next && next !== 0);
+  });
+  const begin = (id) => { run = { id, t: 0 }; onBegin(id); hintEl.textContent = STEPS[id].hint; };
+  const finish = () => { const id = run.id; update(id, 1); onFinish(id); run = null; next = (next + 1) % ORDER.length; idle = 0; setButtons(); };
+  const start = (id) => { if (run || ORDER[next] !== id) return; begin(id); setButtons(); if (still.matches) finish(); };
+  // two modes: Auto runs the steps on a loop, Manual waits for the visitor to press each one in order
+  const modeEls = [...document.querySelectorAll("[data-mode]")];
+  const INTRO_MANUAL = INTRO.split(/(?<=[.?!])\s+/)[0] + " Press the steps in order.";
+  const setAuto = (on, save = true) => {
+    auto = on;
+    idle = 0;
+    document.body.classList.toggle("manual", !on);
+    modeEls.forEach((m) => m.setAttribute("aria-checked", String((m.dataset.mode === "auto") === on)));
+    if (save) try { localStorage.setItem("fig-mode2", on ? "auto" : "manual"); } catch {}
+  };
+  const restart = () => { reset(); run = null; next = 0; hintEl.textContent = auto ? INTRO : INTRO_MANUAL; idle = 0; setButtons(); };
+  modeEls.forEach((m) => m.addEventListener("click", () => {
+    const on = m.dataset.mode === "auto";
+    if (on === auto) return;
+    setAuto(on);
+    // Manual starts the visitor from step 1; Auto picks up from wherever the machine stands
+    if (!on) restart(); else idle = gap;
+  }));
+  buttons.forEach((b) => b.addEventListener("click", () => { if (auto) setAuto(false); start(b.dataset.step); }));
+  // a press on a step that is still greyed out also switches to Manual once the running step ends
+  document.querySelector(".steps")?.addEventListener("pointerdown", () => { if (auto) setAuto(false); });
+  document.querySelector("[data-restart]")?.addEventListener("click", restart);
+  document.addEventListener("keydown", (e) => {
+    if (e.target.closest?.("button,input,a,select,textarea")) return;
+    if (e.key === " " || e.key === "Enter") { e.preventDefault(); setAuto(false); start(ORDER[next]); }
+  });
+  function tick(now) {
+    const dt = last ? Math.min((now - last) / 1000, 1 / 20) : 1 / 60;
+    last = now;
+    if (run) { run.t += dt; const u = run.t / STEPS[run.id].dur; update(run.id, Math.min(1, u)); if (u >= 1) finish(); }
+    else if (auto && !still.matches) { idle += dt; if (idle > gap) start(ORDER[next]); }
+    draw(now / 1000);
+    requestAnimationFrame(tick);
+  }
+  const PLAN = [];
+  { let t = lead; for (const id of ORDER) { t += gap; PLAN.push({ id, t0: t, t1: t + STEPS[id].dur }); t += STEPS[id].dur; } }
+  const TOTAL = PLAN[PLAN.length - 1].t1 + tail;
+  const cursor = document.createElement("div");
+  cursor.className = "cursor";
+  cursor.innerHTML = '<svg viewBox="0 0 24 24" width="28" height="28"><path d="M3 2l15.5 9.2-6.6 1.5 3.4 7.4-3.1 1.4-3.3-7.4L3 18.6z" fill="#fff" stroke="#23263a" stroke-width="1.6" stroke-linejoin="round"/></svg>';
+  const aim = (i) => { const r = buttons[i].getBoundingClientRect(); return [r.left + r.width * 0.62, r.top + r.height * 0.55]; };
+  const restPoint = () => { const r = document.querySelector(".stage").getBoundingClientRect(); return [r.left + r.width * 0.55, r.top + r.height * 0.62]; };
+  function placeCursor(time) {
+    let from = restPoint(), to = from, u = 0, press = -1;
+    for (let i = 0; i < PLAN.length; i++) {
+      const p = PLAN[i];
+      const leave = i ? PLAN[i - 1].t1 - 0.35 : 0.05, arrive = p.t0 - 0.16;
+      if (time < leave) break;
+      from = i ? aim(i - 1) : restPoint();
+      to = aim(i);
+      u = ease((time - leave) / (arrive - leave));
+      if (time > p.t0 - 0.12 && time < p.t0 + 0.08) press = i;
+    }
+    const x = lerp(from[0], to[0], u) + Math.sin(u * Math.PI) * 18, y = lerp(from[1], to[1], u) - Math.sin(u * Math.PI) * 10;
+    cursor.style.transform = `translate(${f1(x - 3.3)}px, ${f1(y - 2.2)}px) scale(${press >= 0 ? 0.86 : 1})`;
+    buttons.forEach((b, i) => b.toggleAttribute("data-press", i === press));
+  }
+  function seekTo(time) {
+    reset();
+    run = null;
+    next = 0;
+    hintEl.textContent = INTRO;
+    for (const p of PLAN) {
+      if (time < p.t0) break;
+      begin(p.id);
+      if (time >= p.t1) { run.t = STEPS[p.id].dur; finish(); continue; }
+      run.t = time - p.t0;
+      update(p.id, run.t / STEPS[p.id].dur);
+      break;
+    }
+    setButtons();
+    draw(time);
+    placeCursor(time);
+  }
+  // colour swatches
+  document.querySelectorAll("[data-swatch]").forEach((sw) => sw.addEventListener("click", () => {
+    document.querySelectorAll("[data-swatch]").forEach((o) => o.toggleAttribute("data-on", o === sw));
+    paintBody(sw.dataset.swatch);
+  }));
+  function paintBody(c) {
+    const t = (x) => ({ f: x, t: mixHex(x, "#ffffff", 0.42), s3: mixHex(x, "#ffffff", 0.18), s1: mixHex(x, "#1b1d2c", 0.13), s0: mixHex(x, "#1b1d2c", 0.26) });
+    const set = (name, x) => { const v = t(x); const s = document.body.style; s.setProperty(`--${name}`, v.f); s.setProperty(`--${name}-t`, v.t); s.setProperty(`--${name}-3`, v.s3); s.setProperty(`--${name}-1`, v.s1); s.setProperty(`--${name}-0`, v.s0); };
+    set("body", c);
+    set("alt", paint ? paint(c) : c);
+  }
+  paintBody(document.querySelector("[data-swatch]").dataset.swatch);
+  reset();
+  setButtons();
+  draw(0);
+  // probe() hands the figure state to tools outside the page (videos/_kit/timeline.mjs samples it for the score)
+  window.__fig = { start, seek: seekTo, total: TOTAL, plan: PLAN, get state() { return probe(); } };
+  if (location.search.includes("render")) {
+    document.body.classList.add("render");
+    document.body.appendChild(cursor);
+    window.DURATION = TOTAL;
+    window.seek = seekTo;
+    seekTo(0);
+  } else {
+    // Manual is the default; Auto only when the visitor picked it on an earlier page
+    let saved = null;
+    try { saved = localStorage.getItem("fig-mode2"); } catch {}
+    // ?auto in the address starts the tour by itself (pages shown side by side), without touching the saved choice
+    setAuto(/[?&]auto\b/.test(location.search) || saved === "auto", false);
+    hintEl.textContent = auto ? INTRO : INTRO_MANUAL;
+    requestAnimationFrame(tick);
+  }
+}
+
+// Live code for the DGX Spark. Runs inside the figure scope after _kit/runtime.js.
+// The box is real 3D: every part lives in the box's own frame (x to the right of someone facing the foam front,
+// y toward the back, z up from the underside), sits on one layer and is placed every frame by that layer's offset.
+// Flat faces carry their printing as SVG drawn once in the face's plane and placed by a 2 × 2 screen matrix; walls
+// are rebuilt from their facets every frame and shaded by facing; parts are painted back to front by a sort on their
+// boxes (a separating axis decides each overlapping pair). Every frame is a pure function of the pose.
+const M = D.MODEL;
+const BRAND = D.BRAND;
+const DM = D.dims;
+const BW = DM.W, BDP = DM.D, BH = DM.H, WT = DM.T, CRAD = DM.R, FOOT = DM.FOOT;
+const HW = BW / 2, HD = BDP / 2;
+const DEG = Math.PI / 180, TAU = Math.PI * 2;
+
+// ---------------------------------------------------------------- vectors and the camera
+const add3 = (a, b) => [a[0] + b[0], a[1] + b[1], a[2] + b[2]];
+const sub3 = (a, b) => [a[0] - b[0], a[1] - b[1], a[2] - b[2]];
+const mul3 = (a, s) => [a[0] * s, a[1] * s, a[2] * s];
+const dot3 = (a, b) => a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
+const unit3 = (a) => { const l = Math.hypot(a[0], a[1], a[2]) || 1; return [a[0] / l, a[1] / l, a[2] / l]; };
+const CAM = cameraOf(P);
+const SA = CAM.sinA, CA = CAM.cosA, SE = CAM.sinE, CE = CAM.cosE, KK = CAM.k, OX = P.origin[0], OY = P.origin[1];
+const pr = (p) => [OX + (p[0] * SA - p[1] * CA) * KK, OY + ((p[0] * CA + p[1] * SA) * SE - p[2] * CE) * KK];
+const prv = (v) => [(v[0] * SA - v[1] * CA) * KK, ((v[0] * CA + v[1] * SA) * SE - v[2] * CE) * KK];
+const VIEW = [CA * CE, SA * CE, SE];
+const LIGHT = unit3([-SA, CA, 1.2]);
+// the box's frame: local (x, y, z) → screen, and the view and the light in local terms
+const [EX, EY, EZ] = D.FRAME;
+const MX = prv(EX), MY = prv(EY), MZ = prv(EZ), O0 = pr(D.ORIGIN);
+const scr = (p) => [O0[0] + p[0] * MX[0] + p[1] * MY[0] + p[2] * MZ[0], O0[1] + p[0] * MX[1] + p[1] * MY[1] + p[2] * MZ[1]];
+const scv = (v) => [v[0] * MX[0] + v[1] * MY[0] + v[2] * MZ[0], v[0] * MX[1] + v[1] * MY[1] + v[2] * MZ[1]];
+const TV = [dot3(VIEW, EX), dot3(VIEW, EY), dot3(VIEW, EZ)];
+const LT = unit3([dot3(LIGHT, EX), dot3(LIGHT, EY), dot3(LIGHT, EZ)]);
+const ldepth = (p) => dot3(p, TV);
+const AX = [1, 0, 0], AY = [0, 1, 0], AZ = [0, 0, 1];
+const NEG = (v) => [-v[0], -v[1], -v[2]];
+
+// ---------------------------------------------------------------- strings
+const r2 = (n) => Math.round(n * 100) / 100;
+const r1 = (n) => Math.round(n * 10) / 10;
+const P2 = (p) => r2(p[0]) + " " + r2(p[1]);
+const dPath = (pts) => { let s = "M" + P2(pts[0]); for (let i = 1; i < pts.length; i++) s += "L" + P2(pts[i]); return s + "Z"; };
+const dOpen = (pts) => { let s = "M" + P2(pts[0]); for (let i = 1; i < pts.length; i++) s += "L" + P2(pts[i]); return s; };
+const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+// face coordinates: u to the right and v up as seen from outside the face; SVG y = −v
+const loc = (pts, close = true) => "M" + pts.map(([u, v]) => r2(u) + " " + r2(-v)).join("L") + (close ? "Z" : "");
+function rrPts(cx, cy, w, h, r, per = 6) {
+  r = Math.min(r, w / 2, h / 2);
+  const out = [];
+  for (const [ox, oy, a0] of [[w / 2 - r, -h / 2 + r, -90], [w / 2 - r, h / 2 - r, 0], [-w / 2 + r, h / 2 - r, 90], [-w / 2 + r, -h / 2 + r, 180]])
+    for (let i = 0; i <= per; i++) { const a = (a0 + (90 * i) / per) * DEG; out.push([cx + ox + r * Math.cos(a), cy + oy + r * Math.sin(a)]); }
+  return out;
+}
+const circPts = (cx, cy, r, n = 28) => Array.from({ length: n }, (_, i) => { const a = (i / n) * TAU; return [cx + r * Math.cos(a), cy + r * Math.sin(a)]; });
+const rectPts = (x0, y0, x1, y1) => [[x0, y0], [x1, y0], [x1, y1], [x0, y1]];
+const rr = (u, v, w, h, r, per = 4) => loc(rrPts(u, v, w, h, r, per));
+const rect = (u, v, w, h, cls, extra = "") => `<rect class="${cls}" x="${r2(u - w / 2)}" y="${r2(-v - h / 2)}" width="${r2(w)}" height="${r2(h)}"${extra}/>`;
+const circ = (u, v, r, cls, extra = "") => `<circle class="${cls}" cx="${r2(u)}" cy="${r2(-v)}" r="${r2(r)}"${extra}/>`;
+const tx = (u, v, s, size, cls, anchor = "middle", extra = "") => `<text class="${cls}" x="${r2(u)}" y="${r2(-v)}" font-size="${size}" text-anchor="${anchor}"${extra}>${esc(s)}</text>`;
+const lineD = (pts) => loc(pts, false);
+const logoAt = (u, v, h, cls, extra = "") => { const k = h / 100; return `<g transform="matrix(${r2(k)} 0 0 ${r2(k)} ${r2(u - 50 * k)} ${r2(-v - 50 * k)})"><path d="${BRAND.logo}" class="${cls}"${extra}/></g>`; };
+// the brand's mark at full contrast: the eye-white filled in, the green over it, a polish, an inked edge
+const LOGO_BACK = BRAND.logo.split("Z")[0] + "Z";
+function brandMark(u, v, h) {
+  const k = h / 100, T = `matrix(${r2(k)} 0 0 ${r2(k)} ${r2(u - 50 * k)} ${r2(-v - 50 * k)})`;
+  return `<g transform="${T}"><path class="logo-back" d="${LOGO_BACK}"/><path class="logo" d="${BRAND.logo}" fill="${BRAND.color}"/><path class="logo" d="${BRAND.logo}" fill="url(#dg-logogloss)"/><path class="logo-ol" d="${BRAND.logo}"/><path class="logo-ol2" d="${LOGO_BACK}"/></g>`;
+}
+function rng(seed) { let a = seed >>> 0; return () => { a = (a + 0x6d2b79f5) >>> 0; let t = a; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
+let screwN = 0;
+function screwAt(u, v, r = 1) {
+  const a = (31 + screwN++ * 67) * DEG, c = Math.cos(a) * r * 0.62, s = Math.sin(a) * r * 0.62;
+  return circ(u, v, r, "screw") + `<path class="slot" d="${lineD([[u - c, v - s], [u + c, v + s]])}${lineD([[u + s, v - c], [u - s, v + c]])}"/>` + circ(u - r * 0.35, v + r * 0.35, r * 0.18, "hi");
+}
+
+// ---------------------------------------------------------------- materials, shaded by facing
+const rgbOf = (h) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16));
+const hexOf = (c) => "#" + c.map((v) => Math.round(Math.max(0, Math.min(255, v))).toString(16).padStart(2, "0")).join("");
+const WHITE = [255, 255, 255], DARKC = [27, 29, 44];
+const MATS = {
+  gold: { c: "#cbae7c", hi: 0.5, lo: 0.42 }, // the champagne-gold sleeve
+  cut: { c: "#ead7ad", hi: 0.25, lo: 0.15 }, // the sleeve's cut face in the cutaway
+  foam: { c: "#cc9f55", hi: 0.34, lo: 0.3 }, // the metal foam
+  pcb: { c: "#2c5a46", hi: 0.26, lo: 0.3 },
+  sub: { c: "#4e5c40", hi: 0.3, lo: 0.3 }, // the chip's substrate
+  die: { c: "#30333f", hi: 0.34, lo: 0.3 },
+  mem: { c: "#2b2d38", hi: 0.3, lo: 0.3 },
+  ic: { c: "#33353f", hi: 0.3, lo: 0.3 },
+  plastic: { c: "#2f313c", hi: 0.3, lo: 0.3 },
+  ssd: { c: "#24262e", hi: 0.3, lo: 0.3 },
+  alu: { c: "#d0d5dc", hi: 0.5, lo: 0.32 },
+  fin: { c: "#c8cdd5", hi: 0.5, lo: 0.34 },
+  copper: { c: "#c47c4c", hi: 0.42, lo: 0.3 },
+  steel: { c: "#bec5ce", hi: 0.5, lo: 0.32 },
+  choke: { c: "#585b66", hi: 0.3, lo: 0.3 },
+  can: { c: "#9aa1ab", hi: 0.5, lo: 0.3 },
+  rubber: { c: "#44465a", hi: 0.28, lo: 0.3 },
+  white: { c: "#efece3", hi: 0.4, lo: 0.2 },
+  felt: { c: "#a9baa1", hi: 0.22, lo: 0.25 },
+  cable: { c: "#3b3d4a", hi: 0.3, lo: 0.3 },
+};
+for (const m of Object.values(MATS)) m.rgb = rgbOf(m.c);
+const shadeCache = new Map();
+function shade(mat, n) {
+  const m = MATS[mat];
+  const q = Math.round((dot3(n, LT) + 1) * 150) / 150 - 1;
+  const key = mat + q;
+  let v = shadeCache.get(key);
+  if (v) return v;
+  const w = q >= 0 ? m.hi * Math.min(1, q / 0.8) ** 1.4 : 0;
+  const k = q < 0 ? m.lo * Math.min(1, -q) ** 0.8 : 0;
+  v = hexOf(m.rgb.map((x, i) => x + (WHITE[i] - x) * w + (DARKC[i] - x) * k));
+  shadeCache.set(key, v);
+  return v;
+}
+
+// ---------------------------------------------------------------- parts
+const NS = "http://www.w3.org/2000/svg";
+const boxG = part("box");
+const ITEMS = [];
+let NID = 0;
+function makeEl(html) { const g = document.createElementNS(NS, "g"); g.innerHTML = html; return g; }
+const show = (el, on) => { const v = on ? "" : "none"; if (el.style.display !== v) el.style.display = v; };
+// a face's 2 × 2 screen matrix: face coordinates (sx, sy = −v) → screen, for a plane through o spanned by U and V
+function faceM(U, V, o, back = false) {
+  const u = scv(U), v = scv(V), O = scr(o);
+  const s = back ? -1 : 1;
+  return `matrix(${(s * u[0]).toFixed(4)} ${(s * u[1]).toFixed(4)} ${(-v[0]).toFixed(4)} ${(-v[1]).toFixed(4)} ${O[0].toFixed(3)} ${O[1].toFixed(3)})`;
+}
+const bbOf = (pts, pad = 0) => { const b = [1e9, 1e9, 1e9, -1e9, -1e9, -1e9]; for (const p of pts) for (let i = 0; i < 3; i++) { if (p[i] - pad < b[i]) b[i] = p[i] - pad; if (p[i] + pad > b[i + 3]) b[i + 3] = p[i] + pad; } return b; };
+const FACES = {
+  top: (b) => ({ o: [(b[0] + b[3]) / 2, (b[1] + b[4]) / 2, b[5]], U: AX, V: AY, n: AZ }),
+  front: (b) => ({ o: [(b[0] + b[3]) / 2, b[1], (b[2] + b[5]) / 2], U: AX, V: AZ, n: NEG(AY) }),
+  right: (b) => ({ o: [b[3], (b[1] + b[4]) / 2, (b[2] + b[5]) / 2], U: AY, V: AZ, n: AX }),
+  back: (b) => ({ o: [(b[0] + b[3]) / 2, b[4], (b[2] + b[5]) / 2], U: NEG(AX), V: AZ, n: AY }),
+  left: (b) => ({ o: [b[0], (b[1] + b[4]) / 2, (b[2] + b[5]) / 2], U: NEG(AY), V: AZ, n: NEG(AX) }),
+};
+
+// A prism: a polygon pts (counter-clockwise in its U, V plane) swept along A from h[0] to h[1]. Its walls are
+// rebuilt and shaded every frame; the cap at h[1] carries `det`, the cap at h[0] `detBack` (seen from its own side),
+// and `decals` sit on any other face. Its box (in the layer's frame) drives the depth sort.
+function solid(o) {
+  const U = o.U || AX, V = o.V || AY, A = o.A || AZ, org = o.org || [0, 0, 0];
+  const pts = o.pts, [h0, h1] = o.h;
+  const P3 = (p, h) => [org[0] + p[0] * U[0] + p[1] * V[0] + h * A[0], org[1] + p[0] * U[1] + p[1] * V[1] + h * A[1], org[2] + p[0] * U[2] + p[1] * V[2] + h * A[2]];
+  const ring0 = pts.map((p) => P3(p, h0)), ring1 = pts.map((p) => P3(p, h1));
+  const n = pts.length;
+  const nrm = pts.map((p, i) => { const q = pts[(i + 1) % n]; const ex = q[0] - p[0], ey = q[1] - p[1], ln = Math.hypot(ex, ey) || 1; return [(ey / ln) * U[0] - (ex / ln) * V[0], (ey / ln) * U[1] - (ex / ln) * V[1], (ey / ln) * U[2] - (ex / ln) * V[2]]; });
+  const bb = bbOf([...ring0, ...ring1]);
+  const decals = (o.decals || []).map((d) => (typeof d.face === "string" ? { ...FACES[d.face](bb), svg: d.svg } : d));
+  const capCls = o.capCls || "capf";
+  const el = makeEl(`<g data-gl></g><g data-w></g><g data-c1>${o.noCap1 ? "" : `<path class="${capCls}" d="${loc(pts)}"/>`}${o.det || ""}</g><g data-c0>${o.noCap0 ? "" : `<path class="${capCls}" d="${loc(pts.map(([u, v]) => [-u, v]))}"/>`}${o.detBack || ""}</g>` +
+    decals.map((d, i) => `<g data-dk="${i}">${d.svg}</g>`).join("") + `<g data-rim></g>`);
+  const it = { n: NID++, kind: "solid", layer: "bottom", tags: [], ...o, U, V, A, bb, el, decals };
+  it.tags = o.tags || [];
+  it.gl = el.querySelector("[data-gl]"); it.w = el.querySelector("[data-w]"); it.rim = el.querySelector("[data-rim]");
+  it.c1 = el.querySelector("[data-c1]"); it.c0 = el.querySelector("[data-c0]");
+  it.f1 = o.noCap1 ? null : it.c1.firstChild; it.f0 = o.noCap0 ? null : it.c0.firstChild;
+  it.dks = [...el.querySelectorAll("[data-dk]")];
+  const sec = [...ring0, ...ring1];
+  it.bbCorners = () => sec; // the true section points, for outlines round several pieces
+  it.draw = (off) => {
+    const a = ring0.map((p) => scr(add3(p, off))), b = ring1.map((p) => scr(add3(p, off)));
+    it.sil = hull([...a, ...b]);
+    let s = it.ol !== false ? `<path class="ol2" d="${dPath(it.sil)}"/>` : "";
+    for (let i = 0; i < n; i++) {
+      const nl = nrm[i];
+      if (dot3(nl, TV) <= 1e-4) continue;
+      const j = (i + 1) % n, col = shade(it.mat, nl);
+      s += `<path d="${dPath([a[i], a[j], b[j], b[i]])}" fill="${col}" stroke="${col}" stroke-width=".6"/>`;
+    }
+    if (it.extra) s += it.extra(off);
+    it.w.innerHTML = s;
+    const f = dot3(A, TV), capMat = it.capMat || it.mat;
+    const on1 = f > 1e-4, on0 = f < -1e-4;
+    show(it.c1, on1);
+    show(it.c0, on0);
+    if (on1) { it.c1.setAttribute("transform", faceM(U, V, add3(P3([0, 0], h1), off))); if (it.f1) it.f1.setAttribute("fill", shade(capMat, A)); }
+    if (on0) { it.c0.setAttribute("transform", faceM(U, V, add3(P3([0, 0], h0), off), true)); if (it.f0) it.f0.setAttribute("fill", shade(capMat, NEG(A))); }
+    it.decals.forEach((d, i) => {
+      const vis = dot3(d.n, TV) > 0.01;
+      show(it.dks[i], vis);
+      if (vis) it.dks[i].setAttribute("transform", faceM(d.U, d.V, add3(d.o, off)));
+    });
+  };
+  if (!o.free) ITEMS.push(it);
+  return it;
+}
+// an axis-aligned block, rounded in plan by r
+const block = (o) => solid({ ...o, pts: o.r ? rrPts((o.x[0] + o.x[1]) / 2, (o.y[0] + o.y[1]) / 2, o.x[1] - o.x[0], o.y[1] - o.y[0], o.r, o.per || 3) : rectPts(o.x[0], o.y[0], o.x[1], o.y[1]), h: o.z });
+const cyl = (o) => solid({ ...o, pts: circPts(o.c[0], o.c[1], o.rad, o.seg || 28), h: o.z });
+
+// A round bar between two points (heat pipes): a capsule on screen with a shine along it.
+function rod(o) {
+  const { a, b, r } = o;
+  const it = { n: NID++, kind: "rod", layer: "cool", tags: [], ...o, bb: bbOf([a, b], r), el: makeEl("<g data-gl></g><g data-w></g><g data-rim></g>") };
+  it.gl = it.el.querySelector("[data-gl]"); it.w = it.el.querySelector("[data-w]"); it.rim = it.el.querySelector("[data-rim]");
+  it.draw = (off) => {
+    const A = scr(add3(a, off)), B = scr(add3(b, off)), R = r * KK;
+    const dx = B[0] - A[0], dy = B[1] - A[1], len = Math.hypot(dx, dy) || 1;
+    const nx = (-dy / len) * R, ny = (dx / len) * R;
+    const cap = (rr_) => `M${r2(A[0] + nx * rr_)} ${r2(A[1] + ny * rr_)}L${r2(B[0] + nx * rr_)} ${r2(B[1] + ny * rr_)}A${r2(R * rr_)} ${r2(R * rr_)} 0 0 1 ${r2(B[0] - nx * rr_)} ${r2(B[1] - ny * rr_)}L${r2(A[0] - nx * rr_)} ${r2(A[1] - ny * rr_)}A${r2(R * rr_)} ${r2(R * rr_)} 0 0 1 ${r2(A[0] + nx * rr_)} ${r2(A[1] + ny * rr_)}Z`;
+    // which side of the bar faces the light: the screen normal that points up-left
+    const sgn = nx * -0.6 + ny * -0.8 > 0 ? 1 : -1;
+    const sh = (k) => `M${r2(A[0] + nx * k * sgn)} ${r2(A[1] + ny * k * sgn)}L${r2(B[0] + nx * k * sgn)} ${r2(B[1] + ny * k * sgn)}`;
+    const ux = dx / len, uy = dy / len;
+    it.sil = [A, B];
+    it.capD = cap(1);
+    it.poly = [[A[0] - ux * R + nx, A[1] - uy * R + ny], [B[0] + ux * R + nx, B[1] + uy * R + ny], [B[0] + ux * R - nx, B[1] + uy * R - ny], [A[0] - ux * R - nx, A[1] - uy * R - ny]];
+    it.w.innerHTML = `<path class="ol2" d="${cap(1)}"/><path d="${cap(1)}" fill="${it.tintFn ? it.tintFn() : shade(o.mat, [0, 0, 1])}"/><path d="${sh(-0.55)}" stroke="${shade(o.mat, [0, 0, -1])}" stroke-width="${r2(R * 0.7)}" stroke-linecap="round" fill="none" style="vector-effect:none"/><path d="${sh(0.42)}" stroke="#fff" stroke-opacity=".5" stroke-width="${r2(R * 0.28)}" stroke-linecap="round" fill="none" style="vector-effect:none"/>`;
+  };
+  ITEMS.push(it);
+  return it;
+}
+// a bent bar: a polyline with rounded corners of radius br, cut into straight pieces for the sort
+function pipe(pts, r, br, o) {
+  const path = [pts[0]];
+  for (let i = 1; i < pts.length - 1; i++) {
+    const p = pts[i], d0 = unit3(sub3(p, pts[i - 1])), d1 = unit3(sub3(pts[i + 1], p));
+    const a = sub3(p, mul3(d0, br)), b = add3(p, mul3(d1, br));
+    for (let k = 0; k <= 4; k++) { const t = k / 4; const q = add3(add3(mul3(a, (1 - t) * (1 - t)), mul3(p, 2 * t * (1 - t))), mul3(b, t * t)); path.push(q); }
+  }
+  path.push(pts[pts.length - 1]);
+  const out = [];
+  for (let i = 0; i < path.length - 1; i++) out.push(rod({ ...o, a: path[i], b: path[i + 1], r }));
+  return out;
+}
+
+// ================================================================= THE BOX
+const TOPZ = BH, SIDEZ = BH - CRAD;
+const FOAM = { x: HW - WT - 0.4, z0: 0.4, z1: BH - WT - 0.4, r: CRAD - WT - 0.4, y0: HD - 4, y1: HD - 1.5 };
+// the foam ends' outline in their own (u, v) plane, u across, v up; rounded at the top like the sleeve
+const foamPts = (() => {
+  const { x, z0, z1, r } = FOAM, out = [[-x, z0], [x, z0]];
+  for (let i = 0; i <= 6; i++) { const a = (i / 6) * 90 * DEG; out.push([x - r + r * Math.cos(a), z1 - r + r * Math.sin(a)]); }
+  for (let i = 0; i <= 6; i++) { const a = (90 + (i / 6) * 90) * DEG; out.push([-x + r + r * Math.cos(a), z1 - r + r * Math.sin(a)]); }
+  return out;
+})();
+const inFoam = (u, v, m) => Math.abs(u) <= FOAM.x - m && v >= FOAM.z0 + m && v <= FOAM.z1 - m && !(Math.abs(u) > FOAM.x - FOAM.r && v > FOAM.z1 - FOAM.r && Math.hypot(Math.abs(u) - (FOAM.x - FOAM.r), v - (FOAM.z1 - FOAM.r)) > FOAM.r - m);
+
+// ---- the ports along the back edge of the board (x ranges, z ranges); the back foam is cut round them
+const PORTS = {
+  hdmi: { x: [-66, -51.5], y: [62, HD - 0.8], z: [6.6, 12.6] },
+  q1: { x: [-47, -28], y: [42, HD - 0.8], z: [6.6, 16] },
+  q2: { x: [-24.5, -5.5], y: [42, HD - 0.8], z: [6.6, 16] },
+  rj: { x: [-1, 15], y: [56, HD - 0.8], z: [6.6, 20] },
+  usb: [22, 31.2, 40.4, 49.6].map((c) => ({ x: [c - 4.4, c + 4.4], y: [66, HD - 0.8], z: [6.6, 10] })),
+  pwr: { c: [61, 70], r: 3.2, z: [6.6, 11.5] },
+};
+const CUTS = [PORTS.hdmi, PORTS.q1, PORTS.q2, PORTS.rj, ...PORTS.usb].map((p) => ({ x: [p.x[0] - 0.8, p.x[1] + 0.8], z: [p.z[0] - 0.8, p.z[1] + 0.8] }));
+CUTS.push({ x: [PORTS.pwr.c[0] - 4, PORTS.pwr.c[0] + 4], z: [6, 12.2], round: true });
+
+// ---- the metal foam: a sponge of open cells, drawn as pores with dark cores and glints on the struts
+function foamSvg(seed, mirror, holes) {
+  const R = rng(seed);
+  let pores = "", cores = "", glints = "";
+  const S = 2.35;
+  const inHole = (u, v, m) => holes.some((h) => u > h.x[0] - m && u < h.x[1] + m && v > h.z[0] - m && v < h.z[1] + m);
+  const poly = (cx, cy, r, k, rot, stretch) => {
+    const n = 6 + (k % 2), out = [];
+    for (let i = 0; i < n; i++) { const a = rot + (i / n) * TAU, rr_ = r * (0.72 + R() * 0.5); out.push([cx + rr_ * Math.cos(a) * stretch, cy + rr_ * Math.sin(a)]); }
+    return "M" + out.map(([u, v]) => r1(u) + " " + r1(-v)).join("L") + "Z";
+  };
+  let row = 0;
+  for (let v = FOAM.z0 + 0.9; v < FOAM.z1; v += S * 0.86, row++) {
+    for (let u0 = -FOAM.x + 0.6 + (row % 2) * S * 0.5; u0 < FOAM.x; u0 += S) {
+      const u = u0 + (R() - 0.5) * S * 0.55, vv = v + (R() - 0.5) * S * 0.5;
+      const big = R() < 0.18;
+      const r = big ? 0.95 + R() * 0.45 : 0.42 + R() * 0.42;
+      const uu = u;
+      if (!inFoam(u, vv, r + 0.35) || inHole(mirror ? -u : u, vv, r + 0.5)) continue;
+      const rot = R() * TAU, st = 0.85 + R() * 0.35;
+      pores += poly(uu, vv, r, Math.floor(R() * 4), rot, st);
+      if (r > 0.6) cores += poly(uu + 0.12, vv - 0.15, r * 0.5, 1, rot + 0.4, st);
+      if (R() < 0.55) { const ga = R() * TAU; glints += `M${r1(uu + Math.cos(ga) * (r + 0.55) - 0.32)} ${r1(-(vv + Math.sin(ga) * (r + 0.55)))}h0.64v0.28h-0.64Z`; }
+    }
+  }
+  return `<path class="pore" d="${pores}"/><path class="core" d="${cores}"/><path class="glint" d="${glints}"/>`;
+}
+const cutSvg = (holes, mirror) => holes.map((h) => {
+  const cx = ((h.x[0] + h.x[1]) / 2) * (mirror ? -1 : 1), cz = (h.z[0] + h.z[1]) / 2, w = h.x[1] - h.x[0], hh = h.z[1] - h.z[0];
+  return `<path class="portin" d="${rr(cx, cz, w, hh, h.round ? Math.min(w, hh) / 2 : 0.8)}"/>`;
+}).join("");
+
+// ---- the sleeve: top and both sides in one piece of champagne-gold anodised metal, rounded along its two top edges
+// Metal, not card: every face carries a light-to-dark gradient and a fine brushed grain, the round edges a bright
+// specular band where they turn toward the light, and the sides pick up the mat's colour along their lower edge.
+const HALF = unit3(add3(LT, TV)); // the half-way vector between the light and the eye: where a curved edge flashes
+function brushed(x0, x1, y0, y1, seed, along = "v") {
+  // fine parallel grain: short runs of very thin light and dark lines, a little uneven so it reads as brushing
+  const R = rng(seed);
+  let light = "", dark = "";
+  const [a0, a1, b0, b1] = along === "v" ? [x0, x1, y0, y1] : [y0, y1, x0, x1];
+  for (let a = a0 + 0.3; a < a1; a += 0.42 + R() * 0.36) {
+    let b = b0 + R() * 6;
+    while (b < b1) {
+      const len = 8 + R() * 38, e = Math.min(b1, b + len);
+      const sg = along === "v" ? lineD([[a, b], [a, e]]) : lineD([[b, a], [e, a]]);
+      if (R() < 0.55) light += sg; else dark += sg;
+      b = e + 1 + R() * 7;
+    }
+  }
+  return `<path class="brush-l" d="${light}"/><path class="brush-d" d="${dark}"/>`;
+}
+function makeSleeve({ layer, topLayer, tags, id, seed = 1 }) {
+  const out = [];
+  const band = (cx, a0, a1) => {
+    const pts = [], cz = BH - CRAD;
+    for (let i = 0; i <= 8; i++) { const a = (a0 + ((a1 - a0) * i) / 8) * DEG; pts.push([cx + CRAD * Math.cos(a), cz + CRAD * Math.sin(a)]); }
+    for (let i = 8; i >= 0; i--) { const a = (a0 + ((a1 - a0) * i) / 8) * DEG; pts.push([cx + (CRAD - WT) * Math.cos(a), cz + (CRAD - WT) * Math.sin(a)]); }
+    return pts;
+  };
+  // the specular band along a round edge: a soft glow and a crisp line at the angle that faces the half-way vector,
+  // and a darker line where the edge turns down into the side
+  const flash = (cx, a0, a1) => (off) => {
+    const cz = BH - CRAD;
+    let th = Math.atan2(HALF[2], HALF[0]);
+    if (th < 0) th += 2 * Math.PI;
+    th = Math.min(a1 * DEG - 0.08, Math.max(a0 * DEG + 0.08, th));
+    const at3 = (t, y) => scr(add3([cx + CRAD * Math.cos(t), y, cz + CRAD * Math.sin(t)], off));
+    const line = (t) => `M${P2(at3(t, -HD + 0.6))}L${P2(at3(t, HD - 0.6))}`;
+    const dk = a1 === 90 ? 0.14 : Math.PI - 0.14;
+    return `<path class="spec-g" d="${line(th)}"/><path class="spec" d="${line(th)}"/><path class="edge-dk" d="${line(dk)}"/>`;
+  };
+  const along = { U: AX, V: AZ, A: NEG(AY), h: [-HD, HD] };
+  const top = `<path d="${rr(0, 0, BW - 2 * CRAD, BDP, 0.01, 1)}" fill="url(#dg-topgrad)" stroke="none"/>` + brushed(-HW + CRAD, HW - CRAD, -HD + 0.5, HD - 0.5, 11 + seed) +
+    `<path d="${rr(0, 0, BW - 2 * CRAD, BDP, 0.01, 1)}" fill="url(#dg-topspec)" stroke="none"/>` +
+    brandMark(0, 21, 94) + tx(0, -26, BRAND.maker.toUpperCase(), 19, "wordmark") + tx(0, -48, BRAND.name.toUpperCase(), 6, "model");
+  const tt = [...tags, "sltop"];
+  out.push(solid({ id: `${id}-top`, layer: topLayer, tags: tt, ...along, pts: rectPts(-HW + CRAD, BH - WT, HW - CRAD, BH), mat: "gold", ol: false,
+    decals: [{ o: [0, 0, BH], U: AX, V: AY, n: AZ, svg: top }] }));
+  out.push(solid({ id: `${id}-cl`, layer: topLayer, tags: tt, ...along, pts: band(-HW + CRAD, 90, 180), mat: "gold", ol: false, extra: flash(-HW + CRAD, 90, 180) }));
+  out.push(solid({ id: `${id}-cr`, layer: topLayer, tags: tt, ...along, pts: band(HW - CRAD, 0, 90), mat: "gold", ol: false, extra: flash(HW - CRAD, 0, 90) }));
+  // the side walls; their tops are the cut faces when the lid is cut away
+  const cutTop = (x) => { let c = ""; for (let y = -HD + 2; y < HD; y += 2.2) c += lineD([[x - WT / 2, y], [x + WT / 2, y + 1.4]]); return `<path class="cuth" d="${c}"/>`; };
+  const side = `<path d="${rr(0, 0, BDP, SIDEZ, 0.01, 1)}" fill="url(#dg-sidegrad)" stroke="none"/>` + brushed(-HD + 0.5, HD - 0.5, -SIDEZ / 2 + 0.4, SIDEZ / 2 - 0.4, 21 + seed, "h") +
+    `<path d="${rr(0, 0, BDP, SIDEZ, 0.01, 1)}" fill="url(#dg-sidemat)" stroke="none"/><path class="lite" d="${lineD([[-HD + 1, SIDEZ / 2 - 0.5], [HD - 1, SIDEZ / 2 - 0.5]])}"/><path class="edge-dk2" d="${lineD([[-HD, -SIDEZ / 2 + 0.5], [HD, -SIDEZ / 2 + 0.5]])}"/>`;
+  out.push(block({ id: `${id}-wl`, layer, tags: [...tags, "wall"], x: [-HW, -HW + WT], y: [-HD, HD], z: [0, SIDEZ], mat: "gold", capMat: "cut", ol: false, det: cutTop(-HW + WT / 2) }));
+  out.push(block({ id: `${id}-wr`, layer, tags: [...tags, "wall"], x: [HW - WT, HW], y: [-HD, HD], z: [0, SIDEZ], mat: "gold", capMat: "cut", ol: false, det: cutTop(HW - WT / 2), decals: [{ face: "right", svg: side }] }));
+  return out;
+}
+const SLEEVE = makeSleeve({ layer: "sleeve", topLayer: "lidtop", tags: ["sleeve"], id: "sl" });
+// a silhouette inked once round a set of pieces: their hull, less the chord across the open underside
+function outlineOf(id, layer, pieces) {
+  const bb = [1e9, 1e9, 1e9, -1e9, -1e9, -1e9];
+  for (const s of pieces) for (let i = 0; i < 3; i++) { bb[i] = Math.min(bb[i], s.bb[i]); bb[i + 3] = Math.max(bb[i + 3], s.bb[i + 3]); }
+  const it = { n: NID++, kind: "outline", id, layer, tags: [id], afterTags: ["sleeve"], bb, el: makeEl("<g data-gl></g><g data-w></g><g data-rim></g>") };
+  it.gl = it.el.querySelector("[data-gl]"); it.w = it.el.querySelector("[data-w]"); it.rim = it.el.querySelector("[data-rim]");
+  it.draw = (off, all) => {
+    const pts = [];
+    let zmin = 1e9;
+    for (const s of pieces) for (const p of s.bbCorners()) { const q = scr(add3(p, all ? all[s.layer] : off)); q.loc = p; pts.push(q); zmin = Math.min(zmin, p[2]); }
+    const h = hull(pts);
+    it.sil = h;
+    let d = "", pen = false;
+    for (let i = 0; i < h.length; i++) {
+      const a = h[i], b = h[(i + 1) % h.length];
+      const open = a.loc[2] < zmin + 0.01 && b.loc[2] < zmin + 0.01 && a.loc[0] * b.loc[0] < 0;
+      if (open) { pen = false; continue; }
+      if (!pen) { d += "M" + P2(a); pen = true; }
+      d += "L" + P2(b);
+    }
+    it.w.innerHTML = `<path class="ol2" d="${d}"/>`;
+  };
+  ITEMS.push(it);
+  return it;
+}
+const SLEEVE_OL = outlineOf("sleeve-ol", "sleeve", SLEEVE);
+const LIDTOP_OL = outlineOf("lidtop-ol", "lidtop", SLEEVE.filter((s) => s.tags.includes("sltop")));
+
+// ---- the foam ends: the front takes the air in, the back lets it out round the ports
+const FOAM_F = solid({ id: "foam-f", layer: "foamF", tags: ["foam", "foamF"], pts: foamPts, U: AX, V: AZ, A: NEG(AY), h: [FOAM.y0, FOAM.y1], mat: "foam",
+  det: `<path d="${loc(foamPts)}" fill="url(#dg-foambase)" stroke="none"/>` + foamSvg(7, false, []) + `<path d="${loc(foamPts)}" fill="url(#dg-foamsheen)" stroke="none"/><path class="rimdark" d="${lineD([[-FOAM.x + FOAM.r, FOAM.z1 - 0.6], [FOAM.x - FOAM.r, FOAM.z1 - 0.6]])}"/>`,
+  detBack: foamSvg(8, true, []) });
+const FOAM_B = solid({ id: "foam-b", layer: "foamB", tags: ["foam", "foamB"], under: true, pts: foamPts, U: NEG(AX), V: AZ, A: AY, h: [FOAM.y0, FOAM.y1], mat: "foam",
+  det: foamSvg(11, true, CUTS) + cutSvg(CUTS, true),
+  detBack: `<path d="${loc(foamPts)}" fill="url(#dg-foambase)" stroke="none"/>` + foamSvg(12, false, CUTS) + cutSvg(CUTS, false) });
+
+// ---- the bottom plate, its feet and the standoffs the board stands on
+const BOT = { x: HW - WT - 0.2, y: HD - 4.2 };
+const STANDS = [[-64, -62], [64, -62], [-64, 63], [64, 63], [-30, 44], [52, 4]];
+{
+  let s = `<path class="seam" d="${rr(0, 0, 2 * BOT.x - 5, 2 * BOT.y - 5, 2.5)}"/>`;
+  for (let x = -60; x <= 60; x += 20) s += `<path class="rib" d="${lineD([[x, -BOT.y + 6], [x, BOT.y - 6]])}"/>`;
+  for (let y = -60; y <= 60; y += 20) s += `<path class="rib" d="${lineD([[-BOT.x + 6, y], [BOT.x - 6, y]])}"/>`;
+  for (const [x, y] of [[-56, -56], [56, -56], [-56, 56], [56, 56]]) s += circ(x, y, 6.6, "seam") + screwAt(x, y, 1.6);
+  s += tx(30, -50, BRAND.maker.toUpperCase(), 5, "model") + tx(30, -56, BRAND.name.toUpperCase(), 2.6, "lprint2");
+  block({ id: "bottom", layer: "bottom", tags: ["bottom"], x: [-BOT.x, BOT.x], y: [-BOT.y, BOT.y], z: [0, 2], r: 2, mat: "gold", det: s });
+  for (const [x, y] of [[-56, -56], [56, -56], [-56, 56], [56, 56]]) cyl({ id: "foot", layer: "bottom", tags: ["bottom"], c: [x, y], rad: 6, z: [-FOOT, 0], mat: "rubber" });
+  for (const [x, y] of STANDS) cyl({ id: "standoff", layer: "bottom", tags: ["bottom"], c: [x, y], rad: 2.6, z: [2, 5], mat: "steel", seg: 16, det: circ(x, y, 1.3, "hole") });
+}
+
+// ---- the main board: the chip and its memory in the middle, the SSD and the power stages in front, ports behind
+const BOARD = { x: [-71, 71], y: [-69, 70], z: [5, 6.6] };
+const BZ = BOARD.z[1];
+const CHIP = { x: [-20, 20], y: [-14, 22] };
+const MEMS = [];
+for (const x of [-43.5, -30, 30, 43.5]) for (const y of [-5, 13]) MEMS.push([x, y]);
+const SSD = { x: [-66, -24], y: [-65, -43] };
+const CHOKES = [24, 32, 40, 48, 56, 64];
+const CAPS = [26, 36, 46, 56];
+const CX = { x: [-40, -22], y: [30.5, 39.5] };
+const ICS = [{ c: [-61, -18], w: 8, h: 8, name: "EC" }, { c: [-61, 6], w: 6, h: 5, name: "SPI" }, { c: [61, -24], w: 7, h: 7, name: "PMIC" }, { c: [61, 10], w: 9, h: 6, name: "TPM" }];
+{
+  const R = rng(25);
+  // where the parts stand, so the small passives scatter round them
+  const keep = [
+    [CHIP.x[0] - 1, CHIP.y[0] - 1, CHIP.x[1] + 1, CHIP.y[1] + 1],
+    ...MEMS.map(([x, y]) => [x - 6.5, y - 7.5, x + 6.5, y + 7.5]),
+    [SSD.x[0] - 2, SSD.y[0] - 1, SSD.x[1] + 6, SSD.y[1] + 1],
+    [CHOKES[0] - 5, -62, 68, -44], [CAPS[0] - 4, -69, 60, -61.5],
+    [-15, -66, 3, -48], [2, -48, 12, -42],
+    [CX.x[0] - 1, CX.y[0] - 1, CX.x[1] + 1, CX.y[1] + 1],
+    [-67, 41, 17, 71], [17, 65, 58, 71], [56, 65, 66, 75],
+    ...ICS.map((c) => [c.c[0] - c.w / 2 - 1, c.c[1] - c.h / 2 - 1, c.c[0] + c.w / 2 + 1, c.c[1] + c.h / 2 + 1]),
+    ...STANDS.map(([x, y]) => [x - 4, y - 4, x + 4, y + 4]),
+    [-43, -27, -37, -21], [37, -27, 43, -21], [-43, 23, -37, 29], [37, 23, 43, 29],
+  ];
+  const free = (x, y, m) => !keep.some((k) => x > k[0] - m && x < k[2] + m && y > k[1] - m && y < k[3] + m) && Math.abs(x) < 69 && y > -67 && y < 68;
+  let pas = "";
+  const scatter = (x0, y0, x1, y1, n) => {
+    for (let i = 0; i < n; i++) {
+      const x = x0 + R() * (x1 - x0), y = y0 + R() * (y1 - y0);
+      if (!free(x, y, 1)) continue;
+      const v = R() < 0.5, big = R() < 0.25;
+      const w = big ? 1.6 : 1, h = big ? 0.8 : 0.5;
+      pas += rect(x, y, v ? h : w, v ? w : h, R() < 0.62 ? "pas" : "res");
+    }
+  };
+  // decoupling round the chip and the memory, then everywhere else more sparsely
+  scatter(-52, -14, 52, 24, 260);
+  scatter(-70, -68, 70, 69, 340);
+  let tr = "";
+  // the memory buses: fans of traces from each package to the chip's edge
+  for (const [x, y] of MEMS) {
+    const sx = Math.sign(x), x0 = x - sx * 5.5, x1 = sx * 20.5;
+    if (Math.abs(x) > 40) continue;
+    for (let k = -4; k <= 4; k++) tr += lineD([[x0, y + k * 1.3], [x0 - sx * 1.2, y + k * 1.3], [x1, y + 4 + k * 1.6]]);
+  }
+  for (let k = 0; k < 6; k++) tr += lineD([[CX.x[0] + 3 + k * 2.4, CX.y[1] + 0.5], [CX.x[0] + 3 + k * 2.4, 43], [-37 + k * 1.8, 47]]);
+  for (let k = 0; k < 5; k++) tr += lineD([[-24 + k * 1.2, -43 + 0.5], [-24 + k * 1.2, -30], [-18 + k * 1.2, -14.5]]);
+  let s = `<path class="pcb-edge" d="${rr(0, 0.5, 140.6, 137.6, 2)}"/><path class="trace" d="${tr}"/>${pas}`;
+  // mounting holes, plated, over the standoffs
+  for (const [x, y] of STANDS) s += circ(x, y, 3.3, "pad") + circ(x, y, 1.5, "hole");
+  // silkscreen outlines round the memory and the chip, reference numbers, the board's own print
+  for (const [x, y] of MEMS) s += `<path class="silkl" d="${rr(x, y, 12.6, 14.6, 0.4, 1)}"/>`;
+  s += `<path class="silkl" d="${rr(0, 4, 41.6, 37.6, 1, 2)}"/>` + tx(0, -16.5, "U1", 2.2, "silk") + tx(-37, -14.5, "DRAM", 1.8, "silk") + tx(37, -14.5, "DRAM", 1.8, "silk");
+  s += tx(-60, -30, BRAND.maker.toUpperCase(), 3.2, "silk") + tx(-60, -34.4, BRAND.name.toUpperCase(), 2, "silk");
+  s += tx(-45, -40.5, "M.2", 2, "silk", "middle") + tx(44, -41.4, "VCORE", 1.8, "silk") + tx(7, -40.4, "FAN", 1.6, "silk") + tx(-6, -46.2, "BT1", 1.6, "silk") + tx(-31, 28.4, "U40", 1.6, "silk");
+  // a serial-number label near the right edge
+  s += `<path class="label" d="${rr(60, -4, 12, 7, 0.4, 1)}"/>`;
+  for (let j = 0; j < 22; j++) s += rect(55.2 + j * 0.44, -3.2, [0.14, 0.26, 0.14, 0.38][j % 4], 3.2, "bar");
+  s += tx(60, -6.3, "SN 0000", 1.1, "lprint");
+  // the pads under the cooler's 4 spring posts, the fan header's pins
+  for (const [x, y] of [[-40, -24], [40, -24], [-40, 26], [40, 26]]) s += circ(x, y, 3.1, "pad") + circ(x, y, 1.3, "hole");
+  block({ id: "board", layer: "board", tags: ["board"], x: BOARD.x, y: BOARD.y, z: BOARD.z, r: 2.5, mat: "pcb", det: s });
+}
+// ---- the GB10: one package, the CPU die and the GPU die side by side on it
+const CHIPS = {};
+{
+  let s = "";
+  const R = rng(4);
+  // the small capacitors on the package round the dies
+  for (let i = 0; i < 70; i++) {
+    const side = i % 4;
+    const x = side < 2 ? -18.5 + R() * 37 : (side === 2 ? -18.6 : 18.6), y = side < 2 ? (side === 0 ? -12.3 : 20.3) : -11 + R() * 30;
+    if (side < 2 && Math.abs(x) < 6 && side === 0) continue;
+    s += rect(x, y, side < 2 ? 0.9 : 0.5, side < 2 ? 0.5 : 0.9, "ldcap");
+  }
+  s += tx(0, -11.6, "GB10", 2.6, "chipprint") + `<path class="dot" d="${loc([[-19, -13], [-16.6, -13], [-19, -10.6]])}"/>` + logoAt(13.5, 19.6, 4.4, "logo", ' fill="#d8dae2" opacity=".8"');
+  s += `<rect class="c2c" data-c2c x="-3.3" y="-12.5" width="2.2" height="19" rx="1" style="opacity:0"/>`;
+  CHIPS.sub = block({ id: "gb10", layer: "board", tags: ["chip"], x: CHIP.x, y: CHIP.y, z: [BZ, BZ + 1.3], r: 0.6, mat: "sub", det: s });
+  CHIPS.c2c = CHIPS.sub.c1.querySelector("[data-c2c]");
+  const die = (x, y, w, h, name) => `${tx((x[0] + x[1]) / 2, (y[0] + y[1]) / 2 + 1.5, name, 2.6, "dieprint")}${tx((x[0] + x[1]) / 2, (y[0] + y[1]) / 2 - 2.2, name === "CPU" ? "GRACE" : "BLACKWELL", 1.3, "dieprint")}<path class="sheen" d="${lineD([[x[0] + 1, y[1] - 1], [x[1] - 1, y[1] - 1]])}"/><path class="sheen" d="${lineD([[x[0] + 1, y[0] + 1], [x[0] + 1, y[1] - 1]])}"/>`;
+  CHIPS.cpu = block({ id: "die-cpu", layer: "board", tags: ["chipdie", "cpu"], x: [-16, -3.2], y: [-7, 13], z: [BZ + 1.3, BZ + 2.1], mat: "die", det: die([-16, -3.2], [-7, 13], 0, 0, "CPU") });
+  CHIPS.gpu = block({ id: "die-gpu", layer: "board", tags: ["chipdie", "gpu"], x: [-1.2, 16], y: [-9, 17], z: [BZ + 1.3, BZ + 2.1], mat: "die", det: die([-1.2, 16], [-9, 17], 0, 0, "GPU") });
+}
+// ---- the memory: 8 packages round the chip (layout drawn as typical)
+for (const [x, y] of MEMS) block({ id: "mem", layer: "board", tags: ["mem"], x: [x - 5.5, x + 5.5], y: [y - 6.5, y + 6.5], z: [BZ, BZ + 1.1], r: 0.4, mat: "mem",
+  det: tx(x, y + 1.6, "LPDDR5X", 1.6, "chipprint") + tx(x, y - 1.6, "DRAM", 1.3, "chipprint") + circ(x - 4, y - 5, 0.45, "dot") + `<path class="cellf" data-fill d=""/>` });
+// the order the packages fill in, nearest the chip first, and each one's cells
+const MEM_ITS = ITEMS.filter((it) => it.id === "mem").map((it) => ({ it, x: (it.bb[0] + it.bb[3]) / 2, y: (it.bb[1] + it.bb[4]) / 2 }))
+  .sort((a, b) => Math.abs(a.x) - Math.abs(b.x) || b.y - a.y);
+for (const m of MEM_ITS) m.el = m.it.c1.querySelector("[data-fill]");
+const CELLS = [];
+for (let r = 0; r < 5; r++) for (let c = 0; c < 4; c++) CELLS.push([-3.45 + c * 2.3, 4.6 - r * 2.3]);
+// ---- small chips round the edges, the coin cell, the fan header
+for (const c of ICS) block({ id: "ic", layer: "board", tags: ["board"], x: [c.c[0] - c.w / 2, c.c[0] + c.w / 2], y: [c.c[1] - c.h / 2, c.c[1] + c.h / 2], z: [BZ, BZ + 0.9], r: 0.3, mat: "ic",
+  det: tx(c.c[0], c.c[1], c.name, 1.4, "chipprint") + circ(c.c[0] - c.w / 2 + 1, c.c[1] - c.h / 2 + 1, 0.35, "dot") });
+cyl({ id: "bt-holder", layer: "board", tags: ["board"], c: [-6, -57], rad: 8.6, z: [BZ, BZ + 1.4], mat: "plastic" });
+cyl({ id: "bt-cell", layer: "board", tags: ["board"], c: [-6, -57], rad: 7.4, z: [BZ + 1.4, BZ + 3.2], mat: "steel", det: tx(-6, -55, "+", 4, "lprint") + tx(-6, -59.6, "CR2032", 1.8, "lprint2") });
+block({ id: "fanhdr", layer: "board", tags: ["board"], x: [2.5, 11.5], y: [-47.5, -43], z: [BZ, BZ + 4.2], mat: "white", det: [4.5, 7, 9.5].map((x) => rect(x, -45.2, 1.1, 1.1, "hole")).join("") });
+// ---- the power stages in front: chokes, their switches and the polymer capacitors
+for (const x of CHOKES) {
+  block({ id: "choke", layer: "board", tags: ["board", "vrm"], x: [x - 3.4, x + 3.4], y: [-53, -46], z: [BZ, BZ + 5], r: 0.5, mat: "choke", det: tx(x, -49.5, "R22", 1.6, "chipprint") + `<path class="sheen" d="${lineD([[x - 2.6, -46.8], [x + 2.6, -46.8]])}"/>` });
+  block({ id: "stage", layer: "board", tags: ["board", "vrm"], x: [x - 2.2, x + 2.2], y: [-60, -56.4], z: [BZ, BZ + 0.9], mat: "ic", det: circ(x - 1.4, -59.2, 0.3, "dot") });
+}
+for (const x of CAPS) cyl({ id: "cap", layer: "board", tags: ["board", "vrm"], c: [x, -65], rad: 3, z: [BZ, BZ + 6.4], mat: "can", seg: 24,
+  det: `<path class="hair" d="${lineD([[x - 1.6, -65], [x + 1.6, -65]])}${lineD([[x, -66.6], [x, -63.4]])}"/>` + `<path d="${loc(Array.from({ length: 13 }, (_, i) => { const a = (200 + i * 10) * DEG; return [x + 3 * Math.cos(a), -65 + 3 * Math.sin(a)]; }))}" fill="#3b3d4a" opacity=".55" stroke="none"/>` });
+// ---- the ConnectX networking chip behind the cooler, under its own small heatsink
+block({ id: "cx", layer: "board", tags: ["board", "cx"], x: CX.x, y: CX.y, z: [BZ, BZ + 1.1], r: 0.4, mat: "sub" });
+{
+  let f = "";
+  for (let x = CX.x[0] + 1.6; x < CX.x[1] - 1; x += 1.5) f += lineD([[x, CX.y[0] + 0.8], [x, CX.y[1] - 0.8]]);
+  block({ id: "cx-sink", layer: "board", tags: ["board", "cx"], x: [CX.x[0] + 1, CX.x[1] - 1], y: [CX.y[0] + 0.6, CX.y[1] - 0.6], z: [BZ + 1.1, BZ + 6], mat: "fin", det: `<path class="finl" d="${f}"/>` + tx(-31, 35, "ConnectX", 1.5, "lprint2") });
+}
+// ---- the ports, standing on the back edge of the board and out through the back foam
+{
+  const vents = (x, y, w, d, step) => { let s = ""; for (let u = x - w / 2 + step; u < x + w / 2 - step / 2; u += step) for (let v = y - d / 2 + step; v < y + d / 2 - step / 2; v += step) s += rect(u, v, step * 0.45, step * 0.45, "vent"); return s; };
+  const box3 = (id, p, mat, det, extra = {}) => block({ id, layer: "board", tags: ["board", "port"], x: p.x, y: p.y, z: p.z, mat, det, ...extra });
+  const ctr = (p) => [(p.x[0] + p.x[1]) / 2, (p.y[0] + p.y[1]) / 2];
+  const hd = ctr(PORTS.hdmi);
+  box3("hdmi", PORTS.hdmi, "steel", `<path class="seam" d="${rr(hd[0], hd[1], 12.5, 10, 0.6)}"/>` + vents(hd[0], hd[1] - 1, 10, 6, 1.6));
+  for (const q of [PORTS.q1, PORTS.q2]) {
+    const [cx, cy] = ctr(q);
+    box3("qsfp", q, "steel", `<path class="seam" d="${lineD([[q.x[0] + 0.8, q.y[1] - 4], [q.x[1] - 0.8, q.y[1] - 4]])}"/>` + vents(cx, q.y[0] + 2.5, 15, 3, 1.4));
+    let f = "";
+    for (let x = q.x[0] + 2.4; x < q.x[1] - 1.6; x += 1.4) f += lineD([[x, cy - 10.5], [x, cy + 11.5]]);
+    block({ id: "qsfp-sink", layer: "board", tags: ["board", "port"], x: [q.x[0] + 1.2, q.x[1] - 1.2], y: [cy - 11, cy + 12], z: [16, 20.5], mat: "fin", det: `<path class="finl" d="${f}"/><path class="finh" d="${f.replace(/M(-?[\d.]+) /g, (m, a) => `M${r2(+a + 0.45)} `).replace(/L(-?[\d.]+) /g, (m, a) => `L${r2(+a + 0.45)} `)}"/>` });
+  }
+  const rj = ctr(PORTS.rj);
+  box3("rj45", PORTS.rj, "steel", `<path class="seam" d="${rr(rj[0], rj[1], 13.5, 15, 0.8)}"/>` + vents(rj[0], rj[1] - 2, 11, 9, 1.8));
+  for (const u of PORTS.usb) { const [cx, cy] = ctr(u); box3("usbc", u, "steel", `<path class="seam" d="${rr(cx, cy, 6.6, 6, 1.6)}"/>`); }
+  cyl({ id: "pwr", layer: "board", tags: ["board", "port"], c: PORTS.pwr.c, rad: PORTS.pwr.r, z: PORTS.pwr.z, mat: "plastic", det: `<path class="lite" d="${loc(Array.from({ length: 9 }, (_, i) => { const a = (110 + i * 22) * DEG; return [61 + 1.7 * Math.cos(a), 70 + 1.7 * Math.sin(a)]; }), false)}"/><path class="lite" d="${lineD([[61, 70.4], [61, 72.2]])}"/>` });
+}
+// ---- the SSD: an M.2 card in its socket at the front left, held down by one screw
+block({ id: "m2-socket", layer: "board", tags: ["board"], x: [-24.6, -18.6], y: [-65.6, -42.4], z: [BZ, BZ + 3.4], mat: "plastic", det: `<path class="seam" d="${lineD([[-23.4, -64.6], [-23.4, -43.4]])}"/>` });
+cyl({ id: "m2-stand", layer: "board", tags: ["board"], c: [-64, -54], rad: 2.4, z: [BZ, BZ + 2.2], mat: "steel", seg: 16 });
+{
+  let s = "";
+  for (let k = 0; k < 18; k++) s += rect(-25.4, -63.6 + k * 1.15, 1.6, 0.6, "gold");
+  s += `<path class="pcb-edge" d="${rr(-45, -54, 41, 21, 0.6, 1)}"/>`;
+  s += circ(-64, -54, 3.2, "pad") + tx(-30, -45.5, "M.2", 1.4, "silk");
+  block({ id: "ssd", layer: "ssd", tags: ["ssd"], x: SSD.x, y: SSD.y, z: [BZ + 2.2, BZ + 3], r: 0.6, mat: "ssd", det: s });
+  block({ id: "ssd-nand", layer: "ssd", tags: ["ssd"], x: [-58, -40], y: [-62, -46], z: [BZ + 3, BZ + 4], r: 0.5, mat: "ic",
+    det: `<path class="label" d="${rr(-49, -54, 16.4, 14.4, 0.6, 2)}"/>` + tx(-49, -50.4, "NVMe SSD", 2.3, "lprint") + tx(-49, -54, BRAND.maker.toUpperCase(), 1.4, "lprint2") + Array.from({ length: 22 }, (_, j) => rect(-54.2 + j * 0.48, -58.2, [0.16, 0.28, 0.16, 0.4][j % 4], 3, "bar")).join("") });
+  block({ id: "ssd-ctl", layer: "ssd", tags: ["ssd"], x: [-36.5, -29.5], y: [-58, -51], z: [BZ + 3, BZ + 3.8], r: 0.4, mat: "ic", det: tx(-33, -54.5, "CTRL", 1.2, "chipprint") });
+  cyl({ id: "ssd-screw", layer: "ssd", tags: ["ssd"], c: [-64, -54], rad: 2.3, z: [BZ + 3, BZ + 4], mat: "steel", seg: 18, det: screwAt(-64, -54, 1.6) });
+}
+
+// ================================================================= THE COOLER
+// a copper block on the two dies, 3 heat pipes each side up into a fin stack, 2 fans in front of the fins pushing
+// the air from the front foam through the fins and out of the back
+const FIN = { x: [-48, 48], y: [-28, 30], z: [15, 45.5] };
+const FANS = [-20, 20];
+const FAN = { y: [-38, -28], z: [7.5, 45.5], s: 38 };
+const PIPES = [[-12, 22], [1, 30], [14, 38]];
+const FAN_ROT = [];
+{
+  block({ id: "cu-block", layer: "cool", tags: ["cool", "copper"], x: [-17, 17], y: [-11, 19], z: [BZ + 2.1, 13], r: 1, mat: "copper",
+    decals: [{ face: "front", svg: `<path class="seam" d="${lineD([[-16, 0.8], [16, 0.8]])}"/>` }, { face: "right", svg: `<path class="seam" d="${lineD([[-14, 0.8], [14, 0.8]])}"/>` }] });
+  block({ id: "fin-base", layer: "cool", tags: ["cool"], x: FIN.x, y: FIN.y, z: [13, FIN.z[0]], mat: "alu" });
+  let top = "", topH = "";
+  for (let x = FIN.x[0] + 0.8; x < FIN.x[1]; x += 1.6) { top += lineD([[x, FIN.y[0] + 0.3], [x, FIN.y[1] - 0.3]]); topH += lineD([[x + 0.5, FIN.y[0] + 0.6], [x + 0.5, FIN.y[1] - 0.6]]); }
+  const fcz = (FIN.z[0] + FIN.z[1]) / 2, fcy = (FIN.y[0] + FIN.y[1]) / 2;
+  let slots = "";
+  for (let x = FIN.x[0] + 1.2; x < FIN.x[1] - 0.6; x += 1.6) slots += rect(x, 0, 0.7, FIN.z[1] - FIN.z[0] - 1.2, "gap");
+  let ends = "";
+  for (const [y, z] of PIPES) ends += circ(y - fcy, z - fcz, 2.5, "pipe-end") + circ(y - fcy, z - fcz, 1.5, "pipe-in");
+  const plate = `<path class="seam" d="${lineD([[-(FIN.y[1] - FIN.y[0]) / 2 + 1, (FIN.z[1] - FIN.z[0]) / 2 - 1.2], [(FIN.y[1] - FIN.y[0]) / 2 - 1, (FIN.z[1] - FIN.z[0]) / 2 - 1.2]])}"/>`;
+  block({ id: "fins", layer: "cool", tags: ["cool", "fins"], x: FIN.x, y: FIN.y, z: FIN.z, mat: "fin", det: `<path class="finl" d="${top}"/><path class="finh" d="${topH}"/>`,
+    decals: [{ face: "front", svg: slots }, { face: "back", svg: slots }, { face: "right", svg: plate + ends }, { face: "left", svg: plate + ends.replace(/cx="(-?[\d.]+)"/g, (m, a) => `cx="${r2(-a)}"`) }] });
+  // spring posts holding the cooler down at its 4 corners
+  for (const [x, y] of [[-40, -24], [40, -24], [-40, 26], [40, 26]]) cyl({ id: "post", layer: "cool", tags: ["cool"], c: [x, y], rad: 2.2, z: [BZ, 13], mat: "steel", seg: 16 });
+  // the heat pipes: out of the block's sides under the fin base, up outside the stack, back into the fins
+  for (const sx of [-1, 1]) for (const [y, z] of PIPES) pipe([[sx * 17, y, 10.7], [sx * 53.5, y, 10.7], [sx * 53.5, y, z], [sx * 47.8, y, z]], 2.3, 3.6, { layer: "cool", tags: ["cool", "copper"], mat: "copper" });
+  // the 2 fans: square frames, 7 swept blades, a hub with the maker's mark
+  for (const cx of FANS) {
+    const cz = (FAN.z[0] + FAN.z[1]) / 2, h = FAN.s / 2;
+    let blades = "", bh = "";
+    for (let i = 0; i < 7; i++) {
+      const a0 = i * (360 / 7) + 12, pts = [];
+      for (let k = 0; k <= 6; k++) { const a = (a0 + k * 4.5) * DEG, r = 6.8; pts.push([cx + r * Math.cos(a), cz + r * Math.sin(a)]); }
+      for (let k = 6; k >= 0; k--) { const a = (a0 + 18 + k * 6.5) * DEG, r = 16.4; pts.push([cx + r * Math.cos(a), cz + r * Math.sin(a)]); }
+      blades += loc(pts);
+      const mid = [];
+      for (let k = 0; k <= 6; k++) { const t = k / 6, r = 7.4 + t * 8.4, a = (a0 + 4 + t * 30) * DEG; mid.push([cx + r * Math.cos(a), cz + r * Math.sin(a)]); }
+      bh += lineD(mid);
+    }
+    const det = circ(cx, cz, 17.4, "fanin") + `<g data-rot><path class="blade" d="${blades}"/><path class="bladeh" d="${bh}"/></g>` + circ(cx, cz, 16.6, "fanblur", ' data-fb style="opacity:0"') + circ(cx, cz, 6.6, "hub") + brandMark(cx, cz, 10) +
+      [[-1, -1], [1, -1], [1, 1], [-1, 1]].map(([a, b]) => circ(cx + a * (h - 2.6), cz + b * (h - 2.6), 1.4, "hole")).join("") +
+      `<path class="seam" d="${loc(Array.from({ length: 40 }, (_, i) => { const a = (i / 40) * TAU; return [cx + 18.2 * Math.cos(a), cz + 18.2 * Math.sin(a)]; }))}"/>`;
+    const f = solid({ id: "fan", layer: "cool", tags: ["cool", "fan"], pts: rrPts(cx, cz, FAN.s, FAN.s, 3, 3), U: AX, V: AZ, A: NEG(AY), h: [-FAN.y[1], -FAN.y[0]], mat: "plastic", det });
+    FAN_ROT.push({ g: f.c1.querySelector("[data-rot]"), fb: f.c1.querySelector("[data-fb]"), cx, cz });
+  }
+}
+
+// ================================================================= THE AIR
+// streamlines: in through the front foam, through the fans and the fins, out through the back foam above the ports
+const AIRS = [[-58, 13], [-36, 34], [-14, 21], [6, 38], [26, 26], [50, 15], [-48, 41], [38, 41], [-2, 11], [62, 33]];
+const COLD = "#1fa597", WARM = "#f0612a", PAPER = "#f5f0e5";
+const solidAt = (p) => {
+  const [x, y, z] = p;
+  if (y > FAN.y[0] - 0.2 && y < FAN.y[1] + 0.2 && z > FAN.z[0] && z < FAN.z[1] && FANS.some((c) => Math.abs(x - c) < FAN.s / 2)) return true;
+  if (y > FIN.y[0] - 0.2 && y < FIN.y[1] + 0.2 && Math.abs(x) < 48.2 && z > 12.8 && z < FIN.z[1] + 0.2) return true;
+  if (Math.abs(Math.abs(y) - (FOAM.y0 + FOAM.y1) / 2) < (FOAM.y1 - FOAM.y0) / 2 + 0.2 && Math.abs(x) < HW) return true;
+  return false;
+};
+const AIRSEGS = [];
+{
+  const cr = (p0, p1, p2, p3, t) => { const t2 = t * t, t3 = t2 * t; return [0, 1, 2].map((i) => 0.5 * (2 * p1[i] + (-p0[i] + p2[i]) * t + (2 * p0[i] - 5 * p1[i] + 4 * p2[i] - p3[i]) * t2 + (-p0[i] + 3 * p1[i] - 3 * p2[i] + p3[i]) * t3)); };
+  AIRS.forEach(([x0, z0], li) => {
+    const xf = x0 < 0 ? FANS[0] : FANS[1];
+    const xin = xf + clamp((x0 - xf) * 0.3, -11, 11), zin = Math.max(21, 26.5 + clamp((z0 - 26) * 0.55, -11, 11));
+    const zout = clamp(zin + 5, 24.5, 43.5);
+    const ctrl = [[x0 * 1.04, -160, z0 - 5], [x0, -112, z0 - 1.5], [x0, -HD + 1, z0], [lerp(x0, xin, 0.6), -54, lerp(z0, zin, 0.6)], [xin, -40, zin], [xin, -10, zin], [xin, 28, zin],
+      [lerp(xin, x0, 0.4), 52, lerp(zin, zout, 0.6)], [x0 * 0.92, HD, zout], [x0 * 1.02, 104, zout + 9], [x0 * 1.12, 150, zout + 26]];
+    const dense = [];
+    for (let i = 0; i < ctrl.length - 1; i++) {
+      const p0 = ctrl[Math.max(0, i - 1)], p1 = ctrl[i], p2 = ctrl[i + 1], p3 = ctrl[Math.min(ctrl.length - 1, i + 2)];
+      for (let k = 0; k < 24; k++) dense.push(cr(p0, p1, p2, p3, k / 24));
+    }
+    dense.push(ctrl[ctrl.length - 1]);
+    // resample by length, 3.2 mm pieces
+    const pts = [dense[0]];
+    let acc = 0;
+    for (let i = 1; i < dense.length; i++) { acc += Math.hypot(...sub3(dense[i], dense[i - 1])); if (acc >= 3.2) { pts.push(dense[i]); acc = 0; } }
+    let total = 0;
+    for (let i = 1; i < pts.length; i++) total += Math.hypot(...sub3(pts[i], pts[i - 1]));
+    const line = [];
+    let s = 0, nextChev = 10 + (li % 3) * 7;
+    for (let i = 0; i < pts.length - 1; i++) {
+      const a = pts[i], b = pts[i + 1], m = mul3(add3(a, b), 0.5);
+      s += Math.hypot(...sub3(b, a));
+      if (solidAt(m)) continue;
+      const y = m[1];
+      const warm = ease(seg(y, -26, 34));
+      const fade = ease(seg(y, -160, -112)) * (1 - ease(seg(y, 104, 150)));
+      const col = mixHex(COLD, WARM, warm);
+      let chev = null;
+      if (s >= nextChev) { nextChev = s + 24; if (fade > 0.35) chev = { p: m, d: unit3(sub3(b, a)) }; }
+      const sg = airSeg({ a, b, col, chev, s, frac: s / total, fade });
+      AIRSEGS.push(sg);
+      line.push(sg);
+    }
+  });
+}
+function airSeg(o) {
+  const it = { n: NID++, kind: "air", layer: "air", tags: ["air"], ...o, bb: bbOf([o.a, o.b], 0.3), el: makeEl("") };
+  it.draw = (off) => {
+    const A = scr(add3(o.a, off)), B = scr(add3(o.b, off));
+    it.sil = [A, B];
+    { const dx = B[0] - A[0], dy = B[1] - A[1], l = Math.hypot(dx, dy) || 1, w = 0.5 * KK, nx = (-dy / l) * w, ny = (dx / l) * w; it.poly = [[A[0] + nx, A[1] + ny], [B[0] + nx, B[1] + ny], [B[0] - nx, B[1] - ny], [A[0] - nx, A[1] - ny]]; }
+    // pulses run along the line with the air; it fades toward the paper as the fans stop
+    const wave = Math.max(0, Math.sin(TAU * (o.s / 36 - Z.airT * 0.85))) ** 6;
+    const col = mixHex(o.col, "#ffffff", 0.5 * wave);
+    const op = o.fade * Z.airFade;
+    it.el.style.opacity = op >= 0.999 ? "" : String(r2(op));
+    let s = `<path class="air-g" stroke="${col}" d="M${P2(A)}L${P2(B)}"/><path class="air" stroke="${col}" d="M${P2(A)}L${P2(B)}"/>`;
+    if (o.chev) {
+      const tip = scr(add3(add3(o.chev.p, mul3(o.chev.d, 1.8)), off)), back = scr(add3(add3(o.chev.p, mul3(o.chev.d, -1.8)), off));
+      const dx = tip[0] - back[0], dy = tip[1] - back[1], l = Math.hypot(dx, dy) || 1, w = 2.1 * KK;
+      const nx = (-dy / l) * w, ny = (dx / l) * w;
+      s += `<path class="air-c" stroke="${col}" d="M${P2([back[0] + nx, back[1] + ny])}L${P2(tip)}L${P2([back[0] - nx, back[1] - ny])}"/>`;
+    }
+    it.el.innerHTML = s;
+  };
+  ITEMS.push(it);
+  return it;
+}
+
+
+// ================================================================= THE DATA STREAM (the model loading)
+// glowing dots that arc from the SSD up to the chip and out from the chip to every memory package
+const FLOW = (() => {
+  const paths = [[[-49, -54, 10.6], [-40, -40, 17], [-24, -20, 17.5], [-8, 0, 13], [-6, 3, 9.4]]];
+  for (const { x, y } of [...MEMS.map(([x, y]) => ({ x, y }))]) {
+    const sx = Math.sign(x), far = Math.abs(x) > 40;
+    paths.push([[sx * 8, y + 1, 9.4], [sx * 15, y + 1, far ? 17 : 14], [sx * (Math.abs(x) - 4), y, far ? 15 : 12], [x, y, 8.0]]);
+  }
+  const it = { n: NID++, kind: "flow", layer: "board", tags: ["flow"], bb: [-52, -58, 7.8, 52, 22, 18.5], el: makeEl(""), overBoard: true };
+  const at = (pts, t) => { const n = pts.length - 1, x = clamp(t) * n, i = Math.min(n - 1, Math.floor(x)); return lerp3(pts[i], pts[i + 1], x - i); };
+  it.draw = (off) => {
+    let s = "";
+    const g = Z.flow;
+    paths.forEach((pts, pi) => {
+      const N = pi === 0 ? 7 : 4;
+      for (let k = 0; k < N; k++) {
+        const t = (k / N + Z.flowT * (pi === 0 ? 0.42 : 0.55) + pi * 0.13) % 1;
+        const a = g * Math.sin(Math.PI * t) ** 0.6;
+        if (a < 0.02) continue;
+        const q = scr(add3(at(pts, t), off));
+        s += `<circle class="bit-g" cx="${r2(q[0])}" cy="${r2(q[1])}" r="${r2(2.3 * KK)}" opacity="${r2(0.45 * a)}"/><circle class="bit" cx="${r2(q[0])}" cy="${r2(q[1])}" r="${r2(0.85 * KK)}" opacity="${r2(a)}"/>`;
+      }
+    });
+    it.el.innerHTML = s;
+    it.sil = null;
+  };
+  ITEMS.push(it);
+  return it;
+})();
+
+// ================================================================= THE SECOND BOX AND THE CABLE (the link step)
+const U2 = makeSleeve({ layer: "u2", topLayer: "u2", tags: ["u2", "sleeve"], id: "u2", seed: 5 });
+U2.push(solid({ id: "u2-foam", layer: "u2", tags: ["u2", "foam2"], pts: foamPts, U: AX, V: AZ, A: NEG(AY), h: [FOAM.y0, FOAM.y1], mat: "foam",
+  det: `<path d="${loc(foamPts)}" fill="url(#dg-foambase)" stroke="none"/>` + foamSvg(17, false, []) + `<path d="${loc(foamPts)}" fill="url(#dg-foamsheen)" stroke="none"/>` }));
+const U2_OL = outlineOf("u2-ol", "u2", U2.filter((p) => p.tags.includes("sltop") || p.tags.includes("wall")));
+// a QSFP cable from the first box's networking port, down onto the mat behind both boxes, to the second box's port
+const U2X = -178;
+const CABLE_Z = -FOOT + 2.2;
+const CABLE = pipe([[-15, 90, 11], [-15, 104, 11], [-15, 120, CABLE_Z], [-15, 154, CABLE_Z], [U2X - 15, 154, CABLE_Z], [U2X - 15, 120, CABLE_Z], [U2X - 15, 104, 11], [U2X - 15, 90, 11]], 2.2, 10, { layer: "cable", tags: ["cable"], mat: "cable" });
+CABLE.forEach((r, i) => {
+  r.k = i / (CABLE.length - 1);
+  r.vis = (q) => q.cable > 0.001 && r.k <= q.cable + 1e-6;
+  // data pulses running from the first box to the second
+  r.tintFn = () => { const w = Z.pulse * Math.max(0, Math.sin(TAU * (r.k * 4.5 - Z.pulseT * 1.1))) ** 8; return mixHex(shade("cable", [0, 0, 1]), "#b6f06a", w); };
+});
+const PLUGS = [
+  block({ id: "plug-a", layer: "cable", tags: ["cable"], x: [-23.5, -6.5], y: [HD + 0.5, 91], z: [7.4, 14.6], r: 0.8, mat: "steel", det: `<path class="seam" d="${lineD([[-22, 86], [-8, 86]])}"/>` }),
+  block({ id: "plug-b", layer: "cable", tags: ["cable"], x: [U2X - 23.5, U2X - 6.5], y: [HD + 0.5, 91], z: [7.4, 14.6], r: 0.8, mat: "steel", det: `<path class="seam" d="${lineD([[U2X - 22, 86], [U2X - 8, 86]])}"/>` }),
+];
+PLUGS[0].vis = (q) => q.cable > 0.001;
+PLUGS[1].vis = (q) => q.cable > 0.9;
+PLUGS[1].offFn = (q) => [0, 16 * (1 - seg(q.cable, 0.9, 1)), 0];
+
+// ================================================================= THE MAT (drawn once, never moves)
+const matG = part("mat");
+const MAT = { x: [-272, 142], y: [-168, 176] };
+const MATC = [(MAT.x[0] + MAT.x[1]) / 2, (MAT.y[0] + MAT.y[1]) / 2];
+const MATZ = -FOOT;
+{
+  const mat = block({ id: "mat", free: true, x: MAT.x, y: MAT.y, z: [MATZ - 3, MATZ], r: 14, per: 6, mat: "felt",
+    det: `<path class="felt" d="${rr(MATC[0], MATC[1], MAT.x[1] - MAT.x[0] - 10, MAT.y[1] - MAT.y[0] - 10, 10, 6)}"/><path class="feltl" d="${rr(MATC[0], MATC[1], MAT.x[1] - MAT.x[0] - 4, MAT.y[1] - MAT.y[0] - 4, 12, 6)}"/>` });
+  mat.draw([0, 0, 0]);
+  matG.appendChild(mat.el);
+  const top = rrPts(MATC[0], MATC[1], MAT.x[1] - MAT.x[0], MAT.y[1] - MAT.y[0], 14, 6).map(([x, y]) => scr([x, y, MATZ]));
+  matG.insertAdjacentHTML("beforeend", `<defs><clipPath id="dg-matclip"><path d="${dPath(top)}"/></clipPath></defs>`);
+}
+const shadowG = part("shadows");
+shadowG.setAttribute("clip-path", "url(#dg-matclip)");
+
+// ---------------------------------------------------------------- shared defs and the item container
+boxG.innerHTML = `<defs>` +
+  ["A", "B"].map((k) => `<filter id="dg-dim${k}" color-interpolation-filters="sRGB"><feColorMatrix data-dim="${k}" type="matrix" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0"/></filter>`).join("") +
+  `<filter id="dg-blur" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur data-blur stdDeviation="4"/></filter>` +
+  `<linearGradient id="dg-topgrad" gradientUnits="userSpaceOnUse" x1="-75" y1="75" x2="75" y2="-75"><stop offset="0" stop-color="#fff" stop-opacity=".34"/><stop offset=".42" stop-color="#fff" stop-opacity=".06"/><stop offset=".68" stop-color="#3d2c10" stop-opacity=".04"/><stop offset="1" stop-color="#3d2c10" stop-opacity=".2"/></linearGradient>` +
+  `<linearGradient id="dg-topspec" gradientUnits="userSpaceOnUse" x1="-75" y1="75" x2="75" y2="-75"><stop offset=".2" stop-color="#fff" stop-opacity="0"/><stop offset=".3" stop-color="#fff" stop-opacity=".2"/><stop offset=".36" stop-color="#fff" stop-opacity="0"/></linearGradient>` +
+  `<linearGradient id="dg-sidegrad" gradientUnits="userSpaceOnUse" x1="0" y1="-22" x2="0" y2="22"><stop offset="0" stop-color="#fff" stop-opacity=".2"/><stop offset=".35" stop-color="#fff" stop-opacity=".02"/><stop offset="1" stop-color="#3d2c10" stop-opacity=".2"/></linearGradient>` +
+  `<linearGradient id="dg-sidemat" gradientUnits="userSpaceOnUse" x1="0" y1="22" x2="0" y2="8"><stop offset="0" stop-color="#9fb497" stop-opacity=".55"/><stop offset="1" stop-color="#9fb497" stop-opacity="0"/></linearGradient>` +
+  `<linearGradient id="dg-topsheen" gradientUnits="userSpaceOnUse" x1="-70" y1="-60" x2="60" y2="70"><stop offset="0" stop-color="#fff" stop-opacity=".26"/><stop offset=".3" stop-color="#fff" stop-opacity=".04"/><stop offset=".55" stop-color="#fff" stop-opacity=".16"/><stop offset=".72" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#5a4320" stop-opacity=".08"/></linearGradient>` +
+  `<linearGradient id="dg-sidesheen" gradientUnits="userSpaceOnUse" x1="-75" y1="0" x2="75" y2="0"><stop offset="0" stop-color="#fff" stop-opacity=".18"/><stop offset=".45" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#5a4320" stop-opacity=".1"/></linearGradient>` +
+  `<linearGradient id="dg-foambase" gradientUnits="userSpaceOnUse" x1="0" y1="-48" x2="0" y2="0"><stop offset="0" stop-color="#5a4320" stop-opacity=".22"/><stop offset=".12" stop-color="#5a4320" stop-opacity="0"/><stop offset="1" stop-color="#fff" stop-opacity=".05"/></linearGradient>` +
+  `<linearGradient id="dg-foamsheen" gradientUnits="userSpaceOnUse" x1="-70" y1="-50" x2="70" y2="0"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".28" stop-color="#fff" stop-opacity=".2"/><stop offset=".4" stop-color="#fff" stop-opacity="0"/><stop offset=".62" stop-color="#fff" stop-opacity=".1"/><stop offset=".72" stop-color="#fff" stop-opacity="0"/></linearGradient>` +
+  `<linearGradient id="dg-logogloss" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="100" y2="100"><stop offset="0" stop-color="#fff" stop-opacity=".45"/><stop offset=".45" stop-color="#fff" stop-opacity="0"/><stop offset=".6" stop-color="#fff" stop-opacity=".22"/><stop offset="1" stop-color="#23263a" stop-opacity=".18"/></linearGradient>` +
+  `</defs>`;
+const itemsG = makeEl("");
+boxG.appendChild(itemsG);
+const blurEl = boxG.querySelector("[data-blur]");
+const dimEls = { A: boxG.querySelector('[data-dim="A"]'), B: boxG.querySelector('[data-dim="B"]') };
+const setDim = (el, t) => el.setAttribute("values", `${r2(1 - t)} 0 0 0 ${r2(t * 0.96)} 0 ${r2(1 - t)} 0 0 ${r2(t * 0.94)} 0 0 ${r2(1 - t)} 0 ${r2(t * 0.9)} 0 0 0 1 0`);
+ITEMS.forEach((it) => itemsG.appendChild(it.el));
+
+// ================================================================= THE STEPS
+// Every frame is a pure function of (S.step, S.u): scene() turns it into where each layer sits, what is lit, what
+// fades, how far the memory has filled, the air, the fans, the second box and its cable, and where the camera aims.
+// Each step starts exactly where the one before it ended, and the last one ends on the first frame.
+const smoother = (x) => { const t = clamp(x); return t * t * t * (t * (t * 6 - 15) + 10); };
+const sine = (x) => (1 - Math.cos(Math.PI * clamp(x))) / 2;
+const bump = (u, a, b, w = 0.25) => ease(seg(u, a, a + (b - a) * w)) * (1 - ease(seg(u, b - (b - a) * w, b)));
+// ∫ from 0 to x of ease(seg(t, a, b)) dt: how far something that speeds up smoothly has turned
+const easeInt = (x, a, b) => { if (x <= a) return 0; const w = b - a; if (x >= b) return w * 0.5 + (x - b); const t = (x - a) / w; return w * (t * t * t - (t * t * t * t) / 2); };
+const O3 = [0, 0, 0];
+const LID_ASIDE = [-170, 4, 46], TOP_ASIDE = [-162, -6, 34], COOL_UP = [0, 26, 50];
+const APART = { board: [0, 0, 40], ssd: [0, -6, 74], cool: [0, 0, 112], sleeve: [0, 0, 198], foamF: [0, -64, 34], foamB: [0, 64, 34] };
+const U2_AT = [U2X, 0, 0], U2_UP = [U2X, 0, 280];
+const GREEN = BRAND.color, CPU_C = "#4fa7e6";
+const SPIN = 820; // degrees a second for the fans at full speed (drawn, not a spec)
+const KEEP_OPEN = ["chip", "chipdie", "mem", "sleeve", "sleeve-ol", "lidtop-ol", "foam", "ssd", "flow"];
+const DIM_AIR = ["board", "ssd", "mem", "chip", "chipdie", "bottom", "port", "vrm", "cx"];
+const N_ = BRAND.name;
+const ORDER = ["lid", "chip", "memory", "apart", "air", "link", "close"];
+const DUR = { lid: 3.4, chip: 4.4, memory: 5.0, apart: 4.6, air: 5.4, link: 5.2, close: 4.4 };
+const STEPS = {
+  lid: { dur: DUR.lid, hint: `The gold sleeve lifts off, foam ends and all. Inside: one board, a cooler with ${M.fans} fans and a row of ports along the back.` },
+  chip: { dur: DUR.chip, hint: `The cooler lifts. Under it is one package with a CPU die and a GPU die side by side, linked inside the chip. ${BRAND.maker} rates the box at up to ${M.pflops} petaflop of FP4 AI performance.` },
+  memory: { dur: DUR.memory, hint: `The CPU and the GPU share one pool of ${M.memGB} GB, so a model of up to ${M.params} billion parameters loads from the SSD and fits (${BRAND.maker}'s figures; the ${M.memChips} packages are drawn as typical).` },
+  apart: { dur: DUR.apart, hint: `Taken apart: the lid, the two foam ends, the cooler, the SSD, the board with the chip and its memory, and the bottom plate.` },
+  air: { dur: DUR.air, hint: `The fans pull air in through the gold foam at the front, across the fins over the chip, and push it out through the foam at the back. The foam ends are the vents.` },
+  link: { dur: DUR.link, hint: `A second box joins the first through a networking cable between their ConnectX ports; together they run models of about ${M.linked} billion parameters (${BRAND.maker}'s figure).` },
+  close: { dur: DUR.close, hint: `The cable comes out, the second box goes back, and the first sits closed on the mat again, logo up.` },
+};
+const fanEndAir = SPIN * DUR.air * easeInt(1, 0.42, 0.62);
+const fanEndLink = fanEndAir + SPIN * DUR.link * (1 - easeInt(1, 0, 0.4));
+
+function freshZ() {
+  return {
+    st: null, u: 0,
+    off: { bottom: O3, board: O3, ssd: O3, cool: O3, sleeve: O3, lidtop: O3, foamF: O3, foamB: O3, u2: U2_UP, cable: O3, air: O3 },
+    u2on: 0, hl: {}, dimA: 0, keep: [], dimB: 0, dimTags: [], fill: 0, cellA: 1, flow: 0, flowT: 0, c2c: 0,
+    air: 0, airFade: 1, airT: 0, fan: 0, fanA: 0, cable: 0, pulse: 0, pulseT: 0,
+    cam: ["rest", "rest", 0], clampW: 1, hot: [], model: `up to ${M.params}B params`,
+    p: { lid: 0, cooler: 0, chip: 0, cpu: 0, gpu: 0, fill: 0, flow: 0, apart: 0, top: 0, air: 0, fan: 0, u2: 0, cable: 0, data: 0, logo: 0 },
+  };
+}
+let S = { step: null, u: 0 };
+function scene() {
+  const Z = freshZ();
+  const st = S.step, u = S.u, off = Z.off, p = Z.p;
+  Z.st = st; Z.u = u;
+  const lidAt = (v) => { off.sleeve = v; off.lidtop = v; off.foamF = v; off.foamB = v; };
+  if (st === "lid") {
+    // straight up off the base first, then aside to the upper left where its logo stays in view
+    const s = smoother(seg(u, 0.28, 0.86));
+    lidAt([-170 * s, 4 * s, 62 * ease(seg(u, 0, 0.32)) - 16 * smoother(seg(u, 0.7, 0.95))]);
+    Z.cam = ["rest", "open", sine(seg(u, 0.06, 0.95))];
+    Z.hot = ["size"];
+    p.lid = Math.max(ease(seg(u, 0, 0.32)) * 0.4, s);
+  } else if (st === "chip" || st === "memory") {
+    lidAt(LID_ASIDE);
+    p.lid = 1;
+    Z.keep = KEEP_OPEN;
+    if (st === "chip") {
+      const lift = smoother(seg(u, 0.04, 0.4));
+      off.cool = [0, 26 * smoother(seg(u, 0.22, 0.5)), 50 * lift];
+      const a = ease(seg(u, 0.36, 0.56));
+      Z.hl = { chip: [GREEN, a], cpu: [CPU_C, bump(u, 0.56, 0.8)], gpu: [GREEN, bump(u, 0.7, 0.95)] };
+      Z.c2c = bump(u, 0.6, 0.97);
+      Z.dimA = 0.42 * a;
+      Z.cam = ["open", "chip", sine(seg(u, 0.05, 0.45))];
+      Z.clampW = 1 - ease(seg(u, 0.05, 0.4));
+      Z.hot = ["ai"];
+      Object.assign(p, { cooler: lift, chip: a, cpu: bump(u, 0.56, 0.8), gpu: bump(u, 0.7, 0.95) });
+    } else {
+      off.cool = COOL_UP;
+      Z.hl = { chip: [GREEN, 1], mem: [GREEN, ease(seg(u, 0, 0.14))] };
+      Z.dimA = 0.42;
+      Z.flow = ease(seg(u, 0.04, 0.14)) * (1 - ease(seg(u, 0.82, 0.95)));
+      Z.flowT = u * DUR.memory;
+      Z.fill = smoother(seg(u, 0.14, 0.84));
+      Z.model = Z.fill < 1 ? `${Math.round(M.params * Z.fill)}B loading` : `${M.params}B loaded`;
+      Z.cam = ["chip", "chip", 0];
+      Z.clampW = 0;
+      Z.hot = ["mem", "model"];
+      Object.assign(p, { cooler: 1, chip: 1, fill: Z.fill, flow: Z.flow });
+    }
+  } else if (st === "apart") {
+    Z.keep = KEEP_OPEN;
+    Z.hl = { chip: [GREEN, 1], mem: [GREEN, 1 - ease(seg(u, 0, 0.25))] };
+    Z.fill = 1;
+    Z.cellA = 1 - ease(seg(u, 0, 0.22));
+    Z.dimA = 0.42 * (1 - ease(seg(u, 0, 0.3)));
+    // the lid rises high before it swings back over the stack; the foam ends leave it on their own paths
+    const sx = smoother(seg(u, 0.3, 0.85)), sz = smoother(seg(u, 0.05, 0.6));
+    off.sleeve = off.lidtop = [lerp(-170, 0, sx), lerp(4, 0, sx), lerp(46, 198, sz)];
+    const fy = smoother(seg(u, 0.05, 0.35)), fx = smoother(seg(u, 0.2, 0.6));
+    off.foamF = [lerp(-170, 0, fx), lerp(4, -64, fy), lerp(46, 34, fx)];
+    off.foamB = [lerp(-170, 0, fx), lerp(4, 64, fy), lerp(46, 34, fx)];
+    off.cool = lerp3(COOL_UP, APART.cool, smoother(seg(u, 0.3, 0.75)));
+    const bz = 40 * smoother(seg(u, 0.45, 0.85)), ss = smoother(seg(u, 0.6, 0.95));
+    off.board = [0, 0, bz];
+    off.ssd = [0, -6 * ss, bz + 34 * ss];
+    Z.cam = ["chip", "apart", sine(seg(u, 0.05, 0.9))];
+    Z.clampW = ease(seg(u, 0.1, 0.8));
+    Object.assign(p, { lid: 1 - sx, cooler: 1, chip: 1, apart: smoother(seg(u, 0.05, 0.95)) });
+  } else if (st === "air") {
+    // back together, all but the top of the sleeve, which slides off aside; then the fans start and the air flows
+    const ss = 1 - smoother(seg(u, 0, 0.18)), bz = 40 * (1 - smoother(seg(u, 0.08, 0.3)));
+    off.board = [0, 0, bz];
+    off.ssd = [0, -6 * ss, bz + 34 * ss];
+    off.cool = [0, 0, 112 * (1 - smoother(seg(u, 0.12, 0.36)))];
+    const sf = smoother(seg(u, 0.18, 0.4));
+    off.foamF = [0, -64 * (1 - sf), 34 * (1 - sf)];
+    off.foamB = [0, 64 * (1 - sf), 34 * (1 - sf)];
+    off.sleeve = [0, 0, 198 * (1 - smoother(seg(u, 0.26, 0.48)))];
+    const tx_ = smoother(seg(u, 0.2, 0.45)), tz = smoother(seg(u, 0.3, 0.52));
+    off.lidtop = [lerp(0, TOP_ASIDE[0], tx_), lerp(0, TOP_ASIDE[1], tx_), lerp(198, TOP_ASIDE[2], tz)];
+    const a = ease(seg(u, 0.5, 0.7));
+    Z.hl = { chip: [GREEN, 1 - ease(seg(u, 0, 0.25))], foamF: [COLD, a], foamB: [WARM, a], copper: [WARM, 0.8 * a] };
+    Z.dimB = 0.22 * ease(seg(u, 0.45, 0.6));
+    Z.dimTags = DIM_AIR;
+    Z.air = smoother(seg(u, 0.5, 0.86));
+    Z.airT = u * DUR.air;
+    Z.fan = ease(seg(u, 0.42, 0.62));
+    Z.fanA = SPIN * DUR.air * easeInt(u, 0.42, 0.62);
+    Z.cam = ["apart", "air", sine(seg(u, 0.06, 0.9))];
+    Object.assign(p, { chip: 1 - ease(seg(u, 0, 0.25)), apart: 1 - smoother(seg(u, 0, 0.48)), top: tz, air: Z.air, fan: Z.fan });
+  } else if (st === "link") {
+    // the air dies down and the top goes back on; a second box comes down beside it and a cable joins them
+    const lx = smoother(seg(u, 0.12, 0.34));
+    off.lidtop = [lerp(TOP_ASIDE[0], 0, lx), lerp(TOP_ASIDE[1], 0, lx), TOP_ASIDE[2] + 30 * smoother(seg(u, 0.04, 0.16)) - 64 * smoother(seg(u, 0.3, 0.42))];
+    const fa = 1 - ease(seg(u, 0, 0.22));
+    Z.air = fa > 0.002 ? 1 : 0;
+    Z.airFade = fa;
+    Z.airT = DUR.air + u * DUR.link;
+    Z.hl = { foamF: [COLD, fa], foamB: [WARM, fa], copper: [WARM, 0.8 * fa], cable: [GREEN, ease(seg(u, 0.84, 0.94))] };
+    Z.dimB = 0.22 * fa;
+    Z.dimTags = DIM_AIR;
+    Z.fan = 1 - ease(seg(u, 0, 0.4));
+    Z.fanA = fanEndAir + SPIN * DUR.link * (u - easeInt(u, 0, 0.4));
+    Z.u2on = u > 0.36 ? 1 : 0;
+    const d = smoother(seg(u, 0.38, 0.64));
+    off.u2 = [U2X, 0, lerp(U2_UP[2], 0, d)];
+    Z.cable = smoother(seg(u, 0.62, 0.84));
+    Z.pulse = ease(seg(u, 0.84, 0.92));
+    Z.pulseT = u * DUR.link;
+    Z.cam = ["air", "link", sine(seg(u, 0.18, 0.72))];
+    Z.hot = ["link"];
+    Object.assign(p, { top: 1 - smoother(seg(u, 0.3, 0.42)), air: fa, fan: Z.fan, u2: d, cable: Z.cable, data: Z.pulse });
+  } else if (st === "close") {
+    const d = smoother(seg(u, 0.3, 0.62));
+    off.u2 = [U2X, 0, lerp(0, U2_UP[2], d)];
+    Z.u2on = u < 0.64 ? 1 : 0;
+    Z.cable = 1 - smoother(seg(u, 0.04, 0.3));
+    Z.pulse = 1 - ease(seg(u, 0, 0.12));
+    Z.pulseT = DUR.link + u * DUR.close;
+    Z.hl = { cable: [GREEN, 1 - ease(seg(u, 0, 0.14))], "sleeve-ol": [GREEN, bump(u, 0.7, 1)] };
+    Z.cam = ["link", "rest", sine(seg(u, 0.28, 0.95))];
+    Object.assign(p, { u2: 1 - d, cable: Z.cable, data: Z.pulse, logo: bump(u, 0.7, 1) });
+  }
+  Z.cut = Math.hypot(...sub3(off.lidtop, off.sleeve)) > 0.5;
+  return Z;
+}
+
+// what is drawn in a state
+function visibleNow(it, q) {
+  if (it.kind === "air") return q.air > 0.001 && it.frac <= q.air;
+  if (it.kind === "flow") return q.flow > 0.002;
+  if (it === SLEEVE_OL) return !q.cut;
+  if (it === LIDTOP_OL) return !!q.cut;
+  if (it.layer === "u2") return !!q.u2on;
+  if (it.vis) return it.vis(q);
+  return true;
+}
+const offOf = (it, q) => { const o = q.off[it.layer] || O3; return it.offFn ? add3(o, it.offFn(q)) : o; };
+
+// ---------------------------------------------------------------- the depth sort
+const EPS = 0.05;
+function cmpItems(A, B) {
+  const a = A.cb, b = B.cb;
+  // every axis the two boxes are apart on gives an order; when several do, the widest gap (as seen) decides
+  let best = 0, res = 0;
+  for (let i = 0; i < 3; i++) {
+    const w = Math.abs(TV[i]) + 0.05;
+    if (a[i + 3] <= b[i] + EPS) { const g = (b[i] - a[i + 3] + 1) * w; if (g > best) { best = g; res = TV[i] > 0 ? -1 : 1; } }
+    if (b[i + 3] <= a[i] + EPS) { const g = (a[i] - b[i + 3] + 1) * w; if (g > best) { best = g; res = TV[i] > 0 ? 1 : -1; } }
+  }
+  if (res) return res;
+  // the sleeve's outline goes over the sleeve and over whatever it holds; the sleeve goes over what it holds
+  if (A.afterTags) return 1;
+  if (B.afterTags) return -1;
+  // the data stream rides over the board's parts
+  if (A.overBoard && !B.overBoard) return 1;
+  if (B.overBoard && !A.overBoard) return -1;
+  // a panel with holes goes under whatever passes through it (the ports through the back foam)
+  if (!!A.under !== !!B.under) return A.under ? -1 : 1;
+  const sa = A.tags.includes("sleeve"), sb = B.tags.includes("sleeve");
+  if (sa !== sb) return sa ? 1 : -1;
+  return A.dep < B.dep ? -1 : 1;
+}
+// two convex outlines on screen overlap unless an edge of one separates them
+function convexOverlap(Pp, Qq) {
+  for (const poly of [Pp, Qq]) {
+    const n = poly.length;
+    for (let i = 0; i < n; i++) {
+      const a = poly[i], b = poly[(i + 1) % n];
+      const nx = a[1] - b[1], ny = b[0] - a[0], ln = Math.hypot(nx, ny);
+      if (ln < 1e-6) continue;
+      let p0 = Infinity, p1 = -Infinity, q0 = Infinity, q1 = -Infinity;
+      for (const p of Pp) { const d = (p[0] * nx + p[1] * ny) / ln; if (d < p0) p0 = d; if (d > p1) p1 = d; }
+      for (const p of Qq) { const d = (p[0] * nx + p[1] * ny) / ln; if (d < q0) q0 = d; if (d > q1) q1 = d; }
+      if (p1 <= q0 + 0.05 || q1 <= p0 + 0.05) return false;
+    }
+  }
+  return true;
+}
+let CYCLES = 0;
+let LAST_GRAPH = null;
+// one cycle of the last sort, for checking the order rules (ids and boxes)
+function findCycle() {
+  const { list, outs } = LAST_GRAPH, n = list.length, state = new Uint8Array(n), stack = [];
+  const dfs = (u) => { state[u] = 1; stack.push(u); for (const v of outs[u]) { if (state[v] === 1) return stack.slice(stack.indexOf(v)); if (!state[v]) { const c = dfs(v); if (c) return c; } } state[u] = 2; stack.pop(); return null; };
+  for (let i = 0; i < n; i++) if (!state[i]) { const c = dfs(i); if (c) return c.map((k) => ({ id: list[k].id || list[k].kind, cb: list[k].cb.map(r1) })); }
+  return null;
+}
+const CYC_IDS = new Set();
+function depthOrder(list) {
+  const n = list.length, outs = list.map(() => []), indeg = new Int32Array(n);
+  for (let i = 0; i < n; i++) {
+    const si = list[i].sb;
+    for (let j = i + 1; j < n; j++) {
+      const sj = list[j].sb;
+      if (si[2] < sj[0] || sj[2] < si[0] || si[3] < sj[1] || sj[3] < si[1]) continue;
+      if (!convexOverlap(list[i].poly, list[j].poly)) continue;
+      if (cmpItems(list[i], list[j]) < 0) { outs[i].push(j); indeg[j]++; } else { outs[j].push(i); indeg[i]++; }
+    }
+  }
+  LAST_GRAPH = { list, outs };
+  const done = new Uint8Array(n), res = [];
+  CYCLES = 0;
+  CYC_IDS.clear();
+  for (let k = 0; k < n; k++) {
+    let best = -1;
+    for (let i = 0; i < n; i++) if (!done[i] && indeg[i] === 0 && (best < 0 || list[i].dep < list[best].dep)) best = i;
+    if (best < 0) { CYCLES++; CYC_IDS.add(list.find((it, i) => !done[i] && indeg[i] > 0)?.id); for (let i = 0; i < n; i++) if (!done[i] && (best < 0 || indeg[i] < indeg[best] || (indeg[i] === indeg[best] && list[i].dep < list[best].dep))) best = i; }
+    done[best] = 1;
+    res.push(list[best]);
+    for (const j of outs[best]) indeg[j]--;
+  }
+  return res;
+}
+
+
+// ---------------------------------------------------------------- the camera
+// Named aims, each the box of what that state draws; a step eases from one aim to the next, and on every frame the
+// camera also keeps whatever is drawn (bar the air, the data and the second box coming and going) on the stage.
+const artG = svg.querySelector("g.art");
+const PAD = 14;
+const DRAWN = {};
+const cornersOf = (b) => { const out = []; for (const x of [b[0], b[3]]) for (const y of [b[1], b[4]]) for (const z of [b[2], b[5]]) out.push([x, y, z]); return out; };
+const fitOf = (b, fill = 1) => Math.min(((D.W - 2 * PAD) * fill) / (b[2] - b[0]), ((D.H - 2 * PAD) * fill) / (b[3] - b[1]));
+const midOf = (b) => [(b[0] + b[2]) / 2, (b[1] + b[3]) / 2];
+const LID_LAYERS = ["sleeve", "lidtop", "foamF", "foamB"];
+function boxOfState(q, withU2, noLid = false) {
+  let x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9;
+  for (const it of ITEMS) {
+    if (it.kind === "air" || it.kind === "flow" || !visibleNow(it, q)) continue;
+    if (it.layer === "u2" && !withU2) continue;
+    if (noLid && LID_LAYERS.includes(it.layer)) continue;
+    const o = offOf(it, q);
+    for (const c of cornersOf(it.bb)) { const s2 = scr(add3(c, o)); if (s2[0] < x0) x0 = s2[0]; if (s2[0] > x1) x1 = s2[0]; if (s2[1] < y0) y0 = s2[1]; if (s2[1] > y1) y1 = s2[1]; }
+  }
+  return [x0, y0, x1, y1];
+}
+let AIMS = null;
+function makeAims() {
+  const at = (step, u) => { const keep = S; S = { step, u }; const q = scene(); S = keep; return q; };
+  const q = { rest: freshZ(), open: at("memory", 1), apart: at("apart", 1), air: at("air", 1), link: at("link", 1) };
+  q.rest.cut = false;
+  const fill = { rest: 0.86, open: 0.94, apart: 0.95, air: 0.95, link: 0.94 };
+  AIMS = {};
+  for (const [k, z] of Object.entries(q)) { const b = boxOfState(z, k === "link"); AIMS[k] = { s: fitOf(b, fill[k]), F: midOf(b), b }; }
+  // closer on the board for the chip and the memory: the lid set aside may run off the edge, its logo may not
+  const b = boxOfState(q.open, false, true);
+  for (const x of [-50, 50]) for (const y of [-38, 54]) { const p2 = scr(add3([x, y, BH], LID_ASIDE)); b[0] = Math.min(b[0], p2[0]); b[1] = Math.min(b[1], p2[1]); b[2] = Math.max(b[2], p2[0]); b[3] = Math.max(b[3], p2[1]); }
+  AIMS.chip = { s: fitOf(b, 0.95), F: midOf(b), b };
+}
+
+// ---------------------------------------------------------------- the frame
+let lastKey = "";
+let paintN = 0;
+let lastOrder = "";
+let Z = freshZ();
+function draw() {
+  const key = `${S.step}|${S.u}|${paintN}`;
+  if (key === lastKey) return;
+  lastKey = key;
+  if (!AIMS) makeAims();
+  Z = scene();
+  const live = [];
+  for (const it of ITEMS) {
+    const on = visibleNow(it, Z);
+    show(it.el, on);
+    if (!on) continue;
+    const o = offOf(it, Z);
+    if (it.tags.includes("wall") && it.layer === "sleeve") it.ol = !!Z.cut;
+    it.draw(o, Z.off);
+    it.cb = [it.bb[0] + o[0], it.bb[1] + o[1], it.bb[2] + o[2], it.bb[3] + o[0], it.bb[4] + o[1], it.bb[5] + o[2]];
+    const sc = cornersOf(it.cb).map(scr);
+    let x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9;
+    for (const q of sc) { if (q[0] < x0) x0 = q[0]; if (q[0] > x1) x1 = q[0]; if (q[1] < y0) y0 = q[1]; if (q[1] > y1) y1 = q[1]; }
+    it.sb = [x0, y0, x1, y1];
+    if (it.kind === "solid" || it.kind === "outline") it.poly = it.sil;
+    if (it.kind === "flow") it.poly = hull(sc);
+    it.dep = ldepth([(it.cb[0] + it.cb[3]) / 2, (it.cb[1] + it.cb[4]) / 2, (it.cb[2] + it.cb[5]) / 2]);
+    live.push(it);
+  }
+  // the lit parts: a soft glow behind and a coloured rim, faded in by their amount; the rest fades toward the paper
+  setDim(dimEls.A, Z.dimA);
+  setDim(dimEls.B, Z.dimB);
+  for (const it of live) {
+    if (!it.gl) continue;
+    const tag = it.tags.find((t) => Z.hl[t] && Z.hl[t][1] > 0.003);
+    if (tag && it.sil) {
+      const [c, a] = Z.hl[tag];
+      const d = it.kind === "rod" ? it.capD : dPath(it.sil);
+      it.gl.innerHTML = `<path class="hl-glow" d="${d}" fill="${it.kind === "outline" ? "none" : c}" fill-opacity=".55" stroke="${c}" stroke-opacity=".6" stroke-width="${it.kind === "outline" ? 18 : 14}" filter="url(#dg-blur)"/>`;
+      it.rim.innerHTML = it.kind === "rod" ? "" : `<path class="hl-rim" d="${d}" stroke="${c}"/><path class="hl-rim2" d="${d}"/>`;
+      it.gl.style.opacity = it.rim.style.opacity = String(r2(a));
+    } else if (it.gl.firstChild || it.rim.firstChild) { it.gl.innerHTML = ""; it.rim.innerHTML = ""; }
+  }
+  for (const it of live) {
+    let f = "";
+    if (Z.dimB > 0.003 && it.tags.some((t) => Z.dimTags.includes(t))) f = "url(#dg-dimB)";
+    else if (Z.dimA > 0.003 && it.kind !== "air" && !it.tags.some((t) => Z.keep.includes(t))) f = "url(#dg-dimA)";
+    if ((it.el.getAttribute("filter") || "") !== f) { if (f) it.el.setAttribute("filter", f); else it.el.removeAttribute("filter"); }
+  }
+  // the moving bits inside the parts: the fans, the memory cells, the link between the dies
+  for (const fr of FAN_ROT) {
+    fr.g.setAttribute("transform", `rotate(${r2(Z.fanA % 360)} ${r2(fr.cx)} ${r2(-fr.cz)})`);
+    fr.fb.style.opacity = String(r2(0.32 * Z.fan));
+  }
+  const lit = Z.fill * MEM_ITS.length * CELLS.length;
+  MEM_ITS.forEach((m, j) => {
+    const n = clamp(lit - j * CELLS.length, 0, CELLS.length);
+    let d = "";
+    for (let i = 0; i < Math.floor(n); i++) d += rr(m.x + CELLS[i][0], m.y + CELLS[i][1], 1.8, 1.8, 0.3, 1);
+    if (m.el.getAttribute("d") !== d) m.el.setAttribute("d", d);
+    m.el.style.opacity = String(r2(Z.cellA));
+  });
+  CHIPS.c2c.style.opacity = String(r2(Z.c2c * (0.55 + 0.45 * Math.sin(TAU * S.u * 6))));
+  const ordered = depthOrder(live);
+  const key2 = ordered.map((it) => it.n).join(",");
+  if (key2 !== lastOrder) { for (const it of ordered) itemsG.appendChild(it.el); lastOrder = key2; }
+  // the shadows on the mat: one per layer, fainter the higher it floats
+  const byLayer = {};
+  for (const it of live) { if (it.kind === "air" || it.kind === "flow" || it.layer === "cable") continue; (byLayer[it.layer] ||= []).push(it); }
+  const SH = D.SHADOW;
+  let sh = "";
+  for (const list of Object.values(byLayer)) {
+    const pts = [];
+    let zMin = 1e9;
+    for (const it of list) for (const q of cornersOf(it.cb)) {
+      const h = q[2] - MATZ, w = [SH[0] * h, SH[1] * h, 0];
+      pts.push(scr([q[0] + dot3(w, EX), q[1] + dot3(w, EY), MATZ]));
+      if (q[2] < zMin) zMin = q[2];
+    }
+    // fainter the higher it floats, and gone by the time it is out of the picture
+    sh += `<path class="shadow" d="${dPath(hull(pts))}" opacity="${r2(1 - clamp((zMin - MATZ - 6) / 250) ** 0.8)}"/>`;
+  }
+  shadowG.innerHTML = sh;
+  // the camera: ease between the step's two aims, then make sure what is drawn stays on the stage
+  const full = [1e9, 1e9, -1e9, -1e9], base = [1e9, 1e9, -1e9, -1e9];
+  const grow = (bx, b) => { if (b[0] < bx[0]) bx[0] = b[0]; if (b[1] < bx[1]) bx[1] = b[1]; if (b[2] > bx[2]) bx[2] = b[2]; if (b[3] > bx[3]) bx[3] = b[3]; };
+  for (const it of live) {
+    if (it.kind === "air" || it.kind === "flow" || it.layer === "u2") continue;
+    grow(full, it.sb);
+    if (!LID_LAYERS.includes(it.layer)) grow(base, it.sb);
+  }
+  // what must stay on the stage: everything, except that the lid set aside may leave it while the camera is close
+  const liveBox = full.map((v, i) => lerp(base[i], v, Z.clampW));
+  const a0 = AIMS[Z.cam[0]], a1 = AIMS[Z.cam[1]], kk = Z.cam[2];
+  let cs = a0.s * (a1.s / a0.s) ** kk;
+  let F = [lerp(a0.F[0], a1.F[0], kk), lerp(a0.F[1], a1.F[1], kk)];
+  cs = Math.min(cs, fitOf(liveBox));
+  const hw = D.W / 2 / cs, hh = D.H / 2 / cs, pd = PAD / cs;
+  F = [clamp(F[0], liveBox[2] + pd - hw, liveBox[0] - pd + hw), clamp(F[1], liveBox[3] + pd - hh, liveBox[1] - pd + hh)];
+  artG.setAttribute("transform", `translate(${D.W / 2} ${D.H / 2}) scale(${cs.toFixed(4)}) translate(${(-F[0]).toFixed(3)} ${(-F[1]).toFixed(3)})`);
+  blurEl.setAttribute("stdDeviation", r2(5 / cs));
+  const toStage = (b) => [(b[0] - F[0]) * cs + D.W / 2, (b[1] - F[1]) * cs + D.H / 2, (b[2] - F[0]) * cs + D.W / 2, (b[3] - F[1]) * cs + D.H / 2];
+  // the readouts
+  setText(chip("model"), Z.model);
+  ["size", "ai", "mem", "model", "link"].forEach((n) => chipHot(n, Z.hot.includes(n)));
+  Object.assign(DRAWN, { cs, F, stageBox: toStage(liveBox), items: live.length, cycles: CYCLES });
+}
+
+const UPDATE = Object.fromEntries(ORDER.map((id) => [id, (u) => { S.step = id; S.u = u; }]));
+
+// the swatches pick the sleeve's finish; the foam, its pores and the wordmark follow it
+const FINISHES = [["champagne", "#cdad74"], ["silver", "#c4c8ce"], ["graphite", "#6e7179"], ["rose gold", "#d6a58f"], ["black", "#3a3c44"]];
+document.querySelectorAll("[data-swatch]").forEach((b, i) => { const [name, c] = FINISHES[i % FINISHES.length]; b.dataset.swatch = c; b.title = name; b.setAttribute("aria-label", name); b.style.background = c; });
+
+tour({
+  STEPS,
+  ORDER,
+  update: (id, u) => UPDATE[id](u),
+  reset: () => { S = { step: null, u: 0 }; },
+  onFinish: (id) => { if (id === "close") S = { step: null, u: 0 }; },
+  draw,
+  paint: (c) => {
+    const lum = rgbOf(c).reduce((sum, v, i) => sum + v * [0.2126, 0.7152, 0.0722][i], 0) / 255;
+    MATS.gold.c = c;
+    MATS.gold.rgb = rgbOf(c);
+    MATS.gold.hi = 0.22 + 0.3 * clamp((lum - 0.2) / 0.5);
+    MATS.foam.rgb = rgbOf(mixHex(c, "#7a5a2c", 0.12));
+    shadeCache.clear();
+    const st = document.body.style;
+    st.setProperty("--wm", lum < 0.45 ? "#f4f1ea" : "#23263a");
+    st.setProperty("--pore", mixHex(c, "#1b1d2c", 0.42));
+    st.setProperty("--core", mixHex(c, "#1b1d2c", 0.7));
+    paintN++;
+    return mixHex(c, "#f5f0e5", 0.45);
+  },
+  probe: () => ({ step: S.step, u: S.u, ...Z.p, cs: DRAWN.cs, stageBox: DRAWN.stageBox, cycles: DRAWN.cycles }),
+});
+window.__dgx = { cycle: () => findCycle(), get drawn() { return { ...DRAWN }; } };
+
+}
+</script></body></html>
