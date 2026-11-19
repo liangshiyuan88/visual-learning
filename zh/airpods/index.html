@@ -1,0 +1,2495 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>AirPods Pro · 可视化学习</title><script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
+<meta name="description" content="AirPods Pro 通过更多声音实现降噪：耳机柄上的麦克风听到公交车的声音，芯片播放与此波形相反的波形，两者相加几乎为零，因此大约">
+<meta property="og:type" content="website"><meta property="og:title" content="AirPods Pro · 可视化学习"><meta property="og:description" content="AirPods Pro 通过更多声音实现降噪：耳机柄上的麦克风听到公交车的声音，芯片播放与此波形相反的波形，两者相加几乎为零，因此大约">
+<meta property="og:image" content="https://visual-learning.app/airpods-og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:url" content="https://visual-learning.app/airpods">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="AirPods Pro · 可视化学习"><meta name="twitter:description" content="AirPods Pro 通过更多声音实现降噪：耳机柄上的麦克风听到公交车的声音，芯片播放与此波形相反的波形，两者相加几乎为零，因此大约"><meta name="twitter:image" content="https://visual-learning.app/airpods-og.png">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20x%3D%223%22%20y%3D%223%22%20width%3D%2226%22%20height%3D%2226%22%20rx%3D%226%22%20fill%3D%22%23f2c14e%22%20stroke%3D%22%2323263a%22%20stroke-width%3D%222.4%22%2F%3E%3Ccircle%20cx%3D%2216%22%20cy%3D%2216%22%20r%3D%226%22%20fill%3D%22%23fffaf0%22%20stroke%3D%22%2323263a%22%20stroke-width%3D%222.4%22%2F%3E%3C%2Fsvg%3E"><style>
+.site{width:min(980px,100% - 32px);margin:22px auto 0;padding:0 20px;display:flex;align-items:center;gap:10px;font:600 12px ui-monospace,"SF Mono",Menlo,Consolas,monospace;color:#23263a;position:relative;z-index:5}
+.site a{color:inherit;text-decoration:none}
+.site .home{font:700 15px ui-sans-serif,system-ui,"Segoe UI",sans-serif;white-space:nowrap;margin-right:auto}
+.site .home:hover{text-decoration:underline;text-underline-offset:3px}
+.pill{background:#fffaf0;border:1.3px solid #23263a;border-radius:999px;padding:5px 11px;white-space:nowrap;box-shadow:2px 2px 0 #23263a;transition:transform .12s,box-shadow .12s;cursor:pointer}
+.pill:hover{transform:translate(-1px,-1px);box-shadow:3px 3px 0 #23263a}
+.menu{position:relative}
+.menu summary{list-style:none;display:flex;align-items:center;gap:7px}
+.menu summary::-webkit-details-marker{display:none}
+.menu summary b{opacity:.5}
+.menu summary i{font-style:normal;font-size:9px;opacity:.6;transition:transform .15s}
+.menu[open] summary{background:#23263a;color:#fffaf0}
+.menu[open] summary i{transform:rotate(180deg)}
+.panel{position:absolute;right:0;top:calc(100% + 10px);width:min(560px,calc(100vw - 32px));background:#f5f0e5;border:1.4px solid #23263a;border-radius:8px;box-shadow:4px 4px 0 #23263a;padding:10px;display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.panel a{display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 6px 8px;border-radius:6px;border:1.2px solid transparent;text-align:center}
+.panel a:hover{border-color:#23263a;background:#fffaf0}
+.panel a[aria-current]{background:#efe8d8;border-color:#23263a}
+.panel img{width:100%;aspect-ratio:1/1;object-fit:contain}
+.panel b{font-size:10px;opacity:.55;letter-spacing:.06em}
+.panel span{font:600 12px/1.25 ui-sans-serif,system-ui,"Segoe UI",sans-serif}
+.arrows{display:flex;gap:6px}
+.arrows a{padding:5px 10px}
+.iso-page{padding-top:16px!important}
+.credit{margin:16px 2px 0;font:500 12px/1.5 ui-sans-serif,system-ui,"Segoe UI",sans-serif;color:#7b7666}
+.credit a{color:inherit;text-underline-offset:2px}
+.keys{font:600 11px ui-monospace,Menlo,Consolas,monospace;color:#8a8676}
+@media (max-width:760px){
+.site{width:100%;padding:10px 10px 0;margin-top:0;gap:6px;flex-wrap:wrap}
+.site .badges{order:-2;margin-left:auto}
+.site .maker,.site .guide{font-size:11px;padding:4px 10px}
+.site::after{content:"";order:-1;flex-basis:100%;height:0}
+.site .home{font-size:14px}
+.menu summary .nm{display:none}
+.panel{position:fixed;left:10px;right:10px;top:52px;width:auto;max-height:calc(100vh - 70px);overflow:auto;grid-template-columns:repeat(3,1fr);gap:4px;padding:8px}
+.panel span{font-size:11px}
+.iso-page{padding-top:10px!important}
+.keys{display:none}
+.credit{margin:12px 2px 0}
+}
+.render .site,.render .credit{display:none}
+.embed .site,.embed .credit{display:none!important}
+.embed .iso-page{margin:0 auto!important;padding:6px!important;width:100%!important}
+.embed.fill .iso-page{height:100vh;display:flex;flex-direction:column}
+.embed.fill .card{flex:1;grid-template-rows:auto 1fr auto}
+.embed.fill .main{display:flex;flex-direction:column}
+.embed.fill .stage{flex:1;display:grid;place-items:center}
+a.guide,.site a.guide{font:700 12px ui-monospace,"SF Mono",Menlo,Consolas,monospace;white-space:nowrap;text-decoration:none;color:#23263a;background:#f2c14e;border:1.3px solid #23263a;border-radius:999px;padding:5px 12px;box-shadow:2px 2px 0 #23263a;transition:transform .12s,box-shadow .12s}
+a.guide:hover{transform:translate(-1px,-1px);box-shadow:3px 3px 0 #23263a}
+.badges{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+a.maker,.site a.maker{font:600 12px ui-monospace,"SF Mono",Menlo,Consolas,monospace;white-space:nowrap;text-decoration:none;color:#fffaf0;background:#23263a;border:1.3px solid #23263a;border-radius:999px;padding:5px 12px;box-shadow:2px 2px 0 #23263a55;transition:transform .12s}
+.maker b{font-weight:700;color:#f2c14e}
+.maker:hover{transform:translate(-1px,-1px)}
+</style><style>
+.iso{
+  --anatomy-page:#0b0b0b;--anatomy-card:#131313;--anatomy-text:#a3a3a3;--anatomy-strong:#e6e6e6;--anatomy-muted:#6e6e6e;
+  --anatomy-paper:#131313;--anatomy-face:#1b1b1b;--anatomy-top:#1c1c1c;
+  --anatomy-shade-0:#0f0f0f;--anatomy-shade-1:#121212;--anatomy-shade-2:#151515;--anatomy-shade-3:#181818;
+  --anatomy-lit-top:#262626;--anatomy-lit-shade:#1d1d1d;
+  --anatomy-hi:#d4d4d4;--anatomy-mid:#6a6a6a;--anatomy-lo:#3e3e3e;--anatomy-faint:#2a2a2a;--anatomy-lit:#ffffff;
+  --anatomy-halo:#050505;--anatomy-halo-opacity:.9;--anatomy-dot:#e6e6e6;
+  --anatomy-red:#ff6b6b;--anatomy-green:#6be0a0;--anatomy-blue:#6b9bff;
+  --anatomy-weight:.6px;--anatomy-ease:cubic-bezier(.32,.72,0,1);
+  --anatomy-mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --anatomy-lift:inset 0 1px 0 0 #ffffff0a,inset 0 0 0 1px #ffffff06,0 0 0 1px #00000026,0 1px 1px -.5px #00000014,0 3px 3px -1.5px #00000014,0 6px 6px -3px #00000014,0 12px 12px -6px #00000014;
+}
+.iso[data-theme="light"]{
+  --anatomy-page:#f2f2ef;--anatomy-card:#fbfbfa;--anatomy-text:#57575a;--anatomy-strong:#18181a;--anatomy-muted:#8c8c90;
+  --anatomy-paper:#fbfbfa;--anatomy-face:#ffffff;--anatomy-top:#ffffff;
+  --anatomy-shade-0:#dcdcd9;--anatomy-shade-1:#e5e5e2;--anatomy-shade-2:#ededea;--anatomy-shade-3:#f4f4f1;
+  --anatomy-lit-top:#ffffff;--anatomy-lit-shade:#eeeeeb;
+  --anatomy-hi:#26262a;--anatomy-mid:#8a8a8f;--anatomy-lo:#b4b4b8;--anatomy-faint:#d4d4d6;--anatomy-lit:#000000;
+  --anatomy-halo:#8a8a80;--anatomy-halo-opacity:.32;--anatomy-dot:#3a3a3e;
+  --anatomy-red:#e5484d;--anatomy-green:#30a46c;--anatomy-blue:#3e63dd;
+  --anatomy-lift:inset 0 1px 0 0 #ffffff,0 0 0 1px #0000000f,0 1px 1px -.5px #0000000a,0 3px 3px -1.5px #0000000a,0 6px 6px -3px #0000000a,0 12px 12px -6px #0000000a;
+}
+.iso-svg{display:block;width:100%;height:auto;overflow:visible}
+.iso-svg path,.iso-svg circle{vector-effect:non-scaling-stroke}
+.iso-fill{fill:var(--anatomy-paper);stroke:none}
+.iso-solid[data-lit]>.iso-fill{fill:var(--anatomy-face)}
+.iso-shade,.iso-top{stroke:none}
+.iso-shade[data-shade="0"]{fill:var(--anatomy-shade-0)}
+.iso-shade[data-shade="1"]{fill:var(--anatomy-shade-1)}
+.iso-shade[data-shade="2"]{fill:var(--anatomy-shade-2)}
+.iso-shade[data-shade="3"]{fill:var(--anatomy-shade-3)}
+.iso-top{fill:var(--anatomy-top)}
+.iso-solid[data-lit]>.iso-top{fill:var(--anatomy-lit-top)}
+.iso-solid[data-lit]>.iso-shade{fill:var(--anatomy-lit-shade)}
+.iso-solid[data-seamless]>.iso-shade,.iso-solid[data-seamless]>.iso-top{stroke-width:.4;stroke-linejoin:round}
+.iso-solid[data-seamless]>.iso-shade[data-shade="0"]{stroke:var(--anatomy-shade-0)}
+.iso-solid[data-seamless]>.iso-shade[data-shade="1"]{stroke:var(--anatomy-shade-1)}
+.iso-solid[data-seamless]>.iso-shade[data-shade="2"]{stroke:var(--anatomy-shade-2)}
+.iso-solid[data-seamless]>.iso-shade[data-shade="3"]{stroke:var(--anatomy-shade-3)}
+.iso-solid[data-seamless]>.iso-top{stroke:var(--anatomy-top)}
+.iso-solid[data-seamless][data-lit]>.iso-top{stroke:var(--anatomy-lit-top)}
+.iso-solid[data-seamless][data-lit]>.iso-shade{stroke:var(--anatomy-lit-shade)}
+.iso-solid[data-lit]>.iso-edge{stroke:var(--anatomy-lit)}
+.iso-halo{fill:var(--anatomy-halo);stroke:none;filter:blur(9px);opacity:var(--anatomy-halo-opacity);transform:translateY(3px)}
+.iso-line{fill:none;stroke:var(--anatomy-lo);stroke-width:var(--anatomy-weight);stroke-linecap:round;stroke-linejoin:round}
+.iso-line[data-tone="hi"]{stroke:var(--anatomy-hi)}
+.iso-line[data-tone="mid"]{stroke:var(--anatomy-mid)}
+.iso-line[data-tone="lo"]{stroke:var(--anatomy-lo)}
+.iso-line[data-tone="faint"]{stroke:var(--anatomy-faint)}
+.iso-line[data-tone="lit"]{stroke:var(--anatomy-lit)}
+.iso-line[data-tone="red"]{stroke:var(--anatomy-red)}
+.iso-line[data-tone="green"]{stroke:var(--anatomy-green)}
+.iso-line[data-tone="blue"]{stroke:var(--anatomy-blue)}
+.iso-line[data-dotted]{stroke-dasharray:.01 3.5;stroke-width:1}
+.iso-line[data-dashed]{stroke-dasharray:3 3}
+.iso-line[data-flow]{stroke-dasharray:2 6}
+.iso-wire-end{fill:var(--anatomy-paper);stroke:var(--anatomy-lo);stroke-width:var(--anatomy-weight)}
+.iso-wire[data-tone="hi"] .iso-wire-end{stroke:var(--anatomy-hi)}
+.iso-wire[data-tone="mid"] .iso-wire-end{stroke:var(--anatomy-mid)}
+.iso-wire[data-tone="faint"] .iso-wire-end{stroke:var(--anatomy-faint)}
+.iso-wire[data-tone="lit"] .iso-wire-end{stroke:var(--anatomy-lit)}
+.iso-dots circle{fill:var(--anatomy-dot);stroke:none;opacity:.32}
+.iso-dots[data-tone="hi"] circle{opacity:.85}
+.iso-dots[data-tone="mid"] circle{opacity:.45}
+.iso-dots[data-tone="lo"] circle{opacity:.22}
+.iso-dots[data-tone="faint"] circle{opacity:.12}
+.iso-face-text{fill:var(--anatomy-mid);font-family:var(--anatomy-mono);letter-spacing:.04em}
+.iso-face-text[data-tone="hi"]{fill:var(--anatomy-hi)}
+.iso-face-text[data-tone="lo"]{fill:var(--anatomy-lo)}
+.iso-face-text[data-tone="faint"]{fill:var(--anatomy-faint)}
+.tb-body{fill:var(--anatomy-shade-2);stroke:none}
+.tb-shine{fill:var(--anatomy-top);stroke:none}
+.tb-shade{fill:var(--anatomy-shade-0);stroke:none}
+.tb-ring{fill:none;stroke:var(--anatomy-lo);stroke-width:.45;stroke-linecap:butt;stroke-linejoin:round}
+.tb-ring[data-tone="mid"]{stroke:var(--anatomy-mid)}
+.tb-ring[data-tone="faint"]{stroke:var(--anatomy-faint)}
+.tb-ring[data-tone="hi"]{stroke:var(--anatomy-hi)}
+@keyframes iso-flow{to{stroke-dashoffset:-32}}
+@keyframes iso-pulse{0%,100%{opacity:.18}12%{opacity:1}40%{opacity:.18}}
+.iso-line[data-flow]{animation:iso-flow 1600ms linear infinite}
+.iso-dots circle[data-pulse]{animation:iso-pulse 1600ms steps(1,end) infinite;animation-delay:var(--pulse-at,0ms)}
+.iso-figure{margin:32px 0 36px}
+.iso-plate{position:relative;padding:52px 24px;border-radius:0;background:var(--anatomy-card);box-shadow:0 0 0 1px var(--anatomy-mid);--anatomy-paper:var(--anatomy-card)}
+.iso-plate-corners{position:absolute;inset:18px 20px;pointer-events:none}
+.iso-plate-corner{position:absolute;color:var(--anatomy-muted);font-family:var(--anatomy-mono);font-size:10.5px;line-height:1;letter-spacing:.04em;white-space:nowrap}
+.iso-plate-corner[data-corner="fig"]{top:0;left:0;color:var(--anatomy-text)}
+.iso-plate-corner[data-corner="title"]{top:0;right:0;text-transform:uppercase;letter-spacing:.1em}
+.iso-plate-corner[data-corner="hint"]{bottom:0;left:0;text-transform:uppercase;letter-spacing:.1em}
+.iso-plate-corner[data-corner="readout"]{right:0;bottom:0;color:var(--anatomy-text);font-variant-numeric:tabular-nums}
+.iso-plate .iso-svg{margin:0 auto}
+.iso-legend{display:grid;gap:8px;margin-top:12px;color:var(--anatomy-muted);font-size:13px;line-height:1.55}
+.iso-keys{display:flex;flex-wrap:wrap;gap:6px 18px}
+.iso-key{display:inline-flex;align-items:center;gap:7px}
+.iso-swatch{width:16px;height:10px;flex:none;overflow:visible}
+.iso-swatch path{fill:none;stroke:var(--anatomy-hi);stroke-width:1;vector-effect:non-scaling-stroke;stroke-linejoin:round;stroke-linecap:round}
+.iso-swatch[data-mark="raised"] path,.iso-swatch[data-mark="flat"] path{stroke:var(--anatomy-mid)}
+.iso-swatch[data-mark="lit"] path{stroke:var(--anatomy-lit)}
+.iso-swatch[data-mark="dim"] path{stroke:var(--anatomy-lo)}
+.iso-swatch[data-mark="dotted"] path{stroke-dasharray:.01 3;stroke-width:1.4}
+.iso-swatch[data-mark="dashed"] path{stroke-dasharray:3 2.5}
+.iso-swatch[data-mark="red"] path{stroke:var(--anatomy-red)}
+.iso-swatch[data-mark="green"] path{stroke:var(--anatomy-green)}
+.iso-swatch[data-mark="blue"] path{stroke:var(--anatomy-blue)}
+.iso-swatch-crease{stroke:var(--anatomy-lo)!important}
+@media (max-width:560px){.iso-plate{padding:48px 12px 70px}.iso-plate-corner[data-corner="hint"]{bottom:18px}}
+@media (prefers-reduced-motion:reduce){.iso-line[data-flow],.iso-dots circle[data-pulse]{animation:none}}
+
+*{box-sizing:border-box}
+html{color-scheme:dark}
+body[data-theme="light"]{color-scheme:light}
+body{margin:0;background:var(--anatomy-page);color:var(--anatomy-text);font:14px/1.6 ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+.iso-page{width:min(980px,100% - 32px);margin:64px auto 96px}
+</style></head><body class="iso" data-theme="light"><header class="site">
+  <a class="home" href="/">← 可视化学习</a>
+  <details class="menu"><summary class="pill"><b>22</b><span class="nm">AirPods Pro</span><span>· 全部 40 个</span><i>▼</i></summary>
+    <nav class="panel"><a href="/dji-drone"><img src="/thumbs/dji-drone.webp" alt="" loading="lazy"><b>图 29</b><span>大疆无人机</span></a><a href="/dji-neo"><img src="/thumbs/dji-neo.webp" alt="" loading="lazy"><b>图 36</b><span>大疆 Neo</span></a><a href="/vision-pro"><img src="/thumbs/vision-pro.webp" alt="" loading="lazy"><b>图 28</b><span>Vision Pro</span></a><a href="/rolex"><img src="/thumbs/rolex.webp" alt="" loading="lazy"><b>图 38</b><span>劳力士潜航者</span></a><a href="/meta-glasses"><img src="/thumbs/meta-glasses.webp" alt="" loading="lazy"><b>图 37</b><span>Meta Ray-Ban 显示眼镜</span></a><a href="/ipad-pro"><img src="/thumbs/ipad-pro.webp" alt="" loading="lazy"><b>图 41</b><span>iPad Pro</span></a><a href="/dgx-spark"><img src="/thumbs/dgx-spark.webp" alt="" loading="lazy"><b>图 25</b><span>NVIDIA DGX Spark</span></a><a href="/spot"><img src="/thumbs/spot.webp" alt="" loading="lazy"><b>图 30</b><span>Spot 机器狗</span></a><a href="/robot-vacuum"><img src="/thumbs/robot-vacuum.webp" alt="" loading="lazy"><b>图 40</b><span>带机械臂的扫地机器人</span></a><a href="/atlas"><img src="/thumbs/atlas.webp" alt="" loading="lazy"><b>图 35</b><span>Atlas 机器人</span></a><a href="/combination-lock"><img src="/thumbs/combination-lock.webp" alt="" loading="lazy"><b>图 39</b><span>密码锁</span></a><a href="/starlink"><img src="/thumbs/starlink.webp" alt="" loading="lazy"><b>图 33</b><span>星链天线</span></a><a href="/switch-2"><img src="/thumbs/switch-2.webp" alt="" loading="lazy"><b>图 32</b><span>任天堂 Switch 2</span></a><a href="/f1-wheel"><img src="/thumbs/f1-wheel.webp" alt="" loading="lazy"><b>图 34</b><span>F1 方向盘</span></a><a href="/ps-controller"><img src="/thumbs/ps-controller.webp" alt="" loading="lazy"><b>图 24</b><span>PlayStation 手柄</span></a><a href="/iphone"><img src="/thumbs/iphone.webp" alt="" loading="lazy"><b>图 20</b><span>iPhone</span></a><a href="/macbook"><img src="/thumbs/macbook.webp" alt="" loading="lazy"><b>图 21</b><span>MacBook</span></a><a href="/rtx-5090"><img src="/thumbs/rtx-5090.webp" alt="" loading="lazy"><b>图 27</b><span>RTX 5090</span></a><a href="/mac-mini"><img src="/thumbs/mac-mini.webp" alt="" loading="lazy"><b>图 26</b><span>Mac mini</span></a><a href="/apple-watch"><img src="/thumbs/apple-watch.webp" alt="" loading="lazy"><b>图 23</b><span>Apple Watch</span></a><a href="/airpods" aria-current="page"><img src="/thumbs/airpods.webp" alt="" loading="lazy"><b>图 22</b><span>AirPods Pro</span></a><a href="/mechanical-watch"><img src="/thumbs/mechanical-watch.webp" alt="" loading="lazy"><b>图 18</b><span>机械表</span></a><a href="/rubiks-cube"><img src="/thumbs/rubiks-cube.webp" alt="" loading="lazy"><b>图 15</b><span>魔方</span></a><a href="/instant-camera"><img src="/thumbs/instant-camera.webp" alt="" loading="lazy"><b>图 16</b><span>拍立得</span></a><a href="/atom"><img src="/thumbs/atom.webp" alt="" loading="lazy"><b>图 19</b><span>原子</span></a><a href="/lava-lamp"><img src="/thumbs/lava-lamp.webp" alt="" loading="lazy"><b>图 17</b><span>熔岩灯</span></a><a href="/claw-machine"><img src="/thumbs/claw-machine.webp" alt="" loading="lazy"><b>图 02</b><span>抓娃娃机</span></a><a href="/microwave"><img src="/thumbs/microwave.webp" alt="" loading="lazy"><b>图 07</b><span>微波炉</span></a><a href="/espresso-machine"><img src="/thumbs/espresso-machine.webp" alt="" loading="lazy"><b>图 01</b><span>意式咖啡机</span></a><a href="/car-engine"><img src="/thumbs/car-engine.webp" alt="" loading="lazy"><b>图 03</b><span>汽车发动机</span></a><a href="/vending-machine"><img src="/thumbs/vending-machine.webp" alt="" loading="lazy"><b>图 04</b><span>自动售货机</span></a><a href="/washing-machine"><img src="/thumbs/washing-machine.webp" alt="" loading="lazy"><b>图 05</b><span>洗衣机</span></a><a href="/toaster"><img src="/thumbs/toaster.webp" alt="" loading="lazy"><b>图 06</b><span>烤面包机</span></a><a href="/pencil-sharpener"><img src="/thumbs/pencil-sharpener.webp" alt="" loading="lazy"><b>图 08</b><span>卷笔刀</span></a><a href="/smoke-alarm"><img src="/thumbs/smoke-alarm.webp" alt="" loading="lazy"><b>图 09</b><span>烟雾报警器</span></a><a href="/fridge"><img src="/thumbs/fridge.webp" alt="" loading="lazy"><b>图 10</b><span>冰箱</span></a><a href="/capsule-toy-machine"><img src="/thumbs/capsule-toy-machine.webp" alt="" loading="lazy"><b>图 11</b><span>扭蛋机</span></a><a href="/photo-booth"><img src="/thumbs/photo-booth.webp" alt="" loading="lazy"><b>图 12</b><span>大头贴机</span></a><a href="/roller-coaster"><img src="/thumbs/roller-coaster.webp" alt="" loading="lazy"><b>图 13</b><span>过山车</span></a><a href="/elevator"><img src="/thumbs/elevator.webp" alt="" loading="lazy"><b>图 14</b><span>电梯</span></a></nav>
+  </details>
+  <span class="arrows"><a class="pill" href="/apple-watch" data-go="prev" title="Apple Watch (←)">←</a><a class="pill" href="/mechanical-watch" data-go="next" title="机械表 (→)">→</a></span>
+  <span class="badges"><a class="guide" href="https://x.com/elvar_official/status/2111831136171151589" target="_blank" rel="noopener">完整指南 ↗</a><a class="maker" href="https://x.com/elvar_official" target="_blank" rel="noopener">作者 <b>@elvar_official</b></a></span>
+</header><main class="iso-page"><style>.c-chrome{--f:#cfd7e0;--t:#e3e8ed;--s3:#d8dee6;--s2:#cfd7e0;--s1:#b8bfc9;--s0:#a0a7b1}
+.c-steel{--f:#bcc5cf;--t:#d8dde3;--s3:#c8cfd8;--s2:#bcc5cf;--s1:#a7afba;--s0:#9299a5}
+.c-dark{--f:#8e98a6;--t:#bdc3cb;--s3:#a2abb6;--s2:#8e98a6;--s1:#7f8896;--s0:#707886}
+.c-iron{--f:#8a8f9c;--t:#bbbec6;--s3:#9fa3ae;--s2:#8a8f9c;--s1:#7c808d;--s0:#6d717f}
+.c-brass{--f:#e3b866;--t:#efd6a6;--s3:#e8c582;--s2:#e3b866;--s1:#c9a45e;--s0:#af9057}
+.c-copper{--f:#d98a5a;--t:#e9bb9f;--s3:#e09f78;--s2:#d98a5a;--s1:#c07c54;--s0:#a86e4e}
+.c-black{--f:#383a4e;--t:#8c8d98;--s3:#5c5d6e;--s2:#383a4e;--s1:#34364a;--s0:#303245}
+.c-rubber{--f:#44465a;--t:#93949f;--s3:#666778;--s2:#44465a;--s1:#3f4154;--s0:#393b4e}
+.c-wood{--f:#cf9460;--t:#e3c1a3;--s3:#d8a77d;--s2:#cf9460;--s1:#b88559;--s0:#a07552}
+.c-porcelain{--f:#f7f3ea;--t:#faf8f3;--s3:#f8f5ee;--s2:#f7f3ea;--s1:#dad7d1;--s0:#bebbb9}
+.c-glass{--f:#d9eef5;--t:#e9f5f9;--s3:#e0f1f7;--s2:#d9eef5;--s1:#c0d3db;--s0:#a8b8c1}
+.c-amber{--f:#ffb648;--t:#ffd595;--s3:#ffc369;--s2:#ffb648;--s1:#e1a244;--s0:#c48e41}
+.c-mint{--f:#86d3ad;--t:#b9e5cf;--s3:#9cdbbc;--s2:#86d3ad;--s1:#78bb9c;--s0:#6aa48b}
+.c-butter{--f:#f2c14e;--t:#f7db98;--s3:#f4cc6e;--s2:#f2c14e;--s1:#d6ac4a;--s0:#ba9645}
+.c-tomato{--f:#e5583e;--t:#f09e8f;--s3:#ea7661;--s2:#e5583e;--s1:#cb503c;--s0:#b04939}
+.c-sky{--f:#7fb9e9;--t:#b5d6f2;--s3:#96c6ed;--s2:#7fb9e9;--s1:#72a5d0;--s0:#6590b8}
+.c-rose{--f:#f2a5bf;--t:#f7cbda;--s3:#f4b5cb;--s2:#f2a5bf;--s1:#d693ac;--s0:#ba8299}
+.c-lilac{--f:#b9a6e8;--t:#d6cbf2;--s3:#c6b6ec;--s2:#b9a6e8;--s1:#a494d0;--s0:#9082b7}
+.c-cream{--f:#f6eedb;--t:#faf5ea;--s3:#f8f1e1;--s2:#f6eedb;--s1:#dad3c4;--s0:#bdb8ae}
+.c-paper{--f:#fbf7ee;--t:#fdfaf5;--s3:#fcf8f1;--s2:#fbf7ee;--s1:#dedbd5;--s0:#c1bebc}
+.c-green{--f:#5fae7b;--t:#a2d0b2;--s3:#7cbd93;--s2:#5fae7b;--s1:#569b71;--s0:#4d8866}
+.c-pcb{--f:#3f8f5c;--t:#90bea0;--s3:#62a379;--s2:#3f8f5c;--s1:#3a8056;--s0:#367150}
+.c{--anatomy-paper:var(--f);--anatomy-face:var(--f);--anatomy-top:var(--t);--anatomy-shade-3:var(--s3);--anatomy-shade-2:var(--s2);--anatomy-shade-1:var(--s1);--anatomy-shade-0:var(--s0);--anatomy-lit-top:var(--t);--anatomy-lit-shade:var(--s2)}
+.c-body{--f:var(--body);--t:var(--body-t);--s3:var(--body-3);--s2:var(--body);--s1:var(--body-1);--s0:var(--body-0)}
+.c-alt{--f:var(--alt);--t:var(--alt-t);--s3:var(--alt-3);--s2:var(--alt);--s1:var(--alt-1);--s0:var(--alt-0)}
+.iso[data-theme="light"]{--anatomy-page:#ece6d8;--anatomy-card:#f5f0e5;--anatomy-hi:#23263a;--anatomy-mid:#23263aa8;--anatomy-lo:#23263a70;--anatomy-faint:#23263a45;--anatomy-lit:#23263a;--anatomy-dot:#23263a;--anatomy-weight:1.15px;--anatomy-halo-opacity:0;--anatomy-text:#4a4c5e;--anatomy-strong:#23263a;--anatomy-muted:#8a8676}
+body.iso{background:var(--anatomy-page);margin:0}
+.iso-page{max-width:980px;margin:0 auto;padding:28px 20px 40px;font-family:ui-sans-serif,system-ui,"Segoe UI",sans-serif;color:var(--anatomy-text)}
+.card{background:var(--anatomy-card);border:1.4px solid #23263a;border-radius:6px;box-shadow:4px 4px 0 #23263a;display:grid;grid-template-columns:200px 1fr;overflow:hidden}
+.side{border-right:1.4px solid #23263a;padding:18px 16px;display:flex;flex-direction:column;gap:10px;background:#efe8d8}
+.fig{font:600 11px var(--anatomy-mono);letter-spacing:.08em;text-transform:uppercase;color:#6b6656}
+.title{font:700 21px/1.15 ui-sans-serif,system-ui,"Segoe UI",sans-serif;color:#23263a;margin:2px 0 6px}
+.steps{display:flex;flex-direction:column;gap:7px;margin-top:4px}
+.step{appearance:none;text-align:left;font:600 12.5px var(--anatomy-mono);color:#23263a;background:#fffaf0;border:1.3px solid #23263a;border-radius:999px;padding:7px 12px 7px 10px;cursor:pointer;display:flex;gap:8px;align-items:center;box-shadow:2px 2px 0 #23263a;transition:transform .12s,box-shadow .12s,background .2s,opacity .2s}
+.step b{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;background:#23263a;color:#fffaf0;font-size:10px;flex:none}
+.step:hover:not([disabled]){transform:translate(-1px,-1px);box-shadow:3px 3px 0 #23263a}
+.step:active:not([disabled]),.step[data-press]{transform:translate(2px,2px);box-shadow:0 0 0 #23263a}
+.step[disabled]{opacity:.38;cursor:default;box-shadow:none}
+.step[data-on]{background:var(--body);opacity:1;box-shadow:2px 2px 0 #23263a}
+.step[data-done]{opacity:.55;box-shadow:none}
+.main{position:relative;padding:14px 18px 12px}
+.hint{font:500 13.5px/1.45 ui-sans-serif,system-ui,"Segoe UI",sans-serif;color:#23263a;min-height:40px;max-width:600px}
+.lapse{display:inline-block;margin-left:8px;font:700 11px var(--anatomy-mono);background:#23263a;color:#fffaf0;border-radius:4px;padding:2px 6px;vertical-align:1px;opacity:0;transition:opacity .2s}
+.lapse[data-on]{opacity:1}
+.stage svg{display:block;width:100%;height:auto;overflow:visible}
+.chips{display:flex;flex-wrap:wrap;gap:6px 8px;margin-top:4px}
+.chip{font:600 11.5px var(--anatomy-mono);color:#23263a;background:#fffaf0;border:1.2px solid #23263a;border-radius:6px;padding:5px 8px;font-variant-numeric:tabular-nums;white-space:nowrap;transition:background .25s}
+.chip i{font-style:normal;color:#7b7666;font-weight:500;margin-right:5px;text-transform:uppercase;font-size:10px;letter-spacing:.06em}
+.chip[data-hot]{background:var(--body)}
+.foot{display:flex;align-items:center;gap:18px;flex-wrap:wrap;border-top:1.4px solid #23263a;padding:10px 18px;grid-column:1/-1;background:#efe8d8}
+.idea{font:500 13px/1.45 ui-sans-serif,system-ui,"Segoe UI",sans-serif;color:#23263a;flex:1 1 340px}
+.idea b{font-weight:700}
+.ctl{display:flex;align-items:center;gap:8px;font:600 10px var(--anatomy-mono);letter-spacing:.07em;text-transform:uppercase;color:#6b6656}
+.sw{width:18px;height:18px;border-radius:50%;border:1.3px solid #23263a;cursor:pointer;padding:0}
+.sw[data-on]{box-shadow:0 0 0 2px #f5f0e5,0 0 0 3.4px #23263a}
+.shadow{fill:#ddd4c3}
+.slot{fill:#23263a;opacity:.62}
+.plate{fill:#e3b866;stroke:#23263a;stroke-width:1px;vector-effect:non-scaling-stroke}
+.dial-face{fill:#fffdf6;stroke:#23263a;stroke-width:1px;vector-effect:non-scaling-stroke}
+.dial-red{fill:none;stroke:#e5583e;stroke-width:2.2px;stroke-linecap:round;vector-effect:non-scaling-stroke}
+.glint{fill:none;stroke:#fff;stroke-width:1.6px;stroke-linecap:round;opacity:.85;vector-effect:non-scaling-stroke}
+.needle{fill:none;stroke:#e5583e;stroke-width:1.6px;stroke-linecap:round;vector-effect:non-scaling-stroke}
+.lcd{fill:#cde7c3;stroke:#23263a;stroke-width:1px;vector-effect:non-scaling-stroke}
+.lcd-text{fill:#23263a;font-family:var(--anatomy-mono);font-weight:700;letter-spacing:.02em}
+.glass .iso-fill,.glass .iso-shade,.glass .iso-top{fill-opacity:.32}
+.ink{fill:none;stroke:#23263a;stroke-width:1.15px;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+.word{font:700 15px "Segoe Print","Bradley Hand","Comic Sans MS",cursive;fill:#23263a;paint-order:stroke;stroke:#f5f0e5;stroke-width:4px;stroke-linejoin:round}
+.cursor{position:fixed;left:0;top:0;z-index:10;pointer-events:none;transform-origin:3px 2px;filter:drop-shadow(1px 2px 0 #23263a55)}
+.render *{transition:none!important}
+.modes{display:flex;gap:2px;padding:2px;background:#fffaf0;border:1.3px solid #23263a;border-radius:999px;box-shadow:2px 2px 0 #23263a;margin:2px 0 6px}
+.mode{flex:1;appearance:none;border:0;background:none;border-radius:999px;padding:5px 6px;font:700 11.5px var(--anatomy-mono);color:#6b6656;cursor:pointer;white-space:nowrap;transition:background .15s,color .15s;display:flex;align-items:center;justify-content:center;gap:6px}
+.mode:hover:not([aria-checked="true"]){color:#23263a}
+.mode[aria-checked="true"]{background:#23263a;color:#fffaf0}
+.restart{appearance:none;background:none;border:0;padding:2px 0;margin-top:auto;align-self:flex-start;font:600 11px var(--anatomy-mono);color:#6b6656;cursor:pointer;text-decoration:underline;text-decoration-color:#6b665666;text-underline-offset:3px}
+.restart:hover{color:#23263a;text-decoration-color:#23263a}
+.render .modes,.render .restart{display:none}
+.manual .step:not([disabled]):not([data-on]){animation:nudge 1.5s ease-in-out infinite}
+@keyframes nudge{0%,100%{box-shadow:2px 2px 0 #23263a,0 0 0 0 #23263a55}60%{box-shadow:2px 2px 0 #23263a,0 0 0 6px #23263a00}}
+@media (prefers-reduced-motion:reduce){.manual .step{animation:none!important}}
+@media (max-width:760px){
+.iso-page{width:100%;margin:0 auto;padding:10px 10px 28px}
+.card{grid-template-columns:1fr;box-shadow:3px 3px 0 #23263a}
+.side{border-right:0;border-bottom:1.4px solid #23263a;padding:12px 12px 10px;gap:6px}
+.title{font-size:18px;margin:0 0 4px}
+.steps{flex-direction:row;flex-wrap:wrap;gap:6px}
+.step{padding:5px 10px 5px 6px;font-size:11.5px;gap:6px}
+.modes{max-width:280px;margin:0 0 4px}
+.restart{margin-top:2px}
+.main{padding:10px 10px 10px}
+.hint{min-height:57px;font-size:13px}
+.foot{padding:10px 12px;gap:10px 16px}
+.idea{flex-basis:100%}
+}
+
+.stage svg{overflow:hidden}
+.c-porcelain{--f:#f7f3ea;--t:#fffdf7;--s3:#f9f6ef;--s2:#f7f3ea;--s1:#dcd8cf;--s0:#c4c0b7}
+.step[data-on],.chip[data-hot]{background:var(--body)}
+.grid{fill:none;stroke:#23263a;stroke-width:.5px;opacity:.12;vector-effect:non-scaling-stroke}
+.grid-major{opacity:.25}
+.shadow-mat{mix-blend-mode:multiply}
+.ph path,.ph use,.ph circle,.ph rect,.ph ellipse{vector-effect:non-scaling-stroke;stroke-linejoin:round}
+.ph .ol{fill:none;stroke:#23263a;stroke-width:1.05px}
+.ph .ol2{fill:none;stroke:#23263a;stroke-width:1.9px;stroke-linejoin:round}
+.ph .olg{fill:none;stroke:#23263a;stroke-width:1.2px;stroke-linejoin:round;opacity:.55}
+.ph .thin{fill:none;stroke:#23263a;stroke-width:.6px}
+.ph .seam{fill:none;stroke:#23263a;stroke-width:.55px;opacity:.55}
+.ph .hair{fill:none;stroke:#23263a;stroke-width:.4px;opacity:.55}
+.ph .lite{fill:none;stroke:#fff;stroke-width:.8px;opacity:.8;stroke-linecap:round}
+.ph .ink{fill:#23263a;stroke:none}
+.ph text{font-family:ui-sans-serif,system-ui,"Segoe UI",sans-serif;font-weight:700}
+.ph .logo{fill:#23263a;fill-opacity:.82;stroke:none}
+.ph .logo-ol{fill:none;stroke:#23263a;stroke-width:.5px;opacity:.6}
+.ph .bp{fill:#23263a;font-weight:600;letter-spacing:.01em}
+.ph .bp2{fill:#23263a;opacity:.5;font-weight:500}
+.ph .bpl{fill:#23263a;opacity:.38;font-weight:500}
+.ph .band{fill:var(--body);stroke:#23263a;stroke-width:.4px}
+.ph .tear{fill:var(--body-1);stroke:#23263a;stroke-width:.35px}
+.ph .pocket{fill:#23263a;fill-opacity:.07;stroke:#23263a;stroke-width:.5px;stroke-opacity:.45}
+.ph .pocket2{fill:#23263a;fill-opacity:.09;stroke:none}
+.ph .well{fill:#2b2d38;stroke:#23263a;stroke-width:.5px}
+.ph .pin{fill:#e3b866;stroke:#23263a;stroke-width:.3px}
+.ph .led{fill:#5a5e6a;stroke:#23263a;stroke-width:.35px}
+.ph .led-on{fill:#3fd27a;stroke:none}
+.ph .led-glow{fill:#3fd27a;stroke:none}
+.ph .mesh{fill:#2b2d38;stroke:#23263a;stroke-width:.4px}
+.ph .mesh-l{fill:none;stroke:#7d8190;stroke-width:.3px;opacity:.85}
+.ph .mesh-g{fill:#8f939f;stroke:#23263a;stroke-width:.35px}
+.ph .mesh-gl{fill:none;stroke:#3b3e4a;stroke-width:.3px;opacity:.7}
+.ph .flat{fill:#fff;fill-opacity:.5;stroke:#23263a;stroke-width:.45px;stroke-opacity:.5}
+.ph .flat-l{fill:none;stroke:#fff;stroke-width:.6px;opacity:.9}
+.ph .contact{fill:#c9d0d9;stroke:#23263a;stroke-width:.35px}
+.ph .opening{fill:#2b2d38;stroke:#23263a;stroke-width:.45px}
+.ph .opening-m{fill:#5a5e6a;stroke:none}
+.ph .sizemark{fill:#23263a;opacity:.45;font-weight:700}
+.ph .print{fill:#23263a;opacity:.45;font-weight:600}
+.ph .cone{fill:none;stroke:#23263a;stroke-width:.35px;opacity:.5}
+.ph .dome{fill:#e9e6dd;stroke:#23263a;stroke-width:.4px}
+.ph .chip-pk{fill:#2e3038;stroke:#23263a;stroke-width:.4px}
+.ph .chip-t{fill:#d8dae2;font-weight:700;opacity:.85}
+.ph .chiplogo{fill:#d8dae2;opacity:.85;stroke:none}
+.ph .pas{fill:#b9946a;stroke:none}
+.ph .pas2{fill:#2a2c37;stroke:none}
+.ph .gold{fill:#e3b866;stroke:#23263a;stroke-width:.3px}
+.ph .trace{fill:none;stroke:#f3c27a;stroke-width:.45px;opacity:.85}
+.ph .zig{fill:none;stroke:#e3b866;stroke-width:.5px;stroke-linejoin:round}
+.ph .gauge{fill:none;stroke:#c97f4a;stroke-width:.45px;stroke-linejoin:round}
+.ph .can{fill:#c9d0d9;stroke:#23263a;stroke-width:.35px}
+.ph .can-h{fill:#23263a;stroke:none}
+.ph .plus{fill:none;stroke:#23263a;stroke-width:.6px;opacity:.6}
+.ph .wprint{fill:#f2f0ea;font-weight:600;opacity:.8}
+.ph .hinge-pin{fill:#c3cad3;stroke:#23263a;stroke-width:.4px}
+.ph .mag{fill:#7d8290;stroke:#23263a;stroke-width:.4px}
+.ph .mag-hi{fill:none;stroke:#fff;stroke-width:.5px;opacity:.5}
+.ph .port{fill:#2b2d38;stroke:#23263a;stroke-width:.4px}
+.ph .port-t{fill:#e3b866;stroke:none}
+.ph .card{fill:#fbf8f0;stroke:#23263a;stroke-width:.5px}
+.ph .card-l{fill:none;stroke:#23263a;stroke-width:.4px;opacity:.35}
+.ph .gloss{fill:#fff;stroke:none}
+.ph .mag-ring{fill:none;stroke:var(--alt);stroke-width:1.2px}
+.veil{stroke:none}
+.hl-wash{fill:var(--alt);stroke:none}
+.hl-glow{fill:none;stroke:var(--alt);stroke-linejoin:round;stroke-linecap:round;vector-effect:non-scaling-stroke}
+.hl-line{fill:none;stroke:var(--alt);stroke-linejoin:round;stroke-linecap:round;vector-effect:non-scaling-stroke}
+.hl-dot{fill:var(--alt);stroke:#fff;stroke-width:.6px;vector-effect:non-scaling-stroke}
+.wave-glow{fill:none;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+.wave{fill:none;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+.wave-core{fill:none;stroke:#fff;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+.note{fill:#23263a;stroke:#fffaf0;stroke-width:.8px;paint-order:stroke;vector-effect:non-scaling-stroke}
+.icon-bg{fill:#fffaf0;stroke:#23263a;stroke-width:1.2px;vector-effect:non-scaling-stroke}
+.icon-g{fill:#23263a;stroke:none}
+.press{fill:none;stroke:var(--alt);stroke-width:2px;stroke-linecap:round;vector-effect:non-scaling-stroke}
+.ripple{fill:none;stroke:var(--alt);vector-effect:non-scaling-stroke}
+</style>
+<div class="card">
+  <aside class="side">
+    <div class="fig">图 22 · 耳机</div>
+    <div class="title">AirPods Pro</div>
+    <div class="modes" role="radiogroup" aria-label="Mode"><button class="mode" data-mode="auto" role="radio" aria-checked="false"><svg viewBox="0 0 12 12" width="9" height="9" aria-hidden="true"><path d="M2 1.2v9.6L10.4 6z" fill="currentColor"/></svg>自动</button><button class="mode" data-mode="manual" role="radio" aria-checked="true"><svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M4 2.5l14.5 8.6-6.2 1.4 3.2 7-2.9 1.3-3.1-7-5.5 4.3z" fill="currentColor"/></svg>手动</button></div>
+    <div class="steps"><button class="step" data-step="open" ><b>1</b>打开外壳</button><button class="step" data-step="out" disabled><b>2</b>从盒子中取出</button><button class="step" data-step="noise" disabled><b>3</b>噪音</button><button class="step" data-step="anti" disabled><b>4</b>抗噪</button><button class="step" data-step="squeeze" disabled><b>5</b>挤压以暂停</button><button class="step" data-step="apart" disabled><b>6</b>拆开它</button><button class="step" data-step="back" disabled><b>↺</b>放回箱子</button></div>
+    <button class="restart" data-restart>⟲ 重新开始</button>
+  </aside>
+  <section class="main">
+    <div class="hint"><span data-hint>AirPods Pro是如何让公交车变得安静的？按下步骤，或者等待机器自行运行这些步骤。</span><span class="lapse" data-lapse>×3</span></div>
+    <div class="stage"><svg xmlns="http://www.w3.org/2000/svg" class="iso-svg" viewBox="0 0 700 500" role="img" aria-label="A white AirPods Pro charging case standing 开启 a desk mat, with the white product box standing behind it, 和 a card of spare ear tips. The 盖子 snaps open 时松开， two earbuds lift out; a rumbling sound wave reaches the outer microphone, the chip 游玩次数 the same wave upside down through the speaker 时松开， two cancel to a flat line at the ear; a 挤压 开启 the stem pauses the music; one earbud comes apart into its 零件, 和 everything goes back into the case as the 盖子 snaps shut."><defs><clipPath id="matclip"><path d="M509.6 182.5L518.1 181.5L526.9 181.2L535.7 181.8L544 183.3L551.6 185.5L558.1 188.5L563.4 192L567.2 196L684 356.4L686.2 360.6L686.7 365L685.4 369.4L682.5 373.6L678 377.4L672.1 380.6L665.1 383.3L657.1 385.2L190.4 470.1L181.9 471.2L173.1 471.5L164.3 470.8L156 469.4L148.4 467.1L141.9 464.2L136.6 460.7L132.8 456.7L16 296.3L13.8 292L13.3 287.6L14.6 283.3L17.5 279.1L22 275.3L27.9 272L34.9 269.4L42.9 267.5Z"/></clipPath></defs><g class="art"><path class="shadow" d="M33.2 306.9L264.8 260.1L311.5 253.2L350.8 301.8L119.1 348.6L72.5 355.5Z"/><g class="c c-body"><g class="iso-solid"><path class="iso-fill" d="M13.3 287.6L14.6 283.3L17.5 279.1L22 275.3L27.9 272L34.9 269.4L42.9 267.5L509.6 182.5L518.1 181.5L526.9 181.2L535.7 181.8L544 183.3L551.6 185.5L558.1 188.5L563.4 192L567.2 196L684 356.4L686.2 360.6L686.7 365L686.7 375.4L685.4 379.8L682.5 384L678 387.7L672.1 391L665.1 393.7L657.1 395.6L190.4 480.5L181.9 481.6L173.1 481.9L164.3 481.2L156 479.8L148.4 477.5L141.9 474.6L136.6 471.1L132.8 467.1L16 306.7L13.8 302.4L13.3 298Z"/><path class="iso-shade" data-shade="0" d="M686.7 375.4L685.4 379.8L685.4 369.4L686.7 365ZM685.4 379.8L682.5 384L682.5 373.6L685.4 369.4ZM682.5 384L678 387.7L678 377.4L682.5 373.6ZM678 387.7L672.1 391L672.1 380.6L678 377.4ZM672.1 391L665.1 393.7L665.1 383.3L672.1 380.6Z"/><path class="iso-shade" data-shade="1" d="M665.1 393.7L657.1 395.6L657.1 385.2L665.1 383.3ZM657.1 395.6L190.4 480.5L190.4 470.1L657.1 385.2ZM190.4 480.5L181.9 481.6L181.9 471.2L190.4 470.1ZM181.9 481.6L173.1 481.9L173.1 471.5L181.9 471.2Z"/><path class="iso-shade" data-shade="2" d="M173.1 481.9L164.3 481.2L164.3 470.8L173.1 471.5ZM164.3 481.2L156 479.8L156 469.4L164.3 470.8Z"/><path class="iso-shade" data-shade="3" d="M156 479.8L148.4 477.5L148.4 467.1L156 469.4ZM148.4 477.5L141.9 474.6L141.9 464.2L148.4 467.1ZM141.9 474.6L136.6 471.1L136.6 460.7L141.9 464.2ZM136.6 471.1L132.8 467.1L132.8 456.7L136.6 460.7ZM132.8 467.1L16 306.7L16 296.3L132.8 456.7ZM16 306.7L13.8 302.4L13.8 292L16 296.3ZM13.8 302.4L13.3 298L13.3 287.6L13.8 292Z"/><path class="iso-top" d="M509.6 182.5L518.1 181.5L526.9 181.2L535.7 181.8L544 183.3L551.6 185.5L558.1 188.5L563.4 192L567.2 196L684 356.4L686.2 360.6L686.7 365L685.4 369.4L682.5 373.6L678 377.4L672.1 380.6L665.1 383.3L657.1 385.2L190.4 470.1L181.9 471.2L173.1 471.5L164.3 470.8L156 469.4L148.4 467.1L141.9 464.2L136.6 460.7L132.8 456.7L16 296.3L13.8 292L13.3 287.6L14.6 283.3L17.5 279.1L22 275.3L27.9 272L34.9 269.4L42.9 267.5Z"/><path class="iso-line iso-crease" data-tone="faint" d="M686.7 365L685.4 369.4L682.5 373.6L678 377.4L672.1 380.6L665.1 383.3L657.1 385.2L190.4 470.1L181.9 471.2L173.1 471.5L164.3 470.8L156 469.4L148.4 467.1L141.9 464.2L136.6 460.7L132.8 456.7L16 296.3L13.8 292L13.3 287.6"/><path class="iso-line iso-bevel" data-tone="faint" d="M686.7 365L681.5 368.9L678.9 372.7L674.8 376.2L669.4 379.2L663 381.6L655.6 383.4L189.2 468.2L181.2 469.3L173.2 469.5L165.3 468.9L157.7 467.6L150.8 465.5L144.8 462.8L140 459.6L136.4 455.9L19.8 295.7L17.8 291.7L13.3 287.6"/><path class="iso-line" data-tone="faint" d="M686.7 370.2L685.4 374.6L682.5 378.8L678 382.6L672.1 385.8L665.1 388.5L657.1 390.4L190.4 475.3L181.9 476.4L173.1 476.7L164.3 476L156 474.6L148.4 472.3L141.9 469.4L136.6 465.9L132.8 461.9L16 301.5L13.8 297.2L13.3 292.8"/><path class="iso-line iso-edge" data-tone="hi" d="M13.3 287.6L14.6 283.3L17.5 279.1L22 275.3L27.9 272L34.9 269.4L42.9 267.5L509.6 182.5L518.1 181.5L526.9 181.2L535.7 181.8L544 183.3L551.6 185.5L558.1 188.5L563.4 192L567.2 196L684 356.4L686.2 360.6L686.7 365M686.7 375.4L685.4 379.8L682.5 384L678 387.7L672.1 391L665.1 393.7L657.1 395.6L190.4 480.5L181.9 481.6L173.1 481.9L164.3 481.2L156 479.8L148.4 477.5L141.9 474.6L136.6 471.1L132.8 467.1L16 306.7L13.8 302.4L13.3 298M686.7 365L686.7 375.4M13.3 287.6L13.3 298"/></g></g><path class="iso-line" data-tone="mid" data-dotted="" d="M516.8 192.4L521.3 191.8L526 191.7L530.7 192L535.1 192.8L539.2 194L542.7 195.6L545.5 197.5L547.5 199.6L664.3 360L665.4 362.2L665.7 364.6L665 366.9L663.5 369.1L661.1 371.2L657.9 372.9L654.2 374.3L649.9 375.3L183.2 460.3L178.7 460.9L174 461L169.3 460.7L164.9 459.9L160.8 458.7L157.3 457.1L154.5 455.2L152.5 453.1L35.7 292.7L34.6 290.4L34.3 288.1L35 285.8L36.5 283.5L38.9 281.5L42.1 279.8L45.8 278.4L50.1 277.3Z"/><path class="iso-line" data-tone="faint" d="M513 187.2L519.7 186.4L526.5 186.2L533.3 186.7L539.8 187.8L545.7 189.6L550.8 191.9L554.9 194.6L557.9 197.7L674.6 358.1L676.3 361.4L676.7 364.8L675.7 368.2L673.4 371.5L669.9 374.4L665.4 377L659.9 379L653.7 380.5L187 465.4L180.3 466.3L173.5 466.5L166.7 466L160.2 464.9L154.3 463.1L149.2 460.8L145.1 458.1L142.1 455L25.4 294.6L23.7 291.3L23.3 287.8L24.3 284.5L26.6 281.2L30.1 278.3L34.6 275.7L40.1 273.7L46.3 272.2Z"/><path class="grid" d="M99.5 278.5L219.6 443.5M147.1 269.8L267.3 434.9M194.7 261.1L314.9 426.2M242.3 252.5L362.5 417.5M289.9 243.8L410.1 408.9M337.5 235.1L457.7 400.2M385.1 226.5L505.3 391.6M432.7 217.8L552.9 382.9M480.4 209.1L600.5 374.2M69 310.7L545.1 224.1M86.2 334.3L562.3 247.6M103.4 357.9L579.5 271.2M120.5 381.5L596.6 294.8M137.7 405L613.8 318.4M154.9 428.6L631 342"/><path class="grid grid-major" d="M51.9 287.1L172 452.2M528 200.5L648.1 365.6M51.9 287.1L528 200.5M172 452.2L648.1 365.6"/><text class="iso-face-text" data-tone="hi" transform="matrix(4.7 -0.9 1.7 2.3 496.5 391)" font-size="3.4" text-anchor="start">桌垫</text><text class="iso-face-text" data-tone="mid" transform="matrix(4.7 -0.9 1.7 2.3 502.7 399.5)" font-size="1.7" text-anchor="start">117 × 86 · 防滑</text><g class="shadow-mat" clip-path="url(#matclip)"><path class="shadow" data-part="shadow-live" d=""/></g><g class="ph" data-part="box"></g><g class="ph" data-part="tips"></g><g class="ph" data-part="scene"></g><g class="ph" data-part="fx"></g><g data-part="sounds"></g></g></svg></div>
+    <div class="chips"><span class="chip" data-chipbox="noise"><i>噪声输入，典型</i><span data-chip="noise">80 分贝</span></span><span class="chip" data-chipbox="ear"><i>驱动，典型的</i><span data-chip="ear">80 分贝</span></span><span class="chip" data-chipbox="adjust"><i>校正，Apple</i><span data-chip="adjust">每秒 200 次</span></span><span class="chip" data-chipbox="mics"><i>麦克风</i><span data-chip="mics">每只耳机 3 个</span></span><span class="chip" data-chipbox="hours"><i>电池续航时间，Apple</i><span data-chip="hours">6 小时</span></span><span class="chip" data-chipbox="parts"><i>零件</i><span data-chip="parts">1 个耳机</span></span></div>
+  </section>
+  <footer class="foot">
+    <div class="idea"><b>核心原理：</b> AirPods Pro 通过更多声音实现降噪：耳机柄上的麦克风听到公交车的声音，芯片播放与此波形相反的波形，两者相加几乎为零，因此大约 <b>80 分贝</b> 外部到达大约 <b>55 dB</b> （典型值），校正后 <b>每秒 200 次</b> （Apple 提供的初代 AirPods Pro 的数据）。每个耳机最长播放时间为 <b>6 小时</b> 一次充电（Apple给出的AirPods Pro 2数据）。</div>
+    <div class="ctl">配色 <button class="sw" data-swatch="#f2c14e" title="butter" style="background:#f2c14e" data-on></button><button class="sw" data-swatch="#e5583e" title="tomato" style="background:#e5583e" ></button><button class="sw" data-swatch="#86d3ad" title="mint" style="background:#86d3ad" ></button><button class="sw" data-swatch="#7fb9e9" title="sky" style="background:#7fb9e9" ></button><button class="sw" data-swatch="#f2a5bf" title="rose" style="background:#f2a5bf" ></button></div>
+  </footer>
+</div><p class="credit"><span class="keys">按空格或回车执行下一步 · ← → 切换机器<br></span>作者 <a target="_blank" rel="noopener" href="https://x.com/elvar_official">@elvar_official</a></p></main><script>
+if (/[?&]embed\b/.test(location.search)) document.body.classList.add("embed");
+addEventListener("keydown", (e) => {
+  if (e.key === "Escape") document.querySelector(".menu").open = false;
+  if (e.altKey || e.ctrlKey || e.metaKey || e.target.closest("input,textarea,select")) return;
+  const go = e.key === "ArrowLeft" ? "prev" : e.key === "ArrowRight" ? "next" : null;
+  if (go) location.href = document.querySelector('[data-go="' + go + '"]').href;
+});
+addEventListener("click", (e) => { const m = document.querySelector(".menu"); if (m.open && !m.contains(e.target)) m.open = false; });
+</script><script type="module">const AZIMUTH = 45;
+const ELEVATION = 30;
+const SHADES = 4;
+const RADIANS = Math.PI / 180;
+const UNIT = Math.sqrt(1.6);
+function cameraOf({ scale, azimuth = AZIMUTH, elevation = ELEVATION }) {
+    const a = azimuth * RADIANS;
+    const e = elevation * RADIANS;
+    return { sinA: Math.sin(a), cosA: Math.cos(a), sinE: Math.sin(e), cosE: Math.cos(e), k: scale * UNIT };
+}
+function iso([x, y, z], projection) {
+    const { origin } = projection;
+    const { sinA, cosA, sinE, cosE, k } = cameraOf(projection);
+    return [origin[0] + (x * sinA - y * cosA) * k, origin[1] + ((x * cosA + y * sinA) * sinE - z * cosE) * k];
+}
+function towardViewer(projection) {
+    const { sinA, cosA } = cameraOf(projection);
+    return [cosA, sinA];
+}
+function depthOf([x, y, z], projection) {
+    const { sinA, cosA, sinE, cosE } = cameraOf(projection);
+    return (x * cosA + y * sinA) * cosE + z * sinE;
+}
+const tenth = (value) => {
+    const text = (Math.round(value * 10) / 10).toFixed(1).replace(/\.0$/, "");
+    return text === "-0" ? "0" : text;
+};
+function pathOf(points, closed = false) {
+    if (!points.length)
+        return "";
+    return points.map(([x, y], at) => `${at ? "L" : "M"}${tenth(x)} ${tenth(y)}`).join("") + (closed ? "Z" : "");
+}
+const joinPaths = (paths) => paths.filter(Boolean).join("");
+function roundedPlan({ x, y, w, d, r }, steps = 8) {
+    const radius = Math.max(0, Math.min(r, w / 2, d / 2));
+    const corners = [
+        [x + w - radius, y + radius, -90],
+        [x + w - radius, y + d - radius, 0],
+        [x + radius, y + d - radius, 90],
+        [x + radius, y + radius, 180],
+    ];
+    const out = [];
+    for (const [cx, cy, start] of corners) {
+        const count = radius > 0 ? steps : 0;
+        for (let step = 0; step <= count; step++) {
+            const angle = (start + (count ? (90 * step) / count : 45)) * RADIANS;
+            out.push([cx + radius * Math.cos(angle), cy + radius * Math.sin(angle)]);
+        }
+    }
+    return out;
+}
+function signedArea(points) {
+    let area = 0;
+    for (let index = 0; index < points.length; index++) {
+        const [ax, ay] = points[index];
+        const [bx, by] = points[(index + 1) % points.length];
+        area += ax * by - bx * ay;
+    }
+    return area / 2;
+}
+const oriented = (points) => (signedArea(points) < 0 ? [...points].reverse() : points);
+function convexHull(points) {
+    const sorted = [...points].sort((a, b) => a[0] - b[0] || a[1] - b[1]);
+    if (sorted.length < 3)
+        return sorted;
+    const cross = (o, a, b) => (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0]);
+    const lower = [];
+    for (const point of sorted) {
+        while (lower.length >= 2 && cross(lower[lower.length - 2], lower[lower.length - 1], point) <= 0)
+            lower.pop();
+        lower.push(point);
+    }
+    const upper = [];
+    for (let index = sorted.length - 1; index >= 0; index--) {
+        const point = sorted[index];
+        while (upper.length >= 2 && cross(upper[upper.length - 2], upper[upper.length - 1], point) <= 0)
+            upper.pop();
+        upper.push(point);
+    }
+    return [...lower.slice(0, -1), ...upper.slice(0, -1)];
+}
+function runsOf(flags, want) {
+    const count = flags.length;
+    const runs = [];
+    const start = flags.findIndex((flag, index) => flag !== flags[(index + count - 1) % count]);
+    if (start < 0)
+        return flags[0] === want ? [Array.from({ length: count + 1 }, (_, index) => index % count)] : [];
+    let run = null;
+    for (let step = 0; step < count; step++) {
+        const index = (start + step) % count;
+        if (flags[index] === want) {
+            if (!run)
+                run = [index];
+            run.push((index + 1) % count);
+        }
+        else if (run) {
+            runs.push(run);
+            run = null;
+        }
+    }
+    if (run)
+        runs.push(run);
+    return runs;
+}
+function extrude(ring, z, height, projection, options = {}) {
+    const convex = options.convex ?? true;
+    const count = ring.length;
+    const counter = signedArea(ring) > 0;
+    const [vx, vy] = towardViewer(projection);
+    const { sinA, cosA } = cameraOf(projection);
+    const normals = ring.map(([ax, ay], index) => {
+        const [bx, by] = ring[(index + 1) % count];
+        const dx = bx - ax;
+        const dy = by - ay;
+        const length = Math.hypot(dx, dy) || 1;
+        return (counter ? [dy / length, -dx / length] : [-dy / length, dx / length]);
+    });
+    const facing = normals.map(([nx, ny]) => nx * vx + ny * vy > 1e-9);
+    const top = ring.map(([x, y]) => iso([x, y, z + height], projection));
+    const bottom = ring.map(([x, y]) => iso([x, y, z], projection));
+    const outline = [];
+    const crease = [];
+    for (const run of runsOf(facing, false))
+        outline.push(pathOf(run.map((index) => top[index])));
+    for (const run of runsOf(facing, true)) {
+        crease.push(pathOf(run.map((index) => top[index])));
+        if (height > 0)
+            outline.push(pathOf(run.map((index) => bottom[index])));
+    }
+    if (height > 0) {
+        for (let index = 0; index < count; index++) {
+            if (facing[(index + count - 1) % count] !== facing[index])
+                outline.push(pathOf([top[index], bottom[index]]));
+        }
+    }
+    let fill;
+    if (convex) {
+        fill = pathOf(convexHull([...top, ...bottom]), true);
+    }
+    else {
+        const parts = [pathOf(oriented(top), true), pathOf(oriented(bottom), true)];
+        for (let index = 0; index < count; index++) {
+            if (!facing[index])
+                continue;
+            const next = (index + 1) % count;
+            parts.push(pathOf(oriented([top[index], top[next], bottom[next], bottom[index]]), true));
+        }
+        fill = parts.join("");
+    }
+    const buckets = Array.from({ length: SHADES }, () => []);
+    if (height > 0) {
+        const [lx, ly] = [-sinA, cosA];
+        for (let index = 0; index < count; index++) {
+            if (!facing[index])
+                continue;
+            const [nx, ny] = normals[index];
+            const lit = (nx * lx + ny * ly + 1) / 2;
+            const shade = Math.min(SHADES - 1, Math.max(0, Math.floor(lit * SHADES)));
+            const next = (index + 1) % count;
+            buckets[shade].push(pathOf(oriented([top[index], top[next], bottom[next], bottom[index]]), true));
+        }
+    }
+    let bevel;
+    if (options.bevel && options.bevel > 0) {
+        const by = options.bevel;
+        const inset = ring.map(([x, y], index) => {
+            const [ax, ay] = normals[(index + count - 1) % count];
+            const [bx, by2] = normals[index];
+            const mx = ax + bx;
+            const my = ay + by2;
+            const length = Math.hypot(mx, my) || 1;
+            return [x - (mx / length) * by, y - (my / length) * by];
+        });
+        const insetTop = inset.map(([x, y]) => iso([x, y, z + height], projection));
+        bevel = runsOf(facing, true)
+            .map((run) => pathOf([top[run[0]], ...run.slice(1, -1).map((index) => insetTop[index]), top[run[run.length - 1]]]))
+            .join("");
+    }
+    return {
+        fill,
+        outline: outline.join(""),
+        crease: crease.join(""),
+        top: pathOf(oriented(top), true),
+        shades: buckets.map((paths) => paths.join("")),
+        bevel,
+    };
+}
+const ringOf = (plan, steps = 8) => roundedPlan(plan, steps);
+function slabOf(plan, z, height, projection, steps = 8, bevel = 0) {
+    return extrude(ringOf(plan, steps), z, height, projection, { convex: true, bevel });
+}
+function circleRing(cx, cy, radius, steps = 40) {
+    return Array.from({ length: steps }, (_, step) => {
+        const angle = (step / steps) * Math.PI * 2;
+        return [cx + radius * Math.cos(angle), cy + radius * Math.sin(angle)];
+    });
+}
+function cylinder(cx, cy, radius, z, height, projection, steps = 32, bevel = 0) {
+    return extrude(circleRing(cx, cy, radius, steps), z, height, projection, { convex: true, bevel });
+}
+const insetPlan = ({ x, y, w, d, r }, by) => ({ x: x + by, y: y + by, w: w - by * 2, d: d - by * 2, r: Math.max(0, r - by) });
+function onTop(points, z, projection, closed = false) {
+    return pathOf(points.map(([x, y]) => iso([x, y, z], projection)), closed);
+}
+const planOutline = (plan, z, projection, steps = 8) => onTop(ringOf(plan, steps), z, projection, true);
+const lineOnTop = (from, to, z, projection) => onTop([from, to], z, projection);
+const segment = (from, to, projection) => pathOf([iso(from, projection), iso(to, projection)]);
+const rise = (at, from, to, projection) => segment([at[0], at[1], from], [at[0], at[1], to], projection);
+const ring = (cx, cy, radius, z, projection, steps = 40) => onTop(circleRing(cx, cy, radius, steps), z, projection, true);
+const pointsAt = (points, projection) => points.map((point) => iso(point, projection));
+function dotGrid(x, y, columns, rows, gap, z, projection) {
+    const dots = [];
+    for (let row = 0; row < rows; row++) {
+        for (let column = 0; column < columns; column++)
+            dots.push(iso([x + column * gap, y + row * gap, z], projection));
+    }
+    return dots;
+}
+function corners({ x, y, w, d }, inset = 0) {
+    return [
+        [x + inset, y + inset],
+        [x + w - inset, y + inset],
+        [x + inset, y + d - inset],
+        [x + w - inset, y + d - inset],
+    ];
+}
+function boxCorners({ x, y, w, d }, z0, z1) {
+    const out = [];
+    for (const px of [x, x + w])
+        for (const py of [y, y + d])
+            for (const z of [z0, z1])
+                out.push([px, py, z]);
+    return out;
+}
+function knurl(cx, cy, radius, z0, z1, count, projection, inset = 0.4) {
+    const [vx, vy] = towardViewer(projection);
+    const lines = [];
+    for (let index = 0; index < count; index++) {
+        const angle = (index / count) * Math.PI * 2;
+        const nx = Math.cos(angle);
+        const ny = Math.sin(angle);
+        if (nx * vx + ny * vy < 0.15)
+            continue;
+        lines.push(segment([cx + radius * nx, cy + radius * ny, z0 + inset], [cx + radius * nx, cy + radius * ny, z1 - inset], projection));
+    }
+    return lines.join("");
+}
+function sideArc(cx, cy, radius, z, projection, steps = 24) {
+    const [vx, vy] = towardViewer(projection);
+    const facing = Math.atan2(vy, vx);
+    const points = [];
+    for (let step = 0; step <= steps; step++) {
+        const angle = facing - Math.PI / 2 + (step / steps) * Math.PI;
+        points.push(iso([cx + radius * Math.cos(angle), cy + radius * Math.sin(angle), z], projection));
+    }
+    return pathOf(points);
+}
+function ringSeam(ring, z, projection) {
+    const count = ring.length;
+    const counter = signedArea(ring) > 0;
+    const [vx, vy] = towardViewer(projection);
+    const facing = ring.map(([ax, ay], index) => {
+        const [bx, by] = ring[(index + 1) % count];
+        const dx = bx - ax;
+        const dy = by - ay;
+        const [nx, ny] = counter ? [dy, -dx] : [-dy, dx];
+        return nx * vx + ny * vy > 1e-9;
+    });
+    return runsOf(facing, true).map((run) => pathOf(run.map((index) => iso([ring[index][0], ring[index][1], z], projection)))).join("");
+}
+const sideSeam = (plan, z, projection, steps = 8) => ringSeam(ringOf(plan, steps), z, projection);
+function sideRing(center, radius, axis, projection, steps = 20) {
+    const [px, py, pz] = center;
+    const points = [];
+    for (let step = 0; step < steps; step++) {
+        const angle = (step / steps) * Math.PI * 2;
+        const u = radius * Math.cos(angle);
+        const v = radius * Math.sin(angle);
+        points.push(iso(axis === "x" ? [px, py + u, pz + v] : [px + u, py, pz + v], projection));
+    }
+    return pathOf(points, true);
+}
+function coil(from, to, center, radius, turns, axis, projection, perTurn = 16) {
+    const count = Math.max(1, Math.round(turns * perTurn));
+    const back = [];
+    const front = [];
+    let run = [];
+    let near = null;
+    for (let index = 0; index <= count; index++) {
+        const share = index / count;
+        const angle = share * turns * Math.PI * 2;
+        const u = radius * Math.cos(angle);
+        const v = radius * Math.sin(angle);
+        const along = from + (to - from) * share;
+        const point = axis === "x" ? [along, center[0] + u, center[1] + v] : [center[0] + u, along, center[1] + v];
+        const normal = axis === "x" ? [0, Math.cos(angle), Math.sin(angle)] : [Math.cos(angle), 0, Math.sin(angle)];
+        const facing = depthOf(normal, projection) > 0;
+        const flat = iso(point, projection);
+        if (near === null)
+            near = facing;
+        if (facing !== near) {
+            run.push(flat);
+            (near ? front : back).push(pathOf(run));
+            run = [flat];
+            near = facing;
+            continue;
+        }
+        run.push(flat);
+    }
+    if (run.length > 1)
+        (near ? front : back).push(pathOf(run));
+    return { back: back.join(""), front: front.join("") };
+}
+function topTicks(from, to, step, every, edge, z, lengths, projection, axis = "x") {
+    const minor = [];
+    const major = [];
+    const first = Math.ceil(from / step) * step;
+    for (let at = first, index = Math.round(first / step); at <= to + 1e-9; at += step, index++) {
+        const big = index % every === 0;
+        const length = big ? lengths[1] : lengths[0];
+        const a = axis === "x" ? [at, edge] : [edge, at];
+        const b = axis === "x" ? [at, edge + length] : [edge + length, at];
+        (big ? major : minor).push(lineOnTop(a, b, z, projection));
+    }
+    return { minor: minor.join(""), major: major.join("") };
+}
+function sideTicks(from, to, step, every, face, top, lengths, projection, axis = "x") {
+    const minor = [];
+    const major = [];
+    const first = Math.ceil(from / step) * step;
+    for (let at = first, index = Math.round(first / step); at <= to + 1e-9; at += step, index++) {
+        const big = index % every === 0;
+        const length = big ? lengths[1] : lengths[0];
+        const a = axis === "x" ? [at, face, top] : [face, at, top];
+        const b = axis === "x" ? [at, face, top - length] : [face, at, top - length];
+        (big ? major : minor).push(segment(a, b, projection));
+    }
+    return { minor: minor.join(""), major: major.join("") };
+}
+function radialTicks(cx, cy, radius, count, every, z, lengths, projection, from = 0, span = Math.PI * 2) {
+    const minor = [];
+    const major = [];
+    const closed = Math.abs(span - Math.PI * 2) < 1e-9;
+    const steps = closed ? count : count + 1;
+    for (let index = 0; index < steps; index++) {
+        const angle = from + (index / count) * span;
+        const big = index % every === 0;
+        const inner = radius - (big ? lengths[1] : lengths[0]);
+        const sx = Math.sin(angle);
+        const sy = -Math.cos(angle);
+        (big ? major : minor).push(lineOnTop([cx + sx * inner, cy + sy * inner], [cx + sx * radius, cy + sy * radius], z, projection));
+    }
+    return { minor: minor.join(""), major: major.join("") };
+}
+const haloOf = (plan, z, height, projection) => slabOf(plan, z, height, projection).fill;
+function axisVector(projection, [dx, dy, dz]) {
+    const origin = iso([0, 0, 0], projection);
+    const moved = iso([dx, dy, dz], projection);
+    return [moved[0] - origin[0], moved[1] - origin[1]];
+}
+const fine = (value) => Math.round(value * 100) / 100;
+function translateAlong(projection, by) {
+    const [x, y] = axisVector(projection, by);
+    return `translate(${fine(x)} ${fine(y)})`;
+}
+const thousandth = (value) => Math.round(value * 1000) / 1000;
+function axesAt(at, z, projection) {
+    const origin = iso([at[0], at[1], z], projection);
+    const along = (point) => {
+        const [px, py] = iso(point, projection);
+        return [px - origin[0], py - origin[1]];
+    };
+    return { origin, x: along([at[0] + 1, at[1], z]), y: along([at[0], at[1] + 1, z]), z: along([at[0], at[1], z + 1]) };
+}
+const matrixOf = (u, v, origin) => `matrix(${thousandth(u[0])} ${thousandth(u[1])} ${thousandth(v[0])} ${thousandth(v[1])} ${thousandth(origin[0])} ${thousandth(origin[1])})`;
+function holdStill(element, [dx, dy]) {
+    const text = dx || dy ? `translate(${-dx} ${-dy})` : "";
+    element.querySelectorAll("[data-hold]").forEach((node) => (text ? node.setAttribute("transform", text) : node.removeAttribute("transform")));
+}
+function topMatrix(at, z, projection, along = "x") {
+    const { origin, x, y } = axesAt(at, z, projection);
+    return along === "x" ? matrixOf(x, y, origin) : matrixOf([-y[0], -y[1]], x, origin);
+}
+function sideMatrix(at, z, projection, face) {
+    const { origin, x, y, z: up } = axesAt(at, z, projection);
+    const down = [-up[0], -up[1]];
+    return face === "left" ? matrixOf(x, down, origin) : matrixOf([-y[0], -y[1]], down, origin);
+}
+function screenRise(height, projection) {
+    const { cosE, k } = cameraOf(projection);
+    return height * cosE * k;
+}
+function fitProjection(points, width, height, { pad = 24, headroom = 0, azimuth = AZIMUTH, elevation = ELEVATION } = {}) {
+    const unit = { origin: [0, 0], scale: 1, azimuth, elevation };
+    const flat = points.map((point) => iso(point, unit));
+    const xs = flat.map(([x]) => x);
+    const ys = flat.map(([, y]) => y);
+    const left = Math.min(...xs);
+    const right = Math.max(...xs);
+    const up = Math.min(...ys);
+    const down = Math.max(...ys);
+    const scale = Math.min((width - pad * 2) / (right - left), (height - pad * 2 - headroom) / (down - up));
+    return {
+        origin: [width / 2 - ((left + right) / 2) * scale, headroom + (height - headroom) / 2 - ((up + down) / 2) * scale],
+        scale,
+        azimuth,
+        elevation,
+    };
+}
+const escape = (text) => text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+const attrs = (pairs) => Object.entries(pairs)
+    .filter(([, value]) => value !== undefined && value !== false)
+    .map(([key, value]) => ` ${key}="${escape(String(value))}"`)
+    .join("");
+function solidSvg(paths, { tone = "hi", crease = "faint", halo = false, lit = false, flat = false, className, inner = "" } = {}) {
+    const parts = [];
+    if (halo)
+        parts.push(`<path class="iso-halo" d="${paths.fill}"/>`);
+    parts.push(`<path class="iso-fill" d="${paths.fill}"/>`);
+    if (!flat) {
+        paths.shades.forEach((d, shade) => {
+            if (d)
+                parts.push(`<path class="iso-shade" data-shade="${shade}" d="${d}"/>`);
+        });
+        parts.push(`<path class="iso-top" d="${paths.top}"/>`);
+    }
+    if (crease !== "none" && paths.crease)
+        parts.push(`<path class="iso-line iso-crease" data-tone="${crease}" d="${paths.crease}"/>`);
+    if (crease !== "none" && paths.bevel)
+        parts.push(`<path class="iso-line iso-bevel" data-tone="${crease}" d="${paths.bevel}"/>`);
+    if (inner)
+        parts.push(inner);
+    parts.push(`<path class="iso-line iso-edge" data-tone="${tone}" d="${paths.outline}"/>`);
+    return `<g${attrs({ class: className ? `iso-solid ${className}` : "iso-solid", "data-lit": lit ? "" : undefined, "data-seamless": paths.seamless ? "" : undefined })}>${parts.join("")}</g>`;
+}
+function lineSvg(d, { tone = "lo", dotted = false, dashed = false, flow = false, className, free } = {}) {
+    if (!d)
+        return "";
+    return `<path${attrs({
+        class: className ? `iso-line ${className}` : "iso-line",
+        "data-tone": tone,
+        "data-free": free === true ? "" : free || undefined,
+        "data-dotted": dotted ? "" : undefined,
+        "data-dashed": dashed ? "" : undefined,
+        "data-flow": flow ? "" : undefined,
+        d,
+    })}/>`;
+}
+function dotsSvg(points, { size = 0.5, tone = "mid", pulse = false } = {}) {
+    const dots = points
+        .map(([x, y, alpha], index) => `<circle cx="${tenth(x)}" cy="${tenth(y)}" r="${size}"${alpha !== undefined && alpha < 1 ? ` fill-opacity="${Math.max(0, alpha).toFixed(2)}"` : ""}${pulse ? ` data-pulse="" style="--pulse-at:${(index * 137) % 1600}ms"` : ""}/>`)
+        .join("");
+    return `<g class="iso-dots" data-tone="${tone}">${dots}</g>`;
+}
+function fadedSvg(list, style = {}) {
+    const groups = new Map();
+    for (const entry of list) {
+        const [d, alpha] = Array.isArray(entry) ? entry : [entry.d, entry.alpha];
+        if (!d || !(alpha > 0.02))
+            continue;
+        const level = Math.min(1, Math.round(alpha * 20) / 20);
+        groups.set(level, (groups.get(level) ?? "") + d);
+    }
+    return [...groups].map(([alpha, d]) => (alpha >= 1 ? lineSvg(d, style) : `<g opacity="${alpha.toFixed(2)}">${lineSvg(d, style)}</g>`)).join("");
+}
+function fadeLineSvg(points, { fade = [0, 0], tone = "lo", className, stops = 6 } = {}) {
+    if (points.length < 2)
+        return "";
+    const ease = (t) => t * t * (3 - 2 * t);
+    const hashOf = (text) => {
+        let hash = 2166136261;
+        for (let index = 0; index < text.length; index++)
+            hash = Math.imul(hash ^ text.charCodeAt(index), 16777619);
+        return (hash >>> 0).toString(36);
+    };
+    const lengths = [0];
+    for (let index = 1; index < points.length; index++)
+        lengths.push(lengths[index - 1] + Math.hypot(points[index][0] - points[index - 1][0], points[index][1] - points[index - 1][1]));
+    const at = (length) => {
+        let index = 1;
+        while (index < points.length - 1 && lengths[index] < length)
+            index++;
+        const span = lengths[index] - lengths[index - 1] || 1;
+        const t = Math.max(0, Math.min(1, (length - lengths[index - 1]) / span));
+        return [points[index - 1][0] + (points[index][0] - points[index - 1][0]) * t, points[index - 1][1] + (points[index][1] - points[index - 1][1]) * t];
+    };
+    const pieceOf = (from, to) => [at(from), ...points.filter((_, index) => lengths[index] > from + 1e-6 && lengths[index] < to - 1e-6), at(to)];
+    const total = lengths[lengths.length - 1];
+    if (total < 1e-6)
+        return "";
+    let [start, end] = Array.isArray(fade) ? fade : [fade, fade];
+    if (start + end > total) {
+        const share = total / (start + end);
+        start *= share;
+        end *= share;
+    }
+    const paint = `var(--anatomy-${tone})`;
+    const ramp = (piece, rising) => {
+        const d = pathOf(piece);
+        const [x1, y1] = piece[0];
+        const [x2, y2] = piece[piece.length - 1];
+        const id = `iso-fade-${hashOf(`${d}|${tone}|${rising}`)}`;
+        const marks = Array.from({ length: stops + 1 }, (_, index) => {
+            const t = index / stops;
+            const alpha = ease(rising ? t : 1 - t);
+            return `<stop offset="${t.toFixed(3)}" stop-opacity="${alpha.toFixed(3)}" style="stop-color:${paint}"/>`;
+        }).join("");
+        const gradient = `<linearGradient id="${id}" gradientUnits="userSpaceOnUse" x1="${tenth(x1)}" y1="${tenth(y1)}" x2="${tenth(x2)}" y2="${tenth(y2)}">${marks}</linearGradient>`;
+        return `<defs>${gradient}</defs><path${attrs({ class: className ? `iso-line ${className}` : "iso-line", "data-tone": tone, "data-free": rising ? "start" : "end", d, style: `stroke:url(#${id})` })}/>`;
+    };
+    const parts = [];
+    if (start > 0.05)
+        parts.push(ramp(pieceOf(0, start), true));
+    if (total - end - start > 0.05)
+        parts.push(lineSvg(pathOf(pieceOf(start, total - end)), { tone, className }));
+    if (end > 0.05)
+        parts.push(ramp(pieceOf(total - end, total), false));
+    return `<g class="iso-fade">${parts.join("")}</g>`;
+}
+function wireSvg(from, to, { via = [], tone = "lo", dotted = false, dashed = false, flow = false, ends = "both", size = 1.2 } = {}) {
+    const d = pathOf([from, ...via, to]);
+    const end = ([x, y]) => `<circle class="iso-wire-end" cx="${tenth(x)}" cy="${tenth(y)}" r="${size}"/>`;
+    return `<g class="iso-wire" data-tone="${tone}">${lineSvg(d, { tone, dotted, dashed, flow })}${ends === "both" || ends === "from" ? end(from) : ""}${ends === "both" || ends === "to" ? end(to) : ""}</g>`;
+}
+function faceTextSvg(transform, text, { size = 3, tone = "mid", anchor = "start" } = {}) {
+    return `<text class="iso-face-text" data-tone="${tone}" transform="${transform}" font-size="${size}" text-anchor="${anchor}">${escape(text)}</text>`;
+}
+function groupSvg(children, extra = {}) {
+    return `<g${attrs(extra)}>${Array.isArray(children) ? children.join("") : children}</g>`;
+}
+function figureSvg({ width, height, label, body, standalone = false, className }) {
+    const style = standalone ? `<style>${ISO_CSS}</style>` : "";
+    return `<svg${attrs({
+        xmlns: "http://www.w3.org/2000/svg",
+        class: `iso-svg${standalone ? " iso" : ""}${className ? ` ${className}` : ""}`,
+        "data-theme": standalone || undefined,
+        viewBox: `0 0 ${width} ${height}`,
+        role: "img",
+        "aria-label": label,
+    })}>${style}${Array.isArray(body) ? body.join("") : body}</svg>`;
+}
+function swatchSvg(mark) {
+    if (mark === "raised" || mark === "flat" || mark === "lit") {
+        const body = mark === "flat" ? "M2 6.5 8 3.5 14 6.5 8 9.5Z" : "M2 4.5 8 1.5 14 4.5 14 6 8 9 2 6Z";
+        const crease = mark === "flat" ? "" : `<path class="iso-swatch-crease" d="M2 4.5 8 7.5 14 4.5"/>`;
+        return `<svg class="iso-swatch" data-mark="${mark}" viewBox="0 0 16 10" aria-hidden="true"><path d="${body}"/>${crease}</svg>`;
+    }
+    return `<svg class="iso-swatch" data-mark="${mark}" viewBox="0 0 16 10" aria-hidden="true"><path d="M1.5 5h13"/></svg>`;
+}
+function plateHtml({ fig, title, hint, readout = "", keys = [], caption, body }) {
+    const corner = (name, text, extra = "") => `<span class="iso-plate-corner" data-corner="${name}"${extra}>${escape(text)}</span>`;
+    const legend = keys.length || caption
+        ? `<figcaption class="iso-legend">${keys.length ? `<span class="iso-keys">${keys.map((key) => `<span class="iso-key">${swatchSvg(key.mark)}${escape(key.label)}</span>`).join("")}</span>` : ""}${caption ? `<span class="iso-caption">${escape(caption)}</span>` : ""}</figcaption>`
+        : "";
+    return `<figure class="iso-figure"><div class="iso-plate"><div class="iso-plate-corners" aria-hidden="true">${corner("fig", fig)}${title ? corner("title", title) : ""}${hint ? corner("hint", hint) : ""}${corner("readout", readout, " data-readout")}</div>${body}</div>${legend}</figure>`;
+}
+function pageHtml({ title, theme = "dark", body, script = "", width = 650 }) {
+    return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>${escape(title)}</title><style>${ISO_CSS}${PAGE_CSS.replace("__WIDTH__", String(width))}</style></head><body class="iso" data-theme="${theme}"><main class="iso-page">${body}</main>${script ? `<script type="module">${script.replace(/<\/(script)/gi, "<\\/$1")}<\/script>` : ""}</body></html>`;
+}
+const PAGE_CSS = `
+*{box-sizing:border-box}
+html{color-scheme:dark}
+body[data-theme="light"]{color-scheme:light}
+body{margin:0;background:var(--anatomy-page);color:var(--anatomy-text);font:14px/1.6 ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+.iso-page{width:min(__WIDTH__px,100% - 32px);margin:64px auto 96px}
+`;
+const ISO_CSS = `
+.iso{
+  --anatomy-page:#0b0b0b;--anatomy-card:#131313;--anatomy-text:#a3a3a3;--anatomy-strong:#e6e6e6;--anatomy-muted:#6e6e6e;
+  --anatomy-paper:#131313;--anatomy-face:#1b1b1b;--anatomy-top:#1c1c1c;
+  --anatomy-shade-0:#0f0f0f;--anatomy-shade-1:#121212;--anatomy-shade-2:#151515;--anatomy-shade-3:#181818;
+  --anatomy-lit-top:#262626;--anatomy-lit-shade:#1d1d1d;
+  --anatomy-hi:#d4d4d4;--anatomy-mid:#6a6a6a;--anatomy-lo:#3e3e3e;--anatomy-faint:#2a2a2a;--anatomy-lit:#ffffff;
+  --anatomy-halo:#050505;--anatomy-halo-opacity:.9;--anatomy-dot:#e6e6e6;
+  --anatomy-red:#ff6b6b;--anatomy-green:#6be0a0;--anatomy-blue:#6b9bff;
+  --anatomy-weight:.6px;--anatomy-ease:cubic-bezier(.32,.72,0,1);
+  --anatomy-mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --anatomy-lift:inset 0 1px 0 0 #ffffff0a,inset 0 0 0 1px #ffffff06,0 0 0 1px #00000026,0 1px 1px -.5px #00000014,0 3px 3px -1.5px #00000014,0 6px 6px -3px #00000014,0 12px 12px -6px #00000014;
+}
+.iso[data-theme="light"]{
+  --anatomy-page:#f2f2ef;--anatomy-card:#fbfbfa;--anatomy-text:#57575a;--anatomy-strong:#18181a;--anatomy-muted:#8c8c90;
+  --anatomy-paper:#fbfbfa;--anatomy-face:#ffffff;--anatomy-top:#ffffff;
+  --anatomy-shade-0:#dcdcd9;--anatomy-shade-1:#e5e5e2;--anatomy-shade-2:#ededea;--anatomy-shade-3:#f4f4f1;
+  --anatomy-lit-top:#ffffff;--anatomy-lit-shade:#eeeeeb;
+  --anatomy-hi:#26262a;--anatomy-mid:#8a8a8f;--anatomy-lo:#b4b4b8;--anatomy-faint:#d4d4d6;--anatomy-lit:#000000;
+  --anatomy-halo:#8a8a80;--anatomy-halo-opacity:.32;--anatomy-dot:#3a3a3e;
+  --anatomy-red:#e5484d;--anatomy-green:#30a46c;--anatomy-blue:#3e63dd;
+  --anatomy-lift:inset 0 1px 0 0 #ffffff,0 0 0 1px #0000000f,0 1px 1px -.5px #0000000a,0 3px 3px -1.5px #0000000a,0 6px 6px -3px #0000000a,0 12px 12px -6px #0000000a;
+}
+.iso-svg{display:block;width:100%;height:auto;overflow:visible}
+.iso-svg path,.iso-svg circle{vector-effect:non-scaling-stroke}
+.iso-fill{fill:var(--anatomy-paper);stroke:none}
+.iso-solid[data-lit]>.iso-fill{fill:var(--anatomy-face)}
+.iso-shade,.iso-top{stroke:none}
+.iso-shade[data-shade="0"]{fill:var(--anatomy-shade-0)}
+.iso-shade[data-shade="1"]{fill:var(--anatomy-shade-1)}
+.iso-shade[data-shade="2"]{fill:var(--anatomy-shade-2)}
+.iso-shade[data-shade="3"]{fill:var(--anatomy-shade-3)}
+.iso-top{fill:var(--anatomy-top)}
+.iso-solid[data-lit]>.iso-top{fill:var(--anatomy-lit-top)}
+.iso-solid[data-lit]>.iso-shade{fill:var(--anatomy-lit-shade)}
+.iso-solid[data-seamless]>.iso-shade,.iso-solid[data-seamless]>.iso-top{stroke-width:.4;stroke-linejoin:round}
+.iso-solid[data-seamless]>.iso-shade[data-shade="0"]{stroke:var(--anatomy-shade-0)}
+.iso-solid[data-seamless]>.iso-shade[data-shade="1"]{stroke:var(--anatomy-shade-1)}
+.iso-solid[data-seamless]>.iso-shade[data-shade="2"]{stroke:var(--anatomy-shade-2)}
+.iso-solid[data-seamless]>.iso-shade[data-shade="3"]{stroke:var(--anatomy-shade-3)}
+.iso-solid[data-seamless]>.iso-top{stroke:var(--anatomy-top)}
+.iso-solid[data-seamless][data-lit]>.iso-top{stroke:var(--anatomy-lit-top)}
+.iso-solid[data-seamless][data-lit]>.iso-shade{stroke:var(--anatomy-lit-shade)}
+.iso-solid[data-lit]>.iso-edge{stroke:var(--anatomy-lit)}
+.iso-halo{fill:var(--anatomy-halo);stroke:none;filter:blur(9px);opacity:var(--anatomy-halo-opacity);transform:translateY(3px)}
+.iso-line{fill:none;stroke:var(--anatomy-lo);stroke-width:var(--anatomy-weight);stroke-linecap:round;stroke-linejoin:round}
+.iso-line[data-tone="hi"]{stroke:var(--anatomy-hi)}
+.iso-line[data-tone="mid"]{stroke:var(--anatomy-mid)}
+.iso-line[data-tone="lo"]{stroke:var(--anatomy-lo)}
+.iso-line[data-tone="faint"]{stroke:var(--anatomy-faint)}
+.iso-line[data-tone="lit"]{stroke:var(--anatomy-lit)}
+.iso-line[data-tone="red"]{stroke:var(--anatomy-red)}
+.iso-line[data-tone="green"]{stroke:var(--anatomy-green)}
+.iso-line[data-tone="blue"]{stroke:var(--anatomy-blue)}
+.iso-line[data-dotted]{stroke-dasharray:.01 3.5;stroke-width:1}
+.iso-line[data-dashed]{stroke-dasharray:3 3}
+.iso-line[data-flow]{stroke-dasharray:2 6}
+.iso-wire-end{fill:var(--anatomy-paper);stroke:var(--anatomy-lo);stroke-width:var(--anatomy-weight)}
+.iso-wire[data-tone="hi"] .iso-wire-end{stroke:var(--anatomy-hi)}
+.iso-wire[data-tone="mid"] .iso-wire-end{stroke:var(--anatomy-mid)}
+.iso-wire[data-tone="faint"] .iso-wire-end{stroke:var(--anatomy-faint)}
+.iso-wire[data-tone="lit"] .iso-wire-end{stroke:var(--anatomy-lit)}
+.iso-dots circle{fill:var(--anatomy-dot);stroke:none;opacity:.32}
+.iso-dots[data-tone="hi"] circle{opacity:.85}
+.iso-dots[data-tone="mid"] circle{opacity:.45}
+.iso-dots[data-tone="lo"] circle{opacity:.22}
+.iso-dots[data-tone="faint"] circle{opacity:.12}
+.iso-face-text{fill:var(--anatomy-mid);font-family:var(--anatomy-mono);letter-spacing:.04em}
+.iso-face-text[data-tone="hi"]{fill:var(--anatomy-hi)}
+.iso-face-text[data-tone="lo"]{fill:var(--anatomy-lo)}
+.iso-face-text[data-tone="faint"]{fill:var(--anatomy-faint)}
+.tb-body{fill:var(--anatomy-shade-2);stroke:none}
+.tb-shine{fill:var(--anatomy-top);stroke:none}
+.tb-shade{fill:var(--anatomy-shade-0);stroke:none}
+.tb-ring{fill:none;stroke:var(--anatomy-lo);stroke-width:.45;stroke-linecap:butt;stroke-linejoin:round}
+.tb-ring[data-tone="mid"]{stroke:var(--anatomy-mid)}
+.tb-ring[data-tone="faint"]{stroke:var(--anatomy-faint)}
+.tb-ring[data-tone="hi"]{stroke:var(--anatomy-hi)}
+@keyframes iso-flow{to{stroke-dashoffset:-32}}
+@keyframes iso-pulse{0%,100%{opacity:.18}12%{opacity:1}40%{opacity:.18}}
+.iso-line[data-flow]{animation:iso-flow 1600ms linear infinite}
+.iso-dots circle[data-pulse]{animation:iso-pulse 1600ms steps(1,end) infinite;animation-delay:var(--pulse-at,0ms)}
+.iso-figure{margin:32px 0 36px}
+.iso-plate{position:relative;padding:52px 24px;border-radius:0;background:var(--anatomy-card);box-shadow:0 0 0 1px var(--anatomy-mid);--anatomy-paper:var(--anatomy-card)}
+.iso-plate-corners{position:absolute;inset:18px 20px;pointer-events:none}
+.iso-plate-corner{position:absolute;color:var(--anatomy-muted);font-family:var(--anatomy-mono);font-size:10.5px;line-height:1;letter-spacing:.04em;white-space:nowrap}
+.iso-plate-corner[data-corner="fig"]{top:0;left:0;color:var(--anatomy-text)}
+.iso-plate-corner[data-corner="title"]{top:0;right:0;text-transform:uppercase;letter-spacing:.1em}
+.iso-plate-corner[data-corner="hint"]{bottom:0;left:0;text-transform:uppercase;letter-spacing:.1em}
+.iso-plate-corner[data-corner="readout"]{right:0;bottom:0;color:var(--anatomy-text);font-variant-numeric:tabular-nums}
+.iso-plate .iso-svg{margin:0 auto}
+.iso-legend{display:grid;gap:8px;margin-top:12px;color:var(--anatomy-muted);font-size:13px;line-height:1.55}
+.iso-keys{display:flex;flex-wrap:wrap;gap:6px 18px}
+.iso-key{display:inline-flex;align-items:center;gap:7px}
+.iso-swatch{width:16px;height:10px;flex:none;overflow:visible}
+.iso-swatch path{fill:none;stroke:var(--anatomy-hi);stroke-width:1;vector-effect:non-scaling-stroke;stroke-linejoin:round;stroke-linecap:round}
+.iso-swatch[data-mark="raised"] path,.iso-swatch[data-mark="flat"] path{stroke:var(--anatomy-mid)}
+.iso-swatch[data-mark="lit"] path{stroke:var(--anatomy-lit)}
+.iso-swatch[data-mark="dim"] path{stroke:var(--anatomy-lo)}
+.iso-swatch[data-mark="dotted"] path{stroke-dasharray:.01 3;stroke-width:1.4}
+.iso-swatch[data-mark="dashed"] path{stroke-dasharray:3 2.5}
+.iso-swatch[data-mark="red"] path{stroke:var(--anatomy-red)}
+.iso-swatch[data-mark="green"] path{stroke:var(--anatomy-green)}
+.iso-swatch[data-mark="blue"] path{stroke:var(--anatomy-blue)}
+.iso-swatch-crease{stroke:var(--anatomy-lo)!important}
+@media (max-width:560px){.iso-plate{padding:48px 12px 70px}.iso-plate-corner[data-corner="hint"]{bottom:18px}}
+@media (prefers-reduced-motion:reduce){.iso-line[data-flow],.iso-dots circle[data-pulse]{animation:none}}
+`;
+
+{ // the figure's own scope, so nothing collides with the inlined kit
+const D = {"P":{"origin":[465.1482286783019,366.24184286531437],"scale":3.950455286699157,"azimuth":36,"elevation":30},"KS":4.996974600249126,"W":700,"H":500,"MODEL":{"caseSize":[60.6,45.2,21.7],"budSize":[21.8,30.9,24],"budG":5.3,"hours":6,"adjust":200,"mics":3,"dbIn":80,"dbEar":55,"slow":40,"lidDeg":104,"rest":0.056234132519034905},"BRAND":{"name":"AirPods Pro","heading":"AirPods Pro","logo":"M50 30C55 26 63 22 71 23C79 24 85 28 89 34A20 20 0 0 0 90 67C87 76 82 86 76 92C71 97 65 99 60 97C56 95.5 53 95 50 95C47 95 44 95.5 40 97C35 99 29 97 24 92C15 83 9 70 9 56C9 38 21 25 35 25C41 25 46 28 50 30ZM50 21C50 12 57 4 66 3C67 12 59 20 50 21Z"},"SHADOW":[-0.06,0.17],"MAT_T":2.4,"AZ":36,"EL":30,"CASE":{"c":[0,0],"psi":14,"A":30.3,"B":10.85,"C":22.6,"p":3.1,"q":2.5,"zs":31},"BOX":{"c":[-47.18763649087251,27.519574168312964,0],"psi":22,"w":50,"h":54,"d":21,"lid":14},"TIPS":{"c":[-10.636549975872342,50.367289033764465,0],"psi":26,"w":30,"d":20}};
+// Shared runtime for the figures, inlined after the kit (iso, ring, lineOnTop, translateAlong exist).
+// A figure's live.js defines its state, UPDATE and draw, then calls tour({...}).
+
+const P = D.P;
+const svg = document.querySelector(".stage svg");
+const part = (name) => svg.querySelector(`[data-part="${name}"]`);
+const slot = (name) => svg.querySelector(`[data-slot="${name}"]`);
+const chip = (name) => document.querySelector(`[data-chip="${name}"]`);
+const chipHot = (name, on) => document.querySelector(`[data-chipbox="${name}"]`)?.toggleAttribute("data-hot", !!on);
+const still = matchMedia("(prefers-reduced-motion: reduce)");
+const f1 = (n) => Math.round(n * 10) / 10;
+const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+const ease = (x) => { const t = clamp(x); return t * t * (3 - 2 * t); };
+const seg = (u, a, b) => clamp((u - a) / (b - a));
+const lerp = (a, b, t) => a + (b - a) * t;
+const lerp3 = (a, b, t) => a.map((v, i) => lerp(v, b[i], t));
+const pathOf = (pts, close = true) => (pts.length ? "M" + pts.map((p) => f1(p[0]) + " " + f1(p[1])).join("L") + (close ? "Z" : "") : "");
+const at = (p) => iso(p, P);
+const toward = towardViewer(P);
+function hull(points) {
+  const pts = [...points].sort((a, b) => a[0] - b[0] || a[1] - b[1]);
+  if (pts.length < 3) return pts;
+  const cross = (o, a, b) => (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0]);
+  const lo = [];
+  for (const p of pts) { while (lo.length >= 2 && cross(lo[lo.length - 2], lo[lo.length - 1], p) <= 0) lo.pop(); lo.push(p); }
+  const hi = [];
+  for (const p of pts.reverse()) { while (hi.length >= 2 && cross(hi[hi.length - 2], hi[hi.length - 1], p) <= 0) hi.pop(); hi.push(p); }
+  return lo.slice(0, -1).concat(hi.slice(0, -1));
+}
+const circle3 = (cx, cy, r, z, n = 36) => Array.from({ length: n }, (_, i) => { const a = (i / n) * Math.PI * 2; return [cx + r * Math.cos(a), cy + r * Math.sin(a), z]; });
+const cylPath = (cx, cy, r, z0, z1, n = 36) => pathOf(hull([...circle3(cx, cy, r, z0, n), ...circle3(cx, cy, r, z1, n)].map(at)));
+const discPath = (cx, cy, r, z, n = 44) => pathOf(circle3(cx, cy, r, z, n).map(at));
+// a circle in a vertical plane: axis "x" means the circle lies in the plane x = c[0]
+const vcircle = (c, r, axis = "x", n = 36) => Array.from({ length: n }, (_, i) => { const a = (i / n) * Math.PI * 2; return axis === "x" ? [c[0], c[1] + r * Math.cos(a), c[2] + r * Math.sin(a)] : [c[0] + r * Math.cos(a), c[1], c[2] + r * Math.sin(a)]; });
+// a straight rod between two world points, as a screen quad with round ends; r in world units
+function rodPath(a, b, r) {
+  const A = at(a), B = at(b), KS = D.KS;
+  const dx = B[0] - A[0], dy = B[1] - A[1], len = Math.hypot(dx, dy) || 1;
+  const nx = (-dy / len) * r * KS, ny = (dx / len) * r * KS, R = r * KS;
+  return `M${f1(A[0] + nx)} ${f1(A[1] + ny)}L${f1(B[0] + nx)} ${f1(B[1] + ny)}A${f1(R)} ${f1(R)} 0 0 1 ${f1(B[0] - nx)} ${f1(B[1] - ny)}L${f1(A[0] - nx)} ${f1(A[1] - ny)}A${f1(R)} ${f1(R)} 0 0 1 ${f1(A[0] + nx)} ${f1(A[1] + ny)}Z`;
+}
+const mixHex = (a, b, t) => {
+  const h = (x) => [1, 3, 5].map((i) => parseInt(x.slice(i, i + 2), 16));
+  const A = h(a), B = h(b);
+  return "#" + A.map((v, i) => Math.round(v + (B[i] - v) * t).toString(16).padStart(2, "0")).join("");
+};
+const along = (pts, u) => {
+  const n = pts.length - 1;
+  const x = clamp(u) * n;
+  const i = Math.min(n - 1, Math.floor(x));
+  return lerp3(pts[i], pts[i + 1], ease(x - i));
+};
+const lapseEl = document.querySelector("[data-lapse]");
+function setLapse(text) {
+  if (text) { if (lapseEl.textContent !== text) lapseEl.textContent = text; lapseEl.setAttribute("data-on", ""); } else lapseEl.removeAttribute("data-on");
+}
+const soundsG = part("sounds");
+function setWord(w) {
+  if (!w) { if (soundsG.firstChild) soundsG.textContent = ""; return; }
+  const [x, y] = at(w.p);
+  let t = soundsG.querySelector("text");
+  if (!t) { t = document.createElementNS("http://www.w3.org/2000/svg", "text"); t.setAttribute("class", "word"); soundsG.appendChild(t); }
+  if (t.textContent !== w.text) t.textContent = w.text;
+  t.setAttribute("x", f1(x)); t.setAttribute("y", f1(y));
+  t.setAttribute("font-size", w.size || 15);
+}
+const setText = (el, text) => { if (el && el.textContent !== text) el.textContent = text; };
+
+// Steps, buttons, the idle tour, the drawn cursor and window.seek(t) for frame-exact recording.
+function tour({ STEPS, ORDER, update, reset, onBegin = () => {}, onFinish = () => {}, draw, paint, probe = () => null, gap = 0.7, lead = 0.2, tail = 1.0 }) {
+  const buttons = [...document.querySelectorAll("[data-step]")];
+  const hintEl = document.querySelector("[data-hint]");
+  const INTRO = hintEl.textContent;
+  let next = 0, run = null, idle = 0, last = 0, auto = true;
+  const setButtons = () => buttons.forEach((b, i) => {
+    b.disabled = !!run || i !== next;
+    b.toggleAttribute("data-on", !!run && ORDER[i] === run.id);
+    b.toggleAttribute("data-done", !run && i < next && next !== 0);
+  });
+  const begin = (id) => { run = { id, t: 0 }; onBegin(id); hintEl.textContent = STEPS[id].hint; };
+  const finish = () => { const id = run.id; update(id, 1); onFinish(id); run = null; next = (next + 1) % ORDER.length; idle = 0; setButtons(); };
+  const start = (id) => { if (run || ORDER[next] !== id) return; begin(id); setButtons(); if (still.matches) finish(); };
+  // two modes: Auto runs the steps on a loop, Manual waits for the visitor to press each one in order
+  const modeEls = [...document.querySelectorAll("[data-mode]")];
+  const INTRO_MANUAL = INTRO.split(/(?<=[.?!])\s+/)[0] + " 按顺序点击步骤。";
+  const setAuto = (on, save = true) => {
+    auto = on;
+    idle = 0;
+    document.body.classList.toggle("manual", !on);
+    modeEls.forEach((m) => m.setAttribute("aria-checked", String((m.dataset.mode === "auto") === on)));
+    if (save) try { localStorage.setItem("fig-mode2", on ? "auto" : "manual"); } catch {}
+  };
+  const restart = () => { reset(); run = null; next = 0; hintEl.textContent = auto ? INTRO : INTRO_MANUAL; idle = 0; setButtons(); };
+  modeEls.forEach((m) => m.addEventListener("click", () => {
+    const on = m.dataset.mode === "auto";
+    if (on === auto) return;
+    setAuto(on);
+    // Manual starts the visitor from step 1; Auto picks up from wherever the machine stands
+    if (!on) restart(); else idle = gap;
+  }));
+  buttons.forEach((b) => b.addEventListener("click", () => { if (auto) setAuto(false); start(b.dataset.step); }));
+  // a press on a step that is still greyed out also switches to Manual once the running step ends
+  document.querySelector(".steps")?.addEventListener("pointerdown", () => { if (auto) setAuto(false); });
+  document.querySelector("[data-restart]")?.addEventListener("click", restart);
+  document.addEventListener("keydown", (e) => {
+    if (e.target.closest?.("button,input,a,select,textarea")) return;
+    if (e.key === " " || e.key === "Enter") { e.preventDefault(); setAuto(false); start(ORDER[next]); }
+  });
+  function tick(now) {
+    const dt = last ? Math.min((now - last) / 1000, 1 / 20) : 1 / 60;
+    last = now;
+    if (run) { run.t += dt; const u = run.t / STEPS[run.id].dur; update(run.id, Math.min(1, u)); if (u >= 1) finish(); }
+    else if (auto && !still.matches) { idle += dt; if (idle > gap) start(ORDER[next]); }
+    draw(now / 1000);
+    requestAnimationFrame(tick);
+  }
+  const PLAN = [];
+  { let t = lead; for (const id of ORDER) { t += gap; PLAN.push({ id, t0: t, t1: t + STEPS[id].dur }); t += STEPS[id].dur; } }
+  const TOTAL = PLAN[PLAN.length - 1].t1 + tail;
+  const cursor = document.createElement("div");
+  cursor.className = "cursor";
+  cursor.innerHTML = '<svg viewBox="0 0 24 24" width="28" height="28"><path d="M3 2l15.5 9.2-6.6 1.5 3.4 7.4-3.1 1.4-3.3-7.4L3 18.6z" fill="#fff" stroke="#23263a" stroke-width="1.6" stroke-linejoin="round"/></svg>';
+  const aim = (i) => { const r = buttons[i].getBoundingClientRect(); return [r.left + r.width * 0.62, r.top + r.height * 0.55]; };
+  const restPoint = () => { const r = document.querySelector(".stage").getBoundingClientRect(); return [r.left + r.width * 0.55, r.top + r.height * 0.62]; };
+  function placeCursor(time) {
+    let from = restPoint(), to = from, u = 0, press = -1;
+    for (let i = 0; i < PLAN.length; i++) {
+      const p = PLAN[i];
+      const leave = i ? PLAN[i - 1].t1 - 0.35 : 0.05, arrive = p.t0 - 0.16;
+      if (time < leave) break;
+      from = i ? aim(i - 1) : restPoint();
+      to = aim(i);
+      u = ease((time - leave) / (arrive - leave));
+      if (time > p.t0 - 0.12 && time < p.t0 + 0.08) press = i;
+    }
+    const x = lerp(from[0], to[0], u) + Math.sin(u * Math.PI) * 18, y = lerp(from[1], to[1], u) - Math.sin(u * Math.PI) * 10;
+    cursor.style.transform = `translate(${f1(x - 3.3)}px, ${f1(y - 2.2)}px) scale(${press >= 0 ? 0.86 : 1})`;
+    buttons.forEach((b, i) => b.toggleAttribute("data-press", i === press));
+  }
+  function seekTo(time) {
+    reset();
+    run = null;
+    next = 0;
+    hintEl.textContent = INTRO;
+    for (const p of PLAN) {
+      if (time < p.t0) break;
+      begin(p.id);
+      if (time >= p.t1) { run.t = STEPS[p.id].dur; finish(); continue; }
+      run.t = time - p.t0;
+      update(p.id, run.t / STEPS[p.id].dur);
+      break;
+    }
+    setButtons();
+    draw(time);
+    placeCursor(time);
+  }
+  // colour swatches
+  document.querySelectorAll("[data-swatch]").forEach((sw) => sw.addEventListener("click", () => {
+    document.querySelectorAll("[data-swatch]").forEach((o) => o.toggleAttribute("data-on", o === sw));
+    paintBody(sw.dataset.swatch);
+  }));
+  function paintBody(c) {
+    const t = (x) => ({ f: x, t: mixHex(x, "#ffffff", 0.42), s3: mixHex(x, "#ffffff", 0.18), s1: mixHex(x, "#1b1d2c", 0.13), s0: mixHex(x, "#1b1d2c", 0.26) });
+    const set = (name, x) => { const v = t(x); const s = document.body.style; s.setProperty(`--${name}`, v.f); s.setProperty(`--${name}-t`, v.t); s.setProperty(`--${name}-3`, v.s3); s.setProperty(`--${name}-1`, v.s1); s.setProperty(`--${name}-0`, v.s0); };
+    set("body", c);
+    set("alt", paint ? paint(c) : c);
+  }
+  paintBody(document.querySelector("[data-swatch]").dataset.swatch);
+  reset();
+  setButtons();
+  draw(0);
+  // probe() hands the figure state to tools outside the page (videos/_kit/timeline.mjs samples it for the score)
+  window.__fig = { start, seek: seekTo, total: TOTAL, plan: PLAN, get state() { return probe(); } };
+  if (location.search.includes("render")) {
+    document.body.classList.add("render");
+    document.body.appendChild(cursor);
+    window.DURATION = TOTAL;
+    window.seek = seekTo;
+    seekTo(0);
+  } else {
+    // Manual is the default; Auto only when the visitor picked it on an earlier page
+    let saved = null;
+    try { saved = localStorage.getItem("fig-mode2"); } catch {}
+    // ?auto in the address starts the tour by itself (pages shown side by side), without touching the saved choice
+    setAuto(/[?&]auto\b/.test(location.search) || saved === "auto", false);
+    hintEl.textContent = auto ? INTRO : INTRO_MANUAL;
+    requestAnimationFrame(tick);
+  }
+}
+
+// Live code for the earbuds. Runs inside the figure scope after _kit/runtime.js.
+// Everything that moves is real 3D: the case is a superellipsoid cut at the seam, its lid turns on the hinge, each
+// earbud is a set of lofted and turned bodies (head halves, nozzle, tip, stem and the parts inside) in its own frame.
+// Every frame each body is placed by its pose, its facets are shaded by facing and painted back to front, and flat
+// details (meshes, the status light, printing, the logo) are laid on their faces with a 2 × 2 screen matrix built from
+// the face's two in-plane axes. Every frame is a pure function of (S.step, S.u), so window.seek(t) lands on the same
+// picture.
+const M = D.MODEL;
+const BRAND = D.BRAND;
+const DEG = Math.PI / 180;
+const TAU = Math.PI * 2;
+
+// ---------------------------------------------------------------- vectors and the camera
+const add3 = (a, b) => [a[0] + b[0], a[1] + b[1], a[2] + b[2]];
+const sub3 = (a, b) => [a[0] - b[0], a[1] - b[1], a[2] - b[2]];
+const mul3 = (a, s) => [a[0] * s, a[1] * s, a[2] * s];
+const dot3 = (a, b) => a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
+const cross3 = (a, b) => [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]];
+const len3 = (a) => Math.hypot(a[0], a[1], a[2]);
+const unit3 = (a) => { const l = len3(a) || 1; return [a[0] / l, a[1] / l, a[2] / l]; };
+const CAM = cameraOf(P);
+const SA = CAM.sinA, CA = CAM.cosA, SE = CAM.sinE, CE = CAM.cosE, KK = CAM.k, OX = P.origin[0], OY = P.origin[1];
+const pr = (p) => [OX + (p[0] * SA - p[1] * CA) * KK, OY + ((p[0] * CA + p[1] * SA) * SE - p[2] * CE) * KK];
+const prv = (v) => [(v[0] * SA - v[1] * CA) * KK, ((v[0] * CA + v[1] * SA) * SE - v[2] * CE) * KK];
+const VIEW = [CA * CE, SA * CE, SE];
+const LIGHT = unit3([-SA, CA, 1.2]);
+const depth = (p) => dot3(p, VIEW);
+const UP = [0, 0, 1];
+const Hv = [CA, SA, 0], Rv = [SA, -CA, 0];
+const heading = (phi) => add3(mul3(Hv, Math.cos(phi * DEG)), mul3(Rv, Math.sin(phi * DEG)));
+const at2 = (r, h) => add3(mul3(Rv, r), mul3(Hv, h));
+const r2 = (n) => Math.round(n * 100) / 100;
+const r3 = (n) => Math.round(n * 1000) / 1000;
+const P2 = (p) => r2(p[0]) + " " + r2(p[1]);
+const dPath = (pts) => { if (!pts.length) return ""; let s = "M" + P2(pts[0]); for (let i = 1; i < pts.length; i++) s += "L" + P2(pts[i]); return s + "Z"; };
+const dOpen = (pts) => { if (!pts.length) return ""; let s = "M" + P2(pts[0]); for (let i = 1; i < pts.length; i++) s += "L" + P2(pts[i]); return s; };
+const loc = (pts, close = true) => "M" + pts.map((p) => r3(p[0]) + " " + r3(p[1])).join("L") + (close ? "Z" : "");
+const smoother = (x) => { const t = clamp(x); return t * t * t * (t * (t * 6 - 15) + 10); };
+const sine = (x) => (1 - Math.cos(Math.PI * clamp(x))) / 2;
+const outCubic = (x) => 1 - (1 - clamp(x)) ** 3;
+const inCubic = (x) => clamp(x) ** 3;
+const bump = (u, a, b, w = 0.25) => ease(seg(u, a, a + (b - a) * w)) * (1 - ease(seg(u, b - (b - a) * w, b)));
+const VE = ' vector-effect="non-scaling-stroke"';
+
+// ---------------------------------------------------------------- colours, shaded by facing
+const rgbOf = (h) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16));
+const hexOf = (c) => "#" + c.map((v) => Math.round(Math.max(0, Math.min(255, v))).toString(16).padStart(2, "0")).join("");
+const WHITE = [255, 255, 255], DARKC = [27, 29, 44];
+const MATS = {
+  white: { c: "#e9e6de", hi: 0.85, lo: 0.3 }, // the glossy case and the earbud shells
+  inner: { c: "#d6d2c8", hi: 0.4, lo: 0.35 }, // inside the shells
+  silicone: { c: "#e2dfd8", hi: 0.6, lo: 0.26 },
+  box: { c: "#f2f0ea", hi: 0.7, lo: 0.2 },
+  steel: { c: "#c3cad3", hi: 0.5, lo: 0.32 },
+  dark: { c: "#3b3d4a", hi: 0.3, lo: 0.3 },
+  mesh: { c: "#4a4d59", hi: 0.3, lo: 0.3 },
+  pcb: { c: "#2e6a51", hi: 0.3, lo: 0.3 },
+  flex: { c: "#d08a3f", hi: 0.34, lo: 0.3 },
+  cell: { c: "#b9bfc8", hi: 0.5, lo: 0.32 },
+  magnet: { c: "#7d8290", hi: 0.4, lo: 0.3 },
+  driver: { c: "#3a3c47", hi: 0.32, lo: 0.3 },
+  gold: { c: "#e0b45e", hi: 0.4, lo: 0.3 },
+  pouch: { c: "#a9b0ba", hi: 0.45, lo: 0.3 },
+  card: { c: "#f7f3ea", hi: 0.6, lo: 0.2 },
+};
+for (const m of Object.values(MATS)) m.rgb = rgbOf(m.c);
+const shadeCache = new Map();
+function shade(mat, n) {
+  const m = MATS[mat];
+  const q = Math.round((dot3(n, LIGHT) + 1) * 120) / 120 - 1;
+  const key = mat + q;
+  let v = shadeCache.get(key);
+  if (v) return v;
+  const w = q >= 0 ? m.hi * Math.min(1, q / 0.85) ** 1.3 : 0;
+  const k = q < 0 ? m.lo * Math.min(1, -q) ** 0.8 : 0;
+  v = hexOf(m.rgb.map((x, i) => x + (WHITE[i] - x) * w + (DARKC[i] - x) * k));
+  shadeCache.set(key, v);
+  return v;
+}
+
+// ---------------------------------------------------------------- frames, rotations
+// A frame is { X, Y, Z, o }: three world unit vectors (a proper rotation) and an origin. Local [x, y, z] → world.
+function frameXZ(X, Zh, o) {
+  X = unit3(X);
+  const Z = unit3(sub3(Zh, mul3(X, dot3(Zh, X))));
+  return { X, Y: cross3(Z, X), Z, o };
+}
+const rotW = (T, v) => [T.X[0] * v[0] + T.Y[0] * v[1] + T.Z[0] * v[2], T.X[1] * v[0] + T.Y[1] * v[1] + T.Z[1] * v[2], T.X[2] * v[0] + T.Y[2] * v[1] + T.Z[2] * v[2]];
+const toW = (T, p) => add3(T.o, rotW(T, p));
+const toL = (T, p) => { const d = sub3(p, T.o); return [dot3(d, T.X), dot3(d, T.Y), dot3(d, T.Z)]; };
+// compose: a child frame given in the parent's local coordinates
+const inFrame = (T, C) => ({ X: rotW(T, C.X), Y: rotW(T, C.Y), Z: rotW(T, C.Z), o: toW(T, C.o) });
+function quatOf(T) {
+  const m00 = T.X[0], m01 = T.Y[0], m02 = T.Z[0], m10 = T.X[1], m11 = T.Y[1], m12 = T.Z[1], m20 = T.X[2], m21 = T.Y[2], m22 = T.Z[2];
+  const tr = m00 + m11 + m22;
+  let w, x, y, z;
+  if (tr > 0) { const s = Math.sqrt(tr + 1) * 2; w = s / 4; x = (m21 - m12) / s; y = (m02 - m20) / s; z = (m10 - m01) / s; }
+  else if (m00 > m11 && m00 > m22) { const s = Math.sqrt(1 + m00 - m11 - m22) * 2; w = (m21 - m12) / s; x = s / 4; y = (m01 + m10) / s; z = (m02 + m20) / s; }
+  else if (m11 > m22) { const s = Math.sqrt(1 + m11 - m00 - m22) * 2; w = (m02 - m20) / s; x = (m01 + m10) / s; y = s / 4; z = (m12 + m21) / s; }
+  else { const s = Math.sqrt(1 + m22 - m00 - m11) * 2; w = (m10 - m01) / s; x = (m02 + m20) / s; y = (m12 + m21) / s; z = s / 4; }
+  return [w, x, y, z];
+}
+function frameOfQ([w, x, y, z], o) {
+  return { X: [1 - 2 * (y * y + z * z), 2 * (x * y + w * z), 2 * (x * z - w * y)], Y: [2 * (x * y - w * z), 1 - 2 * (x * x + z * z), 2 * (y * z + w * x)], Z: [2 * (x * z + w * y), 2 * (y * z - w * x), 1 - 2 * (x * x + y * y)], o };
+}
+function slerp(a, b, t) {
+  let d = a[0] * b[0] + a[1] * b[1] + a[2] * b[2] + a[3] * b[3];
+  if (d < 0) { b = b.map((v) => -v); d = -d; }
+  if (d > 0.9995) { const r = a.map((v, i) => v + (b[i] - v) * t); const l = Math.hypot(...r); return r.map((v) => v / l); }
+  const th = Math.acos(d), s = Math.sin(th);
+  const ka = Math.sin((1 - t) * th) / s, kb = Math.sin(t * th) / s;
+  return a.map((v, i) => v * ka + b[i] * kb);
+}
+// a pose between two frames: the turn by slerp, the origin along a path
+const poseMix = (A, B, tr, o) => frameOfQ(slerp(quatOf(A), quatOf(B), tr), o);
+// turn a frame about a world axis through a world point
+function turnAbout(T, axis, ang, pivot) {
+  const k = unit3(axis), c = Math.cos(ang), s = Math.sin(ang);
+  const rot = (v) => add3(add3(mul3(v, c), mul3(cross3(k, v), s)), mul3(k, dot3(k, v) * (1 - c)));
+  return { X: rot(T.X), Y: rot(T.Y), Z: rot(T.Z), o: add3(pivot, rot(sub3(T.o, pivot))) };
+}
+
+// ---------------------------------------------------------------- bodies: rings joined by quads, with end caps
+// A body's facets carry their outward normal (found from the body's centre), so a convex body is drawn by its
+// facets that face you plus its hull for the outline.
+function ringsBody(rings, mat, { capA = mat, capB = mat, inner = "inner" } = {}) {
+  const v = [], f = [];
+  const n = rings[0].length;
+  for (const ring of rings) for (const p of ring) v.push(p);
+  let c = [0, 0, 0];
+  for (const p of v) c = add3(c, p);
+  c = mul3(c, 1 / v.length);
+  const orient = (nn, fc) => (dot3(nn, sub3(fc, c)) < 0 ? mul3(nn, -1) : nn);
+  for (let i = 0; i < rings.length - 1; i++) {
+    for (let j = 0; j < n; j++) {
+      const a = i * n + j, b = i * n + ((j + 1) % n), cc = (i + 1) * n + ((j + 1) % n), d = (i + 1) * n + j;
+      const nn = cross3(sub3(v[cc], v[a]), sub3(v[d], v[b]));
+      if (len3(nn) < 1e-9) continue;
+      const fc = mul3(add3(add3(v[a], v[b]), add3(v[cc], v[d])), 0.25);
+      f.push({ i: [a, b, cc, d], n: orient(unit3(nn), fc), m: mat, mi: inner });
+    }
+  }
+  const cap = (ring0, m, isB) => {
+    if (!m) return;
+    let nn = [0, 0, 0];
+    const idx = ring0.map((_, j) => (isB ? (rings.length - 1) * n : 0) + j);
+    for (let j = 0; j < idx.length; j++) { const p = v[idx[j]], q = v[idx[(j + 1) % idx.length]]; nn = add3(nn, [(p[1] - q[1]) * (p[2] + q[2]), (p[2] - q[2]) * (p[0] + q[0]), (p[0] - q[0]) * (p[1] + q[1])]); }
+    if (len3(nn) < 1e-9) return;
+    const fc = mul3(idx.reduce((s, j) => add3(s, v[j]), [0, 0, 0]), 1 / idx.length);
+    f.push({ i: idx, n: orient(unit3(nn), fc), m, mi: inner, cap: isB ? "B" : "A" });
+  };
+  cap(rings[0], capA, false);
+  cap(rings[rings.length - 1], capB, true);
+  return { v, f, c };
+}
+// a turned body along local axis a (radials u, v) about point o: profile [[s, r], ...]
+function latheRings(profile, n, { o = [0, 0, 0], a, u, v }) {
+  return profile.map(([s, r]) => Array.from({ length: n }, (_, j) => { const q = (j / n) * TAU, c = Math.cos(q), sn = Math.sin(q); return [o[0] + a[0] * s + (u[0] * c + v[0] * sn) * r, o[1] + a[1] * s + (u[1] * c + v[1] * sn) * r, o[2] + a[2] * s + (u[2] * c + v[2] * sn) * r]; }));
+}
+const axisOf = (a) => { a = unit3(a); const h = Math.abs(a[2]) < 0.9 ? [0, 0, 1] : [1, 0, 0]; const u = unit3(cross3(h, a)); return { a, u, v: cross3(a, u) }; };
+// a rounded rectangle in a plane (u, v) about o, as ring points
+function rrRing(o, u, v, w, h, r, per = 4) {
+  r = Math.min(r, w / 2 - 0.001, h / 2 - 0.001);
+  const out = [];
+  for (const [ox, oy, a0] of [[w / 2 - r, -h / 2 + r, -90], [w / 2 - r, h / 2 - r, 0], [-w / 2 + r, h / 2 - r, 90], [-w / 2 + r, -h / 2 + r, 180]])
+    for (let i = 0; i <= per; i++) { const a = (a0 + (90 * i) / per) * DEG; const x = ox + r * Math.cos(a), y = oy + r * Math.sin(a); out.push(add3(o, add3(mul3(u, x), mul3(v, y)))); }
+  return out;
+}
+// a slab: a rounded rectangle in (u, v) extruded along n from s0 to s1
+const slabBody = (o, u, v, n, w, h, r, s0, s1, mat, opt) => ringsBody([rrRing(add3(o, mul3(n, s0)), u, v, w, h, r), rrRing(add3(o, mul3(n, s1)), u, v, w, h, r)], mat, opt);
+
+// ---------------------------------------------------------------- drawing a body
+let lastHull = null;
+function clipPoly(pts, clip) {
+  // keep the part with dot(p, n) >= d
+  const out = [];
+  for (let i = 0; i < pts.length; i++) {
+    const a = pts[i], b = pts[(i + 1) % pts.length];
+    const da = dot3(a, clip.n) - clip.d, db = dot3(b, clip.n) - clip.d;
+    if (da >= 0) out.push(a);
+    if ((da >= 0) !== (db >= 0)) { const t = da / (da - db); out.push(add3(a, mul3(sub3(b, a), t))); }
+  }
+  return out;
+}
+// opt: back (draw the facets facing away, as the inside), clip (a world half-space), outline class, noOutline, matFn
+function drawBody(B, T, opt = {}) {
+  const n = B.v.length;
+  const W = new Array(n), Sc = new Array(n);
+  for (let i = 0; i < n; i++) { W[i] = toW(T, B.v[i]); Sc[i] = pr(W[i]); }
+  const buckets = new Map();
+  const hullPts = [];
+  const clip = opt.clip;
+  let any = false;
+  for (const f of B.f) {
+    const nW = rotW(T, f.n);
+    const fac = dot3(nW, VIEW);
+    let pts;
+    if (clip) {
+      const wp = clipPoly(f.i.map((j) => W[j]), clip);
+      if (wp.length < 3) continue;
+      for (const p of wp) hullPts.push(pr(p));
+      if (opt.back ? fac >= -1e-4 : fac <= 1e-4) continue;
+      pts = wp.map(pr);
+    } else {
+      if (opt.back ? fac >= -1e-4 : fac <= 1e-4) continue;
+      pts = f.i.map((j) => Sc[j]);
+    }
+    any = true;
+    const col = opt.back ? shade(f.mi || "inner", mul3(nW, -1)) : shade(opt.mat || f.m, nW);
+    buckets.set(col, (buckets.get(col) || "") + dPath(pts));
+  }
+  let s = "";
+  let hl = clip ? hull(hullPts) : hull(Sc);
+  if (clip && hl.length > 2) {
+    let ar = 0;
+    for (let i = 0; i < hl.length; i++) { const a = hl[i], b = hl[(i + 1) % hl.length]; ar += a[0] * b[1] - b[0] * a[1]; }
+    if (Math.abs(ar) / 2 < 30) return { s: "", hull: [] };
+  }
+  // an underlay in the body's middle tone hides the hairlines between facets
+  if (!opt.back && hl.length > 2 && any) s += `<path d="${dPath(hl)}" fill="${shade(opt.mat || B.f[0].m, VIEW)}"/>`;
+  for (const [col, d] of buckets) s += `<path d="${d}" fill="${col}" stroke="${col}" stroke-width=".35"/>`;
+  lastHull = hl;
+  if (!opt.noOutline && hl.length > 2 && (any || !opt.back)) s += `<path class="${opt.ol || "ol2"}" d="${dPath(hl)}"/>`;
+  return { s, hull: hl };
+}
+// the screen box of a set of points
+const boxOf = (pts) => { let x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9; for (const p of pts) { if (p[0] < x0) x0 = p[0]; if (p[0] > x1) x1 = p[0]; if (p[1] < y0) y0 = p[1]; if (p[1] > y1) y1 = p[1]; } return [x0, y0, x1, y1]; };
+const boxUnion = (a, b) => (!a ? b : !b ? a : [Math.min(a[0], b[0]), Math.min(a[1], b[1]), Math.max(a[2], b[2]), Math.max(a[3], b[3])]);
+
+// ---------------------------------------------------------------- flat details on faces
+// A detail lives in a plane of its body: origin p, axes u (right) and v (up), outward normal nrm, all in the body's
+// own frame. It is drawn in mm with y up; u = nrm × v keeps text the right way round in this mirrored world.
+const planeOf = (p, nrm, vHint) => { const n = unit3(nrm); const v = unit3(sub3(vHint, mul3(n, dot3(vHint, n)))); return { p, n, v, u: cross3(n, v) }; };
+function decal(T, pl, svgInner, { fade = [0.02, 0.18], alpha = 1 } = {}) {
+  const nW = rotW(T, pl.n);
+  const fac = dot3(nW, VIEW);
+  if (fac <= fade[0]) return "";
+  const U = prv(rotW(T, pl.u)), V = prv(rotW(T, pl.v)), O = pr(toW(T, pl.p));
+  const a = alpha * ease((fac - fade[0]) / (fade[1] - fade[0]));
+  if (a < 0.01) return "";
+  return `<g transform="matrix(${r3(U[0])} ${r3(U[1])} ${r3(V[0])} ${r3(V[1])} ${r2(O[0])} ${r2(O[1])})"${a < 0.995 ? ` opacity="${r3(a)}"` : ""}>${svgInner}</g>`;
+}
+// a decal's outline on screen (for highlights): its local 2D points through the plane
+const decalPts = (T, pl, pts2) => pts2.map(([x, y]) => pr(toW(T, add3(pl.p, add3(mul3(pl.u, x), mul3(pl.v, y))))));
+const txt = (x, y, s, size, cls = "print", anchor = "middle", extra = "") => `<text class="${cls}" x="${r3(x)}" y="${r3(-y)}" font-size="${size}" text-anchor="${anchor}" transform="scale(1 -1)"${extra}>${s}</text>`;
+const circ = (x, y, r, cls, extra = "") => `<circle class="${cls}" cx="${r3(x)}" cy="${r3(y)}" r="${r3(r)}"${extra}/>`;
+const ellPts = (cx, cy, rx, ry, n = 28) => Array.from({ length: n }, (_, i) => { const a = (i / n) * TAU; return [cx + rx * Math.cos(a), cy + ry * Math.sin(a)]; });
+const rrPts2 = (cx, cy, w, h, r, per = 5) => { r = Math.min(r, w / 2, h / 2); const out = []; for (const [ox, oy, a0] of [[w / 2 - r, -h / 2 + r, -90], [w / 2 - r, h / 2 - r, 0], [-w / 2 + r, h / 2 - r, 90], [-w / 2 + r, -h / 2 + r, 180]]) for (let i = 0; i <= per; i++) { const a = (a0 + (90 * i) / per) * DEG; out.push([cx + ox + r * Math.cos(a), cy + oy + r * Math.sin(a)]); } return out; };
+// a black acoustic mesh: an oval with a fine woven grid clipped to it
+let meshN = 0;
+function meshSvg(cx, cy, rx, ry, pitch = 0.42) {
+  const id = `mclip${meshN++}`;
+  let d = "";
+  for (let x = cx - rx; x <= cx + rx + 1e-6; x += pitch) d += `M${r3(x)} ${r3(cy - ry)}L${r3(x)} ${r3(cy + ry)}`;
+  for (let y = cy - ry; y <= cy + ry + 1e-6; y += pitch) d += `M${r3(cx - rx)} ${r3(y)}L${r3(cx + rx)} ${r3(y)}`;
+  const o = loc(ellPts(cx, cy, rx, ry, 32));
+  return `<clipPath id="${id}"><path d="${o}"/></clipPath><path class="mesh" d="${o}"/><path class="mesh-l" d="${d}" clip-path="url(#${id})"/>`;
+}
+const logoSvg = (cx, cy, size, cls = "logo") => { const k = size / 100; return `<g transform="matrix(${r3(k)} 0 0 ${r3(-k)} ${r3(cx - 50 * k)} ${r3(cy + 50 * k)})"><path d="${BRAND.logo}" class="${cls}"/></g>`; };
+
+// ---------------------------------------------------------------- the charging case
+const CS = D.CASE;
+const CASEF = frameXZ(heading(CS.psi + 90), UP, [CS.c[0], CS.c[1], D.MAT_T]);
+// the superellipsoid: front outline exponent p (x, z), depth exponent q; centre at height C
+const sqF = (x, y, z) => { const G = Math.abs(x / CS.A) ** CS.p + Math.abs((z - CS.C) / CS.C) ** CS.p; return G ** (CS.q / CS.p) + Math.abs(y / CS.B) ** CS.q; };
+// the cross-section at height z, as a ring of N points from the axis outwards
+function caseRing(z, N = 76) {
+  const out = [];
+  for (let j = 0; j < N; j++) {
+    const a = (j / N) * TAU;
+    const dx = CS.A * Math.cos(a), dy = CS.B * Math.sin(a);
+    let lo = 0, hi = 1.2;
+    for (let it = 0; it < 32; it++) { const m = (lo + hi) / 2; if (sqF(m * dx, m * dy, z) > 1) hi = m; else lo = m; }
+    out.push([lo * dx, lo * dy, z]);
+  }
+  return out;
+}
+const ZS = CS.zs;
+const zOf = (th) => CS.C + CS.C * Math.sin(th);
+const thS = Math.asin((ZS - CS.C) / CS.C);
+const BASE_RINGS = [], LID_RINGS = [];
+const NB = 18, NL = 11;
+for (let i = 0; i <= NB; i++) { const th = -Math.PI / 2 + 0.035 + ((thS + Math.PI / 2 - 0.035) * i) / NB; BASE_RINGS.push(caseRing(i === NB ? ZS : zOf(th))); }
+for (let i = 0; i <= NL; i++) { const th = thS + ((Math.PI / 2 - 0.035 - thS) * i) / NL; LID_RINGS.push(caseRing(i === 0 ? ZS : zOf(th), 64)); }
+const BASE = ringsBody(BASE_RINGS, "white", { capB: "white" });
+const LID = ringsBody(LID_RINGS, "white", { capA: "white" });
+// the deck's outline and the surface's front and back at a height
+const DECK = BASE_RINGS[NB];
+const frontY = (z) => { let lo = 0, hi = CS.B * 1.1; for (let i = 0; i < 30; i++) { const m = (lo + hi) / 2; if (sqF(0, m, z) > 1) hi = m; else lo = m; } return lo; };
+const sideX = (z) => { let lo = 0, hi = CS.A * 1.1; for (let i = 0; i < 30; i++) { const m = (lo + hi) / 2; if (sqF(m, 0, z) > 1) hi = m; else lo = m; } return lo; };
+const gradF = (x, y, z) => { const e = 1e-3; return unit3([(sqF(x + e, y, z) - sqF(x - e, y, z)), (sqF(x, y + e, z) - sqF(x, y - e, z)), (sqF(x, y, z + e) - sqF(x, y, z - e))]); };
+const HINGE = { y: -frontY(ZS) + 1.4, z: ZS };
+const LID_MAX = M.lidDeg * DEG;
+// the lid's frame (in the case frame) after turning back by th about the hinge
+function lidFrame(th) {
+  const c = Math.cos(th), s = Math.sin(th);
+  // turn about local x: y → y cos − z sin, z → y sin + z cos (the front edge lifts)
+  const R = { X: [1, 0, 0], Y: [0, c, s], Z: [0, -s, c], o: [0, 0, 0] };
+  const piv = [0, HINGE.y, HINGE.z];
+  R.o = sub3(piv, rotW(R, piv));
+  return inFrame(CASEF, R);
+}
+
+// the seats: each earbud's head sits a little above the deck, its tip pointing to the middle
+const SEAT_X = 17.0, SEAT_Z = ZS + 0.8;
+const seatOf = (side) => frameXZ(mul3(CASEF.X, -side), UP, toW(CASEF, [side * SEAT_X, 0, SEAT_Z]));
+
+// ---------------------------------------------------------------- the earbud, in its own frame
+// x toward the ear (the tip side), y across the head, z up along the head; the stem hangs down on the outer side.
+const HEAD = { ax: 8.2, ay: 9.0, az: 7.6, cut: 0.6 };
+const T_AX = unit3([1, 0, -0.38]); // the nozzle's axis
+const NOZ = [4.4, 0, -2.6]; // where the nozzle's axis starts, inside the head
+const TA = axisOf(T_AX);
+const STEM = { x: -2.8, hx: 2.6, hy: 2.3, r: 2.0, z0: -4.0, z1: -22.4 };
+const sAlong = (s) => add3(NOZ, mul3(T_AX, s));
+// half an ellipsoid as rings across x, from x0 to x1, closed by a flat cut
+function headHalf(x0, x1, nr = 11, nc = 34) {
+  const rings = [];
+  for (let i = 0; i <= nr; i++) {
+    // spread the rings by angle so the dome's tip is fine
+    const t0 = Math.asin(clamp(x0 / HEAD.ax, -1, 1)), t1 = Math.asin(clamp(x1 / HEAD.ax, -1, 1));
+    let th = t0 + ((t1 - t0) * i) / nr;
+    th = clamp(th, -Math.PI / 2 + 0.06, Math.PI / 2 - 0.06);
+    const x = HEAD.ax * Math.sin(th), k = Math.cos(th);
+    rings.push(Array.from({ length: nc }, (_, j) => { const a = (j / nc) * TAU; return [x, HEAD.ay * k * Math.cos(a), HEAD.az * k * Math.sin(a)]; }));
+  }
+  return rings;
+}
+// the stem's cross-section: a rounded rectangle about (x, 0), scaled
+function stemRing(z, s = 1, n = 6) {
+  const out = [];
+  const w = 2 * STEM.hx * s, h = 2 * STEM.hy * s, r = STEM.r * s;
+  for (const [ox, oy, a0] of [[w / 2 - r, -h / 2 + r, -90], [w / 2 - r, h / 2 - r, 0], [-w / 2 + r, h / 2 - r, 90], [-w / 2 + r, -h / 2 + r, 180]])
+    for (let i = 0; i < n; i++) { const a = (a0 + (90 * i) / n) * DEG; out.push([STEM.x + ox + r * Math.cos(a), oy + r * Math.sin(a), z]); }
+  return out;
+}
+// the silicone tip: a skirt that flares back over the head, tapering to a round nose with the sound hole
+const TIP_PROFILE = [[3.0, 2.9], [3.25, 5.0], [3.9, 6.0], [5.1, 6.3], [6.6, 6.0], [8.1, 5.15], [9.3, 4.0], [10.0, 3.0]];
+const TIP_END = 10.0;
+const PARTS = {};
+const PART_ORDER = ["tip", "mesh", "driver", "innerMic", "innerShell", "board", "battery", "outerShell", "outerMic", "stem", "force", "antenna"];
+// shells
+PARTS.outerShell = { body: ringsBody(headHalf(-HEAD.ax, HEAD.cut).reverse(), "white", { capA: "white", capB: null }), shell: true, off: [-34, 0, 0] };
+PARTS.innerShell = { body: ringsBody(headHalf(HEAD.cut, HEAD.ax), "white", { capA: "white", capB: null }), shell: true, off: [0, 0, 0] };
+PARTS.nozzle = { body: ringsBody(latheRings([[1.0, 2.6], [5.6, 2.6]], 22, { o: NOZ, ...TA }), "white", { capA: null, capB: "white" }), shell: true, with: "innerShell" };
+PARTS.stem = { body: ringsBody([stemRing(STEM.z0), stemRing(-8), stemRing(-12), stemRing(-16), stemRing(-19.5), stemRing(STEM.z1), stemRing(-22.85, 0.93), stemRing(-23.2, 0.8), stemRing(-23.32, 0.64)], "white", { capA: null, capB: "white" }), shell: true, off: [0, 0, -16] };
+PARTS.tip = { body: ringsBody(latheRings(TIP_PROFILE, 26, { o: NOZ, ...TA }), "silicone", { capA: null, capB: "dark" }), shell: true, off: mul3(T_AX, 27) };
+PARTS.mesh = { body: ringsBody(latheRings([[5.6, 2.4], [6.0, 2.4]], 22, { o: NOZ, ...TA }), "mesh", { capA: "mesh", capB: "mesh" }), off: mul3(T_AX, 18.5) };
+PARTS.driver = { body: ringsBody(latheRings([[-2.4, 2.2], [-2.1, 4.2], [-0.5, 4.4], [0.1, 4.4], [0.5, 3.3]], 26, { o: NOZ, ...TA }), "driver", { capA: "driver", capB: "dark" }), off: mul3(T_AX, 11.5) };
+PARTS.innerMic = { body: slabBody([3.8, 5.0, -0.4], [0, 1, 0], [0, 0, 1], [1, 0, 0], 2.4, 2.2, 0.3, -0.7, 0.7, "pcb"), off: add3(mul3(T_AX, 5), [0, 8, 2]) };
+PARTS.board = { body: slabBody([-0.8, 0, 0.3], [0, -1, 0], [0, 0, 1], [1, 0, 0], 12.4, 9.4, 2.6, -0.45, 0.45, "pcb"), off: [-12, 0, 0] };
+PARTS.battery = { body: ringsBody(latheRings([[-1.6, 4.3], [-1.4, 4.7], [1.4, 4.7], [1.6, 4.3]], 30, { o: [-4.2, 0, 0], ...axisOf([1, 0, 0]) }), "cell", { capA: "cell", capB: "cell" }), off: [-22.5, 0, 0] };
+PARTS.outerMic = { body: slabBody([-4.3, 0, -8.6], [0, -1, 0], [0, 0, 1], [1, 0, 0], 2.6, 3.6, 0.4, -0.5, 0.5, "pcb"), off: [-9, 0, -6] };
+PARTS.force = { body: slabBody([-4.9, 0, -14.5], [0, -1, 0], [0, 0, 1], [1, 0, 0], 3.0, 6.8, 0.6, -0.15, 0.15, "flex"), off: [-11, 0, -13] };
+PARTS.antenna = { body: slabBody([-2.8, 1.3, -15.6], [1, 0, 0], [0, 0, 1], [0, 1, 0], 3.2, 10.6, 0.6, -0.12, 0.12, "flex"), off: [0, 12, -19] };
+PARTS.nozzle.off = PARTS.innerShell.off;
+
+// the details on the earbud's faces, each tied to the part it is printed on
+const BUD_DECALS = [];
+const budDecal = (part, pl, svg, opt = {}) => BUD_DECALS.push({ part, pl, svg, ...opt });
+// the outer microphone's long mesh at the top of the stem, the force sensor's flat, the voice microphone near the bottom
+const STEM_FACE = STEM.x - STEM.hx;
+const stemPl = (z) => planeOf([STEM_FACE - 0.02, 0, z], [-1, 0, 0], [0, 0, 1]);
+budDecal("stem", stemPl(-8.7), meshSvg(0, 0, 1.4, 2.5, 0.36), { id: "outerMesh", outline: ellPts(0, 0, 1.7, 2.8), fade: [0.12, 0.3] });
+budDecal("stem", stemPl(-14.5), `<path class="flat" d="${loc(rrPts2(0, 0, 3.0, 6.6, 1.3))}"/><path class="flat-l" d="M-1.0 2.9L-1.0 -2.9"/>`, { id: "sensor", outline: rrPts2(0, 0, 3.4, 7.0, 1.5), fade: [0.12, 0.3] });
+budDecal("stem", stemPl(-20.6), meshSvg(0, 0, 1.1, 1.4, 0.34), { id: "voiceMesh", fade: [0.12, 0.3] });
+// the vent mesh on the outer half of the head, and the skin sensor's dark window on the inner half
+{
+  const dir = unit3([-0.28, 0, 0.96]);
+  const p = [HEAD.ax * dir[0], 0, HEAD.az * dir[2]];
+  const n = unit3([p[0] / HEAD.ax ** 2, 0, p[2] / HEAD.az ** 2]);
+  budDecal("outerShell", planeOf(add3(p, mul3(n, 0.03)), n, [0, 1, 0]), `<path class="mesh-g" d="${loc(rrPts2(0, 0, 0.9, 3.6, 0.45))}"/>`, { id: "vent", fade: [0.1, 0.3] });
+  const q = [HEAD.ax * 0.86, -HEAD.ay * 0.3, HEAD.az * 0.3];
+  const k = Math.hypot(q[0] / HEAD.ax, q[1] / HEAD.ay, q[2] / HEAD.az);
+  const qq = mul3(q, 1 / k);
+  const nq = unit3([qq[0] / HEAD.ax ** 2, qq[1] / HEAD.ay ** 2, qq[2] / HEAD.az ** 2]);
+  budDecal("innerShell", planeOf(add3(qq, mul3(nq, 0.03)), nq, [0, 0, 1]), `<path class="mesh-g" d="${loc(ellPts(0, 0, 0.9, 0.6, 20))}" opacity=".7"/>`, { id: "skin", fade: [0.1, 0.3] });
+}
+// the tip's open end: a dark mouth with the mesh deep inside; its size printed inside the rim
+budDecal("tip", planeOf(sAlong(TIP_END + 0.02), T_AX, [0, 0, 1]), `${circ(0, 0, 2.9, "opening")}${circ(0, 0, 1.95, "opening-m")}<path class="mesh-gl" d="M-1.5 -0.9L1.5 -0.9M-1.9 0L1.9 0M-1.5 0.9L1.5 0.9M-0.9 -1.6L-0.9 1.6M0 -2L0 2M0.9 -1.6L0.9 1.6"/>`, { id: "mouth", fade: [0.05, 0.25] });
+// the nozzle's mesh (seen once the tip is off) and the driver's diaphragm
+budDecal("mesh", planeOf(sAlong(6.02), T_AX, [0, 0, 1]), `${circ(0, 0, 2.35, "mesh-g")}<path class="mesh-gl" d="M-1.9 -1.2L1.9 -1.2M-2.25 -0.4L2.25 -0.4M-2.25 0.4L2.25 0.4M-1.9 1.2L1.9 1.2M-1.2 -1.9L-1.2 1.9M-0.4 -2.25L-0.4 2.25M0.4 -2.25L0.4 2.25M1.2 -1.9L1.2 1.9"/>`, { id: "meshFace" });
+budDecal("driver", planeOf(sAlong(0.52), T_AX, [0, 0, 1]), `${circ(0, 0, 3.3, "cone")}${circ(0, 0, 2.4, "cone")}${circ(0, 0, 1.5, "dome")}${circ(-0.4, 0.45, 0.32, "lite")}`, { id: "diaphragm" });
+// the board: the H-series chip with the logo, passives, a flex connector
+{
+  const pl = planeOf([-0.33, 0, 0.3], [1, 0, 0], [0, 0, 1]);
+  let pas = "";
+  const R = (() => { let a = 7; return () => { a = (a * 9301 + 49297) % 233280; return a / 233280; }; })();
+  for (let i = 0; i < 22; i++) { const x = -5.2 + R() * 10.4, y = -3.9 + R() * 7.8; if (Math.abs(x) < 3.2 && Math.abs(y) < 3.2) continue; pas += `<rect class="${i % 3 ? "pas" : "pas2"}" x="${r3(x)}" y="${r3(y)}" width="${R() > 0.5 ? 0.9 : 0.5}" height="${R() > 0.5 ? 0.5 : 0.9}"/>`; }
+  const chip = `<path class="chip-pk" d="${loc(rrPts2(0, 0, 5.4, 5.4, 0.4))}"/>${logoSvg(-1.0, 0.9, 2.2, "chiplogo")}${txt(1.0, 0.35, "H2", 1.5, "chip-t", "middle")}${txt(0, -1.7, "343S00", 0.62, "chip-t")}`;
+  budDecal("board", pl, `${pas}${chip}<rect class="gold" x="-6.1" y="-0.6" width="0.9" height="1.2"/><rect class="gold" x="5.2" y="-0.6" width="0.9" height="1.2"/>`, { id: "chip", outline: rrPts2(0, 0, 5.8, 5.8, 0.6) });
+  const plB = planeOf([-1.27, 0, 0.3], [-1, 0, 0], [0, 0, 1]);
+  let pads = "";
+  for (let i = 0; i < 6; i++) pads += `<rect class="gold" x="${r3(-3 + i * 1.2)}" y="-4.2" width=".7" height="1.1"/>`;
+  budDecal("board", plB, pads + `<path class="trace" d="M-3 -3L-3 1L2 1M0 -3L0 3M3 -3L3 0"/>`);
+}
+// the coin cell: a plus on its face
+budDecal("battery", planeOf([-2.58, 0, 0], [1, 0, 0], [0, 0, 1]), `${circ(0, 0, 3.9, "plus")}<path class="plus" d="M-1 0L1 0M0 -1L0 1"/>${txt(0, -2.4, "Li-ion", 0.85, "print")}`);
+budDecal("battery", planeOf([-5.82, 0, 0], [-1, 0, 0], [0, 0, 1]), `${circ(0, 0, 3.9, "plus")}<path class="plus" d="M-1 0L1 0"/>`);
+// the microphones: a can with a sound port on a small board
+budDecal("innerMic", planeOf([4.52, 5.0, -0.4], [1, 0, 0], [0, 0, 1]), `<rect class="can" x="-0.8" y="-0.75" width="1.6" height="1.5" rx=".2"/>${circ(0, 0, 0.25, "can-h")}`);
+budDecal("outerMic", planeOf([-4.82, 0, -8.6], [-1, 0, 0], [0, 0, 1]), `<rect class="can" x="-0.85" y="-1.1" width="1.7" height="2.2" rx=".2"/>${circ(0, 0.3, 0.28, "can-h")}`);
+budDecal("outerMic", planeOf([-3.78, 0, -8.6], [1, 0, 0], [0, 0, 1]), `<rect class="gold" x="-0.8" y="-1.4" width=".5" height=".6"/><rect class="gold" x=".3" y="-1.4" width=".5" height=".6"/>`);
+// the force sensor's strain gauge, on both sides of its flex; the antenna's trace
+const gauge = (() => { const pts = []; for (let i = 0; i <= 8; i++) { const y = -3.2 + i * 0.8; pts.push([-1.1, y], [1.1, y]); if (i < 8) pts.push([1.1, y + 0.4], [-1.1, y + 0.4]); } return `<path class="gauge" d="${loc(pts.filter((_, i) => i % 2 === 0 || true), false)}"/>`; })();
+budDecal("force", planeOf([-5.07, 0, -14.5], [-1, 0, 0], [0, 0, 1]), gauge);
+budDecal("force", planeOf([-4.73, 0, -14.5], [1, 0, 0], [0, 0, 1]), gauge);
+const zig = (() => { const pts = [[-1.2, -5.2]]; for (let i = 0; i < 9; i++) pts.push([i % 2 ? -1.2 : 1.2, -4.6 + i * 1.1]); pts.push([0, 5.2]); return `<path class="zig" d="${loc(pts, false)}"/>`; })();
+budDecal("antenna", planeOf([-2.8, 1.44, -15.6], [0, 1, 0], [0, 0, 1]), zig);
+budDecal("antenna", planeOf([-2.8, 1.16, -15.6], [0, -1, 0], [0, 0, 1]), zig);
+// the cut faces: a white rim round the dark inside, once a shell half is lifted off
+const cutIn = (sign) => `<path class="opening" d="${loc(ellPts(0, 0, HEAD.ay * 0.9, HEAD.az * 0.9, 36))}" opacity=".85"/>`;
+budDecal("outerShell", planeOf([HEAD.cut + 0.02, 0, 0], [1, 0, 0], [0, 0, 1]), cutIn(1), { id: "cutO", fade: [0.04, 0.2], apartOnly: true });
+budDecal("innerShell", planeOf([HEAD.cut - 0.02, 0, 0], [-1, 0, 0], [0, 0, 1]), cutIn(-1), { id: "cutI", fade: [0.04, 0.2], apartOnly: true });
+budDecal("stem", planeOf([STEM.x, 0, STEM.z0 - 0.02], [0, 0, 1], [1, 0, 0]), `<path class="opening" d="${loc(rrPts2(0, 0, 2 * STEM.hy - 0.9, 2 * STEM.hx - 0.9, 1.6))}"/>`, { id: "stemTop", fade: [0.04, 0.2], apartOnly: true });
+// the tip's skirt seen from behind (only when it is off): the hollow that clips onto the nozzle
+budDecal("tip", planeOf(sAlong(2.98), mul3(T_AX, -1), [0, 0, 1]), `${circ(0, 0, 4.6, "opening")}${circ(0, 0, 2.7, "dome")}${circ(0, 0, 1.9, "opening")}`, { id: "skirt", fade: [0.04, 0.2], apartOnly: true });
+// the charging contact at the stem's tip
+budDecal("stem", planeOf([STEM.x, 0, -23.34], [0, 0, -1], [1, 0, 0]), `<path class="contact" d="${loc(rrPts2(0, 0, 2.4, 2.0, 0.9))}"/>${circ(0, 0, 0.45, "can-h")}`);
+
+// part centres (for sorting) and which parts are hidden inside when assembled
+for (const [id, p] of Object.entries(PARTS)) { p.id = id; p.c = p.body.c; }
+const INSIDE = new Set(["mesh", "driver", "innerMic", "board", "battery", "outerMic", "force", "antenna"]);
+
+// ---------------------------------------------------------------- drawing an earbud
+// mode: "solid" (assembled, shells only), "xray" (shells see-through), "apart" (every part, by depth).
+// e: how far each part has moved out (0..1); clip: a world half-space to keep (when it sits in the case).
+const HULLS = {};
+function partFrame(T, id, e) {
+  const off = PARTS[id].off ? mul3(PARTS[id].off, e[id] || 0) : [0, 0, 0];
+  return { X: T.X, Y: T.Y, Z: T.Z, o: toW(T, off) };
+}
+let curBud = "R";
+const XRAY_IN = new Set(["outerMic", "board", "driver", "innerMic", "mesh"]);
+function drawBud(name, T, { e = {}, xray = 0, clip = null } = {}) {
+  curBud = name;
+  const apart = PART_ORDER.some((id) => (e[id] || 0) > 0.002);
+  const order = [];
+  const ids = ["outerShell", "innerShell", "nozzle", "stem", "tip"];
+  if (apart) for (const id of INSIDE) ids.push(id);
+  else if (xray > 0.002) for (const id of XRAY_IN) ids.push(id);
+  for (const id of ids) {
+    const p = PARTS[id];
+    const F = partFrame(T, p.with || id, e);
+    order.push({ id, p, F, key: depth(toW(F, p.c)) + (id === "tip" || id === "nozzle" ? 0.01 : 0) });
+  }
+  let out = "";
+  const keep = {};
+  if (!apart) {
+    // assembled: stem, the far half of the head, the near half, the nozzle and tip in front or behind
+    const tipFront = dot3(rotW(T, T_AX), VIEW) > 0;
+    const outerFirst = dot3(rotW(T, [1, 0, 0]), VIEW) > 0;
+    const shellSeq = ["stem", outerFirst ? "outerShell" : "innerShell", outerFirst ? "innerShell" : "outerShell"];
+    const seq = tipFront ? [...shellSeq, "nozzle", "tip"] : ["tip", "nozzle", ...shellSeq];
+    const byId = Object.fromEntries(order.map((o) => [o.id, o]));
+    if (xray > 0.002) {
+      // the insides of the shells, then the parts inside, then the shells' near walls, see-through
+      for (const id of seq) out += drawBody(byId[id].p.body, byId[id].F, { back: true, clip, noOutline: true }).s;
+      const ins = order.filter((o) => XRAY_IN.has(o.id)).sort((a, b) => a.key - b.key);
+      for (const o of ins) { const r = drawBody(o.p.body, o.F, { clip }); keep[o.id] = r.hull; out += r.s + partDecals(o.id, o.F); }
+      let shells = "";
+      for (const id of seq) { const r = drawBody(byId[id].p.body, byId[id].F, { clip, noOutline: true }); keep[id] = r.hull; shells += r.s + partDecals(id, byId[id].F); }
+      out += `<g opacity="${r3(1 - 0.72 * xray)}">${shells}</g>`;
+      // each shell keeps its own inked outline: the stem, the head (both halves as one), the nozzle and the tip
+      const ink = (pts) => (pts && pts.length > 2 ? `<path class="ol2" d="${dPath(pts)}"/>` : "");
+      out += `<g opacity="${r3(1 - 0.35 * xray)}">${ink(keep.stem)}${ink(hull([...(keep.outerShell || []), ...(keep.innerShell || [])]))}${ink(keep.tip)}</g>`;
+    } else {
+      // the two halves of the head share one outline and a hairline seam
+      let heads = 0;
+      for (const id of seq) {
+        const o = byId[id];
+        const isHead = id === "outerShell" || id === "innerShell";
+        const r = drawBody(o.p.body, o.F, { clip, noOutline: isHead });
+        keep[id] = r.hull;
+        out += r.s;
+        if (isHead && ++heads === 2) {
+          const both = hull([...keep.outerShell, ...keep.innerShell]);
+          out += `<path class="ol2" d="${dPath(both)}"/>` + seamOf(o.F, clip);
+        }
+        out += partDecals(id, o.F, clip);
+      }
+    }
+  } else {
+    order.sort((a, b) => a.key - b.key);
+    for (const o of order) { const r = drawBody(o.p.body, o.F, { clip }); keep[o.id] = r.hull; out += r.s + partDecals(o.id, o.F, clip, true); }
+  }
+  HULLS[name] = keep;
+  return out;
+}
+// the seam between the head's halves: the visible arc of the cut ellipse
+function seamOf(F, clip) {
+  const pts = [];
+  const N = 48;
+  let d = "", run = [];
+  for (let j = 0; j <= N; j++) {
+    const a = (j / N) * TAU;
+    const p = [HEAD.cut, HEAD.ay * Math.cos(a) * 0.997, HEAD.az * Math.sin(a) * 0.997];
+    const nrm = unit3([p[0] / HEAD.ax ** 2, p[1] / HEAD.ay ** 2, p[2] / HEAD.az ** 2]);
+    const w = toW(F, p);
+    const vis = dot3(rotW(F, nrm), VIEW) > 0.02 && (!clip || dot3(w, clip.n) >= clip.d);
+    if (vis) run.push(pr(w)); else { if (run.length > 1) d += dOpen(run); run = []; }
+  }
+  if (run.length > 1) d += dOpen(run);
+  void pts;
+  return d ? `<path class="seam" d="${d}"/>` : "";
+}
+const DECAL_POLY = {};
+function partDecals(id, F, clip, apart = false) {
+  let s = "";
+  for (const dc of BUD_DECALS) {
+    if (dc.part !== id) continue;
+    if (dc.outline) DECAL_POLY[curBud + ":" + dc.id] = { F, pl: dc.pl, pts: dc.outline };
+    if (dc.apartOnly && !apart) continue;
+    if (clip && dot3(toW(F, dc.pl.p), clip.n) < clip.d + 0.6) continue;
+    s += decal(F, dc.pl, dc.svg, { fade: dc.fade });
+  }
+  return s;
+}
+
+// ---------------------------------------------------------------- the case's own details
+// the status light on the front, below the seam
+const LED_Z = ZS - 6.6;
+const LED_PL = (() => { const y = frontY(LED_Z); return planeOf([0, y + 0.02, LED_Z], gradF(0, y, LED_Z), [0, 0, 1]); })();
+// the lanyard loop on the right side, low down
+const LOOP_PL = (() => { const z = 9.5, x = sideX(z); return planeOf([x + 0.02, 0, z], gradF(x, 0, z), [0, 0, 1]); })();
+// the deck: the pockets the heads and tips sit in and the wells the stems drop into
+const SEAT_POCKET = {};
+function deckSvg() {
+  let s = "";
+  for (const side of [-1, 1]) {
+    const T = seatOf(side);
+    // the footprint of everything below the deck, in the case frame
+    const pts = [];
+    for (const id of ["outerShell", "innerShell", "tip"]) for (const v of PARTS[id].body.v) { const w = toW(T, v); const l = toL(CASEF, w); if (l[2] < ZS + 0.5) pts.push([l[0], l[1]]); }
+    const hl = hull(pts).map(([x, y]) => { const c = [side * SEAT_X, 0]; return [c[0] + (x - c[0]) * 1.04, c[1] + (y - c[1]) * 1.04]; });
+    SEAT_POCKET[side] = hl;
+    const sx = -side * (SEAT_X - STEM.x);
+    const mir = (pts) => pts.map(([x, y]) => [-x, y]);
+    s += `<path class="pocket" d="${loc(mir(hl))}"/>`;
+    s += `<path class="pocket2" d="${loc(mir(hl.map(([x, y]) => [side * SEAT_X + (x - side * SEAT_X) * 0.86, y * 0.8])))}"/>`;
+    s += `<path class="well" d="${loc(rrPts2(sx, 0, 2 * STEM.hx + 0.8, 2 * STEM.hy + 0.8, STEM.r + 0.4))}"/>`;
+    s += circ(sx - 0.8, 0, 0.35, "pin") + circ(sx + 0.8, 0, 0.35, "pin");
+  }
+  // the closing magnets under the deck's front edge, seen as faint discs
+  s += circ(-4, frontY(ZS) - 2.6, 1.3, "pocket2") + circ(4, frontY(ZS) - 2.6, 1.3, "pocket2");
+  return s;
+}
+// inside the lid: shallow pockets over the heads, the printing
+function lidInSvg() {
+  let s = "";
+  for (const side of [-1, 1]) s += `<path class="pocket" d="${loc(SEAT_POCKET[side].map(([x, y]) => [x * 0.98, -y * 0.9]))}"/>`;
+  s += txt(0, 4.6, `${BRAND.name} · Charging Case`, 1.25, "print");
+  s += txt(0, 2.6, "Designed in California · Assembled in China", 0.85, "print");
+  return s;
+}
+
+// ---------------------------------------------------------------- the box and the spare tips (drawn once)
+const BX = D.BOX;
+const BOXF = frameXZ(heading(BX.psi + 90), UP, [BX.c[0], BX.c[1], D.MAT_T]);
+const BOX_BODY = ringsBody([rrRing([0, 0, 0], [1, 0, 0], [0, 1, 0], BX.w, BX.d, 1.4, 3), rrRing([0, 0, BX.h], [1, 0, 0], [0, 1, 0], BX.w, BX.d, 1.4, 3)], "box");
+function boxSvg() {
+  const T = BOXF;
+  let s = drawBody(BOX_BODY, T).s;
+  // the lid's seam round the sides and the top, and the accent band below it
+  const yS = BX.d / 2 - BX.lid;
+  const seamPts = (z0, z1, x) => [toW(T, [x, yS, z0]), toW(T, [x, yS, z1])].map(pr);
+  for (const x of [-BX.w / 2, BX.w / 2]) {
+    if (dot3(rotW(T, [Math.sign(x), 0, 0]), VIEW) > 0) {
+      s += `<path class="seam" d="${dOpen(seamPts(0.4, BX.h - 0.4, x))}"/>`;
+    }
+  }
+  if (dot3(rotW(T, [0, 0, 1]), VIEW) > 0) s += `<path class="seam" d="${dOpen([toW(T, [-BX.w / 2 + 0.4, yS, BX.h]), toW(T, [BX.w / 2 - 0.4, yS, BX.h])].map(pr))}"/>`;
+  // the front: the logo, big, and the name
+  const front = planeOf([0, BX.d / 2 + 0.02, 0], [0, 1, 0], [0, 0, 1]);
+  s += decal(T, front, `<g transform="translate(0 ${BX.h * 0.56})">${logoSvg(0, 0, BX.w * 0.5)}</g>${txt(0, BX.h * 0.14, BRAND.name, 4.6, "bp", "middle")}`, { fade: [0.02, 0.1] });
+  // the left side: an accent band where the lid meets the box, a pull tab, the name printed upright
+  for (const sx of [-1, 1]) {
+    const side = planeOf([sx * (BX.w / 2 + 0.02), 0, 0], [sx, 0, 0], [0, 0, 1]);
+    const yy = (y) => -sx * y; // the side's own x runs along the box's depth
+    s += decal(T, side, `<rect class="band" x="${r3(Math.min(yy(yS - 1.4), yy(yS + 1.4)))}" y="0.4" width="2.8" height="${r3(BX.h - 0.8)}"/><path class="tear" d="${loc([[yy(yS - 1.4), 6], [yy(yS - 1.4) + -sx * 0 + (sx > 0 ? -5 : 5) * 0, 6], [yy(yS + 1.4), 6], [yy(yS + 1.4), 12], [yy(yS - 1.4), 12]])}"/>` +
+      `<g transform="translate(${r3(yy(-2))} ${BX.h / 2}) rotate(-90)">${txt(0, 0, BRAND.name, 3.4, "bp2", "middle")}</g>`, { fade: [0.02, 0.1] });
+  }
+  return s;
+}
+const TP = D.TIPS;
+const TIPSF = frameXZ(heading(TP.psi + 90), UP, [TP.c[0], TP.c[1], D.MAT_T]);
+const TIP_SIZES = [["S", 0.78, -7.6], ["L", 0.98, 6.4]];
+function tipsSvg() {
+  const T = TIPSF;
+  const card = slabBody([0, 0, 0], [1, 0, 0], [0, 1, 0], [0, 0, 1], TP.w, TP.d, 1.2, 0, 0.5, "card");
+  let s = drawBody(card, T, { ol: "ol" }).s;
+  // the card's top, read from the front: its "up" points away from the viewer, so its y is the card's −y
+  const top = planeOf([0, 0, 0.52], [0, 0, 1], [0, -1, 0]);
+  let marks = "";
+  for (const [label, , x] of TIP_SIZES) marks += txt(x, -7.0, label, 2.4, "sizemark");
+  marks += `<path class="card-l" d="M${-TP.w / 2 + 2} -8.0L${TP.w / 2 - 2} -8.0"/>` + txt(0, -9.4, "EAR TIPS", 1.3, "print");
+  s += decal(T, top, marks, { fade: [0.02, 0.1] });
+  // two pairs of spare tips standing on their skirts, noses up
+  const items = [];
+  for (const [label, k, x] of TIP_SIZES) for (const [dx, dy] of [[-3.3, -2.6], [3.4, 1.2]]) {
+    const len = (TIP_END - 3.0) * k;
+    const prof = TIP_PROFILE.map(([s0, r]) => [(s0 - 3.0) * k, r * k]);
+    const o = [x + dx * k, dy, 0.5];
+    const body = ringsBody(latheRings(prof, 20, { o, ...axisOf([0, 0, 1]) }), "silicone", { capA: "silicone", capB: "dark" });
+    items.push({ body, o, k, len, label });
+  }
+  items.sort((a, b) => depth(toW(T, a.o)) - depth(toW(T, b.o)));
+  for (const it of items) {
+    s += drawBody(it.body, T).s;
+    s += decal(T, planeOf(add3(it.o, [0, 0, it.len + 0.02]), [0, 0, 1], [0, -1, 0]), `${circ(0, 0, 2.2 * it.k, "dome")}${circ(0, 0, 1.25 * it.k, "opening")}`);
+  }
+  return s;
+}
+
+// ---------------------------------------------------------------- the case's insides (the cutaway)
+const IN_PARTS = (() => {
+  const L = [];
+  const C = (o, a, r, h, mat) => ({ body: ringsBody(latheRings([[-h / 2, r], [h / 2, r]], 22, { o, ...axisOf(a) }), mat), c: o });
+  for (const side of [-1, 1]) {
+    // a pair of magnets beside each stem, and one under each head
+    L.push({ ...C([side * 16.0, -1.5, 11.6], [0, 1, 0], 2.2, 2.0, "magnet"), mag: true });
+    L.push({ ...C([side * 16.0, -1.5, 17.6], [0, 1, 0], 2.2, 2.0, "magnet"), mag: true });
+  }
+  L.push({ ...C([-4, frontY(ZS) - 2.6, ZS - 1.6], [0, 0, 1], 1.3, 2.0, "magnet"), mag: true });
+  L.push({ ...C([4, frontY(ZS) - 2.6, ZS - 1.6], [0, 0, 1], 1.3, 2.0, "magnet"), mag: true });
+  // the case's battery, its board and the port at the bottom
+  // the case's battery sits on its board; the port's steel shell hangs under the board at the bottom
+  L.push({ body: slabBody([0, -1.6, 6.0], [1, 0, 0], [0, 1, 0], [0, 0, 1], 16, 7.6, 2.2, -2.0, 2.0, "pouch"), c: [0, -1.6, 6.0], id: "cell", ord: 2 });
+  L.push({ body: slabBody([0, 0, 3.6], [1, 0, 0], [0, 1, 0], [0, 0, 1], 19, 9.4, 2.4, -0.4, 0.4, "pcb"), c: [0, 0, 3.6], ord: 1 });
+  L.push({ body: slabBody([0, 0.6, 1.9], [1, 0, 0], [0, 1, 0], [0, 0, 1], 8.6, 3.2, 1.4, -1.3, 1.3, "steel"), c: [0, 0.6, 1.9], id: "port", ord: 0 });
+  return L;
+})();
+
+// ---------------------------------------------------------------- the steps
+const ORDER = ["open", "out", "noise", "anti", "squeeze", "apart", "back"];
+const DUR = { open: 2.2, out: 3.6, noise: 4.2, anti: 7.0, squeeze: 4.4, apart: 5.4, back: 5.2 };
+const N_ = BRAND.name;
+const STEPS = {
+  open: { dur: DUR.open, hint: `The lid swings back about ${Math.round(M.lidDeg / 10) * 10}° and the status light comes on. Inside, magnets hold each earbud down in its slot.` },
+  out: { dur: DUR.out, hint: `Each earbud is ${M.budSize[1]} mm tall and weighs ${M.budG} g (Apple's figures). The tip seals your ear; the stem carries the microphones and a squeeze sensor.` },
+  noise: { dur: DUR.noise, hint: `A bus rumbles at about ${M.dbIn} dB (typical). Shown ${M.slow} times slower, the wave reaches the microphone on the outside of the stem.` },
+  anti: { dur: DUR.anti, hint: `The chip plays the same wave upside down, and the two add up to a flat line. The inner microphone checks what is left and the chip corrects it ${M.adjust} times a second (Apple's figure).` },
+  squeeze: { dur: DUR.squeeze, hint: `A force sensor in the flat of the stem feels the squeeze. 1 squeeze pauses the music, 2 skip to the next track.` },
+  apart: { dur: DUR.apart, hint: `One earbud comes apart into ${PART_ORDER.length} parts. Its small cell plays for up to ${M.hours} hours on a charge (Apple's figure for ${N_} 2).` },
+  back: { dur: DUR.back, hint: `The ${PART_ORDER.length} parts close up and the earbud drops back onto its magnets, charging through the contact at the tip of its stem. The lid snaps shut.` },
+};
+
+// the poses: seated in the case, held up over it, studied up close, taken apart
+const SEAT = { R: seatOf(1), L: seatOf(-1) };
+const LIFT = 27;
+const lifted = (T) => ({ ...T, o: add3(T.o, [0, 0, LIFT]) });
+const HOVER = {
+  R: frameXZ(heading(122), unit3(add3(UP, mul3(heading(-58), 0.1))), add3(at2(22, 18), [0, 0, D.MAT_T + 60])),
+  L: frameXZ(heading(-122), unit3(add3(UP, mul3(heading(58), 0.1))), add3(at2(-25, 2), [0, 0, D.MAT_T + 64])),
+};
+const SQUEEZE = frameXZ(heading(156), unit3(add3(UP, mul3(heading(-24), 0.08))), HOVER.R.o);
+const APART = frameXZ(unit3(add3(heading(46), mul3(UP, 0.12))), UP, add3(at2(14, 20), [0, 0, D.MAT_T + 60]));
+const E_ONE = Object.fromEntries(PART_ORDER.map((id) => [id, 1]));
+const E_ZERO = {};
+
+// the waves (all in mm and seconds of the slowed drawing)
+const WAVE = { lam: 12, f: (100 / M.slow), amp: 3.6 };
+WAVE.c = WAVE.lam * WAVE.f; // how fast the wave travels in the drawing
+const LANE_L = 50, LANE_R = 48; // how far the lane runs out to the left of the microphone and right of the tip
+const T3 = DUR.noise;
+const T_ANTI = T3 + 0.24 * DUR.anti; // the speaker starts the cancelling wave
+const ADJ0 = T_ANTI + 0.62, ADJ_DT = 1 / (M.adjust / M.slow); // the corrections, 4 a second in the drawing
+const ADJ_END = T3 + 0.97 * DUR.anti;
+const G0 = 0.55, G_K = 0.68;
+// the cancelling wave's strength after k corrections; the gain at a moment of the drawing
+const restAt = (k) => Math.max(M.rest, (1 - G0) * G_K ** k);
+function gainAt(tau) {
+  if (tau < T_ANTI) return 0;
+  const k = Math.floor((tau - ADJ0) / ADJ_DT) + 1;
+  if (k <= 0) return 1 - restAt(0);
+  // each correction eases in over 60 ms of the drawing
+  const into = tau - (ADJ0 + (k - 1) * ADJ_DT);
+  const a = restAt(k - 1), b = restAt(k);
+  return 1 - (a + (b - a) * ease(into / 0.06));
+}
+const adjCount = (tau) => (tau < ADJ0 ? 0 : Math.min(Math.floor((tau - ADJ0) / ADJ_DT) + 1, Math.floor((ADJ_END - ADJ0) / ADJ_DT) + 1));
+
+// ---------------------------------------------------------------- the state as a function of (step, u)
+const fresh = () => ({ step: null, u: 0 });
+let S = fresh();
+function scene() {
+  const st = S.step, u = S.u;
+  const Z = { st, u, lid: 0, light: 0, ghost: 0, R: SEAT.R, L: SEAT.L, liftR: 0, liftL: 0, eR: E_ZERO, xray: 0, veil: 0, cam: ["rest", "rest", 0],
+    tau: null, noiseFront: -1, noiseOn: 0, antiOn: 0, waveA: 1, hl: [], hot: [], word: null, lapse: "", music: 0, notes: null, icon: null, press: 0, ripple: -1, sq: 0, partsOut: 0, ear: M.dbIn, seated: 2, flow: 0, flowB: 0 };
+  if (!st) return Z;
+  if (st === "open") {
+    Z.lid = LID_MAX * outCubic(seg(u, 0, 0.52));
+    Z.light = ease(seg(u, 0.28, 0.42));
+    Z.ghost = ease(seg(u, 0.5, 0.72));
+    if (u < 0.14) Z.word = { text: "snap", p: toW(CASEF, [0, frontY(ZS) + 2, ZS + 16]) };
+    Z.hl = [{ t: "led", k: bump(u, 0.28, 0.66, 0.2) }, { t: "magnets", k: ease(seg(u, 0.62, 0.8)) }];
+    Z.hot = ["mics"];
+    Z.hot = [];
+  } else if (st === "out") {
+    Z.lid = LID_MAX;
+    Z.light = 1 - ease(seg(u, 0.72, 0.92));
+    Z.ghost = 1 - ease(seg(u, 0.32, 0.52));
+    const lr = smoother(seg(u, 0.03, 0.24)), ll = smoother(seg(u, 0.12, 0.33));
+    const mr = smoother(seg(u, 0.26, 0.82)), ml = smoother(seg(u, 0.32, 0.88));
+    Z.R = travel(SEAT.R, HOVER.R, lr, mr);
+    Z.L = travel(SEAT.L, HOVER.L, ll, ml);
+    Z.liftR = lr; Z.liftL = ll;
+    Z.seated = (lr < 0.001 ? 1 : 0) + (ll < 0.001 ? 1 : 0);
+    Z.cam = ["rest", "out", sine(seg(u, 0.22, 0.92))];
+    Z.hl = [{ t: "magnets", k: 1 - ease(seg(u, 0.0, 0.3)) }, { t: "tipR", k: bump(u, 0.8, 1.0, 0.3) }, { t: "tipL", k: bump(u, 0.8, 1.0, 0.3) }];
+    if (u > 0.03 && u < 0.17) Z.word = { text: "pop", p: add3(SEAT.R.o, [0, 0, 22]) };
+    else if (u > 0.12 && u < 0.26) Z.word = { text: "pop", p: add3(SEAT.L.o, [0, 0, 22]) };
+    Z.hot = ["mics"];
+  } else {
+    Z.lid = LID_MAX; Z.R = HOVER.R; Z.L = SEAT.L; Z.seated = 1; Z.liftR = 1; Z.liftL = 0;
+    if (st === "noise") {
+      const ml = smoother(seg(u, 0.0, 0.26)), dl = smoother(seg(u, 0.24, 0.32));
+      Z.L = travel(SEAT.L, HOVER.L, 1 - dl, 1 - ml);
+      Z.liftL = 1 - dl;
+      Z.seated = dl > 0.999 ? 1 : 0;
+      if (u > 0.3 && u < 0.36) Z.word = { text: "click", p: add3(SEAT.L.o, [0, 0, 16]) };
+      Z.tau = u * DUR.noise;
+      Z.cam = ["out", "bud", sine(seg(u, 0, 0.34))];
+      Z.veil = ease(seg(u, 0.04, 0.3));
+      Z.noiseOn = 1;
+      Z.hl = [{ t: "outerMesh", k: ease(seg(Z.tau, MIC_T, MIC_T + 0.35)), pulse: 1 }];
+      if (u > 0.38 && u < 0.96) Z.word = { text: "rumble", lane: true };
+      Z.hot = ["noise"];
+      Z.lapse = `×1/${M.slow}`;
+    } else if (st === "anti") {
+      Z.tau = T3 + u * DUR.anti;
+      Z.cam = ["bud", "bud", 1];
+      Z.veil = 1;
+      Z.noiseOn = 1;
+      Z.antiOn = 1;
+      Z.xray = ease(seg(u, 0, 0.1));
+      Z.flow = ease(seg(u, 0.05, 0.14));
+      const adj = adjPhase(Z.tau);
+      Z.adj = adj;
+      Z.hl = [
+        { t: "outerMesh", k: 1 - ease(seg(u, 0.22, 0.32)), pulse: 1 },
+        { t: "board", k: Math.max(ease(seg(u, 0.14, 0.22)) * (1 - ease(seg(u, 0.3, 0.38))), adj.chip), pulse: 1 },
+        { t: "driver", k: Math.max(bump(u, 0.22, 0.44, 0.2), adj.spk * 0.8) },
+        { t: "innerMic", k: adj.mic },
+      ];
+      Z.hot = ["adjust", "ear"];
+      Z.lapse = `×1/${M.slow}`;
+    } else if (st === "squeeze") {
+      Z.tau = T3 + DUR.anti; // the cancelling has settled; the waves fade as the music takes over
+      Z.waveA = 1 - ease(seg(u, 0, 0.12));
+      Z.noiseOn = Z.waveA > 0.002 ? 1 : 0; Z.antiOn = Z.noiseOn;
+      Z.xray = 1 - ease(seg(u, 0, 0.12));
+      Z.flow = Z.xray;
+      const tr = smoother(seg(u, 0.04, 0.28));
+      Z.R = poseMix(HOVER.R, SQUEEZE, tr, lerp3(HOVER.R.o, SQUEEZE.o, tr));
+      Z.cam = ["bud", "stem", sine(seg(u, 0.02, 0.3))];
+      Z.veil = 1;
+      Z.music = 1;
+      Z.musicT = u * DUR.squeeze;
+      Z.stopT = 0.52 * DUR.squeeze;
+      Z.press = bump(u, 0.4, 0.58, 0.35);
+      Z.sq = u >= 0.5 ? 1 : 0;
+      Z.ripple = seg(u, 0.5, 0.7);
+      Z.icon = { k: ease(seg(u, 0.1, 0.18)) * (1 - ease(seg(u, 0.86, 0.96))), paused: ease(seg(u, 0.5, 0.56)) };
+      Z.hl = [{ t: "sensor", k: ease(seg(u, 0.28, 0.4)) * (1 - ease(seg(u, 0.8, 0.95))), pulse: 1 }];
+      if (u > 0.5 && u < 0.62) Z.word = { text: "click", stem: true };
+      Z.ear = M.dbEar;
+    } else if (st === "apart") {
+      const tr = smoother(seg(u, 0, 0.22));
+      Z.R = poseMix(SQUEEZE, APART, tr, lerp3(SQUEEZE.o, APART.o, tr));
+      Z.cam = ["stem", "apart", sine(seg(u, 0, 0.3))];
+      Z.veil = 1;
+      const e = {};
+      PART_ORDER.forEach((id, i) => { e[id] = smoother(seg(u, 0.2 + 0.035 * i, 0.2 + 0.035 * i + 0.3)); });
+      Z.eR = e;
+      Z.partsOut = PART_ORDER.filter((id) => e[id] > 0.5).length;
+      Z.hl = PART_ORDER.map((id, i) => ({ t: "part:" + id, k: bump(u, 0.36 + 0.035 * i, 0.5 + 0.035 * i, 0.3) * 0.9 }));
+      Z.hl.push({ t: "part:battery", k: ease(seg(u, 0.84, 0.92)), pulse: 1 }, { t: "part:board", k: ease(seg(u, 0.84, 0.92)) * 0.6 });
+      Z.hot = u > 0.84 ? ["parts", "hours"] : ["parts"];
+      Z.ear = M.dbEar;
+    } else if (st === "back") {
+      const e = {};
+      PART_ORDER.forEach((id, i) => { e[id] = 1 - smoother(seg(u, 0.02 + 0.022 * (PART_ORDER.length - 1 - i), 0.02 + 0.022 * (PART_ORDER.length - 1 - i) + 0.2)); });
+      Z.eR = e;
+      Z.partsOut = PART_ORDER.filter((id) => e[id] > 0.5).length;
+      const mr = smoother(seg(u, 0.3, 0.66)), dr = smoother(seg(u, 0.66, 0.73));
+      Z.R = travel(SEAT.R, APART, 1 - dr, 1 - mr);
+      Z.liftR = 1 - dr;
+      Z.seated = 1 + (dr > 0.999 ? 1 : 0);
+      Z.cam = ["apart", "rest", sine(seg(u, 0.24, 0.86))];
+      Z.veil = 1 - ease(seg(u, 0.1, 0.34));
+      Z.lid = LID_MAX * (1 - inCubic(seg(u, 0.8, 0.965)));
+      Z.light = ease(seg(u, 0.74, 0.8)) * (1 - ease(seg(u, 0.9, 0.97)));
+      Z.hl = [{ t: "budR", k: bump(u, 0.72, 0.84, 0.3) }];
+      if (u > 0.72 && u < 0.8) Z.word = { text: "click", p: add3(SEAT.R.o, [0, 0, 16]) };
+      else if (u > 0.955 && u < 1) Z.word = { text: "snap", p: toW(CASEF, [0, frontY(ZS) + 2, ZS + 12]) };
+      Z.hot = u < 0.3 ? ["parts"] : [];
+      Z.ear = u < 0.7 ? M.dbEar : M.dbIn;
+    }
+  }
+  return Z;
+}
+// a seated earbud lifts straight up out of its slot (k0), then flies to its pose (k1) along a raised arc
+function travel(seat, to, k0, k1) {
+  const up = lifted(seat);
+  const o0 = add3(seat.o, [0, 0, LIFT * k0]);
+  if (k1 <= 0) return { ...seat, o: o0 };
+  const mid = add3(lerp3(up.o, to.o, 0.5), [0, 0, 10]);
+  const a = lerp3(up.o, mid, k1), b = lerp3(mid, to.o, k1);
+  return poseMix(seat, to, k1, lerp3(a, b, k1));
+}
+// the timing inside one correction: the inner microphone hears what is left, tells the chip, the speaker follows
+function adjPhase(tau) {
+  if (tau < ADJ0 - 0.2 || tau > ADJ_END + 0.1) return { mic: 0, chip: 0, spk: 0, ph: -1 };
+  const k = Math.floor((tau - ADJ0 + 0.2) / ADJ_DT);
+  const ph = (tau - ADJ0 + 0.2 - k * ADJ_DT) / ADJ_DT; // 0..1 inside one correction
+  const tri = (a, b) => clamp(1 - Math.abs((ph - a) / b));
+  return { mic: tri(0.18, 0.2), chip: tri(0.5, 0.22), spk: tri(0.78, 0.2), ph };
+}
+
+// ---------------------------------------------------------------- the stage
+const artG = svg.querySelector("g.art");
+const sceneG = part("scene");
+const fxG = part("fx");
+const shadowEl = part("shadow-live");
+sceneG.innerHTML = `<g data-g="lidB"></g><g data-g="ghost"></g><g data-g="baseF"></g><g data-g="deck"></g><g data-g="buds"></g><g data-g="lidF"></g>`;
+const GG = Object.fromEntries([...sceneG.querySelectorAll("[data-g]")].map((g) => [g.dataset.g, g]));
+fxG.innerHTML = `<defs><clipPath id="lane-clip"><path data-laneclip d="" clip-rule="evenodd"/></clipPath></defs>` +
+  `<rect class="veil" data-veil fill="#f5f0e5" x="0" y="0" width="0" height="0" style="opacity:0"/><g data-budr></g><g data-hl></g><g data-lanes clip-path="url(#lane-clip)"></g><g data-ear></g><g data-flow></g><g data-music></g>`;
+const FX = Object.fromEntries(["veil", "budr", "hl", "lanes", "ear", "flow", "music", "laneclip"].map((k) => [k, fxG.querySelector(`[data-${k}]`)]));
+GG.buds.innerHTML = `<g data-b="L"></g><g data-b="R"></g>`;
+const BUDG = { L: GG.buds.querySelector('[data-b="L"]'), R: GG.buds.querySelector('[data-b="R"]') };
+const budCache = { L: "", R: "" };
+part("box").innerHTML = boxSvg();
+part("tips").innerHTML = tipsSvg();
+
+// the base never moves: its outside, its inside and its deck are drawn once
+const BASE_OUT = drawBody(BASE, CASEF);
+const BASE_HULL = BASE_OUT.hull;
+const BASE_IN = drawBody(BASE, CASEF, { back: true, noOutline: true }).s;
+const DECK_PL = planeOf([0, 0, ZS + 0.01], [0, 0, 1], [0, 1, 0]);
+GG.baseF.innerHTML = BASE_OUT.s.replace(/<path class="ol2"[^>]*>$/, "") + decal(CASEF, LED_PL, `${circ(0, 0, 0.62, "led")}<g data-led style="opacity:0"><circle class="led-glow" r="3.2" opacity=".18"/><circle class="led-glow" r="2.0" opacity=".3"/>${circ(0, 0, 0.95, "led-on")}${circ(-0.3, 0.3, 0.25, "lite")}</g>`) +
+  decal(CASEF, LOOP_PL, `<path class="well" d="${loc(rrPts2(0, 0, 1.4, 3.4, 0.7))}"/><path class="hinge-pin" d="${loc(rrPts2(0, 0, 0.7, 2.6, 0.35))}"/>`) +
+  `<path class="ol2" d="${dPath(BASE_HULL)}"/>`;
+const LED_EL = GG.baseF.querySelector("[data-led]");
+// the deck: its face, the pockets and wells, the hinge's knuckles at the back
+const deckFace = (() => { const pts = DECK.map((p) => pr(toW(CASEF, p))); const col = shade("white", rotW(CASEF, [0, 0, 1])); return `<path d="${dPath(pts)}" fill="${col}" stroke="#23263a" stroke-width=".8"/>`; })();
+let DECK_SVG = "";
+const HINGE_BODIES = [[-6.2, -2.3], [-2.1, 2.1], [2.3, 6.2]].map(([a, b]) => ringsBody(latheRings([[a, 1.15], [b, 1.15]], 20, { o: [0, HINGE.y + 0.2, HINGE.z], ...axisOf([1, 0, 0]) }), "steel"));
+function buildDeck() {
+  const deckD = dPath(DECK.map((p) => pr(toW(CASEF, p))));
+  DECK_SVG = deckFace + `<clipPath id="deckclip"><path d="${deckD}"/></clipPath><g clip-path="url(#deckclip)">${decal(CASEF, DECK_PL, deckSvg(), { fade: [0.02, 0.1] })}</g>` + HINGE_BODIES.map((B) => drawBody(B, CASEF, { ol: "ol" }).s).join("");
+  GG.deck.innerHTML = DECK_SVG;
+}
+buildDeck();
+const LID_IN = lidInSvg();
+
+// the camera's aims, measured once on the poses they frame
+const hullOfBud = (T, e = E_ZERO) => {
+  const pts = [];
+  for (const id of PART_ORDER.concat(["nozzle"])) {
+    const p = PARTS[id];
+    const F = partFrame(T, p.with || id, e);
+    for (const v of p.body.v) pts.push(pr(toW(F, v)));
+  }
+  return pts;
+};
+const CASE_BOX = boxOf([...BASE_HULL, ...LID.v.map((v) => pr(toW(lidFrame(LID_MAX), v)))]);
+const AIM_BOX = {
+  out: boxOf([...BASE_HULL, ...hullOfBud(HOVER.R), ...hullOfBud(HOVER.L)]),
+  bud: boxOf(hullOfBud(HOVER.R)),
+  stem: boxOf(hullOfBud(SQUEEZE)),
+  apart: boxOf(hullOfBud(APART, E_ONE)),
+};
+const PAD = 14;
+const fitOf = (b, fill = 1) => Math.min(((D.W - 2 * PAD) * fill) / (b[2] - b[0]), ((D.H - 2 * PAD) * fill) / (b[3] - b[1]));
+const midOf = (b) => [(b[0] + b[2]) / 2, (b[1] + b[3]) / 2];
+function aimOf(name) {
+  if (name === "rest") return { s: 1, F: [D.W / 2, D.H / 2] };
+  const b = AIM_BOX[name];
+  if (name === "bud") { const s = (D.H * 0.52) / (b[3] - b[1]); const m = midOf(b); return { s, F: [m[0] + (D.W * 0.1) / s, m[1] + 8 / s] }; }
+  if (name === "stem") { const s = (D.H * 0.56) / (b[3] - b[1]); return { s, F: midOf(b) }; }
+  return { s: fitOf(b, name === "out" ? 0.94 : 0.86), F: midOf(b) };
+}
+const AIMS = Object.fromEntries(["rest", "out", "bud", "stem", "apart"].map((n) => [n, aimOf(n)]));
+
+// ---------------------------------------------------------------- the waves
+// where the outer microphone and the tip's mouth are when the earbud is held up close
+const MIC_L = [STEM_FACE - 0.4, 0, -8.7];
+const MOUTH_L = sAlong(TIP_END + 0.1);
+const laneDir = Rv;
+const MIC_W = toW(HOVER.R, MIC_L), MOUTH_W = toW(HOVER.R, MOUTH_L);
+// the lane: a straight line through the microphone, at its height, running on past the mouth
+const LANE0 = MIC_W;
+const S_MIC = 0, S_MOUTH = dot3(sub3(MOUTH_W, MIC_W), laneDir);
+// the lane runs level through the microphone, steps across behind the earbud and runs on level through the mouth
+const LANE_STEP = sub3(MOUTH_W, add3(MIC_W, mul3(laneDir, S_MOUTH)));
+const laneBase = (s) => add3(add3(MIC_W, mul3(laneDir, s)), mul3(LANE_STEP, smoother(clamp(s / S_MOUTH))));
+const S_START = -LANE_L, S_END = S_MOUTH + LANE_R;
+const MIC_T = (S_MIC - S_START) / WAVE.c; // when the front reaches the microphone
+const lanePt = (s, y) => pr(add3(laneBase(s), [0, 0, y]));
+const noiseAt = (s, tau) => WAVE.amp * Math.sin((TAU / WAVE.lam) * s - TAU * WAVE.f * tau);
+function lanesSvg(Z) {
+  const tau = Z.tau;
+  const front = S_START + WAVE.c * tau; // the noise has reached this far
+  const A = Z.waveA;
+  const head = (s) => clamp((front - s) / 5); // the front ramps up over 5 mm
+  const tail = (s) => clamp((s - S_START) / 14); // and fades in from the far end
+  const step = 0.45;
+  let out = "";
+  // the incoming noise: from the far left up to the earbud (and on past it, hidden behind it)
+  const earN = [], earA = [], earSum = [];
+  const aStart = Z.antiOn ? T_ANTI : 1e9;
+  const sEnd = Math.min(front, S_END);
+  const seg1 = [];
+  for (let s = S_START; s <= sEnd + 1e-6; s += step) {
+    const a = head(s) * tail(s) * A;
+    const n = noiseAt(s, tau) * a;
+    if (s <= S_MOUTH) { seg1.push(lanePt(s, n)); continue; }
+    // past the mouth: the cancelling wave left the mouth (s − S_MOUTH)/c ago, with the gain it had then
+    const age = tau - (s - S_MOUTH) / WAVE.c;
+    const anti = age >= aStart ? -gainAt(age) * n * clamp((age - aStart) / 0.08) : 0;
+    const on = age >= aStart;
+    earN.push([s, n, on]);
+    earA.push([s, anti, on]);
+    earSum.push([s, n + anti, on]);
+  }
+  const NOISE = "#e5583e", ANTI = "#1f9cc4", CALM = "#2fb36f";
+  const wave = (pts, col, w, glow = true) => {
+    if (pts.length < 2) return "";
+    const d = dOpen(pts);
+    return (glow ? `<path class="wave-glow" d="${d}" stroke="${col}" stroke-width="${w + 6}" opacity=".18"/>` : "") + `<path class="wave" d="${d}" stroke="${col}" stroke-width="${w}"/>`;
+  };
+  out += wave(seg1, NOISE, 2.4);
+  // ear side: before the cancelling wave arrives, the noise goes on; after, its two halves thin and the sum is drawn bold
+  const offPts = earSum.filter((q) => !q[2]).map(([s, y]) => lanePt(s, y));
+  const onIdx = earSum.findIndex((q) => q[2]);
+  if (onIdx >= 0) {
+    const n = earN.filter((q) => q[2]).map(([s, y]) => lanePt(s, y));
+    const a = earA.filter((q) => q[2]).map(([s, y]) => lanePt(s, y));
+    const sum = earSum.filter((q) => q[2]).map(([s, y]) => lanePt(s, y));
+    out += `<g opacity=".75">${wave(n, NOISE, 1.3, false)}${wave(a, ANTI, 1.3, false)}</g>`;
+    if (sum.length > 1) out += `<path class="wave-glow" d="${dOpen(sum)}" stroke="${CALM}" stroke-width="13" opacity=".2"/><path class="wave" d="${dOpen(sum)}" stroke="${CALM}" stroke-width="4"/><path class="wave-core" d="${dOpen(sum)}" stroke-width="1.3"/>`;
+    // the noise that has not met the cancelling wave yet, out ahead of it
+    const ahead = earSum.slice(0, onIdx).map(([s, y]) => lanePt(s, y));
+    out += wave(ahead, NOISE, 2.4);
+  } else out += wave(offPts, NOISE, 2.4);
+  return out;
+}
+// the cancelling wave inside the earbud: from the speaker out through the nozzle to the mouth
+function insideAnti(Z, T) {
+  if (!Z.antiOn || Z.tau < T_ANTI) return "";
+  let d = "";
+  const pts = [];
+  for (let s = 0.6; s <= TIP_END; s += 0.3) {
+    const y = -gainAt(Z.tau) * WAVE.amp * 0.45 * Math.sin((TAU / WAVE.lam) * (s - TIP_END + S_MOUTH) - TAU * WAVE.f * Z.tau) * clamp((Z.tau - T_ANTI) / 0.3);
+    const p = add3(sAlong(s), [0, 0, y]);
+    pts.push(pr(toW(T, p)));
+  }
+  d = dOpen(pts);
+  return `<path class="wave-glow" d="${d}" stroke="#1f9cc4" stroke-width="7" opacity=".2"/><path class="wave" d="${d}" stroke="#1f9cc4" stroke-width="1.8"/>`;
+}
+
+// signals inside the earbud: dots running along the wires between the microphones, the chip and the speaker
+const ROUTES = {
+  ff: [MIC_L, [-4.0, 0, -5.4], [-2.4, 0, -2.0], [-0.9, 0, 0.3]], // outer microphone → chip
+  out: [[-0.9, 0, 0.3], [1.4, 0, -0.6], [NOZ[0] - 2.2 * T_AX[0], 0, NOZ[2] - 2.2 * T_AX[2]]], // chip → speaker
+  back: [[4.5, 5.0, -0.4], [2.4, 2.6, 0.1], [-0.9, 0, 0.3]], // inner microphone → chip
+};
+const routeLen = (r) => { let L = 0; for (let i = 1; i < r.length; i++) L += len3(sub3(r[i], r[i - 1])); return L; };
+const routeAt = (r, x) => { let L = routeLen(r) * clamp(x); for (let i = 1; i < r.length; i++) { const l = len3(sub3(r[i], r[i - 1])); if (L <= l) return lerp3(r[i - 1], r[i], L / l); L -= l; } return r[r.length - 1]; };
+function flowSvg(Z, T) {
+  if (!Z.flow || Z.tau === null) return "";
+  let s = "";
+  const dots = (r, speed, n, col, k) => {
+    let o = "";
+    const L = routeLen(r);
+    for (let i = 0; i < n; i++) {
+      const x = ((Z.tau * speed) / L + i / n) % 1;
+      const p = pr(toW(T, routeAt(r, x)));
+      const a = k * Math.sin(Math.PI * x);
+      o += `<circle cx="${r2(p[0])}" cy="${r2(p[1])}" r="2.1" fill="${col}" opacity="${r3(a)}" stroke="#fff" stroke-width=".6"${VE}/>`;
+    }
+    return o;
+  };
+  const route = (r, col, k) => `<path d="${dOpen(r.map((p) => pr(toW(T, p))))}" fill="none" stroke="${col}" stroke-width="1" stroke-dasharray="1.5 2" opacity="${r3(0.6 * k)}"${VE}/>`;
+  s += route(ROUTES.ff, "#e5583e", Z.flow) + dots(ROUTES.ff, 10, 5, "#e5583e", Z.flow);
+  if (Z.st === "anti" && Z.tau >= T_ANTI - 0.3) {
+    const k = Z.flow * clamp((Z.tau - T_ANTI + 0.3) / 0.3);
+    s += route(ROUTES.out, "#1f9cc4", k) + dots(ROUTES.out, 10, 4, "#1f9cc4", k);
+  }
+  if (Z.adj && Z.adj.ph >= 0) {
+    // one sample of what is left travels from the inner microphone to the chip
+    const x = clamp((Z.adj.ph - 0.12) / 0.34);
+    if (x > 0 && x < 1) { const p = pr(toW(T, routeAt(ROUTES.back, x))); s += `<circle cx="${r2(p[0])}" cy="${r2(p[1])}" r="2.4" class="hl-dot"/>`; }
+    s += route(ROUTES.back, "var(--alt)", Z.flow * 0.8);
+  }
+  return s;
+}
+
+// music notes leaving the tip, and the play / pause icon beside it
+const NOTE = "M0 0C-1.6 0 -2.6 0.9 -2.6 1.9C-2.6 2.9 -1.7 3.4 -0.6 3.2C0.5 3 1.1 2.2 1.1 1.2L1.1 -7.2L4.6 -8.2L4.6 -6.4L1.9 -5.6Z";
+function musicSvg(Z, T) {
+  if (!Z.music) return "";
+  let s = "";
+  const mouth = toW(T, MOUTH_L);
+  const dir = unit3(add3(mul3(rotW(T, T_AX), 0.6), [0, 0, 0.8]));
+  // a note leaves every 0.32 s while the music plays; each rises and fades over 1.4 s
+  for (let i = 0; i < 16; i++) {
+    const t0 = i * 0.32;
+    if (t0 > Z.stopT) break;
+    const age = Z.musicT - t0;
+    if (age < 0 || age > 1.4) continue;
+    const p = pr(add3(add3(mouth, mul3(dir, 3 + age * 13)), mul3(rotW(T, [0, 1, 0]), Math.sin(age * 5 + i) * 1.5)));
+    const a = Math.sin(Math.PI * clamp(age / 1.4)) * 0.9;
+    const sc = 1.15 + 0.15 * (i % 3);
+    s += `<path class="note" d="${NOTE}" transform="translate(${r2(p[0])} ${r2(p[1])}) scale(${sc})" opacity="${r3(a)}"/>`;
+  }
+  if (Z.icon && Z.icon.k > 0.01) {
+    const c = pr(add3(mouth, add3(mul3(rotW(T, T_AX), 8), [0, 0, 14])));
+    const pz = Z.icon.paused;
+    const g = `<g opacity="${r3(1 - pz)}"><path class="icon-g" d="${NOTE}" transform="translate(-1 3.6) scale(1.05)"/></g><g opacity="${r3(pz)}"><rect class="icon-g" x="-3.4" y="-4.2" width="2.4" height="8.4" rx=".6"/><rect class="icon-g" x="1" y="-4.2" width="2.4" height="8.4" rx=".6"/></g>`;
+    s += `<g transform="translate(${r2(c[0])} ${r2(c[1])}) scale(${r3(0.9 + 0.1 * Z.icon.k)})" opacity="${r3(Z.icon.k)}"><circle class="icon-bg" r="9"/>${g}</g>`;
+  }
+  return s;
+}
+
+// ---------------------------------------------------------------- the frame
+const DRAWN = { cam: null, Z: null };
+const show = (el, on) => { const v = on ? "" : "none"; if (el.style.display !== v) el.style.display = v; };
+let lastLid = null, lastLidSide = null, lastGhost = null, lastGhostBuds = null;
+// the cutaway's insides (the base's inner walls, the magnets, the cell, the board, the port) are drawn once
+const GHOST_STATIC = BASE_IN + IN_PARTS.map((p) => ({ p, key: (p.ord ?? 3) * 1000 + depth(toW(CASEF, p.c)) })).sort((a, b) => a.key - b.key).map(({ p }) => drawBody(p.body, CASEF, { ol: "ol" }).s).join("");
+DRAWN.magHulls = IN_PARTS.filter((p) => p.mag).map((p) => drawBody(p.body, CASEF).hull);
+const CLIP_DECK = (() => { const n = rotW(CASEF, [0, 0, 1]); return { n, d: dot3(n, toW(CASEF, [0, 0, ZS])) }; })();
+const hullScreen = (pts) => (pts && pts.length > 2 ? pts : null);
+
+function draw() {
+  const Z = scene();
+  // ---- the lid: behind the earbuds once its inside faces you, in front of them while it is nearly shut
+  const LF = lidFrame(Z.lid);
+  const inFaces = dot3(rotW(LF, [0, 0, -1]), VIEW) > 0;
+  if (Z.lid !== lastLid || inFaces !== lastLidSide) {
+    const r = drawBody(LID, LF);
+    const inner = decal(LF, planeOf([0, 0, ZS - 0.01], [0, 0, -1], [0, 1, 0]), LID_IN, { fade: [0.03, 0.15] });
+    const html = r.s + inner;
+    GG.lidB.innerHTML = inFaces ? html : "";
+    GG.lidF.innerHTML = inFaces ? "" : html;
+    lastLid = Z.lid; lastLidSide = inFaces;
+    DRAWN.lidHull = r.hull;
+  }
+  // ---- the cutaway: the base's inside, the magnets, the cell, the port, the earbuds' stems in their slots
+  if (Z.ghost !== lastGhost) {
+    show(GG.ghost, Z.ghost > 0.002);
+    GG.baseF.style.opacity = Z.ghost > 0.002 ? String(r3(1 - 0.62 * Z.ghost)) : "";
+    lastGhost = Z.ghost;
+  }
+  // ---- the earbuds
+  const eR = Z.eR;
+  const below = { n: mul3(CLIP_DECK.n, -1), d: -CLIP_DECK.d };
+  let ghostBuds = "";
+  // while the paper veil is up, the studied earbud is drawn above it; it is in front of everything then
+  const rFront = Z.veil > 0.001;
+  const keys = {};
+  for (const [name, T, lift] of [["R", Z.R, Z.liftR], ["L", Z.L, Z.liftL]]) {
+    const inCase = toW(T, [0, 0, -23])[2] < CLIP_DECK.d + 0.2 && lift < 0.999;
+    const xray = name === "R" ? Z.xray : 0;
+    const e = name === "R" ? eR : E_ZERO;
+    const where = name === "R" && rFront ? FX.budr : BUDG[name];
+    const key = [T.o, T.X, T.Z].flat().map((v) => v.toFixed(3)).join() + "|" + PART_ORDER.map((id) => (e[id] || 0).toFixed(4)).join() + "|" + xray.toFixed(4) + "|" + inCase + "|" + (where === FX.budr);
+    keys[name] = depth(T.o);
+    if (budCache[name] !== key) {
+      const html = drawBud(name, T, { e, xray, clip: inCase ? CLIP_DECK : null });
+      where.innerHTML = html;
+      (where === FX.budr ? BUDG.R : name === "R" ? FX.budr : null)?.replaceChildren();
+      budCache[name] = key;
+    }
+    if (inCase && Z.ghost > 0.002) ghostBuds += drawBody(PARTS.stem.body, T, { clip: below }).s;
+  }
+  // the nearer earbud is painted last
+  if ((keys.R > keys.L) !== (BUDG.R.nextSibling === null)) GG.buds.appendChild(keys.R > keys.L ? BUDG.R : BUDG.L);
+  if (Z.ghost > 0.002 && ghostBuds !== lastGhostBuds) {
+    GG.ghost.innerHTML = GHOST_STATIC + ghostBuds;
+    lastGhostBuds = ghostBuds;
+  }
+  // ---- shadows on the mat: the case with its lid, and each earbud by its height
+  {
+    const toMat = (p) => pr([p[0] + D.SHADOW[0] * (p[2] - D.MAT_T), p[1] + D.SHADOW[1] * (p[2] - D.MAT_T), D.MAT_T]);
+    const pts = [];
+    for (let i = 0; i < BASE.v.length; i += 3) pts.push(toMat(toW(CASEF, BASE.v[i])));
+    for (let i = 0; i < LID.v.length; i += 3) pts.push(toMat(toW(LF, LID.v[i])));
+    let d = dPath(hull(pts));
+    for (const [T, lift] of [[Z.R, Z.liftR], [Z.L, Z.liftL]]) {
+      if (lift < 0.02) continue;
+      const bp = [];
+      for (const id of ["outerShell", "innerShell", "stem", "tip"]) { const B = PARTS[id].body; for (let i = 0; i < B.v.length; i += 4) bp.push(toMat(toW(T, B.v[i]))); }
+      d += dPath(hull(bp));
+    }
+    shadowEl.setAttribute("d", d);
+  }
+  // ---- the status light
+  LED_EL.style.opacity = String(r3(Z.light));
+  // ---- the camera: between two aims, scale in log, the subject kept on the stage
+  const [n0, n1, kk] = Z.cam;
+  const a0 = AIMS[n0], a1 = AIMS[n1];
+  const cs = a0.s * (a1.s / a0.s) ** kk;
+  const w = (cs - a0.s) / (a1.s - a0.s || 1);
+  const ww = Math.abs(a1.s - a0.s) < 1e-6 ? kk : clamp(w);
+  const Fc = [lerp(a0.F[0], a1.F[0], ww), lerp(a0.F[1], a1.F[1], ww)];
+  DRAWN.cam = { s: cs, F: Fc };
+  artG.setAttribute("transform", Math.abs(cs - 1) < 1e-4 && Math.abs(Fc[0] - D.W / 2) < 0.01 && Math.abs(Fc[1] - D.H / 2) < 0.01 ? "" : `translate(${D.W / 2} ${D.H / 2}) scale(${cs.toFixed(4)}) translate(${(-Fc[0]).toFixed(3)} ${(-Fc[1]).toFixed(3)})`);
+  // ---- the effects layer
+  const view = [Fc[0] - D.W / 2 / cs, Fc[1] - D.H / 2 / cs, Fc[0] + D.W / 2 / cs, Fc[1] + D.H / 2 / cs];
+  const HR = HULLS.R || {};
+  const budHullR = hull([...(HR.stem || []), ...(HR.outerShell || []), ...(HR.innerShell || []), ...(HR.tip || []), ...Object.values(HR).flat()]);
+  DRAWN.budR = budHullR;
+  DRAWN.budL = hull(Object.values(HULLS.L || {}).flat());
+  // the veil: the paper washes over everything behind the earbud being studied
+  if (Z.veil > 0.002) {
+    FX.veil.setAttribute("x", r2(view[0] - 4)); FX.veil.setAttribute("y", r2(view[1] - 4));
+    FX.veil.setAttribute("width", r2(view[2] - view[0] + 8)); FX.veil.setAttribute("height", r2(view[3] - view[1] + 8));
+    FX.veil.style.opacity = String(r3(0.74 * Z.veil));
+  } else if (FX.veil.style.opacity !== "0") { FX.veil.style.opacity = "0"; FX.veil.setAttribute("width", "0"); FX.veil.setAttribute("height", "0"); }
+  // the highlights: a coloured wash, a soft glow and a pulsing rim round each active part
+  let hs = "";
+  const tSec = (S.step ? S.u * STEPS[S.step].dur : 0);
+  for (const h of Z.hl) {
+    if (h.k < 0.01) continue;
+    const polys = targetPolys(h.t, Z);
+    for (const pts of polys) {
+      if (!pts || pts.length < 3) continue;
+      const d = dPath(pts);
+      const pulse = h.pulse ? 0.5 + 0.5 * Math.sin(TAU * 1.6 * tSec) : 0.7;
+      hs += `<path class="hl-wash" d="${d}" opacity="${r3(0.16 * h.k)}"/><path class="hl-glow" d="${d}" stroke-width="${r2(7 + 4 * pulse)}" opacity="${r3(0.22 * h.k)}"/><path class="hl-line" d="${d}" stroke-width="${r2(1.6 + 0.9 * pulse)}" opacity="${r3(h.k * (0.7 + 0.3 * pulse))}"/>`;
+    }
+  }
+  FX.hl.innerHTML = hs;
+  // the waves, with a gap where the earbud stands in front of the lane
+  if (Z.noiseOn && Z.tau !== null) {
+    FX.lanes.innerHTML = lanesSvg(Z);
+    const rect = `M${r2(view[0] - 50)} ${r2(view[1] - 50)}H${r2(view[2] + 50)}V${r2(view[3] + 50)}H${r2(view[0] - 50)}Z`;
+    const solid = hull([...(HR.outerShell || []), ...(HR.innerShell || []), ...(HR.stem || [])]);
+    FX.laneclip.setAttribute("d", rect + (solid.length > 2 ? dPath(solid) : ""));
+  } else if (FX.lanes.firstChild) FX.lanes.textContent = "";
+  FX.ear.innerHTML = Z.antiOn ? insideAnti(Z, Z.R) : "";
+  FX.flow.innerHTML = flowSvg(Z, Z.R);
+  // the squeeze: two marks press in on the stem's sides, a ripple runs out from the sensor
+  let ms = musicSvg(Z, Z.R);
+  if (Z.press > 0.01 || (Z.ripple > 0 && Z.ripple < 1)) {
+    const T = Z.R;
+    // the marks sit either side of the stem on the screen, square to it, and close in as it is squeezed
+    const c = pr(toW(T, [STEM.x, 0, -14.5]));
+    const ax = prv(rotW(T, [0, 0, 1]));
+    const al = Math.hypot(ax[0], ax[1]) || 1;
+    const up = [ax[0] / al, ax[1] / al], across = [-up[1], up[0]];
+    const half = STEM.hy * KK * 1.05;
+    for (const sg of [-1, 1]) {
+      const gap = half + KK * (5.5 - 3.2 * Z.press);
+      const o = [c[0] + across[0] * sg * gap, c[1] + across[1] * sg * gap];
+      const tipP = [o[0] - across[0] * sg * KK * 1.4, o[1] - across[1] * sg * KK * 1.4];
+      const a = [o[0] + up[0] * KK * 2.2, o[1] + up[1] * KK * 2.2], q = [o[0] - up[0] * KK * 2.2, o[1] - up[1] * KK * 2.2];
+      ms += `<path class="press" d="${dOpen([a, tipP, q])}" opacity="${r3(clamp(Z.press * 1.6))}"/>`;
+    }
+    if (Z.ripple > 0 && Z.ripple < 1) {
+      const pl = DECAL_POLY["R:sensor"];
+      if (pl) {
+        const k = 1 + Z.ripple * 1.6;
+        const pts = decalPts(pl.F, pl.pl, pl.pts.map(([x, y]) => [x * k, y * (1 + Z.ripple * 0.5)]));
+        ms += `<path class="ripple" d="${dPath(pts)}" stroke-width="${r2(2.2 * (1 - Z.ripple) + 0.4)}" opacity="${r3(1 - Z.ripple)}"/>`;
+      }
+    }
+  }
+  FX.music.innerHTML = ms;
+  // ---- readouts
+  const ear = earDb(Z);
+  setText(chip("ear"), `${ear} dB`);
+  setText(chip("parts"), Z.partsOut > 0 ? `${PART_ORDER.length} parts` : "1 个耳机");
+  ["noise", "ear", "adjust", "mics", "hours", "parts"].forEach((n) => chipHot(n, Z.hot.includes(n)));
+  setLapse(Z.lapse);
+  let word = null;
+  if (Z.word) {
+    const p = Z.word.lane ? add3(laneBase(-17), [0, 0, 8]) : Z.word.stem ? add3(toW(Z.R, [STEM.x, 0, -9]), mul3(Rv, -12)) : Z.word.p;
+    word = { text: Z.word.text, p, size: 15 / cs };
+  }
+  setWord(word);
+  if (word) { const t = part("sounds").querySelector("text"); if (t) t.style.fontSize = r2(word.size) + "px"; }
+  DRAWN.Z = Z;
+  return Z;
+}
+// what is left at the ear, in dB: 20·log10 of the wave's strength there
+function earDb(Z) {
+  if (Z.tau === null || !Z.noiseOn) return Z.ear;
+  const s = S_MOUTH + 6;
+  const age = Z.tau - (s - S_MOUTH) / WAVE.c;
+  const reached = S_START + WAVE.c * Z.tau >= s;
+  if (!reached) return M.dbIn;
+  if (!Z.antiOn || age < T_ANTI) return M.dbIn;
+  const rest = 1 - gainAt(age);
+  return Math.round(M.dbIn + 20 * Math.log10(Math.max(rest, M.rest)));
+}
+// a highlight's outline on the screen
+function targetPolys(t, Z) {
+  if (t === "led") { return [decalPts(CASEF, LED_PL, ellPts(0, 0, 2.2, 2.2, 20))]; }
+  if (t === "magnets") return DRAWN.magHulls || [];
+  if (t === "tipR") return [(HULLS.R || {}).tip];
+  if (t === "tipL") return [(HULLS.L || {}).tip];
+  if (t === "budR") return [DRAWN.budR];
+  if (t === "budL") return [DRAWN.budL];
+  if (t.startsWith("part:")) return [(HULLS.R || {})[t.slice(5)]];
+  if (t === "board" || t === "driver" || t === "innerMic") return [(HULLS.R || {})[t]];
+  const pl = DECAL_POLY["R:" + t];
+  if (pl) return [decalPts(pl.F, pl.pl, pl.pts)];
+  return [];
+}
+
+const UPDATE = Object.fromEntries(ORDER.map((id) => [id, (u) => { S.step = id; S.u = u; }]));
+
+// the swatches colour the desk mat and the box's band; each brings a highlight colour that stands off it
+const FINISHES = [["sage", "#a9cdb4", "#7a5af5"], ["sky", "#9fc4e6", "#d9448f"], ["butter", "#f2d58c", "#5a63e8"], ["rose", "#f2b0a0", "#8e44c9"], ["lilac", "#c9b8ea", "#e0901a"]];
+document.querySelectorAll("[data-swatch]").forEach((b, i) => { const [name, c] = FINISHES[i % FINISHES.length]; b.dataset.swatch = c; b.title = name; b.setAttribute("aria-label", name); b.style.background = c; });
+
+tour({
+  STEPS,
+  ORDER,
+  update: (id, u) => UPDATE[id](u),
+  reset: () => { S = fresh(); },
+  onFinish: (id) => { if (id === "back") S = fresh(); },
+  draw,
+  paint: (c) => {
+    const f = FINISHES.find((x) => x[1] === c.toLowerCase()) || FINISHES[0];
+    return f[2];
+  },
+  probe: () => {
+    const Z = DRAWN.Z || scene();
+    return { step: S.step, u: S.u, lid: Z.lid / DEG, light: Z.light, liftR: Z.liftR, liftL: Z.liftL, seated: Z.seated, noise: Z.noiseOn && Z.tau !== null ? clamp((S_START + WAVE.c * Z.tau - S_MIC) / 6) * Z.waveA : 0,
+      earLevel: earLevel(Z), adj: Z.tau !== null && Z.st === "anti" ? adjCount(Z.tau) : 0, press: Z.press, sq: Z.sq, music: Z.music && Z.musicT < Z.stopT ? 1 : 0, parts: Z.partsOut, xray: Z.xray, cam: DRAWN.cam, budR: DRAWN.budR ? boxOf(DRAWN.budR) : null, budL: DRAWN.budL && DRAWN.budL.length ? boxOf(DRAWN.budL) : null };
+  },
+});
+// how loud the rumble is at the ear (0..1), for the score
+function earLevel(Z) {
+  if (Z.tau === null || !Z.noiseOn) return 0;
+  const s = S_MOUTH + 6;
+  const reached = clamp((S_START + WAVE.c * Z.tau - s) / 6);
+  const age = Z.tau - (s - S_MOUTH) / WAVE.c;
+  const rest = Z.antiOn && age >= T_ANTI ? Math.max(1 - gainAt(age), M.rest) : 1;
+  return reached * rest * Z.waveA;
+}
+
+}
+</script><script src="/i18n/lang-switch.js?v=2"></script>
+</body></html>

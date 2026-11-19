@@ -1,0 +1,2486 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>大疆 Neo · 可视化学习</title><script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
+<meta name="description" content="大疆 Neo 可以从掌心起飞并降落，4 个螺旋桨都在完整护罩内旋转（数据来自 DJI）。机头下方的传感器测量与下方物体的距离（布局为示意），螺旋桨随之加速或减速以保持该高度。整机重约">
+<meta property="og:type" content="website"><meta property="og:title" content="大疆 Neo · 可视化学习"><meta property="og:description" content="大疆 Neo 可以从掌心起飞并降落，4 个螺旋桨都在完整护罩内旋转（数据来自 DJI）。机头下方的传感器测量与下方物体的距离（布局为示意），螺旋桨随之加速或减速以保持该高度。整机重约">
+<meta property="og:image" content="https://visual-learning.app/dji-neo-og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:url" content="https://visual-learning.app/dji-neo">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="大疆 Neo · 可视化学习"><meta name="twitter:description" content="大疆 Neo 可以从掌心起飞并降落，4 个螺旋桨都在完整护罩内旋转（数据来自 DJI）。机头下方的传感器测量与下方物体的距离（布局为示意），螺旋桨随之加速或减速以保持该高度。整机重约"><meta name="twitter:image" content="https://visual-learning.app/dji-neo-og.png">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20x%3D%223%22%20y%3D%223%22%20width%3D%2226%22%20height%3D%2226%22%20rx%3D%226%22%20fill%3D%22%23f2c14e%22%20stroke%3D%22%2323263a%22%20stroke-width%3D%222.4%22%2F%3E%3Ccircle%20cx%3D%2216%22%20cy%3D%2216%22%20r%3D%226%22%20fill%3D%22%23fffaf0%22%20stroke%3D%22%2323263a%22%20stroke-width%3D%222.4%22%2F%3E%3C%2Fsvg%3E"><style>
+.site{width:min(980px,100% - 32px);margin:22px auto 0;padding:0 20px;display:flex;align-items:center;gap:10px;font:600 12px ui-monospace,"SF Mono",Menlo,Consolas,monospace;color:#23263a;position:relative;z-index:5}
+.site a{color:inherit;text-decoration:none}
+.site .home{font:700 15px ui-sans-serif,system-ui,"Segoe UI",sans-serif;white-space:nowrap;margin-right:auto}
+.site .home:hover{text-decoration:underline;text-underline-offset:3px}
+.pill{background:#fffaf0;border:1.3px solid #23263a;border-radius:999px;padding:5px 11px;white-space:nowrap;box-shadow:2px 2px 0 #23263a;transition:transform .12s,box-shadow .12s;cursor:pointer}
+.pill:hover{transform:translate(-1px,-1px);box-shadow:3px 3px 0 #23263a}
+.menu{position:relative}
+.menu summary{list-style:none;display:flex;align-items:center;gap:7px}
+.menu summary::-webkit-details-marker{display:none}
+.menu summary b{opacity:.5}
+.menu summary i{font-style:normal;font-size:9px;opacity:.6;transition:transform .15s}
+.menu[open] summary{background:#23263a;color:#fffaf0}
+.menu[open] summary i{transform:rotate(180deg)}
+.panel{position:absolute;right:0;top:calc(100% + 10px);width:min(560px,calc(100vw - 32px));background:#f5f0e5;border:1.4px solid #23263a;border-radius:8px;box-shadow:4px 4px 0 #23263a;padding:10px;display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.panel a{display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 6px 8px;border-radius:6px;border:1.2px solid transparent;text-align:center}
+.panel a:hover{border-color:#23263a;background:#fffaf0}
+.panel a[aria-current]{background:#efe8d8;border-color:#23263a}
+.panel img{width:100%;aspect-ratio:1/1;object-fit:contain}
+.panel b{font-size:10px;opacity:.55;letter-spacing:.06em}
+.panel span{font:600 12px/1.25 ui-sans-serif,system-ui,"Segoe UI",sans-serif}
+.arrows{display:flex;gap:6px}
+.arrows a{padding:5px 10px}
+.iso-page{padding-top:16px!important}
+.credit{margin:16px 2px 0;font:500 12px/1.5 ui-sans-serif,system-ui,"Segoe UI",sans-serif;color:#7b7666}
+.credit a{color:inherit;text-underline-offset:2px}
+.keys{font:600 11px ui-monospace,Menlo,Consolas,monospace;color:#8a8676}
+@media (max-width:760px){
+.site{width:100%;padding:10px 10px 0;margin-top:0;gap:6px;flex-wrap:wrap}
+.site .badges{order:-2;margin-left:auto}
+.site .maker,.site .guide{font-size:11px;padding:4px 10px}
+.site::after{content:"";order:-1;flex-basis:100%;height:0}
+.site .home{font-size:14px}
+.menu summary .nm{display:none}
+.panel{position:fixed;left:10px;right:10px;top:52px;width:auto;max-height:calc(100vh - 70px);overflow:auto;grid-template-columns:repeat(3,1fr);gap:4px;padding:8px}
+.panel span{font-size:11px}
+.iso-page{padding-top:10px!important}
+.keys{display:none}
+.credit{margin:12px 2px 0}
+}
+.render .site,.render .credit{display:none}
+.embed .site,.embed .credit{display:none!important}
+.embed .iso-page{margin:0 auto!important;padding:6px!important;width:100%!important}
+.embed.fill .iso-page{height:100vh;display:flex;flex-direction:column}
+.embed.fill .card{flex:1;grid-template-rows:auto 1fr auto}
+.embed.fill .main{display:flex;flex-direction:column}
+.embed.fill .stage{flex:1;display:grid;place-items:center}
+a.guide,.site a.guide{font:700 12px ui-monospace,"SF Mono",Menlo,Consolas,monospace;white-space:nowrap;text-decoration:none;color:#23263a;background:#f2c14e;border:1.3px solid #23263a;border-radius:999px;padding:5px 12px;box-shadow:2px 2px 0 #23263a;transition:transform .12s,box-shadow .12s}
+a.guide:hover{transform:translate(-1px,-1px);box-shadow:3px 3px 0 #23263a}
+.badges{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+a.maker,.site a.maker{font:600 12px ui-monospace,"SF Mono",Menlo,Consolas,monospace;white-space:nowrap;text-decoration:none;color:#fffaf0;background:#23263a;border:1.3px solid #23263a;border-radius:999px;padding:5px 12px;box-shadow:2px 2px 0 #23263a55;transition:transform .12s}
+.maker b{font-weight:700;color:#f2c14e}
+.maker:hover{transform:translate(-1px,-1px)}
+</style><style>
+.iso{
+  --anatomy-page:#0b0b0b;--anatomy-card:#131313;--anatomy-text:#a3a3a3;--anatomy-strong:#e6e6e6;--anatomy-muted:#6e6e6e;
+  --anatomy-paper:#131313;--anatomy-face:#1b1b1b;--anatomy-top:#1c1c1c;
+  --anatomy-shade-0:#0f0f0f;--anatomy-shade-1:#121212;--anatomy-shade-2:#151515;--anatomy-shade-3:#181818;
+  --anatomy-lit-top:#262626;--anatomy-lit-shade:#1d1d1d;
+  --anatomy-hi:#d4d4d4;--anatomy-mid:#6a6a6a;--anatomy-lo:#3e3e3e;--anatomy-faint:#2a2a2a;--anatomy-lit:#ffffff;
+  --anatomy-halo:#050505;--anatomy-halo-opacity:.9;--anatomy-dot:#e6e6e6;
+  --anatomy-red:#ff6b6b;--anatomy-green:#6be0a0;--anatomy-blue:#6b9bff;
+  --anatomy-weight:.6px;--anatomy-ease:cubic-bezier(.32,.72,0,1);
+  --anatomy-mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --anatomy-lift:inset 0 1px 0 0 #ffffff0a,inset 0 0 0 1px #ffffff06,0 0 0 1px #00000026,0 1px 1px -.5px #00000014,0 3px 3px -1.5px #00000014,0 6px 6px -3px #00000014,0 12px 12px -6px #00000014;
+}
+.iso[data-theme="light"]{
+  --anatomy-page:#f2f2ef;--anatomy-card:#fbfbfa;--anatomy-text:#57575a;--anatomy-strong:#18181a;--anatomy-muted:#8c8c90;
+  --anatomy-paper:#fbfbfa;--anatomy-face:#ffffff;--anatomy-top:#ffffff;
+  --anatomy-shade-0:#dcdcd9;--anatomy-shade-1:#e5e5e2;--anatomy-shade-2:#ededea;--anatomy-shade-3:#f4f4f1;
+  --anatomy-lit-top:#ffffff;--anatomy-lit-shade:#eeeeeb;
+  --anatomy-hi:#26262a;--anatomy-mid:#8a8a8f;--anatomy-lo:#b4b4b8;--anatomy-faint:#d4d4d6;--anatomy-lit:#000000;
+  --anatomy-halo:#8a8a80;--anatomy-halo-opacity:.32;--anatomy-dot:#3a3a3e;
+  --anatomy-red:#e5484d;--anatomy-green:#30a46c;--anatomy-blue:#3e63dd;
+  --anatomy-lift:inset 0 1px 0 0 #ffffff,0 0 0 1px #0000000f,0 1px 1px -.5px #0000000a,0 3px 3px -1.5px #0000000a,0 6px 6px -3px #0000000a,0 12px 12px -6px #0000000a;
+}
+.iso-svg{display:block;width:100%;height:auto;overflow:visible}
+.iso-svg path,.iso-svg circle{vector-effect:non-scaling-stroke}
+.iso-fill{fill:var(--anatomy-paper);stroke:none}
+.iso-solid[data-lit]>.iso-fill{fill:var(--anatomy-face)}
+.iso-shade,.iso-top{stroke:none}
+.iso-shade[data-shade="0"]{fill:var(--anatomy-shade-0)}
+.iso-shade[data-shade="1"]{fill:var(--anatomy-shade-1)}
+.iso-shade[data-shade="2"]{fill:var(--anatomy-shade-2)}
+.iso-shade[data-shade="3"]{fill:var(--anatomy-shade-3)}
+.iso-top{fill:var(--anatomy-top)}
+.iso-solid[data-lit]>.iso-top{fill:var(--anatomy-lit-top)}
+.iso-solid[data-lit]>.iso-shade{fill:var(--anatomy-lit-shade)}
+.iso-solid[data-seamless]>.iso-shade,.iso-solid[data-seamless]>.iso-top{stroke-width:.4;stroke-linejoin:round}
+.iso-solid[data-seamless]>.iso-shade[data-shade="0"]{stroke:var(--anatomy-shade-0)}
+.iso-solid[data-seamless]>.iso-shade[data-shade="1"]{stroke:var(--anatomy-shade-1)}
+.iso-solid[data-seamless]>.iso-shade[data-shade="2"]{stroke:var(--anatomy-shade-2)}
+.iso-solid[data-seamless]>.iso-shade[data-shade="3"]{stroke:var(--anatomy-shade-3)}
+.iso-solid[data-seamless]>.iso-top{stroke:var(--anatomy-top)}
+.iso-solid[data-seamless][data-lit]>.iso-top{stroke:var(--anatomy-lit-top)}
+.iso-solid[data-seamless][data-lit]>.iso-shade{stroke:var(--anatomy-lit-shade)}
+.iso-solid[data-lit]>.iso-edge{stroke:var(--anatomy-lit)}
+.iso-halo{fill:var(--anatomy-halo);stroke:none;filter:blur(9px);opacity:var(--anatomy-halo-opacity);transform:translateY(3px)}
+.iso-line{fill:none;stroke:var(--anatomy-lo);stroke-width:var(--anatomy-weight);stroke-linecap:round;stroke-linejoin:round}
+.iso-line[data-tone="hi"]{stroke:var(--anatomy-hi)}
+.iso-line[data-tone="mid"]{stroke:var(--anatomy-mid)}
+.iso-line[data-tone="lo"]{stroke:var(--anatomy-lo)}
+.iso-line[data-tone="faint"]{stroke:var(--anatomy-faint)}
+.iso-line[data-tone="lit"]{stroke:var(--anatomy-lit)}
+.iso-line[data-tone="red"]{stroke:var(--anatomy-red)}
+.iso-line[data-tone="green"]{stroke:var(--anatomy-green)}
+.iso-line[data-tone="blue"]{stroke:var(--anatomy-blue)}
+.iso-line[data-dotted]{stroke-dasharray:.01 3.5;stroke-width:1}
+.iso-line[data-dashed]{stroke-dasharray:3 3}
+.iso-line[data-flow]{stroke-dasharray:2 6}
+.iso-wire-end{fill:var(--anatomy-paper);stroke:var(--anatomy-lo);stroke-width:var(--anatomy-weight)}
+.iso-wire[data-tone="hi"] .iso-wire-end{stroke:var(--anatomy-hi)}
+.iso-wire[data-tone="mid"] .iso-wire-end{stroke:var(--anatomy-mid)}
+.iso-wire[data-tone="faint"] .iso-wire-end{stroke:var(--anatomy-faint)}
+.iso-wire[data-tone="lit"] .iso-wire-end{stroke:var(--anatomy-lit)}
+.iso-dots circle{fill:var(--anatomy-dot);stroke:none;opacity:.32}
+.iso-dots[data-tone="hi"] circle{opacity:.85}
+.iso-dots[data-tone="mid"] circle{opacity:.45}
+.iso-dots[data-tone="lo"] circle{opacity:.22}
+.iso-dots[data-tone="faint"] circle{opacity:.12}
+.iso-face-text{fill:var(--anatomy-mid);font-family:var(--anatomy-mono);letter-spacing:.04em}
+.iso-face-text[data-tone="hi"]{fill:var(--anatomy-hi)}
+.iso-face-text[data-tone="lo"]{fill:var(--anatomy-lo)}
+.iso-face-text[data-tone="faint"]{fill:var(--anatomy-faint)}
+.tb-body{fill:var(--anatomy-shade-2);stroke:none}
+.tb-shine{fill:var(--anatomy-top);stroke:none}
+.tb-shade{fill:var(--anatomy-shade-0);stroke:none}
+.tb-ring{fill:none;stroke:var(--anatomy-lo);stroke-width:.45;stroke-linecap:butt;stroke-linejoin:round}
+.tb-ring[data-tone="mid"]{stroke:var(--anatomy-mid)}
+.tb-ring[data-tone="faint"]{stroke:var(--anatomy-faint)}
+.tb-ring[data-tone="hi"]{stroke:var(--anatomy-hi)}
+@keyframes iso-flow{to{stroke-dashoffset:-32}}
+@keyframes iso-pulse{0%,100%{opacity:.18}12%{opacity:1}40%{opacity:.18}}
+.iso-line[data-flow]{animation:iso-flow 1600ms linear infinite}
+.iso-dots circle[data-pulse]{animation:iso-pulse 1600ms steps(1,end) infinite;animation-delay:var(--pulse-at,0ms)}
+.iso-figure{margin:32px 0 36px}
+.iso-plate{position:relative;padding:52px 24px;border-radius:0;background:var(--anatomy-card);box-shadow:0 0 0 1px var(--anatomy-mid);--anatomy-paper:var(--anatomy-card)}
+.iso-plate-corners{position:absolute;inset:18px 20px;pointer-events:none}
+.iso-plate-corner{position:absolute;color:var(--anatomy-muted);font-family:var(--anatomy-mono);font-size:10.5px;line-height:1;letter-spacing:.04em;white-space:nowrap}
+.iso-plate-corner[data-corner="fig"]{top:0;left:0;color:var(--anatomy-text)}
+.iso-plate-corner[data-corner="title"]{top:0;right:0;text-transform:uppercase;letter-spacing:.1em}
+.iso-plate-corner[data-corner="hint"]{bottom:0;left:0;text-transform:uppercase;letter-spacing:.1em}
+.iso-plate-corner[data-corner="readout"]{right:0;bottom:0;color:var(--anatomy-text);font-variant-numeric:tabular-nums}
+.iso-plate .iso-svg{margin:0 auto}
+.iso-legend{display:grid;gap:8px;margin-top:12px;color:var(--anatomy-muted);font-size:13px;line-height:1.55}
+.iso-keys{display:flex;flex-wrap:wrap;gap:6px 18px}
+.iso-key{display:inline-flex;align-items:center;gap:7px}
+.iso-swatch{width:16px;height:10px;flex:none;overflow:visible}
+.iso-swatch path{fill:none;stroke:var(--anatomy-hi);stroke-width:1;vector-effect:non-scaling-stroke;stroke-linejoin:round;stroke-linecap:round}
+.iso-swatch[data-mark="raised"] path,.iso-swatch[data-mark="flat"] path{stroke:var(--anatomy-mid)}
+.iso-swatch[data-mark="lit"] path{stroke:var(--anatomy-lit)}
+.iso-swatch[data-mark="dim"] path{stroke:var(--anatomy-lo)}
+.iso-swatch[data-mark="dotted"] path{stroke-dasharray:.01 3;stroke-width:1.4}
+.iso-swatch[data-mark="dashed"] path{stroke-dasharray:3 2.5}
+.iso-swatch[data-mark="red"] path{stroke:var(--anatomy-red)}
+.iso-swatch[data-mark="green"] path{stroke:var(--anatomy-green)}
+.iso-swatch[data-mark="blue"] path{stroke:var(--anatomy-blue)}
+.iso-swatch-crease{stroke:var(--anatomy-lo)!important}
+@media (max-width:560px){.iso-plate{padding:48px 12px 70px}.iso-plate-corner[data-corner="hint"]{bottom:18px}}
+@media (prefers-reduced-motion:reduce){.iso-line[data-flow],.iso-dots circle[data-pulse]{animation:none}}
+
+*{box-sizing:border-box}
+html{color-scheme:dark}
+body[data-theme="light"]{color-scheme:light}
+body{margin:0;background:var(--anatomy-page);color:var(--anatomy-text);font:14px/1.6 ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+.iso-page{width:min(980px,100% - 32px);margin:64px auto 96px}
+</style></head><body class="iso" data-theme="light"><header class="site">
+  <a class="home" href="/">← 可视化学习</a>
+  <details class="menu"><summary class="pill"><b>36</b><span class="nm">大疆 Neo</span><span>· 全部 40 个</span><i>▼</i></summary>
+    <nav class="panel"><a href="/dji-drone"><img src="/thumbs/dji-drone.webp" alt="" loading="lazy"><b>图 29</b><span>大疆无人机</span></a><a href="/dji-neo" aria-current="page"><img src="/thumbs/dji-neo.webp" alt="" loading="lazy"><b>图 36</b><span>大疆 Neo</span></a><a href="/vision-pro"><img src="/thumbs/vision-pro.webp" alt="" loading="lazy"><b>图 28</b><span>Vision Pro</span></a><a href="/rolex"><img src="/thumbs/rolex.webp" alt="" loading="lazy"><b>图 38</b><span>劳力士潜航者</span></a><a href="/meta-glasses"><img src="/thumbs/meta-glasses.webp" alt="" loading="lazy"><b>图 37</b><span>Meta Ray-Ban 显示眼镜</span></a><a href="/ipad-pro"><img src="/thumbs/ipad-pro.webp" alt="" loading="lazy"><b>图 41</b><span>iPad Pro</span></a><a href="/dgx-spark"><img src="/thumbs/dgx-spark.webp" alt="" loading="lazy"><b>图 25</b><span>NVIDIA DGX Spark</span></a><a href="/spot"><img src="/thumbs/spot.webp" alt="" loading="lazy"><b>图 30</b><span>Spot 机器狗</span></a><a href="/robot-vacuum"><img src="/thumbs/robot-vacuum.webp" alt="" loading="lazy"><b>图 40</b><span>带机械臂的扫地机器人</span></a><a href="/atlas"><img src="/thumbs/atlas.webp" alt="" loading="lazy"><b>图 35</b><span>Atlas 机器人</span></a><a href="/combination-lock"><img src="/thumbs/combination-lock.webp" alt="" loading="lazy"><b>图 39</b><span>密码锁</span></a><a href="/starlink"><img src="/thumbs/starlink.webp" alt="" loading="lazy"><b>图 33</b><span>星链天线</span></a><a href="/switch-2"><img src="/thumbs/switch-2.webp" alt="" loading="lazy"><b>图 32</b><span>任天堂 Switch 2</span></a><a href="/f1-wheel"><img src="/thumbs/f1-wheel.webp" alt="" loading="lazy"><b>图 34</b><span>F1 方向盘</span></a><a href="/ps-controller"><img src="/thumbs/ps-controller.webp" alt="" loading="lazy"><b>图 24</b><span>PlayStation 手柄</span></a><a href="/iphone"><img src="/thumbs/iphone.webp" alt="" loading="lazy"><b>图 20</b><span>iPhone</span></a><a href="/macbook"><img src="/thumbs/macbook.webp" alt="" loading="lazy"><b>图 21</b><span>MacBook</span></a><a href="/rtx-5090"><img src="/thumbs/rtx-5090.webp" alt="" loading="lazy"><b>图 27</b><span>RTX 5090</span></a><a href="/mac-mini"><img src="/thumbs/mac-mini.webp" alt="" loading="lazy"><b>图 26</b><span>Mac mini</span></a><a href="/apple-watch"><img src="/thumbs/apple-watch.webp" alt="" loading="lazy"><b>图 23</b><span>Apple Watch</span></a><a href="/airpods"><img src="/thumbs/airpods.webp" alt="" loading="lazy"><b>图 22</b><span>AirPods Pro</span></a><a href="/mechanical-watch"><img src="/thumbs/mechanical-watch.webp" alt="" loading="lazy"><b>图 18</b><span>机械表</span></a><a href="/rubiks-cube"><img src="/thumbs/rubiks-cube.webp" alt="" loading="lazy"><b>图 15</b><span>魔方</span></a><a href="/instant-camera"><img src="/thumbs/instant-camera.webp" alt="" loading="lazy"><b>图 16</b><span>拍立得</span></a><a href="/atom"><img src="/thumbs/atom.webp" alt="" loading="lazy"><b>图 19</b><span>原子</span></a><a href="/lava-lamp"><img src="/thumbs/lava-lamp.webp" alt="" loading="lazy"><b>图 17</b><span>熔岩灯</span></a><a href="/claw-machine"><img src="/thumbs/claw-machine.webp" alt="" loading="lazy"><b>图 02</b><span>抓娃娃机</span></a><a href="/microwave"><img src="/thumbs/microwave.webp" alt="" loading="lazy"><b>图 07</b><span>微波炉</span></a><a href="/espresso-machine"><img src="/thumbs/espresso-machine.webp" alt="" loading="lazy"><b>图 01</b><span>意式咖啡机</span></a><a href="/car-engine"><img src="/thumbs/car-engine.webp" alt="" loading="lazy"><b>图 03</b><span>汽车发动机</span></a><a href="/vending-machine"><img src="/thumbs/vending-machine.webp" alt="" loading="lazy"><b>图 04</b><span>自动售货机</span></a><a href="/washing-machine"><img src="/thumbs/washing-machine.webp" alt="" loading="lazy"><b>图 05</b><span>洗衣机</span></a><a href="/toaster"><img src="/thumbs/toaster.webp" alt="" loading="lazy"><b>图 06</b><span>烤面包机</span></a><a href="/pencil-sharpener"><img src="/thumbs/pencil-sharpener.webp" alt="" loading="lazy"><b>图 08</b><span>卷笔刀</span></a><a href="/smoke-alarm"><img src="/thumbs/smoke-alarm.webp" alt="" loading="lazy"><b>图 09</b><span>烟雾报警器</span></a><a href="/fridge"><img src="/thumbs/fridge.webp" alt="" loading="lazy"><b>图 10</b><span>冰箱</span></a><a href="/capsule-toy-machine"><img src="/thumbs/capsule-toy-machine.webp" alt="" loading="lazy"><b>图 11</b><span>扭蛋机</span></a><a href="/photo-booth"><img src="/thumbs/photo-booth.webp" alt="" loading="lazy"><b>图 12</b><span>大头贴机</span></a><a href="/roller-coaster"><img src="/thumbs/roller-coaster.webp" alt="" loading="lazy"><b>图 13</b><span>过山车</span></a><a href="/elevator"><img src="/thumbs/elevator.webp" alt="" loading="lazy"><b>图 14</b><span>电梯</span></a></nav>
+  </details>
+  <span class="arrows"><a class="pill" href="/dji-drone" data-go="prev" title="大疆无人机 (←)">←</a><a class="pill" href="/vision-pro" data-go="next" title="Vision Pro (→)">→</a></span>
+  <span class="badges"><a class="guide" href="https://x.com/elvar_official/status/2111831136171151589" target="_blank" rel="noopener">完整指南 ↗</a><a class="maker" href="https://x.com/elvar_official" target="_blank" rel="noopener">作者 <b>@elvar_official</b></a></span>
+</header><main class="iso-page"><style>.c-chrome{--f:#cfd7e0;--t:#e3e8ed;--s3:#d8dee6;--s2:#cfd7e0;--s1:#b8bfc9;--s0:#a0a7b1}
+.c-steel{--f:#bcc5cf;--t:#d8dde3;--s3:#c8cfd8;--s2:#bcc5cf;--s1:#a7afba;--s0:#9299a5}
+.c-dark{--f:#8e98a6;--t:#bdc3cb;--s3:#a2abb6;--s2:#8e98a6;--s1:#7f8896;--s0:#707886}
+.c-iron{--f:#7d8593;--t:#b4b8c0;--s3:#949ba6;--s2:#7d8593;--s1:#707786;--s0:#646a78}
+.c-brass{--f:#e3b866;--t:#efd6a6;--s3:#e8c582;--s2:#e3b866;--s1:#c9a45e;--s0:#af9057}
+.c-copper{--f:#d98a5a;--t:#e9bb9f;--s3:#e09f78;--s2:#d98a5a;--s1:#c07c54;--s0:#a86e4e}
+.c-black{--f:#383a4e;--t:#8c8d98;--s3:#5c5d6e;--s2:#383a4e;--s1:#34364a;--s0:#303245}
+.c-rubber{--f:#44465a;--t:#93949f;--s3:#666778;--s2:#44465a;--s1:#3f4154;--s0:#393b4e}
+.c-wood{--f:#cf9460;--t:#e3c1a3;--s3:#d8a77d;--s2:#cf9460;--s1:#b88559;--s0:#a07552}
+.c-porcelain{--f:#f7f3ea;--t:#faf8f3;--s3:#f8f5ee;--s2:#f7f3ea;--s1:#dad7d1;--s0:#bebbb9}
+.c-glass{--f:#d9eef5;--t:#e9f5f9;--s3:#e0f1f7;--s2:#d9eef5;--s1:#c0d3db;--s0:#a8b8c1}
+.c-amber{--f:#ffb648;--t:#ffd595;--s3:#ffc369;--s2:#ffb648;--s1:#e1a244;--s0:#c48e41}
+.c-mint{--f:#86d3ad;--t:#b9e5cf;--s3:#9cdbbc;--s2:#86d3ad;--s1:#78bb9c;--s0:#6aa48b}
+.c-butter{--f:#f2c14e;--t:#f7db98;--s3:#f4cc6e;--s2:#f2c14e;--s1:#d6ac4a;--s0:#ba9645}
+.c-tomato{--f:#e5583e;--t:#f09e8f;--s3:#ea7661;--s2:#e5583e;--s1:#cb503c;--s0:#b04939}
+.c-sky{--f:#7fb9e9;--t:#b5d6f2;--s3:#96c6ed;--s2:#7fb9e9;--s1:#72a5d0;--s0:#6590b8}
+.c-rose{--f:#f2a5bf;--t:#f7cbda;--s3:#f4b5cb;--s2:#f2a5bf;--s1:#d693ac;--s0:#ba8299}
+.c-lilac{--f:#b9a6e8;--t:#d6cbf2;--s3:#c6b6ec;--s2:#b9a6e8;--s1:#a494d0;--s0:#9082b7}
+.c-cream{--f:#f6eedb;--t:#faf5ea;--s3:#f8f1e1;--s2:#f6eedb;--s1:#dad3c4;--s0:#bdb8ae}
+.c-paper{--f:#fbf7ee;--t:#fdfaf5;--s3:#fcf8f1;--s2:#fbf7ee;--s1:#dedbd5;--s0:#c1bebc}
+.c-green{--f:#5fae7b;--t:#a2d0b2;--s3:#7cbd93;--s2:#5fae7b;--s1:#569b71;--s0:#4d8866}
+.c-pcb{--f:#3f8f5c;--t:#90bea0;--s3:#62a379;--s2:#3f8f5c;--s1:#3a8056;--s0:#367150}
+.c{--anatomy-paper:var(--f);--anatomy-face:var(--f);--anatomy-top:var(--t);--anatomy-shade-3:var(--s3);--anatomy-shade-2:var(--s2);--anatomy-shade-1:var(--s1);--anatomy-shade-0:var(--s0);--anatomy-lit-top:var(--t);--anatomy-lit-shade:var(--s2)}
+.c-body{--f:var(--body);--t:var(--body-t);--s3:var(--body-3);--s2:var(--body);--s1:var(--body-1);--s0:var(--body-0)}
+.c-alt{--f:var(--alt);--t:var(--alt-t);--s3:var(--alt-3);--s2:var(--alt);--s1:var(--alt-1);--s0:var(--alt-0)}
+.iso[data-theme="light"]{--anatomy-page:#ece6d8;--anatomy-card:#f5f0e5;--anatomy-hi:#23263a;--anatomy-mid:#23263aa8;--anatomy-lo:#23263a70;--anatomy-faint:#23263a45;--anatomy-lit:#23263a;--anatomy-dot:#23263a;--anatomy-weight:1.15px;--anatomy-halo-opacity:0;--anatomy-text:#4a4c5e;--anatomy-strong:#23263a;--anatomy-muted:#8a8676}
+body.iso{background:var(--anatomy-page);margin:0}
+.iso-page{max-width:980px;margin:0 auto;padding:28px 20px 40px;font-family:ui-sans-serif,system-ui,"Segoe UI",sans-serif;color:var(--anatomy-text)}
+.card{background:var(--anatomy-card);border:1.4px solid #23263a;border-radius:6px;box-shadow:4px 4px 0 #23263a;display:grid;grid-template-columns:200px 1fr;overflow:hidden}
+.side{border-right:1.4px solid #23263a;padding:18px 16px;display:flex;flex-direction:column;gap:10px;background:#efe8d8}
+.fig{font:600 11px var(--anatomy-mono);letter-spacing:.08em;text-transform:uppercase;color:#6b6656}
+.title{font:700 21px/1.15 ui-sans-serif,system-ui,"Segoe UI",sans-serif;color:#23263a;margin:2px 0 6px}
+.steps{display:flex;flex-direction:column;gap:7px;margin-top:4px}
+.step{appearance:none;text-align:left;font:600 12.5px var(--anatomy-mono);color:#23263a;background:#fffaf0;border:1.3px solid #23263a;border-radius:999px;padding:7px 12px 7px 10px;cursor:pointer;display:flex;gap:8px;align-items:center;box-shadow:2px 2px 0 #23263a;transition:transform .12s,box-shadow .12s,background .2s,opacity .2s}
+.step b{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;background:#23263a;color:#fffaf0;font-size:10px;flex:none}
+.step:hover:not([disabled]){transform:translate(-1px,-1px);box-shadow:3px 3px 0 #23263a}
+.step:active:not([disabled]),.step[data-press]{transform:translate(2px,2px);box-shadow:0 0 0 #23263a}
+.step[disabled]{opacity:.38;cursor:default;box-shadow:none}
+.step[data-on]{background:var(--body);opacity:1;box-shadow:2px 2px 0 #23263a}
+.step[data-done]{opacity:.55;box-shadow:none}
+.main{position:relative;padding:14px 18px 12px}
+.hint{font:500 13.5px/1.45 ui-sans-serif,system-ui,"Segoe UI",sans-serif;color:#23263a;min-height:40px;max-width:600px}
+.lapse{display:inline-block;margin-left:8px;font:700 11px var(--anatomy-mono);background:#23263a;color:#fffaf0;border-radius:4px;padding:2px 6px;vertical-align:1px;opacity:0;transition:opacity .2s}
+.lapse[data-on]{opacity:1}
+.stage svg{display:block;width:100%;height:auto;overflow:visible}
+.chips{display:flex;flex-wrap:wrap;gap:6px 8px;margin-top:4px}
+.chip{font:600 11.5px var(--anatomy-mono);color:#23263a;background:#fffaf0;border:1.2px solid #23263a;border-radius:6px;padding:5px 8px;font-variant-numeric:tabular-nums;white-space:nowrap;transition:background .25s}
+.chip i{font-style:normal;color:#7b7666;font-weight:500;margin-right:5px;text-transform:uppercase;font-size:10px;letter-spacing:.06em}
+.chip[data-hot]{background:var(--body)}
+.foot{display:flex;align-items:center;gap:18px;flex-wrap:wrap;border-top:1.4px solid #23263a;padding:10px 18px;grid-column:1/-1;background:#efe8d8}
+.idea{font:500 13px/1.45 ui-sans-serif,system-ui,"Segoe UI",sans-serif;color:#23263a;flex:1 1 340px}
+.idea b{font-weight:700}
+.ctl{display:flex;align-items:center;gap:8px;font:600 10px var(--anatomy-mono);letter-spacing:.07em;text-transform:uppercase;color:#6b6656}
+.sw{width:18px;height:18px;border-radius:50%;border:1.3px solid #23263a;cursor:pointer;padding:0}
+.sw[data-on]{box-shadow:0 0 0 2px #f5f0e5,0 0 0 3.4px #23263a}
+.shadow{fill:#ddd4c3}
+.slot{fill:#23263a;opacity:.62}
+.plate{fill:#e3b866;stroke:#23263a;stroke-width:1px;vector-effect:non-scaling-stroke}
+.dial-face{fill:#fffdf6;stroke:#23263a;stroke-width:1px;vector-effect:non-scaling-stroke}
+.dial-red{fill:none;stroke:#e5583e;stroke-width:2.2px;stroke-linecap:round;vector-effect:non-scaling-stroke}
+.glint{fill:none;stroke:#fff;stroke-width:1.6px;stroke-linecap:round;opacity:.85;vector-effect:non-scaling-stroke}
+.needle{fill:none;stroke:#e5583e;stroke-width:1.6px;stroke-linecap:round;vector-effect:non-scaling-stroke}
+.lcd{fill:#cde7c3;stroke:#23263a;stroke-width:1px;vector-effect:non-scaling-stroke}
+.lcd-text{fill:#23263a;font-family:var(--anatomy-mono);font-weight:700;letter-spacing:.02em}
+.glass .iso-fill,.glass .iso-shade,.glass .iso-top{fill-opacity:.32}
+.ink{fill:none;stroke:#23263a;stroke-width:1.15px;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+.word{font:700 15px "Segoe Print","Bradley Hand","Comic Sans MS",cursive;fill:#23263a;paint-order:stroke;stroke:#f5f0e5;stroke-width:4px;stroke-linejoin:round}
+.cursor{position:fixed;left:0;top:0;z-index:10;pointer-events:none;transform-origin:3px 2px;filter:drop-shadow(1px 2px 0 #23263a55)}
+.render *{transition:none!important}
+.modes{display:flex;gap:2px;padding:2px;background:#fffaf0;border:1.3px solid #23263a;border-radius:999px;box-shadow:2px 2px 0 #23263a;margin:2px 0 6px}
+.mode{flex:1;appearance:none;border:0;background:none;border-radius:999px;padding:5px 6px;font:700 11.5px var(--anatomy-mono);color:#6b6656;cursor:pointer;white-space:nowrap;transition:background .15s,color .15s;display:flex;align-items:center;justify-content:center;gap:6px}
+.mode:hover:not([aria-checked="true"]){color:#23263a}
+.mode[aria-checked="true"]{background:#23263a;color:#fffaf0}
+.restart{appearance:none;background:none;border:0;padding:2px 0;margin-top:auto;align-self:flex-start;font:600 11px var(--anatomy-mono);color:#6b6656;cursor:pointer;text-decoration:underline;text-decoration-color:#6b665666;text-underline-offset:3px}
+.restart:hover{color:#23263a;text-decoration-color:#23263a}
+.render .modes,.render .restart{display:none}
+.manual .step:not([disabled]):not([data-on]){animation:nudge 1.5s ease-in-out infinite}
+@keyframes nudge{0%,100%{box-shadow:2px 2px 0 #23263a,0 0 0 0 #23263a55}60%{box-shadow:2px 2px 0 #23263a,0 0 0 6px #23263a00}}
+@media (prefers-reduced-motion:reduce){.manual .step{animation:none!important}}
+@media (max-width:760px){
+.iso-page{width:100%;margin:0 auto;padding:10px 10px 28px}
+.card{grid-template-columns:1fr;box-shadow:3px 3px 0 #23263a}
+.side{border-right:0;border-bottom:1.4px solid #23263a;padding:12px 12px 10px;gap:6px}
+.title{font-size:18px;margin:0 0 4px}
+.steps{flex-direction:row;flex-wrap:wrap;gap:6px}
+.step{padding:5px 10px 5px 6px;font-size:11.5px;gap:6px}
+.modes{max-width:280px;margin:0 0 4px}
+.restart{margin-top:2px}
+.main{padding:10px 10px 10px}
+.hint{min-height:57px;font-size:13px}
+.foot{padding:10px 12px;gap:10px 16px}
+.idea{flex-basis:100%}
+}
+
+.stage svg{overflow:hidden}
+.c-leather{--f:#a8794f;--t:#c9a07a;--s3:#b88a62;--s2:#a8794f;--s1:#946c48;--s0:#815f40}
+.step[data-on],.chip[data-hot]{background:var(--alt)}
+.shadow-mat{mix-blend-mode:multiply}
+.dr .shadow-pad{fill:#ddd4c3;mix-blend-mode:multiply}
+.dr path,.dr circle,.dr rect,.dr ellipse,.dr use{vector-effect:non-scaling-stroke;stroke-linejoin:round}
+.dr .f{stroke-width:.6px}
+.dr .ol{fill:none;stroke:#23263a;stroke-width:1.1px}
+.dr .ol-s{fill:none;stroke:#23263a;stroke-width:.75px}
+.dr .cr{fill:none;stroke:#23263a;stroke-width:.5px;opacity:.42}
+.dr .seam{fill:none;stroke:#23263a;stroke-width:.55px;opacity:.5}
+.dr .hair{fill:none;stroke:#23263a;stroke-width:.4px;opacity:.55}
+.dr .lite{fill:none;stroke:#fff;stroke-width:.8px;opacity:.55;stroke-linecap:round}
+.dr .ink{fill:#23263a;stroke:none}
+.dr .logo{fill:#23263a;stroke:none}
+.dr .logo-lt{fill:#eef0f2;stroke:none}
+.dr .logo-gr{fill:#9aa0a8;stroke:none}
+.dr text{font-family:ui-sans-serif,system-ui,"Segoe UI",sans-serif;font-weight:700}
+.dr .silk{fill:#e9efe6;font-weight:600;opacity:.88}
+.dr .silk-l{fill:none;stroke:#e9efe6;stroke-width:.5px;opacity:.75}
+.dr .print{fill:#23263a;font-weight:700}
+.dr .print2{fill:#23263a;font-weight:500;opacity:.7}
+.dr .lens{fill:#151826;stroke:#23263a;stroke-width:.5px}
+.dr .lens2{fill:#232a3d;stroke:none}
+.dr .lens3{fill:#2d3a55;stroke:none}
+.dr .glint{fill:#fff;opacity:.85;stroke:none}
+.dr .glint2{fill:#9fc4e6;opacity:.55;stroke:none}
+.dr .ringl{fill:none;stroke:#8d93a3;stroke-width:.5px}
+.dr .vent{fill:#23263a;opacity:.6;stroke:none}
+.dr .screw{fill:#c9d0d9;stroke:#23263a;stroke-width:.5px}
+.dr .slot{fill:none;stroke:#23263a;stroke-width:.6px;stroke-linecap:round}
+.dr .chipb{fill:#2b2d37;stroke:#23263a;stroke-width:.4px}
+.dr .chipp{fill:#d8dae2;font-weight:600;opacity:.8}
+.dr .pad{fill:#e3b866;stroke:none}
+.dr .trace{fill:none;stroke:#7fc49a;stroke-width:.45px;opacity:.6}
+.dr .cap{fill:#b9946a;stroke:#23263a;stroke-width:.3px}
+.dr .res{fill:#2a2c37;stroke:none}
+.dr .conn{fill:#f2efe6;stroke:#23263a;stroke-width:.4px}
+.dr .connd{fill:#3a3c48;stroke:#23263a;stroke-width:.4px}
+.dr .btn{fill:#d9dce1;stroke:#23263a;stroke-width:.45px}
+.dr .led{fill:#5fdc8f;stroke:#23263a;stroke-width:.35px}
+.dr .led-off{fill:#4a4e58;stroke:#23263a;stroke-width:.35px}
+.dr .label{fill:#f4f2ec;stroke:#23263a;stroke-width:.35px}
+.dr .warn{fill:#f2c14e;stroke:#23263a;stroke-width:.35px}
+.dr .grip{fill:none;stroke:#23263a;stroke-width:.6px;opacity:.45;stroke-linecap:round}
+.dr .flex{fill:#d08a3f;stroke:#23263a;stroke-width:.45px}
+.dr .cable-o{fill:none;stroke:#23263a;stroke-linecap:round}
+.dr .wire{fill:none;stroke-linecap:round}
+.dr .stitch{fill:none;stroke:#f3e2c6;stroke-width:.7px;stroke-dasharray:2.2 2.2;opacity:.85}
+.dr .emboss{fill:none;stroke:#6e4e33;stroke-width:.6px;opacity:.5}
+.dr .emboss-l{fill:none;stroke:#e9cfaa;stroke-width:.5px;opacity:.55}
+.dr .disc{stroke:none}
+.dr .disc-e{fill:none;stroke:#23263a;stroke-width:.6px;opacity:.5}
+.dr .wash{fill:none;stroke:#7fa9cf;stroke-linecap:round}
+.dr .wash-o{fill:none;stroke:#f5f0e5;stroke-linecap:round}
+.dr .beam{fill:#ff8a3a;stroke:none}
+.dr .beam-c{fill:none;stroke:#e5583e;stroke-width:1.1px;stroke-dasharray:3 2.4;stroke-linecap:round}
+.dr .beam-spot{fill:#ffb648;stroke:#e5583e;stroke-width:.9px}
+.dr .beam-ring{fill:none;stroke:#e5583e}
+.dr .rule{fill:none;stroke:#23263a;stroke-width:1px;stroke-linecap:round}
+.dr .rule-t{fill:none;stroke:#23263a;stroke-width:.8px;stroke-linecap:round}
+.dr .hl-glow{fill:none;stroke-linejoin:round}
+.dr .hl-rim{fill:none;stroke-linejoin:round}
+.dr .note{font:700 15px "Segoe Print","Bradley Hand","Comic Sans MS",cursive;fill:#23263a;paint-order:stroke;stroke:#f5f0e5;stroke-width:4px;stroke-linejoin:round;vector-effect:none}
+.dr .note.snd{fill:#5b7fa8}
+.dr .lead{fill:none;stroke:#23263a;stroke-width:.9px;stroke-dasharray:3 2.2}
+.dr .lead-dot{fill:#23263a;stroke:none}
+.dr .bar-t{fill:#ece5d4;stroke:#23263a;stroke-width:.8px}
+.dr .bar-f{fill:#e5583e;stroke:#23263a;stroke-width:.8px}
+.dr .bar-k{fill:none;stroke:#23263a;stroke-width:.6px;opacity:.35}
+.dr .path{fill:none;stroke:#2f6cc0;stroke-width:2.2px;stroke-dasharray:7 5;stroke-linecap:round}
+.dr .path-o{fill:none;stroke:#f5f0e5;stroke-width:5px;stroke-linecap:round;opacity:.8}
+.dr .path-h{fill:#2f6cc0;stroke:#23263a;stroke-width:.8px}
+.dr .path-d{fill:#2f6cc0;stroke:#23263a;stroke-width:.8px}
+.dr .view{fill:#7fb9e9;stroke:none;opacity:.2}
+.dr .view-c{fill:none;stroke:#2f6cc0;stroke-width:1px;stroke-dasharray:3 3;opacity:.8}
+.dr .view-r{fill:none;stroke:#2f6cc0;stroke-width:1.2px;opacity:.75}
+.dr .tag{fill:#fffaf0;stroke:#23263a;stroke-width:1.1px}
+.dr .tag-t{fill:#23263a;font:700 11px ui-monospace,"Cascadia Mono",Consolas,monospace}
+.dr .tag-s{fill:#6b6656;font:600 9px ui-monospace,"Cascadia Mono",Consolas,monospace}
+.dr .bell-in{fill:#2c2e38;stroke:#23263a;stroke-width:.4px}
+.dr .bell-in2{fill:#1c1e26;stroke:none}
+.dr .mag-n{fill:#e5583e;stroke:#23263a;stroke-width:.35px}
+.dr .mag-s{fill:#5f7fb8;stroke:#23263a;stroke-width:.35px}
+</style>
+<div class="card">
+  <aside class="side">
+    <div class="fig">图 36 · 无人机</div>
+    <div class="title">大疆 Neo</div>
+    <div class="modes" role="radiogroup" aria-label="Mode"><button class="mode" data-mode="auto" role="radio" aria-checked="false"><svg viewBox="0 0 12 12" width="9" height="9" aria-hidden="true"><path d="M2 1.2v9.6L10.4 6z" fill="currentColor"/></svg>自动</button><button class="mode" data-mode="manual" role="radio" aria-checked="true"><svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M4 2.5l14.5 8.6-6.2 1.4 3.2 7-2.9 1.3-3.1-7-5.5 4.3z" fill="currentColor"/></svg>手动</button></div>
+    <div class="steps"><button class="step" data-step="lift" ><b>1</b>起飞</button><button class="step" data-step="gap" disabled><b>2</b>阅读间隙</button><button class="step" data-step="dronie" disabled><b>3</b>快速拍摄：无人机自拍</button><button class="step" data-step="lid" disabled><b>4</b>着陆并打开</button><button class="step" data-step="motor" disabled><b>5</b>马达</button><button class="step" data-step="apart" disabled><b>6</b>拆开它</button><button class="step" data-step="together" disabled><b>↺</b>重新装好</button></div>
+    <button class="restart" data-restart>⟲ 重新开始</button>
+  </aside>
+  <section class="main">
+    <div class="hint"><span data-hint>大疆Neo是如何从摊开的手掌上起飞，并在无人操控的情况下悬停在同一高度的？按下步骤，或者等待，它会自行运行这些步骤。</span><span class="lapse" data-lapse>×3</span></div>
+    <div class="stage"><svg xmlns="http://www.w3.org/2000/svg" class="iso-svg" viewBox="0 0 700 500" role="img" aria-label="A palm-sized light grey camera 无人机 with the DJI wordmark 开启 its 顶部 shell 和 its four propellers inside round guards, sitting 开启 a round leather launch pad 开启 a felt desk mat. Its 螺旋桨 spin up into blurred discs 和 it lifts straight 关闭 the pad while a 光束 from a sensor under its nose measures the gap to the pad; when it dips, the 螺旋桨 速度 up 和 win the gap back. It flies a Dronie, backing away 和 climbing while its camera tilts down to keep the pad in frame, comes home 和 lands. Its 顶部 shell lifts 关闭 over the flight board, the 电池 时松开， four 电机 in their ducts; one 电机's bell 转数 over to show its 磁铁 while the copper coils light in 转动; it comes apart along clean axes, goes back together, hops 和 lands 开启 the pad."><defs><clipPath id="matclip"><path d="M676 238.1L677.7 239.6L678.9 241.3L679.5 243L679.6 244.8L679 246.6L677.8 248.3L676.2 249.8L674 251.1L297.1 437L294.6 438L291.7 438.7L288.7 439.1L285.7 439.1L282.7 438.7L279.8 438.1L277.3 437.1L275.1 435.8L24 260L22.3 258.5L21.1 256.8L20.5 255.1L20.4 253.3L21 251.5L22.2 249.8L23.8 248.3L26 247.1L402.9 61.1L405.4 60.1L408.3 59.4L411.3 59L414.3 59L417.3 59.4L420.2 60L422.7 61L424.9 62.3Z"/></clipPath><clipPath id="padclip"><path d="M353.6 292.3L350.2 293.9L346.6 295.3L342.9 296.6L339 297.7L335.1 298.7L331 299.6L326.8 300.3L322.6 300.8L318.3 301.2L314 301.4L309.7 301.4L305.3 301.2L301.1 300.9L296.8 300.5L292.6 299.8L288.5 299L284.5 298.1L280.6 297L276.8 295.8L273.2 294.4L269.7 292.8L266.5 291.2L263.4 289.4L260.5 287.5L257.8 285.5L255.4 283.4L253.2 281.2L251.2 279L249.5 276.6L248.1 274.2L246.9 271.8L246 269.3L245.4 266.8L245.1 264.2L245 261.7L245.3 259.2L245.8 256.6L246.6 254.1L247.7 251.7L249 249.3L250.6 246.9L252.5 244.6L254.6 242.4L257 240.3L259.6 238.2L262.4 236.3L265.4 234.5L268.6 232.8L272 231.2L275.6 229.8L279.3 228.5L283.2 227.3L287.2 226.3L291.2 225.5L295.4 224.8L299.6 224.3L303.9 223.9L308.2 223.7L312.5 223.7L316.9 223.9L321.2 224.2L325.4 224.6L329.6 225.3L333.7 226L337.7 227L341.6 228.1L345.4 229.3L349 230.7L352.5 232.3L355.8 233.9L358.8 235.7L361.7 237.6L364.4 239.6L366.8 241.7L369 243.9L371 246.1L372.7 248.5L374.1 250.9L375.3 253.3L376.2 255.8L376.8 258.3L377.1 260.9L377.2 263.4L376.9 265.9L376.4 268.5L375.6 271L374.5 273.4L373.2 275.8L371.6 278.2L369.7 280.5L367.6 282.7L365.2 284.8L362.6 286.9L359.8 288.8L356.8 290.6Z"/></clipPath><filter id="dr-glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="3.2"/></filter><filter id="dr-soft" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="2.2"/></filter><filter id="dr-sh" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="2.4"/></filter></defs><g class="art"><g class="c c-alt"><g class="iso-solid"><path class="iso-fill" d="M20.4 253.3L21 251.5L22.2 249.8L23.8 248.3L26 247.1L402.9 61.1L405.4 60.1L408.3 59.4L411.3 59L414.3 59L417.3 59.4L420.2 60L422.7 61L424.9 62.3L676 238.1L677.7 239.6L678.9 241.3L679.5 243L679.6 244.8L679.6 246.7L679 248.5L677.8 250.2L676.2 251.7L674 252.9L297.1 438.9L294.6 439.9L291.7 440.6L288.7 441L285.7 441L282.7 440.6L279.8 440L277.3 439L275.1 437.7L24 261.9L22.3 260.4L21.1 258.7L20.5 257L20.4 255.2Z"/><path class="iso-shade" data-shade="0" d="M679.6 246.7L679 248.5L679 246.6L679.6 244.8ZM679 248.5L677.8 250.2L677.8 248.3L679 246.6ZM677.8 250.2L676.2 251.7L676.2 249.8L677.8 248.3ZM676.2 251.7L674 252.9L674 251.1L676.2 249.8ZM674 252.9L297.1 438.9L297.1 437L674 251.1ZM297.1 438.9L294.6 439.9L294.6 438L297.1 437Z"/><path class="iso-shade" data-shade="1" d="M294.6 439.9L291.7 440.6L291.7 438.7L294.6 438ZM291.7 440.6L288.7 441L288.7 439.1L291.7 438.7ZM288.7 441L285.7 441L285.7 439.1L288.7 439.1Z"/><path class="iso-shade" data-shade="2" d="M285.7 441L282.7 440.6L282.7 438.7L285.7 439.1ZM282.7 440.6L279.8 440L279.8 438.1L282.7 438.7Z"/><path class="iso-shade" data-shade="3" d="M279.8 440L277.3 439L277.3 437.1L279.8 438.1ZM277.3 439L275.1 437.7L275.1 435.8L277.3 437.1ZM275.1 437.7L24 261.9L24 260L275.1 435.8ZM24 261.9L22.3 260.4L22.3 258.5L24 260ZM22.3 260.4L21.1 258.7L21.1 256.8L22.3 258.5ZM21.1 258.7L20.5 257L20.5 255.1L21.1 256.8ZM20.5 257L20.4 255.2L20.4 253.3L20.5 255.1Z"/><path class="iso-top" d="M676 238.1L677.7 239.6L678.9 241.3L679.5 243L679.6 244.8L679 246.6L677.8 248.3L676.2 249.8L674 251.1L297.1 437L294.6 438L291.7 438.7L288.7 439.1L285.7 439.1L282.7 438.7L279.8 438.1L277.3 437.1L275.1 435.8L24 260L22.3 258.5L21.1 256.8L20.5 255.1L20.4 253.3L21 251.5L22.2 249.8L23.8 248.3L26 247.1L402.9 61.1L405.4 60.1L408.3 59.4L411.3 59L414.3 59L417.3 59.4L420.2 60L422.7 61L424.9 62.3Z"/><path class="iso-line iso-crease" data-tone="faint" d="M679.6 244.8L679 246.6L677.8 248.3L676.2 249.8L674 251.1L297.1 437L294.6 438L291.7 438.7L288.7 439.1L285.7 439.1L282.7 438.7L279.8 438.1L277.3 437.1L275.1 435.8L24 260L22.3 258.5L21.1 256.8L20.5 255.1L20.4 253.3"/><path class="iso-line iso-bevel" data-tone="faint" d="M679.6 244.8L678.4 246.5L677.3 248.1L675.7 249.5L673.6 250.8L296.7 436.7L294.3 437.7L291.5 438.3L288.7 438.7L285.7 438.7L282.8 438.4L280.1 437.8L277.7 436.8L275.5 435.6L24.5 259.8L22.9 258.3L21.7 256.7L21.1 255L20.4 253.3"/><path class="iso-line" data-tone="faint" d="M679.6 245.8L679 247.6L677.8 249.3L676.2 250.8L674 252.1L297.1 438L294.6 439L291.7 439.7L288.7 440.1L285.7 440.1L282.7 439.8L279.8 439.1L277.3 438.1L275.1 436.8L24 261L22.3 259.5L21.1 257.9L20.5 256.1L20.4 254.3"/><path class="iso-line iso-edge" data-tone="hi" d="M20.4 253.3L21 251.5L22.2 249.8L23.8 248.3L26 247.1L402.9 61.1L405.4 60.1L408.3 59.4L411.3 59L414.3 59L417.3 59.4L420.2 60L422.7 61L424.9 62.3L676 238.1L677.7 239.6L678.9 241.3L679.5 243L679.6 244.8M679.6 246.7L679 248.5L677.8 250.2L676.2 251.7L674 252.9L297.1 438.9L294.6 439.9L291.7 440.6L288.7 441L285.7 441L282.7 440.6L279.8 440L277.3 439L275.1 437.7L24 261.9L22.3 260.4L21.1 258.7L20.5 257L20.4 255.2M679.6 244.8L679.6 246.7M20.4 253.3L20.4 255.2"/></g></g><path class="iso-line" data-tone="mid" data-dotted="" d="M672.4 239.9L673.6 240.9L674.4 242.1L674.9 243.3L674.9 244.6L674.5 245.8L673.7 247L672.5 248L671 248.9L294.1 434.9L292.3 435.6L290.3 436.1L288.2 436.3L286.1 436.3L284 436.1L282 435.6L280.2 434.9L278.7 434.1L27.6 258.2L26.4 257.2L25.6 256L25.1 254.8L25.1 253.5L25.5 252.3L26.3 251.1L27.5 250.1L29 249.2L405.9 63.2L407.7 62.5L409.7 62L411.8 61.8L413.9 61.8L416 62L418 62.5L419.8 63.2L421.3 64Z"/><path class="iso-line" data-tone="faint" d="M674.5 238.8L676 240.1L677.1 241.6L677.7 243.1L677.7 244.7L677.2 246.3L676.2 247.7L674.7 249.1L672.8 250.2L295.9 436.1L293.7 437L291.2 437.6L288.5 438L285.8 438L283.2 437.7L280.7 437.1L278.4 436.2L276.5 435.1L25.5 259.3L24 258L22.9 256.5L22.3 255L22.3 253.4L22.8 251.8L23.8 250.4L25.3 249L27.2 247.9L404.1 62L406.3 61.1L408.8 60.5L411.5 60.1L414.2 60.1L416.8 60.4L419.3 61L421.6 61.9L423.5 63Z"/><g class="shadow-mat" clip-path="url(#matclip)"><path class="shadow" data-part="shadow-static" d=""/><path class="shadow" data-part="shadow-live" d=""/></g><g class="dr" data-part="drone"></g><g class="dr" data-part="notes"></g><g data-part="sounds"></g></g></svg></div>
+    <div class="chips"><span class="chip" data-chipbox="height"><i>间隙 · 传感器</i><span data-chip="height">–</span></span><span class="chip" data-chipbox="props"><i>螺旋桨</i><span data-chip="props">4 个防护罩</span></span><span class="chip" data-chipbox="weight"><i>重量·大疆</i><span data-chip="weight">约135克</span></span><span class="chip" data-chipbox="shots"><i>快速拍摄 · DJI</i><span data-chip="shots">4 条路径</span></span><span class="chip" data-chipbox="parts"><i>零件</i><span data-chip="parts">1 架无人机</span></span></div>
+  </section>
+  <footer class="foot">
+    <div class="idea"><b>核心原理：</b> 大疆 Neo 可以从掌心起飞并降落，4 个螺旋桨都在完整护罩内旋转（数据来自 DJI）。机头下方的传感器测量与下方物体的距离（布局为示意），螺旋桨随之加速或减速以保持该高度。整机重约 <b>135 克</b> · DJI。</div>
+    <div class="ctl">配色 <button class="sw" data-swatch="#f2c14e" title="butter" style="background:#f2c14e" data-on></button><button class="sw" data-swatch="#e5583e" title="tomato" style="background:#e5583e" ></button><button class="sw" data-swatch="#86d3ad" title="mint" style="background:#86d3ad" ></button><button class="sw" data-swatch="#7fb9e9" title="sky" style="background:#7fb9e9" ></button><button class="sw" data-swatch="#f2a5bf" title="rose" style="background:#f2a5bf" ></button></div>
+  </footer>
+</div><p class="credit"><span class="keys">按空格或回车执行下一步 · ← → 切换机器<br></span>作者 <a target="_blank" rel="noopener" href="https://x.com/elvar_official">@elvar_official</a></p></main><script>
+if (/[?&]embed\b/.test(location.search)) document.body.classList.add("embed");
+addEventListener("keydown", (e) => {
+  if (e.key === "Escape") document.querySelector(".menu").open = false;
+  if (e.altKey || e.ctrlKey || e.metaKey || e.target.closest("input,textarea,select")) return;
+  const go = e.key === "ArrowLeft" ? "prev" : e.key === "ArrowRight" ? "next" : null;
+  if (go) location.href = document.querySelector('[data-go="' + go + '"]').href;
+});
+addEventListener("click", (e) => { const m = document.querySelector(".menu"); if (m.open && !m.contains(e.target)) m.open = false; });
+</script><script type="module">const AZIMUTH = 45;
+const ELEVATION = 30;
+const SHADES = 4;
+const RADIANS = Math.PI / 180;
+const UNIT = Math.sqrt(1.6);
+function cameraOf({ scale, azimuth = AZIMUTH, elevation = ELEVATION }) {
+    const a = azimuth * RADIANS;
+    const e = elevation * RADIANS;
+    return { sinA: Math.sin(a), cosA: Math.cos(a), sinE: Math.sin(e), cosE: Math.cos(e), k: scale * UNIT };
+}
+function iso([x, y, z], projection) {
+    const { origin } = projection;
+    const { sinA, cosA, sinE, cosE, k } = cameraOf(projection);
+    return [origin[0] + (x * sinA - y * cosA) * k, origin[1] + ((x * cosA + y * sinA) * sinE - z * cosE) * k];
+}
+function towardViewer(projection) {
+    const { sinA, cosA } = cameraOf(projection);
+    return [cosA, sinA];
+}
+function depthOf([x, y, z], projection) {
+    const { sinA, cosA, sinE, cosE } = cameraOf(projection);
+    return (x * cosA + y * sinA) * cosE + z * sinE;
+}
+const tenth = (value) => {
+    const text = (Math.round(value * 10) / 10).toFixed(1).replace(/\.0$/, "");
+    return text === "-0" ? "0" : text;
+};
+function pathOf(points, closed = false) {
+    if (!points.length)
+        return "";
+    return points.map(([x, y], at) => `${at ? "L" : "M"}${tenth(x)} ${tenth(y)}`).join("") + (closed ? "Z" : "");
+}
+const joinPaths = (paths) => paths.filter(Boolean).join("");
+function roundedPlan({ x, y, w, d, r }, steps = 8) {
+    const radius = Math.max(0, Math.min(r, w / 2, d / 2));
+    const corners = [
+        [x + w - radius, y + radius, -90],
+        [x + w - radius, y + d - radius, 0],
+        [x + radius, y + d - radius, 90],
+        [x + radius, y + radius, 180],
+    ];
+    const out = [];
+    for (const [cx, cy, start] of corners) {
+        const count = radius > 0 ? steps : 0;
+        for (let step = 0; step <= count; step++) {
+            const angle = (start + (count ? (90 * step) / count : 45)) * RADIANS;
+            out.push([cx + radius * Math.cos(angle), cy + radius * Math.sin(angle)]);
+        }
+    }
+    return out;
+}
+function signedArea(points) {
+    let area = 0;
+    for (let index = 0; index < points.length; index++) {
+        const [ax, ay] = points[index];
+        const [bx, by] = points[(index + 1) % points.length];
+        area += ax * by - bx * ay;
+    }
+    return area / 2;
+}
+const oriented = (points) => (signedArea(points) < 0 ? [...points].reverse() : points);
+function convexHull(points) {
+    const sorted = [...points].sort((a, b) => a[0] - b[0] || a[1] - b[1]);
+    if (sorted.length < 3)
+        return sorted;
+    const cross = (o, a, b) => (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0]);
+    const lower = [];
+    for (const point of sorted) {
+        while (lower.length >= 2 && cross(lower[lower.length - 2], lower[lower.length - 1], point) <= 0)
+            lower.pop();
+        lower.push(point);
+    }
+    const upper = [];
+    for (let index = sorted.length - 1; index >= 0; index--) {
+        const point = sorted[index];
+        while (upper.length >= 2 && cross(upper[upper.length - 2], upper[upper.length - 1], point) <= 0)
+            upper.pop();
+        upper.push(point);
+    }
+    return [...lower.slice(0, -1), ...upper.slice(0, -1)];
+}
+function runsOf(flags, want) {
+    const count = flags.length;
+    const runs = [];
+    const start = flags.findIndex((flag, index) => flag !== flags[(index + count - 1) % count]);
+    if (start < 0)
+        return flags[0] === want ? [Array.from({ length: count + 1 }, (_, index) => index % count)] : [];
+    let run = null;
+    for (let step = 0; step < count; step++) {
+        const index = (start + step) % count;
+        if (flags[index] === want) {
+            if (!run)
+                run = [index];
+            run.push((index + 1) % count);
+        }
+        else if (run) {
+            runs.push(run);
+            run = null;
+        }
+    }
+    if (run)
+        runs.push(run);
+    return runs;
+}
+function extrude(ring, z, height, projection, options = {}) {
+    const convex = options.convex ?? true;
+    const count = ring.length;
+    const counter = signedArea(ring) > 0;
+    const [vx, vy] = towardViewer(projection);
+    const { sinA, cosA } = cameraOf(projection);
+    const normals = ring.map(([ax, ay], index) => {
+        const [bx, by] = ring[(index + 1) % count];
+        const dx = bx - ax;
+        const dy = by - ay;
+        const length = Math.hypot(dx, dy) || 1;
+        return (counter ? [dy / length, -dx / length] : [-dy / length, dx / length]);
+    });
+    const facing = normals.map(([nx, ny]) => nx * vx + ny * vy > 1e-9);
+    const top = ring.map(([x, y]) => iso([x, y, z + height], projection));
+    const bottom = ring.map(([x, y]) => iso([x, y, z], projection));
+    const outline = [];
+    const crease = [];
+    for (const run of runsOf(facing, false))
+        outline.push(pathOf(run.map((index) => top[index])));
+    for (const run of runsOf(facing, true)) {
+        crease.push(pathOf(run.map((index) => top[index])));
+        if (height > 0)
+            outline.push(pathOf(run.map((index) => bottom[index])));
+    }
+    if (height > 0) {
+        for (let index = 0; index < count; index++) {
+            if (facing[(index + count - 1) % count] !== facing[index])
+                outline.push(pathOf([top[index], bottom[index]]));
+        }
+    }
+    let fill;
+    if (convex) {
+        fill = pathOf(convexHull([...top, ...bottom]), true);
+    }
+    else {
+        const parts = [pathOf(oriented(top), true), pathOf(oriented(bottom), true)];
+        for (let index = 0; index < count; index++) {
+            if (!facing[index])
+                continue;
+            const next = (index + 1) % count;
+            parts.push(pathOf(oriented([top[index], top[next], bottom[next], bottom[index]]), true));
+        }
+        fill = parts.join("");
+    }
+    const buckets = Array.from({ length: SHADES }, () => []);
+    if (height > 0) {
+        const [lx, ly] = [-sinA, cosA];
+        for (let index = 0; index < count; index++) {
+            if (!facing[index])
+                continue;
+            const [nx, ny] = normals[index];
+            const lit = (nx * lx + ny * ly + 1) / 2;
+            const shade = Math.min(SHADES - 1, Math.max(0, Math.floor(lit * SHADES)));
+            const next = (index + 1) % count;
+            buckets[shade].push(pathOf(oriented([top[index], top[next], bottom[next], bottom[index]]), true));
+        }
+    }
+    let bevel;
+    if (options.bevel && options.bevel > 0) {
+        const by = options.bevel;
+        const inset = ring.map(([x, y], index) => {
+            const [ax, ay] = normals[(index + count - 1) % count];
+            const [bx, by2] = normals[index];
+            const mx = ax + bx;
+            const my = ay + by2;
+            const length = Math.hypot(mx, my) || 1;
+            return [x - (mx / length) * by, y - (my / length) * by];
+        });
+        const insetTop = inset.map(([x, y]) => iso([x, y, z + height], projection));
+        bevel = runsOf(facing, true)
+            .map((run) => pathOf([top[run[0]], ...run.slice(1, -1).map((index) => insetTop[index]), top[run[run.length - 1]]]))
+            .join("");
+    }
+    return {
+        fill,
+        outline: outline.join(""),
+        crease: crease.join(""),
+        top: pathOf(oriented(top), true),
+        shades: buckets.map((paths) => paths.join("")),
+        bevel,
+    };
+}
+const ringOf = (plan, steps = 8) => roundedPlan(plan, steps);
+function slabOf(plan, z, height, projection, steps = 8, bevel = 0) {
+    return extrude(ringOf(plan, steps), z, height, projection, { convex: true, bevel });
+}
+function circleRing(cx, cy, radius, steps = 40) {
+    return Array.from({ length: steps }, (_, step) => {
+        const angle = (step / steps) * Math.PI * 2;
+        return [cx + radius * Math.cos(angle), cy + radius * Math.sin(angle)];
+    });
+}
+function cylinder(cx, cy, radius, z, height, projection, steps = 32, bevel = 0) {
+    return extrude(circleRing(cx, cy, radius, steps), z, height, projection, { convex: true, bevel });
+}
+const insetPlan = ({ x, y, w, d, r }, by) => ({ x: x + by, y: y + by, w: w - by * 2, d: d - by * 2, r: Math.max(0, r - by) });
+function onTop(points, z, projection, closed = false) {
+    return pathOf(points.map(([x, y]) => iso([x, y, z], projection)), closed);
+}
+const planOutline = (plan, z, projection, steps = 8) => onTop(ringOf(plan, steps), z, projection, true);
+const lineOnTop = (from, to, z, projection) => onTop([from, to], z, projection);
+const segment = (from, to, projection) => pathOf([iso(from, projection), iso(to, projection)]);
+const rise = (at, from, to, projection) => segment([at[0], at[1], from], [at[0], at[1], to], projection);
+const ring = (cx, cy, radius, z, projection, steps = 40) => onTop(circleRing(cx, cy, radius, steps), z, projection, true);
+const pointsAt = (points, projection) => points.map((point) => iso(point, projection));
+function dotGrid(x, y, columns, rows, gap, z, projection) {
+    const dots = [];
+    for (let row = 0; row < rows; row++) {
+        for (let column = 0; column < columns; column++)
+            dots.push(iso([x + column * gap, y + row * gap, z], projection));
+    }
+    return dots;
+}
+function corners({ x, y, w, d }, inset = 0) {
+    return [
+        [x + inset, y + inset],
+        [x + w - inset, y + inset],
+        [x + inset, y + d - inset],
+        [x + w - inset, y + d - inset],
+    ];
+}
+function boxCorners({ x, y, w, d }, z0, z1) {
+    const out = [];
+    for (const px of [x, x + w])
+        for (const py of [y, y + d])
+            for (const z of [z0, z1])
+                out.push([px, py, z]);
+    return out;
+}
+function knurl(cx, cy, radius, z0, z1, count, projection, inset = 0.4) {
+    const [vx, vy] = towardViewer(projection);
+    const lines = [];
+    for (let index = 0; index < count; index++) {
+        const angle = (index / count) * Math.PI * 2;
+        const nx = Math.cos(angle);
+        const ny = Math.sin(angle);
+        if (nx * vx + ny * vy < 0.15)
+            continue;
+        lines.push(segment([cx + radius * nx, cy + radius * ny, z0 + inset], [cx + radius * nx, cy + radius * ny, z1 - inset], projection));
+    }
+    return lines.join("");
+}
+function sideArc(cx, cy, radius, z, projection, steps = 24) {
+    const [vx, vy] = towardViewer(projection);
+    const facing = Math.atan2(vy, vx);
+    const points = [];
+    for (let step = 0; step <= steps; step++) {
+        const angle = facing - Math.PI / 2 + (step / steps) * Math.PI;
+        points.push(iso([cx + radius * Math.cos(angle), cy + radius * Math.sin(angle), z], projection));
+    }
+    return pathOf(points);
+}
+function ringSeam(ring, z, projection) {
+    const count = ring.length;
+    const counter = signedArea(ring) > 0;
+    const [vx, vy] = towardViewer(projection);
+    const facing = ring.map(([ax, ay], index) => {
+        const [bx, by] = ring[(index + 1) % count];
+        const dx = bx - ax;
+        const dy = by - ay;
+        const [nx, ny] = counter ? [dy, -dx] : [-dy, dx];
+        return nx * vx + ny * vy > 1e-9;
+    });
+    return runsOf(facing, true).map((run) => pathOf(run.map((index) => iso([ring[index][0], ring[index][1], z], projection)))).join("");
+}
+const sideSeam = (plan, z, projection, steps = 8) => ringSeam(ringOf(plan, steps), z, projection);
+function sideRing(center, radius, axis, projection, steps = 20) {
+    const [px, py, pz] = center;
+    const points = [];
+    for (let step = 0; step < steps; step++) {
+        const angle = (step / steps) * Math.PI * 2;
+        const u = radius * Math.cos(angle);
+        const v = radius * Math.sin(angle);
+        points.push(iso(axis === "x" ? [px, py + u, pz + v] : [px + u, py, pz + v], projection));
+    }
+    return pathOf(points, true);
+}
+function coil(from, to, center, radius, turns, axis, projection, perTurn = 16) {
+    const count = Math.max(1, Math.round(turns * perTurn));
+    const back = [];
+    const front = [];
+    let run = [];
+    let near = null;
+    for (let index = 0; index <= count; index++) {
+        const share = index / count;
+        const angle = share * turns * Math.PI * 2;
+        const u = radius * Math.cos(angle);
+        const v = radius * Math.sin(angle);
+        const along = from + (to - from) * share;
+        const point = axis === "x" ? [along, center[0] + u, center[1] + v] : [center[0] + u, along, center[1] + v];
+        const normal = axis === "x" ? [0, Math.cos(angle), Math.sin(angle)] : [Math.cos(angle), 0, Math.sin(angle)];
+        const facing = depthOf(normal, projection) > 0;
+        const flat = iso(point, projection);
+        if (near === null)
+            near = facing;
+        if (facing !== near) {
+            run.push(flat);
+            (near ? front : back).push(pathOf(run));
+            run = [flat];
+            near = facing;
+            continue;
+        }
+        run.push(flat);
+    }
+    if (run.length > 1)
+        (near ? front : back).push(pathOf(run));
+    return { back: back.join(""), front: front.join("") };
+}
+function topTicks(from, to, step, every, edge, z, lengths, projection, axis = "x") {
+    const minor = [];
+    const major = [];
+    const first = Math.ceil(from / step) * step;
+    for (let at = first, index = Math.round(first / step); at <= to + 1e-9; at += step, index++) {
+        const big = index % every === 0;
+        const length = big ? lengths[1] : lengths[0];
+        const a = axis === "x" ? [at, edge] : [edge, at];
+        const b = axis === "x" ? [at, edge + length] : [edge + length, at];
+        (big ? major : minor).push(lineOnTop(a, b, z, projection));
+    }
+    return { minor: minor.join(""), major: major.join("") };
+}
+function sideTicks(from, to, step, every, face, top, lengths, projection, axis = "x") {
+    const minor = [];
+    const major = [];
+    const first = Math.ceil(from / step) * step;
+    for (let at = first, index = Math.round(first / step); at <= to + 1e-9; at += step, index++) {
+        const big = index % every === 0;
+        const length = big ? lengths[1] : lengths[0];
+        const a = axis === "x" ? [at, face, top] : [face, at, top];
+        const b = axis === "x" ? [at, face, top - length] : [face, at, top - length];
+        (big ? major : minor).push(segment(a, b, projection));
+    }
+    return { minor: minor.join(""), major: major.join("") };
+}
+function radialTicks(cx, cy, radius, count, every, z, lengths, projection, from = 0, span = Math.PI * 2) {
+    const minor = [];
+    const major = [];
+    const closed = Math.abs(span - Math.PI * 2) < 1e-9;
+    const steps = closed ? count : count + 1;
+    for (let index = 0; index < steps; index++) {
+        const angle = from + (index / count) * span;
+        const big = index % every === 0;
+        const inner = radius - (big ? lengths[1] : lengths[0]);
+        const sx = Math.sin(angle);
+        const sy = -Math.cos(angle);
+        (big ? major : minor).push(lineOnTop([cx + sx * inner, cy + sy * inner], [cx + sx * radius, cy + sy * radius], z, projection));
+    }
+    return { minor: minor.join(""), major: major.join("") };
+}
+const haloOf = (plan, z, height, projection) => slabOf(plan, z, height, projection).fill;
+function axisVector(projection, [dx, dy, dz]) {
+    const origin = iso([0, 0, 0], projection);
+    const moved = iso([dx, dy, dz], projection);
+    return [moved[0] - origin[0], moved[1] - origin[1]];
+}
+const fine = (value) => Math.round(value * 100) / 100;
+function translateAlong(projection, by) {
+    const [x, y] = axisVector(projection, by);
+    return `translate(${fine(x)} ${fine(y)})`;
+}
+const thousandth = (value) => Math.round(value * 1000) / 1000;
+function axesAt(at, z, projection) {
+    const origin = iso([at[0], at[1], z], projection);
+    const along = (point) => {
+        const [px, py] = iso(point, projection);
+        return [px - origin[0], py - origin[1]];
+    };
+    return { origin, x: along([at[0] + 1, at[1], z]), y: along([at[0], at[1] + 1, z]), z: along([at[0], at[1], z + 1]) };
+}
+const matrixOf = (u, v, origin) => `matrix(${thousandth(u[0])} ${thousandth(u[1])} ${thousandth(v[0])} ${thousandth(v[1])} ${thousandth(origin[0])} ${thousandth(origin[1])})`;
+function holdStill(element, [dx, dy]) {
+    const text = dx || dy ? `translate(${-dx} ${-dy})` : "";
+    element.querySelectorAll("[data-hold]").forEach((node) => (text ? node.setAttribute("transform", text) : node.removeAttribute("transform")));
+}
+function topMatrix(at, z, projection, along = "x") {
+    const { origin, x, y } = axesAt(at, z, projection);
+    return along === "x" ? matrixOf(x, y, origin) : matrixOf([-y[0], -y[1]], x, origin);
+}
+function sideMatrix(at, z, projection, face) {
+    const { origin, x, y, z: up } = axesAt(at, z, projection);
+    const down = [-up[0], -up[1]];
+    return face === "left" ? matrixOf(x, down, origin) : matrixOf([-y[0], -y[1]], down, origin);
+}
+function screenRise(height, projection) {
+    const { cosE, k } = cameraOf(projection);
+    return height * cosE * k;
+}
+function fitProjection(points, width, height, { pad = 24, headroom = 0, azimuth = AZIMUTH, elevation = ELEVATION } = {}) {
+    const unit = { origin: [0, 0], scale: 1, azimuth, elevation };
+    const flat = points.map((point) => iso(point, unit));
+    const xs = flat.map(([x]) => x);
+    const ys = flat.map(([, y]) => y);
+    const left = Math.min(...xs);
+    const right = Math.max(...xs);
+    const up = Math.min(...ys);
+    const down = Math.max(...ys);
+    const scale = Math.min((width - pad * 2) / (right - left), (height - pad * 2 - headroom) / (down - up));
+    return {
+        origin: [width / 2 - ((left + right) / 2) * scale, headroom + (height - headroom) / 2 - ((up + down) / 2) * scale],
+        scale,
+        azimuth,
+        elevation,
+    };
+}
+const escape = (text) => text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+const attrs = (pairs) => Object.entries(pairs)
+    .filter(([, value]) => value !== undefined && value !== false)
+    .map(([key, value]) => ` ${key}="${escape(String(value))}"`)
+    .join("");
+function solidSvg(paths, { tone = "hi", crease = "faint", halo = false, lit = false, flat = false, className, inner = "" } = {}) {
+    const parts = [];
+    if (halo)
+        parts.push(`<path class="iso-halo" d="${paths.fill}"/>`);
+    parts.push(`<path class="iso-fill" d="${paths.fill}"/>`);
+    if (!flat) {
+        paths.shades.forEach((d, shade) => {
+            if (d)
+                parts.push(`<path class="iso-shade" data-shade="${shade}" d="${d}"/>`);
+        });
+        parts.push(`<path class="iso-top" d="${paths.top}"/>`);
+    }
+    if (crease !== "none" && paths.crease)
+        parts.push(`<path class="iso-line iso-crease" data-tone="${crease}" d="${paths.crease}"/>`);
+    if (crease !== "none" && paths.bevel)
+        parts.push(`<path class="iso-line iso-bevel" data-tone="${crease}" d="${paths.bevel}"/>`);
+    if (inner)
+        parts.push(inner);
+    parts.push(`<path class="iso-line iso-edge" data-tone="${tone}" d="${paths.outline}"/>`);
+    return `<g${attrs({ class: className ? `iso-solid ${className}` : "iso-solid", "data-lit": lit ? "" : undefined, "data-seamless": paths.seamless ? "" : undefined })}>${parts.join("")}</g>`;
+}
+function lineSvg(d, { tone = "lo", dotted = false, dashed = false, flow = false, className, free } = {}) {
+    if (!d)
+        return "";
+    return `<path${attrs({
+        class: className ? `iso-line ${className}` : "iso-line",
+        "data-tone": tone,
+        "data-free": free === true ? "" : free || undefined,
+        "data-dotted": dotted ? "" : undefined,
+        "data-dashed": dashed ? "" : undefined,
+        "data-flow": flow ? "" : undefined,
+        d,
+    })}/>`;
+}
+function dotsSvg(points, { size = 0.5, tone = "mid", pulse = false } = {}) {
+    const dots = points
+        .map(([x, y, alpha], index) => `<circle cx="${tenth(x)}" cy="${tenth(y)}" r="${size}"${alpha !== undefined && alpha < 1 ? ` fill-opacity="${Math.max(0, alpha).toFixed(2)}"` : ""}${pulse ? ` data-pulse="" style="--pulse-at:${(index * 137) % 1600}ms"` : ""}/>`)
+        .join("");
+    return `<g class="iso-dots" data-tone="${tone}">${dots}</g>`;
+}
+function fadedSvg(list, style = {}) {
+    const groups = new Map();
+    for (const entry of list) {
+        const [d, alpha] = Array.isArray(entry) ? entry : [entry.d, entry.alpha];
+        if (!d || !(alpha > 0.02))
+            continue;
+        const level = Math.min(1, Math.round(alpha * 20) / 20);
+        groups.set(level, (groups.get(level) ?? "") + d);
+    }
+    return [...groups].map(([alpha, d]) => (alpha >= 1 ? lineSvg(d, style) : `<g opacity="${alpha.toFixed(2)}">${lineSvg(d, style)}</g>`)).join("");
+}
+function fadeLineSvg(points, { fade = [0, 0], tone = "lo", className, stops = 6 } = {}) {
+    if (points.length < 2)
+        return "";
+    const ease = (t) => t * t * (3 - 2 * t);
+    const hashOf = (text) => {
+        let hash = 2166136261;
+        for (let index = 0; index < text.length; index++)
+            hash = Math.imul(hash ^ text.charCodeAt(index), 16777619);
+        return (hash >>> 0).toString(36);
+    };
+    const lengths = [0];
+    for (let index = 1; index < points.length; index++)
+        lengths.push(lengths[index - 1] + Math.hypot(points[index][0] - points[index - 1][0], points[index][1] - points[index - 1][1]));
+    const at = (length) => {
+        let index = 1;
+        while (index < points.length - 1 && lengths[index] < length)
+            index++;
+        const span = lengths[index] - lengths[index - 1] || 1;
+        const t = Math.max(0, Math.min(1, (length - lengths[index - 1]) / span));
+        return [points[index - 1][0] + (points[index][0] - points[index - 1][0]) * t, points[index - 1][1] + (points[index][1] - points[index - 1][1]) * t];
+    };
+    const pieceOf = (from, to) => [at(from), ...points.filter((_, index) => lengths[index] > from + 1e-6 && lengths[index] < to - 1e-6), at(to)];
+    const total = lengths[lengths.length - 1];
+    if (total < 1e-6)
+        return "";
+    let [start, end] = Array.isArray(fade) ? fade : [fade, fade];
+    if (start + end > total) {
+        const share = total / (start + end);
+        start *= share;
+        end *= share;
+    }
+    const paint = `var(--anatomy-${tone})`;
+    const ramp = (piece, rising) => {
+        const d = pathOf(piece);
+        const [x1, y1] = piece[0];
+        const [x2, y2] = piece[piece.length - 1];
+        const id = `iso-fade-${hashOf(`${d}|${tone}|${rising}`)}`;
+        const marks = Array.from({ length: stops + 1 }, (_, index) => {
+            const t = index / stops;
+            const alpha = ease(rising ? t : 1 - t);
+            return `<stop offset="${t.toFixed(3)}" stop-opacity="${alpha.toFixed(3)}" style="stop-color:${paint}"/>`;
+        }).join("");
+        const gradient = `<linearGradient id="${id}" gradientUnits="userSpaceOnUse" x1="${tenth(x1)}" y1="${tenth(y1)}" x2="${tenth(x2)}" y2="${tenth(y2)}">${marks}</linearGradient>`;
+        return `<defs>${gradient}</defs><path${attrs({ class: className ? `iso-line ${className}` : "iso-line", "data-tone": tone, "data-free": rising ? "start" : "end", d, style: `stroke:url(#${id})` })}/>`;
+    };
+    const parts = [];
+    if (start > 0.05)
+        parts.push(ramp(pieceOf(0, start), true));
+    if (total - end - start > 0.05)
+        parts.push(lineSvg(pathOf(pieceOf(start, total - end)), { tone, className }));
+    if (end > 0.05)
+        parts.push(ramp(pieceOf(total - end, total), false));
+    return `<g class="iso-fade">${parts.join("")}</g>`;
+}
+function wireSvg(from, to, { via = [], tone = "lo", dotted = false, dashed = false, flow = false, ends = "both", size = 1.2 } = {}) {
+    const d = pathOf([from, ...via, to]);
+    const end = ([x, y]) => `<circle class="iso-wire-end" cx="${tenth(x)}" cy="${tenth(y)}" r="${size}"/>`;
+    return `<g class="iso-wire" data-tone="${tone}">${lineSvg(d, { tone, dotted, dashed, flow })}${ends === "both" || ends === "from" ? end(from) : ""}${ends === "both" || ends === "to" ? end(to) : ""}</g>`;
+}
+function faceTextSvg(transform, text, { size = 3, tone = "mid", anchor = "start" } = {}) {
+    return `<text class="iso-face-text" data-tone="${tone}" transform="${transform}" font-size="${size}" text-anchor="${anchor}">${escape(text)}</text>`;
+}
+function groupSvg(children, extra = {}) {
+    return `<g${attrs(extra)}>${Array.isArray(children) ? children.join("") : children}</g>`;
+}
+function figureSvg({ width, height, label, body, standalone = false, className }) {
+    const style = standalone ? `<style>${ISO_CSS}</style>` : "";
+    return `<svg${attrs({
+        xmlns: "http://www.w3.org/2000/svg",
+        class: `iso-svg${standalone ? " iso" : ""}${className ? ` ${className}` : ""}`,
+        "data-theme": standalone || undefined,
+        viewBox: `0 0 ${width} ${height}`,
+        role: "img",
+        "aria-label": label,
+    })}>${style}${Array.isArray(body) ? body.join("") : body}</svg>`;
+}
+function swatchSvg(mark) {
+    if (mark === "raised" || mark === "flat" || mark === "lit") {
+        const body = mark === "flat" ? "M2 6.5 8 3.5 14 6.5 8 9.5Z" : "M2 4.5 8 1.5 14 4.5 14 6 8 9 2 6Z";
+        const crease = mark === "flat" ? "" : `<path class="iso-swatch-crease" d="M2 4.5 8 7.5 14 4.5"/>`;
+        return `<svg class="iso-swatch" data-mark="${mark}" viewBox="0 0 16 10" aria-hidden="true"><path d="${body}"/>${crease}</svg>`;
+    }
+    return `<svg class="iso-swatch" data-mark="${mark}" viewBox="0 0 16 10" aria-hidden="true"><path d="M1.5 5h13"/></svg>`;
+}
+function plateHtml({ fig, title, hint, readout = "", keys = [], caption, body }) {
+    const corner = (name, text, extra = "") => `<span class="iso-plate-corner" data-corner="${name}"${extra}>${escape(text)}</span>`;
+    const legend = keys.length || caption
+        ? `<figcaption class="iso-legend">${keys.length ? `<span class="iso-keys">${keys.map((key) => `<span class="iso-key">${swatchSvg(key.mark)}${escape(key.label)}</span>`).join("")}</span>` : ""}${caption ? `<span class="iso-caption">${escape(caption)}</span>` : ""}</figcaption>`
+        : "";
+    return `<figure class="iso-figure"><div class="iso-plate"><div class="iso-plate-corners" aria-hidden="true">${corner("fig", fig)}${title ? corner("title", title) : ""}${hint ? corner("hint", hint) : ""}${corner("readout", readout, " data-readout")}</div>${body}</div>${legend}</figure>`;
+}
+function pageHtml({ title, theme = "dark", body, script = "", width = 650 }) {
+    return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>${escape(title)}</title><style>${ISO_CSS}${PAGE_CSS.replace("__WIDTH__", String(width))}</style></head><body class="iso" data-theme="${theme}"><main class="iso-page">${body}</main>${script ? `<script type="module">${script.replace(/<\/(script)/gi, "<\\/$1")}<\/script>` : ""}</body></html>`;
+}
+const PAGE_CSS = `
+*{box-sizing:border-box}
+html{color-scheme:dark}
+body[data-theme="light"]{color-scheme:light}
+body{margin:0;background:var(--anatomy-page);color:var(--anatomy-text);font:14px/1.6 ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+.iso-page{width:min(__WIDTH__px,100% - 32px);margin:64px auto 96px}
+`;
+const ISO_CSS = `
+.iso{
+  --anatomy-page:#0b0b0b;--anatomy-card:#131313;--anatomy-text:#a3a3a3;--anatomy-strong:#e6e6e6;--anatomy-muted:#6e6e6e;
+  --anatomy-paper:#131313;--anatomy-face:#1b1b1b;--anatomy-top:#1c1c1c;
+  --anatomy-shade-0:#0f0f0f;--anatomy-shade-1:#121212;--anatomy-shade-2:#151515;--anatomy-shade-3:#181818;
+  --anatomy-lit-top:#262626;--anatomy-lit-shade:#1d1d1d;
+  --anatomy-hi:#d4d4d4;--anatomy-mid:#6a6a6a;--anatomy-lo:#3e3e3e;--anatomy-faint:#2a2a2a;--anatomy-lit:#ffffff;
+  --anatomy-halo:#050505;--anatomy-halo-opacity:.9;--anatomy-dot:#e6e6e6;
+  --anatomy-red:#ff6b6b;--anatomy-green:#6be0a0;--anatomy-blue:#6b9bff;
+  --anatomy-weight:.6px;--anatomy-ease:cubic-bezier(.32,.72,0,1);
+  --anatomy-mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --anatomy-lift:inset 0 1px 0 0 #ffffff0a,inset 0 0 0 1px #ffffff06,0 0 0 1px #00000026,0 1px 1px -.5px #00000014,0 3px 3px -1.5px #00000014,0 6px 6px -3px #00000014,0 12px 12px -6px #00000014;
+}
+.iso[data-theme="light"]{
+  --anatomy-page:#f2f2ef;--anatomy-card:#fbfbfa;--anatomy-text:#57575a;--anatomy-strong:#18181a;--anatomy-muted:#8c8c90;
+  --anatomy-paper:#fbfbfa;--anatomy-face:#ffffff;--anatomy-top:#ffffff;
+  --anatomy-shade-0:#dcdcd9;--anatomy-shade-1:#e5e5e2;--anatomy-shade-2:#ededea;--anatomy-shade-3:#f4f4f1;
+  --anatomy-lit-top:#ffffff;--anatomy-lit-shade:#eeeeeb;
+  --anatomy-hi:#26262a;--anatomy-mid:#8a8a8f;--anatomy-lo:#b4b4b8;--anatomy-faint:#d4d4d6;--anatomy-lit:#000000;
+  --anatomy-halo:#8a8a80;--anatomy-halo-opacity:.32;--anatomy-dot:#3a3a3e;
+  --anatomy-red:#e5484d;--anatomy-green:#30a46c;--anatomy-blue:#3e63dd;
+  --anatomy-lift:inset 0 1px 0 0 #ffffff,0 0 0 1px #0000000f,0 1px 1px -.5px #0000000a,0 3px 3px -1.5px #0000000a,0 6px 6px -3px #0000000a,0 12px 12px -6px #0000000a;
+}
+.iso-svg{display:block;width:100%;height:auto;overflow:visible}
+.iso-svg path,.iso-svg circle{vector-effect:non-scaling-stroke}
+.iso-fill{fill:var(--anatomy-paper);stroke:none}
+.iso-solid[data-lit]>.iso-fill{fill:var(--anatomy-face)}
+.iso-shade,.iso-top{stroke:none}
+.iso-shade[data-shade="0"]{fill:var(--anatomy-shade-0)}
+.iso-shade[data-shade="1"]{fill:var(--anatomy-shade-1)}
+.iso-shade[data-shade="2"]{fill:var(--anatomy-shade-2)}
+.iso-shade[data-shade="3"]{fill:var(--anatomy-shade-3)}
+.iso-top{fill:var(--anatomy-top)}
+.iso-solid[data-lit]>.iso-top{fill:var(--anatomy-lit-top)}
+.iso-solid[data-lit]>.iso-shade{fill:var(--anatomy-lit-shade)}
+.iso-solid[data-seamless]>.iso-shade,.iso-solid[data-seamless]>.iso-top{stroke-width:.4;stroke-linejoin:round}
+.iso-solid[data-seamless]>.iso-shade[data-shade="0"]{stroke:var(--anatomy-shade-0)}
+.iso-solid[data-seamless]>.iso-shade[data-shade="1"]{stroke:var(--anatomy-shade-1)}
+.iso-solid[data-seamless]>.iso-shade[data-shade="2"]{stroke:var(--anatomy-shade-2)}
+.iso-solid[data-seamless]>.iso-shade[data-shade="3"]{stroke:var(--anatomy-shade-3)}
+.iso-solid[data-seamless]>.iso-top{stroke:var(--anatomy-top)}
+.iso-solid[data-seamless][data-lit]>.iso-top{stroke:var(--anatomy-lit-top)}
+.iso-solid[data-seamless][data-lit]>.iso-shade{stroke:var(--anatomy-lit-shade)}
+.iso-solid[data-lit]>.iso-edge{stroke:var(--anatomy-lit)}
+.iso-halo{fill:var(--anatomy-halo);stroke:none;filter:blur(9px);opacity:var(--anatomy-halo-opacity);transform:translateY(3px)}
+.iso-line{fill:none;stroke:var(--anatomy-lo);stroke-width:var(--anatomy-weight);stroke-linecap:round;stroke-linejoin:round}
+.iso-line[data-tone="hi"]{stroke:var(--anatomy-hi)}
+.iso-line[data-tone="mid"]{stroke:var(--anatomy-mid)}
+.iso-line[data-tone="lo"]{stroke:var(--anatomy-lo)}
+.iso-line[data-tone="faint"]{stroke:var(--anatomy-faint)}
+.iso-line[data-tone="lit"]{stroke:var(--anatomy-lit)}
+.iso-line[data-tone="red"]{stroke:var(--anatomy-red)}
+.iso-line[data-tone="green"]{stroke:var(--anatomy-green)}
+.iso-line[data-tone="blue"]{stroke:var(--anatomy-blue)}
+.iso-line[data-dotted]{stroke-dasharray:.01 3.5;stroke-width:1}
+.iso-line[data-dashed]{stroke-dasharray:3 3}
+.iso-line[data-flow]{stroke-dasharray:2 6}
+.iso-wire-end{fill:var(--anatomy-paper);stroke:var(--anatomy-lo);stroke-width:var(--anatomy-weight)}
+.iso-wire[data-tone="hi"] .iso-wire-end{stroke:var(--anatomy-hi)}
+.iso-wire[data-tone="mid"] .iso-wire-end{stroke:var(--anatomy-mid)}
+.iso-wire[data-tone="faint"] .iso-wire-end{stroke:var(--anatomy-faint)}
+.iso-wire[data-tone="lit"] .iso-wire-end{stroke:var(--anatomy-lit)}
+.iso-dots circle{fill:var(--anatomy-dot);stroke:none;opacity:.32}
+.iso-dots[data-tone="hi"] circle{opacity:.85}
+.iso-dots[data-tone="mid"] circle{opacity:.45}
+.iso-dots[data-tone="lo"] circle{opacity:.22}
+.iso-dots[data-tone="faint"] circle{opacity:.12}
+.iso-face-text{fill:var(--anatomy-mid);font-family:var(--anatomy-mono);letter-spacing:.04em}
+.iso-face-text[data-tone="hi"]{fill:var(--anatomy-hi)}
+.iso-face-text[data-tone="lo"]{fill:var(--anatomy-lo)}
+.iso-face-text[data-tone="faint"]{fill:var(--anatomy-faint)}
+.tb-body{fill:var(--anatomy-shade-2);stroke:none}
+.tb-shine{fill:var(--anatomy-top);stroke:none}
+.tb-shade{fill:var(--anatomy-shade-0);stroke:none}
+.tb-ring{fill:none;stroke:var(--anatomy-lo);stroke-width:.45;stroke-linecap:butt;stroke-linejoin:round}
+.tb-ring[data-tone="mid"]{stroke:var(--anatomy-mid)}
+.tb-ring[data-tone="faint"]{stroke:var(--anatomy-faint)}
+.tb-ring[data-tone="hi"]{stroke:var(--anatomy-hi)}
+@keyframes iso-flow{to{stroke-dashoffset:-32}}
+@keyframes iso-pulse{0%,100%{opacity:.18}12%{opacity:1}40%{opacity:.18}}
+.iso-line[data-flow]{animation:iso-flow 1600ms linear infinite}
+.iso-dots circle[data-pulse]{animation:iso-pulse 1600ms steps(1,end) infinite;animation-delay:var(--pulse-at,0ms)}
+.iso-figure{margin:32px 0 36px}
+.iso-plate{position:relative;padding:52px 24px;border-radius:0;background:var(--anatomy-card);box-shadow:0 0 0 1px var(--anatomy-mid);--anatomy-paper:var(--anatomy-card)}
+.iso-plate-corners{position:absolute;inset:18px 20px;pointer-events:none}
+.iso-plate-corner{position:absolute;color:var(--anatomy-muted);font-family:var(--anatomy-mono);font-size:10.5px;line-height:1;letter-spacing:.04em;white-space:nowrap}
+.iso-plate-corner[data-corner="fig"]{top:0;left:0;color:var(--anatomy-text)}
+.iso-plate-corner[data-corner="title"]{top:0;right:0;text-transform:uppercase;letter-spacing:.1em}
+.iso-plate-corner[data-corner="hint"]{bottom:0;left:0;text-transform:uppercase;letter-spacing:.1em}
+.iso-plate-corner[data-corner="readout"]{right:0;bottom:0;color:var(--anatomy-text);font-variant-numeric:tabular-nums}
+.iso-plate .iso-svg{margin:0 auto}
+.iso-legend{display:grid;gap:8px;margin-top:12px;color:var(--anatomy-muted);font-size:13px;line-height:1.55}
+.iso-keys{display:flex;flex-wrap:wrap;gap:6px 18px}
+.iso-key{display:inline-flex;align-items:center;gap:7px}
+.iso-swatch{width:16px;height:10px;flex:none;overflow:visible}
+.iso-swatch path{fill:none;stroke:var(--anatomy-hi);stroke-width:1;vector-effect:non-scaling-stroke;stroke-linejoin:round;stroke-linecap:round}
+.iso-swatch[data-mark="raised"] path,.iso-swatch[data-mark="flat"] path{stroke:var(--anatomy-mid)}
+.iso-swatch[data-mark="lit"] path{stroke:var(--anatomy-lit)}
+.iso-swatch[data-mark="dim"] path{stroke:var(--anatomy-lo)}
+.iso-swatch[data-mark="dotted"] path{stroke-dasharray:.01 3;stroke-width:1.4}
+.iso-swatch[data-mark="dashed"] path{stroke-dasharray:3 2.5}
+.iso-swatch[data-mark="red"] path{stroke:var(--anatomy-red)}
+.iso-swatch[data-mark="green"] path{stroke:var(--anatomy-green)}
+.iso-swatch[data-mark="blue"] path{stroke:var(--anatomy-blue)}
+.iso-swatch-crease{stroke:var(--anatomy-lo)!important}
+@media (max-width:560px){.iso-plate{padding:48px 12px 70px}.iso-plate-corner[data-corner="hint"]{bottom:18px}}
+@media (prefers-reduced-motion:reduce){.iso-line[data-flow],.iso-dots circle[data-pulse]{animation:none}}
+`;
+
+{ // the figure's own scope, so nothing collides with the inlined kit
+const D = {"P":{"origin":[311.1081263826543,270.1297279082781],"scale":0.6174923069309466,"azimuth":40,"elevation":36},"KS":0.7810728510134274,"W":700,"H":500,"MODEL":{"weight":135,"motors":4,"quickshots":["Dronie","Rocket","Circle","Spotlight"]},"BRAND":{"name":"大疆 Neo","heading":"DJI Neo","maker":"DJI","logo":"M33 11L46 11L46 70L33 70ZM46 52A18 18 0 1 1 10 52A18 18 0 1 1 46 52ZM34 52A6.5 6.5 0 1 0 21 52A6.5 6.5 0 1 0 34 52ZM66 19A7.5 7.5 0 1 1 51 19A7.5 7.5 0 1 1 66 19ZM52 34L65 34L65 77L52 77ZM52 75L65 75A13 13 0 0 1 52 88L42 88L42 75ZM91 19A7.5 7.5 0 1 1 76 19A7.5 7.5 0 1 1 91 19ZM77 34L90 34L90 70L77 70Z"},"SHADOW":[-0.06,0.17],"MAT_T":3,"PAD_R":88,"PAD_H":9,"PAD_T":12,"AZ":40,"EL":36,"YAW":90,"MAT":{"x":-270,"y":-400,"w":540,"d":670,"r":20}};
+// Shared runtime for the figures, inlined after the kit (iso, ring, lineOnTop, translateAlong exist).
+// A figure's live.js defines its state, UPDATE and draw, then calls tour({...}).
+
+const P = D.P;
+const svg = document.querySelector(".stage svg");
+const part = (name) => svg.querySelector(`[data-part="${name}"]`);
+const slot = (name) => svg.querySelector(`[data-slot="${name}"]`);
+const chip = (name) => document.querySelector(`[data-chip="${name}"]`);
+const chipHot = (name, on) => document.querySelector(`[data-chipbox="${name}"]`)?.toggleAttribute("data-hot", !!on);
+const still = matchMedia("(prefers-reduced-motion: reduce)");
+const f1 = (n) => Math.round(n * 10) / 10;
+const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+const ease = (x) => { const t = clamp(x); return t * t * (3 - 2 * t); };
+const seg = (u, a, b) => clamp((u - a) / (b - a));
+const lerp = (a, b, t) => a + (b - a) * t;
+const lerp3 = (a, b, t) => a.map((v, i) => lerp(v, b[i], t));
+const pathOf = (pts, close = true) => (pts.length ? "M" + pts.map((p) => f1(p[0]) + " " + f1(p[1])).join("L") + (close ? "Z" : "") : "");
+const at = (p) => iso(p, P);
+const toward = towardViewer(P);
+function hull(points) {
+  const pts = [...points].sort((a, b) => a[0] - b[0] || a[1] - b[1]);
+  if (pts.length < 3) return pts;
+  const cross = (o, a, b) => (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0]);
+  const lo = [];
+  for (const p of pts) { while (lo.length >= 2 && cross(lo[lo.length - 2], lo[lo.length - 1], p) <= 0) lo.pop(); lo.push(p); }
+  const hi = [];
+  for (const p of pts.reverse()) { while (hi.length >= 2 && cross(hi[hi.length - 2], hi[hi.length - 1], p) <= 0) hi.pop(); hi.push(p); }
+  return lo.slice(0, -1).concat(hi.slice(0, -1));
+}
+const circle3 = (cx, cy, r, z, n = 36) => Array.from({ length: n }, (_, i) => { const a = (i / n) * Math.PI * 2; return [cx + r * Math.cos(a), cy + r * Math.sin(a), z]; });
+const cylPath = (cx, cy, r, z0, z1, n = 36) => pathOf(hull([...circle3(cx, cy, r, z0, n), ...circle3(cx, cy, r, z1, n)].map(at)));
+const discPath = (cx, cy, r, z, n = 44) => pathOf(circle3(cx, cy, r, z, n).map(at));
+// a circle in a vertical plane: axis "x" means the circle lies in the plane x = c[0]
+const vcircle = (c, r, axis = "x", n = 36) => Array.from({ length: n }, (_, i) => { const a = (i / n) * Math.PI * 2; return axis === "x" ? [c[0], c[1] + r * Math.cos(a), c[2] + r * Math.sin(a)] : [c[0] + r * Math.cos(a), c[1], c[2] + r * Math.sin(a)]; });
+// a straight rod between two world points, as a screen quad with round ends; r in world units
+function rodPath(a, b, r) {
+  const A = at(a), B = at(b), KS = D.KS;
+  const dx = B[0] - A[0], dy = B[1] - A[1], len = Math.hypot(dx, dy) || 1;
+  const nx = (-dy / len) * r * KS, ny = (dx / len) * r * KS, R = r * KS;
+  return `M${f1(A[0] + nx)} ${f1(A[1] + ny)}L${f1(B[0] + nx)} ${f1(B[1] + ny)}A${f1(R)} ${f1(R)} 0 0 1 ${f1(B[0] - nx)} ${f1(B[1] - ny)}L${f1(A[0] - nx)} ${f1(A[1] - ny)}A${f1(R)} ${f1(R)} 0 0 1 ${f1(A[0] + nx)} ${f1(A[1] + ny)}Z`;
+}
+const mixHex = (a, b, t) => {
+  const h = (x) => [1, 3, 5].map((i) => parseInt(x.slice(i, i + 2), 16));
+  const A = h(a), B = h(b);
+  return "#" + A.map((v, i) => Math.round(v + (B[i] - v) * t).toString(16).padStart(2, "0")).join("");
+};
+const along = (pts, u) => {
+  const n = pts.length - 1;
+  const x = clamp(u) * n;
+  const i = Math.min(n - 1, Math.floor(x));
+  return lerp3(pts[i], pts[i + 1], ease(x - i));
+};
+const lapseEl = document.querySelector("[data-lapse]");
+function setLapse(text) {
+  if (text) { if (lapseEl.textContent !== text) lapseEl.textContent = text; lapseEl.setAttribute("data-on", ""); } else lapseEl.removeAttribute("data-on");
+}
+const soundsG = part("sounds");
+function setWord(w) {
+  if (!w) { if (soundsG.firstChild) soundsG.textContent = ""; return; }
+  const [x, y] = at(w.p);
+  let t = soundsG.querySelector("text");
+  if (!t) { t = document.createElementNS("http://www.w3.org/2000/svg", "text"); t.setAttribute("class", "word"); soundsG.appendChild(t); }
+  if (t.textContent !== w.text) t.textContent = w.text;
+  t.setAttribute("x", f1(x)); t.setAttribute("y", f1(y));
+  t.setAttribute("font-size", w.size || 15);
+}
+const setText = (el, text) => { if (el && el.textContent !== text) el.textContent = text; };
+
+// Steps, buttons, the idle tour, the drawn cursor and window.seek(t) for frame-exact recording.
+function tour({ STEPS, ORDER, update, reset, onBegin = () => {}, onFinish = () => {}, draw, paint, probe = () => null, gap = 0.7, lead = 0.2, tail = 1.0 }) {
+  const buttons = [...document.querySelectorAll("[data-step]")];
+  const hintEl = document.querySelector("[data-hint]");
+  const INTRO = hintEl.textContent;
+  let next = 0, run = null, idle = 0, last = 0, auto = true;
+  const setButtons = () => buttons.forEach((b, i) => {
+    b.disabled = !!run || i !== next;
+    b.toggleAttribute("data-on", !!run && ORDER[i] === run.id);
+    b.toggleAttribute("data-done", !run && i < next && next !== 0);
+  });
+  const begin = (id) => { run = { id, t: 0 }; onBegin(id); hintEl.textContent = STEPS[id].hint; };
+  const finish = () => { const id = run.id; update(id, 1); onFinish(id); run = null; next = (next + 1) % ORDER.length; idle = 0; setButtons(); };
+  const start = (id) => { if (run || ORDER[next] !== id) return; begin(id); setButtons(); if (still.matches) finish(); };
+  // two modes: Auto runs the steps on a loop, Manual waits for the visitor to press each one in order
+  const modeEls = [...document.querySelectorAll("[data-mode]")];
+  const INTRO_MANUAL = INTRO.split(/(?<=[.?!])\s+/)[0] + " 按顺序点击步骤。";
+  const setAuto = (on, save = true) => {
+    auto = on;
+    idle = 0;
+    document.body.classList.toggle("manual", !on);
+    modeEls.forEach((m) => m.setAttribute("aria-checked", String((m.dataset.mode === "auto") === on)));
+    if (save) try { localStorage.setItem("fig-mode2", on ? "auto" : "manual"); } catch {}
+  };
+  const restart = () => { reset(); run = null; next = 0; hintEl.textContent = auto ? INTRO : INTRO_MANUAL; idle = 0; setButtons(); };
+  modeEls.forEach((m) => m.addEventListener("click", () => {
+    const on = m.dataset.mode === "auto";
+    if (on === auto) return;
+    setAuto(on);
+    // Manual starts the visitor from step 1; Auto picks up from wherever the machine stands
+    if (!on) restart(); else idle = gap;
+  }));
+  buttons.forEach((b) => b.addEventListener("click", () => { if (auto) setAuto(false); start(b.dataset.step); }));
+  // a press on a step that is still greyed out also switches to Manual once the running step ends
+  document.querySelector(".steps")?.addEventListener("pointerdown", () => { if (auto) setAuto(false); });
+  document.querySelector("[data-restart]")?.addEventListener("click", restart);
+  document.addEventListener("keydown", (e) => {
+    if (e.target.closest?.("button,input,a,select,textarea")) return;
+    if (e.key === " " || e.key === "Enter") { e.preventDefault(); setAuto(false); start(ORDER[next]); }
+  });
+  function tick(now) {
+    const dt = last ? Math.min((now - last) / 1000, 1 / 20) : 1 / 60;
+    last = now;
+    if (run) { run.t += dt; const u = run.t / STEPS[run.id].dur; update(run.id, Math.min(1, u)); if (u >= 1) finish(); }
+    else if (auto && !still.matches) { idle += dt; if (idle > gap) start(ORDER[next]); }
+    draw(now / 1000);
+    requestAnimationFrame(tick);
+  }
+  const PLAN = [];
+  { let t = lead; for (const id of ORDER) { t += gap; PLAN.push({ id, t0: t, t1: t + STEPS[id].dur }); t += STEPS[id].dur; } }
+  const TOTAL = PLAN[PLAN.length - 1].t1 + tail;
+  const cursor = document.createElement("div");
+  cursor.className = "cursor";
+  cursor.innerHTML = '<svg viewBox="0 0 24 24" width="28" height="28"><path d="M3 2l15.5 9.2-6.6 1.5 3.4 7.4-3.1 1.4-3.3-7.4L3 18.6z" fill="#fff" stroke="#23263a" stroke-width="1.6" stroke-linejoin="round"/></svg>';
+  const aim = (i) => { const r = buttons[i].getBoundingClientRect(); return [r.left + r.width * 0.62, r.top + r.height * 0.55]; };
+  const restPoint = () => { const r = document.querySelector(".stage").getBoundingClientRect(); return [r.left + r.width * 0.55, r.top + r.height * 0.62]; };
+  function placeCursor(time) {
+    let from = restPoint(), to = from, u = 0, press = -1;
+    for (let i = 0; i < PLAN.length; i++) {
+      const p = PLAN[i];
+      const leave = i ? PLAN[i - 1].t1 - 0.35 : 0.05, arrive = p.t0 - 0.16;
+      if (time < leave) break;
+      from = i ? aim(i - 1) : restPoint();
+      to = aim(i);
+      u = ease((time - leave) / (arrive - leave));
+      if (time > p.t0 - 0.12 && time < p.t0 + 0.08) press = i;
+    }
+    const x = lerp(from[0], to[0], u) + Math.sin(u * Math.PI) * 18, y = lerp(from[1], to[1], u) - Math.sin(u * Math.PI) * 10;
+    cursor.style.transform = `translate(${f1(x - 3.3)}px, ${f1(y - 2.2)}px) scale(${press >= 0 ? 0.86 : 1})`;
+    buttons.forEach((b, i) => b.toggleAttribute("data-press", i === press));
+  }
+  function seekTo(time) {
+    reset();
+    run = null;
+    next = 0;
+    hintEl.textContent = INTRO;
+    for (const p of PLAN) {
+      if (time < p.t0) break;
+      begin(p.id);
+      if (time >= p.t1) { run.t = STEPS[p.id].dur; finish(); continue; }
+      run.t = time - p.t0;
+      update(p.id, run.t / STEPS[p.id].dur);
+      break;
+    }
+    setButtons();
+    draw(time);
+    placeCursor(time);
+  }
+  // colour swatches
+  document.querySelectorAll("[data-swatch]").forEach((sw) => sw.addEventListener("click", () => {
+    document.querySelectorAll("[data-swatch]").forEach((o) => o.toggleAttribute("data-on", o === sw));
+    paintBody(sw.dataset.swatch);
+  }));
+  function paintBody(c) {
+    const t = (x) => ({ f: x, t: mixHex(x, "#ffffff", 0.42), s3: mixHex(x, "#ffffff", 0.18), s1: mixHex(x, "#1b1d2c", 0.13), s0: mixHex(x, "#1b1d2c", 0.26) });
+    const set = (name, x) => { const v = t(x); const s = document.body.style; s.setProperty(`--${name}`, v.f); s.setProperty(`--${name}-t`, v.t); s.setProperty(`--${name}-3`, v.s3); s.setProperty(`--${name}-1`, v.s1); s.setProperty(`--${name}-0`, v.s0); };
+    set("body", c);
+    set("alt", paint ? paint(c) : c);
+  }
+  paintBody(document.querySelector("[data-swatch]").dataset.swatch);
+  reset();
+  setButtons();
+  draw(0);
+  // probe() hands the figure state to tools outside the page (videos/_kit/timeline.mjs samples it for the score)
+  window.__fig = { start, seek: seekTo, total: TOTAL, plan: PLAN, get state() { return probe(); } };
+  if (location.search.includes("render")) {
+    document.body.classList.add("render");
+    document.body.appendChild(cursor);
+    window.DURATION = TOTAL;
+    window.seek = seekTo;
+    seekTo(0);
+  } else {
+    // Manual is the default; Auto only when the visitor picked it on an earlier page
+    let saved = null;
+    try { saved = localStorage.getItem("fig-mode2"); } catch {}
+    // ?auto in the address starts the tour by itself (pages shown side by side), without touching the saved choice
+    setAuto(/[?&]auto\b/.test(location.search) || saved === "auto", false);
+    hintEl.textContent = auto ? INTRO : INTRO_MANUAL;
+    requestAnimationFrame(tick);
+  }
+}
+
+// Live code for the DJI Neo. Runs inside the figure scope after _kit/runtime.js.
+// The drone is real 3D: every part is a solid built once in its own frame (the body in the drone's frame: x toward
+// the nose, y to the drone's left, z up; a duct, a motor, a prop and a blade in theirs), placed every frame by its
+// chain of poses (the drone, the explode, the spin), culled, shaded by facing and painted back to front in groups.
+// The four ducts are rings, so each is painted in two halves: its far wall, then what sits inside it, then its near
+// wall. Flat print (the wordmark, the board, the labels) lives on a part's face and is placed every frame by that
+// plane's 2 × 2 screen matrix. Every frame is a pure function of (S.step, S.u), so window.seek(t) lands on the same
+// picture.
+const M = D.MODEL;
+const BRAND = D.BRAND;
+const MAT_T = D.MAT_T, PAD_T = D.PAD_T, PAD_R = D.PAD_R, PAD_H = D.PAD_H;
+const DEG = Math.PI / 180;
+const TAU = Math.PI * 2;
+const frac = (x) => x - Math.floor(x);
+
+// ---------------------------------------------------------------- vectors, matrices and the camera
+const add3 = (a, b) => [a[0] + b[0], a[1] + b[1], a[2] + b[2]];
+const sub3 = (a, b) => [a[0] - b[0], a[1] - b[1], a[2] - b[2]];
+const mul3 = (a, s) => [a[0] * s, a[1] * s, a[2] * s];
+const dot3 = (a, b) => a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
+const cross3 = (a, b) => [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]];
+const unit3 = (a) => { const l = Math.hypot(a[0], a[1], a[2]) || 1; return [a[0] / l, a[1] / l, a[2] / l]; };
+const I3 = [1, 0, 0, 0, 1, 0, 0, 0, 1];
+const mm = (a, b) => [0, 1, 2].flatMap((r) => [0, 1, 2].map((c) => a[r * 3] * b[c] + a[r * 3 + 1] * b[3 + c] + a[r * 3 + 2] * b[6 + c]));
+const mv = (a, v) => [a[0] * v[0] + a[1] * v[1] + a[2] * v[2], a[3] * v[0] + a[4] * v[1] + a[5] * v[2], a[6] * v[0] + a[7] * v[1] + a[8] * v[2]];
+function rotAxis(n, th) {
+  const c = Math.cos(th), s = Math.sin(th), t = 1 - c, [x, y, z] = n;
+  return [t * x * x + c, t * x * y - s * z, t * x * z + s * y, t * x * y + s * z, t * y * y + c, t * y * z - s * x, t * x * z - s * y, t * y * z + s * x, t * z * z + c];
+}
+const Rz = (deg) => rotAxis([0, 0, 1], deg * DEG);
+const Rx = (deg) => rotAxis([1, 0, 0], deg * DEG);
+const Ry = (deg) => rotAxis([0, 1, 0], deg * DEG);
+// a rigid pose: p → M p + t
+const TF = (M = I3, t = [0, 0, 0]) => ({ M, t });
+const cmp = (a, b) => ({ M: mm(a.M, b.M), t: add3(mv(a.M, b.t), a.t) });
+const tr = (x, y, z) => TF(I3, [x, y, z]);
+const ap = (tf, p) => add3(mv(tf.M, p), tf.t);
+
+const CAM = cameraOf(P);
+const SA = CAM.sinA, CA = CAM.cosA, SE = CAM.sinE, CE = CAM.cosE, KK = CAM.k, OX = P.origin[0], OY = P.origin[1];
+const pr = (p) => [OX + (p[0] * SA - p[1] * CA) * KK, OY + ((p[0] * CA + p[1] * SA) * SE - p[2] * CE) * KK];
+const prv = (v) => [(v[0] * SA - v[1] * CA) * KK, ((v[0] * CA + v[1] * SA) * SE - v[2] * CE) * KK];
+const VIEW = [CA * CE, SA * CE, SE];
+const LIGHT = unit3([-SA, CA, 1.2]);
+const depth = (p) => dot3(p, VIEW);
+const r2 = (n) => Math.round(n * 100) / 100;
+const r3 = (n) => Math.round(n * 1000) / 1000;
+const P2 = (p) => r2(p[0]) + " " + r2(p[1]);
+const dPath = (pts) => { let s = "M" + P2(pts[0]); for (let i = 1; i < pts.length; i++) s += "L" + P2(pts[i]); return s + "Z"; };
+const dOpen = (pts) => { let s = "M" + P2(pts[0]); for (let i = 1; i < pts.length; i++) s += "L" + P2(pts[i]); return s; };
+const loc = (pts, close = true) => "M" + pts.map((p) => r3(p[0]) + " " + r3(p[1])).join("L") + (close ? "Z" : "");
+const smoother = (x) => { const t = clamp(x); return t * t * t * (t * (t * 6 - 15) + 10); };
+const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
+// ---------------------------------------------------------------- colours, shaded by facing, dimmed toward the paper
+const rgbOf = (h) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16));
+const hexOf = (c) => "#" + c.map((v) => Math.round(Math.max(0, Math.min(255, v))).toString(16).padStart(2, "0")).join("");
+const WHITE = [255, 255, 255], DARKC = [27, 29, 44], PAPER = rgbOf("#f5f0e5");
+const MATS = {
+  shell: { c: "#bfc3c9", hi: 0.5, lo: 0.34 }, // the light grey shell
+  frame: { c: "#b2b6bd", hi: 0.46, lo: 0.34 }, // the guard frame and the tray, a shade darker
+  inner: { c: "#8a8f98", hi: 0.3, lo: 0.36 }, // inside the tray and the ducts
+  dark: { c: "#33353f", hi: 0.26, lo: 0.3 }, // black plastic: the camera's face, the feet
+  bell: { c: "#4f525c", hi: 0.5, lo: 0.3 }, // the motor bells, anodised
+  prop: { c: "#7d828c", hi: 0.4, lo: 0.3 },
+  hub: { c: "#3c3e48", hi: 0.36, lo: 0.3 },
+  steel: { c: "#c3cad3", hi: 0.5, lo: 0.32 },
+  copper: { c: "#c8743f", hi: 0.42, lo: 0.3 },
+  copperHot: { c: "#ffa04a", hi: 0.55, lo: 0.12 },
+  pcb: { c: "#2e6a51", hi: 0.3, lo: 0.3 },
+  pcb2: { c: "#24443a", hi: 0.28, lo: 0.3 },
+  chip: { c: "#30323c", hi: 0.3, lo: 0.3 },
+  white: { c: "#efece4", hi: 0.5, lo: 0.24 },
+  battery: { c: "#868a93", hi: 0.42, lo: 0.34 },
+  leather: { c: "#a57650", hi: 0.2, lo: 0.36 },
+};
+for (const m of Object.values(MATS)) m.rgb = rgbOf(m.c);
+const shadeCache = new Map();
+function shade(mat, n, dim = 0) {
+  const m = MATS[mat];
+  const q = Math.round((dot3(n, LIGHT) + 1) * 150) / 150 - 1;
+  const dq = Math.round(dim * 20) / 20;
+  const key = mat + q + "|" + dq;
+  let v = shadeCache.get(key);
+  if (v) return v;
+  const w = q >= 0 ? m.hi * Math.min(1, q / 0.8) ** 1.4 : 0;
+  const k = q < 0 ? m.lo * Math.min(1, -q) ** 0.8 : 0;
+  let c = m.rgb.map((x, i) => x + (WHITE[i] - x) * w + (DARKC[i] - x) * k);
+  if (dq) c = c.map((x, i) => x + (PAPER[i] - x) * 0.58 * dq);
+  v = hexOf(c);
+  shadeCache.set(key, v);
+  return v;
+}
+
+// ---------------------------------------------------------------- solids, built once in their own frame
+// A solid: points, faces as index lists, outward normals (found from the faces and turned away from the solid's own
+// centre), face centres, and the creases (edges between faces that meet at a sharp angle) for the ink.
+function finish(v, f, mat, matOf = null) {
+  const c = mul3(v.reduce(add3, [0, 0, 0]), 1 / v.length);
+  const fc = f.map((ix) => mul3(ix.reduce((s, i) => add3(s, v[i]), [0, 0, 0]), 1 / ix.length));
+  const n = f.map((ix, k) => {
+    let nn = [0, 0, 0];
+    for (let i = 0; i < ix.length; i++) { const a = v[ix[i]], b = v[ix[(i + 1) % ix.length]]; nn = add3(nn, [(a[1] - b[1]) * (a[2] + b[2]), (a[2] - b[2]) * (a[0] + b[0]), (a[0] - b[0]) * (a[1] + b[1])]); }
+    nn = unit3(nn);
+    return dot3(nn, sub3(fc[k], c)) < 0 ? mul3(nn, -1) : nn;
+  });
+  const fm = matOf ? n.map((nn, k) => matOf(nn, fc[k]) || mat) : null;
+  // creases: shared edges whose faces turn by more than 38°
+  const em = new Map();
+  f.forEach((ix, k) => ix.forEach((a, i) => { const b = ix[(i + 1) % ix.length]; const key = a < b ? a + "_" + b : b + "_" + a; const e = em.get(key); if (e) e.push(k); else em.set(key, [k]); }));
+  const creases = [];
+  for (const [key, fs] of em) if (fs.length === 2 && dot3(n[fs[0]], n[fs[1]]) < Math.cos(38 * DEG)) { const [a, b] = key.split("_").map(Number); creases.push([a, b, fs[0], fs[1]]); }
+  return { v, f, n, fc, fm, mat, c, creases };
+}
+const perpOf = (a) => { const h = Math.abs(a[2]) > 0.9 ? [1, 0, 0] : [0, 0, 1]; const u = unit3(cross3(h, a)); return [u, cross3(a, u)]; };
+// a convex polygon in the plane (u, w) through o, extruded along a from s0 to s1
+function prism(o, a, u, w, poly, s0, s1, mat, matOf) {
+  const v = [];
+  for (const s of [s0, s1]) for (const [x, y] of poly) v.push(add3(o, add3(mul3(a, s), add3(mul3(u, x), mul3(w, y)))));
+  const n = poly.length, f = [];
+  f.push([...Array(n).keys()]);
+  f.push([...Array(n).keys()].map((i) => n + i));
+  for (let i = 0; i < n; i++) f.push([i, (i + 1) % n, n + ((i + 1) % n), n + i]);
+  return finish(v, f, mat, matOf);
+}
+const circlePoly = (r, n) => Array.from({ length: n }, (_, i) => [r * Math.cos((i / n) * TAU + Math.PI / n), r * Math.sin((i / n) * TAU + Math.PI / n)]);
+function rrPoly(w, h, r, per = 4) {
+  r = Math.min(r, w / 2, h / 2);
+  const out = [];
+  for (const [cx, cy, a0] of [[w / 2 - r, h / 2 - r, 0], [-(w / 2 - r), h / 2 - r, 90], [-(w / 2 - r), -(h / 2 - r), 180], [w / 2 - r, -(h / 2 - r), 270]])
+    for (let i = 0; i <= per; i++) { const a = (a0 + (90 * i) / per) * DEG; out.push([cx + r * Math.cos(a), cy + r * Math.sin(a)]); }
+  return out;
+}
+// a cylinder round axis a through c, from s0 to s1 along it
+const cylinder = (c, a, r, s0, s1, mat, n = 28, matOf) => { const [u, w] = perpOf(a); return prism(c, a, u, w, circlePoly(r, n), s0, s1, mat, matOf); };
+// a turned solid: rings of radius r at stations s along axis a through c
+function lathe(c, a, prof, mat, n = 28) {
+  const [u, w] = perpOf(a);
+  const rings = prof.map(([s, r]) => circlePoly(r, n).map(([x, y]) => add3(c, add3(mul3(a, s), add3(mul3(u, x), mul3(w, y))))));
+  return loft(rings, mat);
+}
+// a solid lofted through closed rings of equal count, capped at both ends
+function loft(rings, mat, matOf) {
+  const v = [], f = [], m = rings[0].length;
+  rings.forEach((r) => v.push(...r));
+  for (let i = 0; i + 1 < rings.length; i++) for (let j = 0; j < m; j++) { const a = i * m + j, b = i * m + ((j + 1) % m); f.push([a, b, b + m, a + m]); }
+  f.push([...Array(m).keys()]);
+  f.push([...Array(m).keys()].map((j) => (rings.length - 1) * m + j));
+  return finish(v, f, mat, matOf);
+}
+// a box with its edges chamfered by b, axes ax[0..2], half sizes h[0..2]
+function chamferBox(cen, ax, h, b, mat, matOf) {
+  const v = [], id = new Map();
+  const vid = (i, si, sj, sk) => id.get(`${i}${si}${sj}${sk}`);
+  for (let i = 0; i < 3; i++) {
+    const j = (i + 1) % 3, kx = (i + 2) % 3;
+    for (const si of [-1, 1]) for (const sj of [-1, 1]) for (const sk of [-1, 1]) {
+      id.set(`${i}${si}${sj}${sk}`, v.length);
+      v.push(add3(cen, add3(mul3(ax[i], si * h[i]), add3(mul3(ax[j], sj * (h[j] - b)), mul3(ax[kx], sk * (h[kx] - b))))));
+    }
+  }
+  const f = [];
+  for (let i = 0; i < 3; i++) for (const si of [-1, 1]) f.push([vid(i, si, -1, -1), vid(i, si, 1, -1), vid(i, si, 1, 1), vid(i, si, -1, 1)]);
+  for (let i = 0; i < 3; i++) {
+    const j = (i + 1) % 3;
+    for (const si of [-1, 1]) for (const sj of [-1, 1]) f.push([vid(i, si, sj, -1), vid(i, si, sj, 1), vid(j, sj, 1, si), vid(j, sj, -1, si)]);
+  }
+  for (const s0 of [-1, 1]) for (const s1 of [-1, 1]) for (const s2 of [-1, 1]) { const s = [s0, s1, s2]; f.push([0, 1, 2].map((i) => vid(i, s[i], s[(i + 1) % 3], s[(i + 2) % 3]))); }
+  return finish(v, f, mat, matOf);
+}
+const AXES = [[1, 0, 0], [0, 1, 0], [0, 0, 1]];
+const box = (cen, h, b, mat, matOf) => chamferBox(cen, AXES, h, b, mat, matOf);
+// move a built solid's points by a pose (for solids built square and then tipped)
+const posed = (sol, tf) => finish(sol.v.map((p) => ap(tf, p)), sol.f, sol.mat);
+
+// ---------------------------------------------------------------- flat print, drawn in a plane (mm, y up)
+const circPts = (cx, cy, r, n = 32) => Array.from({ length: n }, (_, i) => { const a = (i / n) * TAU; return [cx + r * Math.cos(a), cy + r * Math.sin(a)]; });
+const rrD = (cx, cy, w, h, r, per = 4) => loc(rrPoly(w, h, r, per).map(([x, y]) => [x + cx, y + cy]));
+const circD = (cx, cy, r, n = 32) => loc(circPts(cx, cy, r, n));
+const lineD = (pts) => loc(pts, false);
+const arcD = (cx, cy, r, a0, a1, n = 24) => lineD(Array.from({ length: n + 1 }, (_, i) => { const a = (a0 + ((a1 - a0) * i) / n) * DEG; return [cx + r * Math.cos(a), cy + r * Math.sin(a)]; }));
+const txt = (x, y, s, size, cls = "print", anchor = "middle", extra = "") => `<text class="${cls}" x="${r3(x)}" y="${r3(-y)}" font-size="${size}" text-anchor="${anchor}" transform="scale(1 -1)"${extra}>${esc(s)}</text>`;
+const rect = (x, y, w, h, cls, extra = "") => `<rect class="${cls}" x="${r3(x - w / 2)}" y="${r3(y - h / 2)}" width="${r3(w)}" height="${r3(h)}"${extra}/>`;
+const circle = (x, y, r, cls, extra = "") => `<circle class="${cls}" cx="${r3(x)}" cy="${r3(y)}" r="${r3(r)}"${extra}/>`;
+// the brand's wordmark, centred at (cx, cy), h tall (its 100-box), y up
+const logoAt = (cx, cy, h, cls) => { const k = h / 100; return `<g transform="matrix(${r3(k)} 0 0 ${r3(-k)} ${r3(cx - 50 * k)} ${r3(cy + 50 * k)})"><path d="${BRAND.logo}" class="${cls}"/></g>`; };
+let screwN = 0;
+function screwSvg(x, y, r = 0.9) {
+  const a = (31 + screwN++ * 67) * DEG, c = Math.cos(a) * r * 0.62, s = Math.sin(a) * r * 0.62;
+  return `<circle class="screw" cx="${r3(x)}" cy="${r3(y)}" r="${r}"/><path class="slot" d="M${r3(x - c)} ${r3(y - s)}L${r3(x + c)} ${r3(y + s)}M${r3(x + s)} ${r3(y - c)}L${r3(x - s)} ${r3(y + c)}"/>`;
+}
+function rng(seed) { let a = seed >>> 0; return () => { a = (a + 0x6d2b79f5) >>> 0; let t = a; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
+// a plane in a part's frame: origin o, in-plane axes u (print's x) and v (print's y), outward normal n
+const plane = (o, u, v, n, svg, keep = false) => ({ o, u, v, n, svg, keep });
+// print on a top face that reads left to right from where we stand: x toward the tail, y to the drone's left
+const TOPU = [-1, 0, 0], TOPV = [0, 1, 0], UPN = [0, 0, 1];
+
+// ---------------------------------------------------------------- painting one part
+// faces that look at us (sorted among themselves), the creases, the outline (hull of its corners), then its print
+function partSvg(pt, tf, dim, hl) {
+  let s = "";
+  const all = [];
+  for (const m of pt.meshes) {
+    const sc = m.v.map((p) => pr(ap(tf, p)));
+    all.push(...sc);
+    const vis = m.f.map((_, i) => dot3(mv(tf.M, m.n[i]), VIEW) > 1e-4);
+    const order = [];
+    for (let i = 0; i < m.f.length; i++) if (vis[i]) order.push([depth(ap(tf, m.fc[i])), i]);
+    order.sort((a, b) => a[0] - b[0]);
+    for (const [, i] of order) {
+      const col = shade(m.fm ? m.fm[i] : m.mat, mv(tf.M, m.n[i]), dim);
+      s += `<path class="f" d="${dPath(m.f[i].map((j) => sc[j]))}" fill="${col}" stroke="${col}"/>`;
+    }
+    if (pt.crease !== false) {
+      let d = "";
+      for (const [a, b, f1, f2] of m.creases) if (vis[f1] && vis[f2]) d += `M${P2(sc[a])}L${P2(sc[b])}`;
+      if (d) s += `<path class="cr" d="${d}"/>`;
+    }
+  }
+  const hullD = dPath(hull(all));
+  let deco = "", keep = "";
+  if (pt.decals) for (const dc of pt.decals) {
+    const nw = mv(tf.M, dc.n);
+    if (dot3(nw, VIEW) <= 0.02) continue;
+    const U = prv(mv(tf.M, dc.u)), V = prv(mv(tf.M, dc.v)), O = pr(ap(tf, dc.o));
+    const g = `<g transform="matrix(${r3(U[0])} ${r3(U[1])} ${r3(V[0])} ${r3(V[1])} ${r2(O[0])} ${r2(O[1])})">${typeof dc.svg === "function" ? dc.svg() : dc.svg}</g>`;
+    if (dc.keep) keep += g; else deco += g;
+  }
+  const glow = hl > 0.01 ? `<path class="hl-glow" d="${hullD}" stroke="#ffb648" stroke-width="12" filter="url(#dr-glow)" style="opacity:${r3(hl * 0.95)}"/>` : "";
+  const ol = pt.outline === false ? "" : `<path class="${pt.outline || "ol"}" d="${hullD}"/>`;
+  const rim = hl > 0.01 ? `<path class="hl-rim" d="${hullD}" stroke="#f08a1c" stroke-width="2.6" style="opacity:${r3(hl)}"/>` : "";
+  const after = deco + ol;
+  return { s: glow + s + (dim > 0.01 ? `<g style="opacity:${r3(1 - 0.6 * dim)}">${after}</g>` : after) + keep + rim, pts: all };
+}
+
+// ================================================================= THE BODY
+// Cross-sections along x (toward the nose): x, half width, bottom, top, top corner radius, bottom corner radius. The
+// top shell is everything above ZS; the tray under it is moulded in one piece with the guard frame.
+const ZS = 24;
+const ST = [
+  [-60, 20, 9, 38, 7, 6],
+  [-55, 24, 5, 42, 9, 7],
+  [-44, 25, 3, 44, 9, 8],
+  [30, 25, 3, 44, 9, 8],
+  [40, 23.5, 5, 43, 9, 7],
+  [47, 20, 9, 40, 8, 6],
+];
+const NA = 5;
+function upperRing([x, w, , zt, rT]) {
+  const out = [[x, -w, ZS]];
+  for (let i = 0; i < NA; i++) { const a = (180 - (90 * i) / (NA - 1)) * DEG; out.push([x, -w + rT + rT * Math.cos(a), zt - rT + rT * Math.sin(a)]); }
+  for (let i = 0; i < NA; i++) { const a = (90 - (90 * i) / (NA - 1)) * DEG; out.push([x, w - rT + rT * Math.cos(a), zt - rT + rT * Math.sin(a)]); }
+  out.push([x, w, ZS]);
+  return out;
+}
+// the tray's U: from the top of the left wall, round the floor, to the top of the right wall; t insets it
+function lowerU([x, w, zb, , , rB], t = 0) {
+  const W = w - t, Zb = zb + t, R = Math.max(1, rB - t * 0.6);
+  const out = [[x, W, ZS]];
+  for (let i = 0; i < NA; i++) { const a = (0 - (90 * i) / (NA - 1)) * DEG; out.push([x, W - R + R * Math.cos(a), Zb + R + R * Math.sin(a)]); }
+  for (let i = 0; i < NA; i++) { const a = (-90 - (90 * i) / (NA - 1)) * DEG; out.push([x, -W + R + R * Math.cos(a), Zb + R + R * Math.sin(a)]); }
+  out.push([x, -W, ZS]);
+  return out;
+}
+
+const PARTS = [];
+const mk = (o) => { const p = { bias: 0, dimOK: true, ...o }; p.c = p.c || mul3(p.meshes.reduce((s, m) => add3(s, m.c), [0, 0, 0]), 1 / p.meshes.length); PARTS.push(p); return p; };
+
+// ---- the top shell: the wordmark big across its flat top, the mode button behind it, the status light on the nose
+const LOGO_H = 44; // the wordmark's 100-box, in mm; the glyphs fill about 80 % of it
+const btnPrint = circle(0, 0, 4.3, "ringl") + circle(0, 0, 3.2, "btn") + `<path class="lite" d="${arcD(0, 0, 2.2, 100, 170, 8)}"/>`;
+const nosePrint = `<path class="connd" d="${rrD(0, 0, 15, 3, 1.5)}"/>` + circle(-4.4, 0, 0.85, "led") + circle(4.4, 0, 0.85, "led-off");
+const sideVents = Array.from({ length: 6 }, (_, i) => `<path class="vent" d="${rrD(-7.5 + i * 3, 0, 1.3, 5.4, 0.65)}"/>`).join("") + `<path class="hair" d="${lineD([[-11, -4.2], [8, -4.2]])}"/>`;
+const tailPrint = [-6, -2, 2, 6].map((x) => `<path class="vent" d="${rrD(x, 0, 1.8, 7, 0.9)}"/>`).join("");
+const SHELL = mk({
+  id: "shell", grp: "shell", node: "shell", meshes: [loft(ST.map(upperRing), "shell")], dimScale: 0.45,
+  decals: [
+    plane([-6, 0, 44.06], TOPU, TOPV, UPN, logoAt(0, 0, LOGO_H, "logo"), true),
+    plane([-38.5, 0, 44.06], TOPU, TOPV, UPN, btnPrint),
+    plane([47.05, 0, 32], [0, -1, 0], [0, 0, 1], [1, 0, 0], nosePrint),
+    plane([-60.05, 0, 31], [0, 1, 0], [0, 0, 1], [-1, 0, 0], tailPrint),
+    plane([-36, -25.05, 29.5], [-1, 0, 0], [0, 0, 1], [0, -1, 0], sideVents),
+    plane([-36, 25.05, 29.5], [1, 0, 0], [0, 0, 1], [0, 1, 0], sideVents),
+  ],
+});
+
+// ---- the tray: drawn as its inside (the far walls and the floor) and its outside (the near walls and the rim), so
+// whatever sits in it can be painted between the two
+const TW = 1.8;
+const TRAY = (() => {
+  const O = ST.map((s) => lowerU(s));
+  const I = ST.map((s, i) => lowerU([i === 0 ? s[0] + TW : i === ST.length - 1 ? s[0] - TW : s[0], ...s.slice(1)], TW));
+  const m = O[0].length, n = ST.length;
+  const quads = [];
+  const axisAt = (x, i) => [x, 0, (ST[i][2] + ZS) / 2];
+  const quadN = (q) => unit3(cross3(sub3(q[1], q[0]), sub3(q[3], q[0])));
+  for (let i = 0; i + 1 < n; i++) for (let j = 0; j + 1 < m; j++) {
+    for (const [R, inner] of [[O, false], [I, true]]) {
+      const q = [R[i][j], R[i][j + 1], R[i + 1][j + 1], R[i + 1][j]];
+      let nn = quadN(q);
+      const c = mul3(q.reduce(add3, [0, 0, 0]), 0.25);
+      const away = dot3(nn, sub3(c, axisAt(c[0], i))) > 0;
+      if (away === inner) nn = mul3(nn, -1);
+      quads.push({ q, n: nn, inner, mat: inner ? "inner" : "frame" });
+    }
+  }
+  for (let i = 0; i + 1 < n; i++) for (const j of [0, m - 1]) quads.push({ q: [O[i][j], O[i + 1][j], I[i + 1][j], I[i][j]], n: [0, 0, 1], rim: true, out: [0, j === 0 ? 1 : -1, 0], mat: "frame" });
+  for (const i of [0, n - 1]) quads.push({ q: [O[i][0], O[i][m - 1], I[i][m - 1], I[i][0]], n: [0, 0, 1], rim: true, out: [i === 0 ? -1 : 1, 0, 0], mat: "frame" });
+  quads.push({ q: O[0], n: [-1, 0, 0], mat: "frame" }, { q: O[n - 1], n: [1, 0, 0], mat: "frame" });
+  quads.push({ q: I[0], n: [1, 0, 0], inner: true, mat: "inner" }, { q: I[n - 1], n: [-1, 0, 0], inner: true, mat: "inner" });
+  const outerPts = O.flat();
+  // the charging port on the near side, between the ducts
+  const side = plane([0, -25.05, 17.5], [-1, 0, 0], [0, 0, 1], [0, -1, 0],
+    `<path class="connd" d="${rrD(0, 0, 8.4, 3.2, 1.5)}"/><path class="lens2" d="${rrD(0, 0, 5.6, 1, 0.5)}"/>` + txt(0, -4.2, "USB-C", 1.7, "print2"));
+  return { quads, outerPts, rimIn: I, decals: [side] };
+})();
+function traySvg(tf, dim) {
+  const back = [], front = [];
+  for (const qd of TRAY.quads) {
+    const nw = mv(tf.M, qd.n);
+    if (dot3(nw, VIEW) <= 1e-4) continue;
+    const pts = qd.q.map((p) => ap(tf, p));
+    const k = depth(mul3(pts.reduce(add3, [0, 0, 0]), 1 / pts.length));
+    const col = shade(qd.mat, nw, dim);
+    const far = qd.inner || (qd.rim && dot3(mv(tf.M, qd.out), VIEW) < 0);
+    (far ? back : front).push([k, `<path class="f" d="${dPath(pts.map(pr))}" fill="${col}" stroke="${col}"/>`]);
+  }
+  back.sort((a, b) => a[0] - b[0]);
+  front.sort((a, b) => a[0] - b[0]);
+  const cen = depth(ap(tf, [0, 0, ZS]));
+  const hp = hull(TRAY.outerPts.map((p) => { const w = ap(tf, p), q = pr(w); q.far = Math.abs(p[2] - ZS) < 0.01 && depth(w) < cen; return q; }));
+  const hullD = dPath(hp);
+  let nearD = "";
+  for (let i = 0; i < hp.length; i++) { const a = hp[i], b = hp[(i + 1) % hp.length]; if (!(a.far && b.far)) nearD += `M${P2(a)}L${P2(b)}`; }
+  const I = TRAY.rimIn;
+  const rimPts = [...I.map((r) => r[0]), ...I.map((r) => r[r.length - 1]).reverse()].map((p) => pr(ap(tf, p)));
+  let deco = "";
+  for (const dc of TRAY.decals) {
+    if (dot3(mv(tf.M, dc.n), VIEW) <= 0.02) continue;
+    const U = prv(mv(tf.M, dc.u)), V = prv(mv(tf.M, dc.v)), O = pr(ap(tf, dc.o));
+    deco += `<g transform="matrix(${r3(U[0])} ${r3(U[1])} ${r3(V[0])} ${r3(V[1])} ${r2(O[0])} ${r2(O[1])})">${dc.svg}</g>`;
+  }
+  const op = dim > 0.01 ? ` style="opacity:${r3(1 - 0.6 * dim)}"` : "";
+  return {
+    back: back.map((x) => x[1]).join("") + `<g${op}><path class="seam" d="${dPath(rimPts)}"/><path class="ol" d="${hullD}"/></g>`,
+    front: front.map((x) => x[1]).join("") + `<g${op}>${deco}<path class="ol" d="${nearD}"/></g>`,
+    pts: TRAY.outerPts.map((p) => pr(ap(tf, p))),
+  };
+}
+// four rubber feet under the belly
+const FEET = [[-34, 15], [-34, -15], [26, 15], [26, -15]].map(([x, y], i) => mk({ id: "foot" + i, grp: "foot", node: "body", meshes: [cylinder([x, y, 0], [0, 0, 1], 3.2, 0, 3.4, "dark", 14)], outline: "ol-s", bias: -40 }));
+
+// ---- the battery: slides in from the tail, under the board
+const BAT = { c: [-33, 0, 16.2], h: [28.5, 16, 6.8] };
+const batTop = (() => {
+  // read from where we stand: x toward the tail
+  let s = `<path class="label" d="${rrD(-3, 0, 48, 28, 2)}"/>` + logoAt(-16, 1.5, 19, "logo");
+  s += txt(-5, 4.6, "INTELLIGENT", 2.7, "print", "start") + txt(-5, 0.6, "飞行电池", 2.7, "print", "start");
+  s += `<path class="hair" d="${lineD([[-5, -2.6], [17, -2.6]])}"/>`;
+  for (let i = 0; i < 4; i++) s += `<path class="warn" d="${loc([[-4.6 + i * 4.6, -9.6], [-1 + i * 4.6, -9.6], [-2.8 + i * 4.6, -6.6]])}"/>`;
+  s += txt(-5, -12.6, "锂离子 · 请勿刺穿", 1.7, "print2", "start");
+  for (let i = 0; i < 4; i++) s += circle(25.2, -5 + i * 3.2, 0.8, i < 3 ? "led" : "led-off");
+  s += circle(25.2, 9, 1.7, "connd") + circle(25.2, 9, 0.9, "hair");
+  return s;
+})();
+const BATTERY = mk({ id: "battery", grp: "battery", node: "battery", layer: "in", meshes: [box(BAT.c, BAT.h, 2.4, "battery")], decals: [plane([BAT.c[0], 0, BAT.c[2] + BAT.h[2] + 0.04], TOPU, TOPV, UPN, batTop)] });
+
+// ---- the flight board over the front of the battery: the processor under its can, the IMU, the four motor drivers
+// and their plugs, the radio and its antenna, the camera's flex at the front edge (all of it drawn, layout typical)
+const FC = { x0: -26, x1: 40, hw: 20.5, z: 25.2, t: 1.4 };
+const FCX = (FC.x0 + FC.x1) / 2;
+const ZT = FC.z + FC.t;
+const fcToPrint = (x, y) => [FCX - x, y];
+const MCONN = [[35, 15], [35, -15], [-21, 15], [-21, -15]];
+const fcPrint = (() => {
+  const R = rng(36);
+  const hw = (FC.x1 - FC.x0) / 2;
+  let s = "", tr = "";
+  for (let i = 0; i < 28; i++) {
+    let x = (R() - 0.5) * 2 * (hw - 3), y = (R() - 0.5) * 2 * (FC.hw - 3);
+    const pts = [[x, y]];
+    for (let k = 0; k < 3; k++) { if (k % 2 === 0) x += (R() - 0.5) * 22; else y += (R() - 0.5) * 14; pts.push([Math.max(-hw + 2, Math.min(hw - 2, x)), Math.max(-FC.hw + 2, Math.min(FC.hw - 2, y))]); }
+    tr += lineD(pts);
+  }
+  s += `<path class="trace" d="${tr}"/>`;
+  for (const sx of [-1, 1]) for (const sy of [-1, 1]) s += circle(sx * (hw - 3), sy * (FC.hw - 3), 2.1, "pad") + screwSvg(sx * (hw - 3), sy * (FC.hw - 3), 1.3);
+  // the four motor drivers: three switches and a driver chip each, by its plug
+  MCONN.forEach(([x, y], i) => {
+    const [px, py] = fcToPrint(x, y);
+    const gx = px + (px > 0 ? -8 : 8), gy = py;
+    for (let k = 0; k < 3; k++) s += rect(gx + (k - 1) * 3.2, gy + (py > 0 ? -1.2 : 1.2), 2.4, 2.1, "chipb");
+    s += rect(gx, gy + (py > 0 ? 3.2 : -3.2), 3.6, 2.1, "chipb");
+    s += txt(px + (px > 0 ? -2 : 2), py + (py > 0 ? -5.8 : 4.8), `M${i + 1}`, 2.1, "silk");
+  });
+  // the IMU's silk box and name, the radio with its meander antenna toward the tail
+  const [ix, iy] = fcToPrint(-4, 11);
+  s += `<path class="silk-l" d="${rrD(ix, iy, 7.4, 7.4, 0.8)}"/>` + txt(ix, iy + 5.2, "IMU", 2.3, "silk");
+  const [rx, ry] = fcToPrint(-14, -2);
+  s += rect(rx, ry, 5.4, 5.4, "chipb") + txt(rx, ry - 4.6, "RF", 2, "silk");
+  let ant = `M${r3(rx + 4)} ${r3(ry)}`;
+  for (let k = 0; k < 6; k++) ant += `L${r3(rx + 5.2 + k * 1.4)} ${r3(ry + (k % 2 ? -3 : 3))}`;
+  s += `<path class="pins" d="${ant}" style="fill:none;stroke:#e3b866;stroke-width:.5px"/>`;
+  for (let i = 0; i < 30; i++) {
+    const x = (R() - 0.5) * 34, y = (R() - 0.5) * 28;
+    if (Math.abs(x + 7) < 11 && Math.abs(y + 3) < 11) continue;
+    if (Math.abs(x - ix) < 6 && Math.abs(y - iy) < 6) continue;
+    if (Math.abs(x - rx) < 5 && Math.abs(y - ry) < 5) continue;
+    s += R() < 0.5 ? rect(x, y, 1.5, 0.85, "cap") : rect(x, y, 1, 0.65, "res");
+  }
+  s += `<path class="screw" d="${rrD(-14, 11, 4.4, 2.2, 1)}"/>`;
+  s += txt(-27, 9, "CAM", 2, "silk");
+  s += logoAt(20, -14.5, 8.4, "silk");
+  return s;
+})();
+const FCB = mk({ id: "fc", grp: "fc", node: "fc", layer: "in", meshes: [prism([FCX, 0, FC.z], [0, 0, 1], [1, 0, 0], [0, 1, 0], rrPoly(FC.x1 - FC.x0, FC.hw * 2, 3), 0, FC.t, "pcb")], decals: [plane([FCX, 0, ZT + 0.04], TOPU, TOPV, UPN, fcPrint)], outline: "ol", crease: false, focusRoot: true });
+const canPrint = logoAt(-1.5, 2, 7.4, "logo-gr") + txt(0, -3.2, "SoC", 2, "print2");
+mk({ id: "fc-can", grp: "fc", node: "fc", layer: "in", bias: 3, meshes: [box([14, -3, ZT + 1], [8, 8, 1], 0.5, "steel")], decals: [plane([14, -3, ZT + 2.03], TOPU, TOPV, UPN, canPrint)], outline: "ol-s" });
+mk({ id: "fc-imu", grp: "fc", node: "fc", layer: "in", bias: 3, meshes: [box([-4, 11, ZT + 0.5], [2.2, 2.2, 0.5], 0.3, "chip")], decals: [plane([-4, 11, ZT + 1.03], TOPU, TOPV, UPN, circle(-1.3, 1.3, 0.32, "chipp"))], outline: "ol-s" });
+MCONN.forEach(([x, y], i) => mk({ id: "fc-c" + i, grp: "fc", node: "fc", layer: "in", bias: 3, meshes: [box([x + (x > 0 ? -1 : 1), y + Math.sign(y) * 2, ZT + 0.8], [2, 3.2, 0.8], 0.3, "white")], outline: "ol-s" }));
+mk({ id: "fc-flex", grp: "fc", node: "fc", layer: "in", bias: 3, meshes: [box([FC.x1 - 2.6, 0, ZT + 0.5], [1.4, 5.4, 0.5], 0.3, "chip")], outline: "ol-s" });
+for (const [x, y] of [[FC.x0 + 3, FC.hw - 3], [FC.x0 + 3, -FC.hw + 3], [FC.x1 - 3, FC.hw - 3], [FC.x1 - 3, -FC.hw + 3]])
+  mk({ id: "fc-post", grp: "fc", node: "fcPost", layer: "in", bias: -6, meshes: [cylinder([x, y, 4], [0, 0, 1], 1.5, 0, FC.z - 4, "steel", 14)], outline: "ol-s" });
+
+// ---- the downward sensor: a small module on the tray floor under the nose, looking down through a window in the
+// belly (place and make-up typical)
+const SENS = { c: [34, 0, 6.6], h: [4.4, 8.6, 1.6] };
+const SENSOR_PT = [34, 0, 3.0]; // the window in the belly, where the beam leaves
+const sensPrint = rect(0, 3.6, 4, 3.4, "chipb") + rect(0, -3.6, 4, 3.4, "chipb") + circle(0, 3.6, 0.9, "glint2") + circle(0, -3.6, 0.9, "glint2") + `<path class="flex" d="${rrD(-3.6, 0, 2.4, 6, 0.4)}"/>`;
+const SENSOR = mk({ id: "sensor", grp: "sensor", node: "sensor", layer: "in", bias: -20, meshes: [box(SENS.c, SENS.h, 0.5, "pcb2")], decals: [plane([SENS.c[0], 0, SENS.c[2] + SENS.h[2] + 0.04], TOPU, TOPV, UPN, sensPrint)], outline: "ol-s", focusRoot: true });
+
+// ================================================================= THE CAMERA, on a small gimbal under the nose
+// two yoke plates hang off the nose, the head turns between them on one tilt motor (drawn)
+const HEAD = { c: [55, 0, 22.5], h: [7, 11.4, 7.4] };
+const lensPrint = (() => {
+  let s = circle(0, 0, 5.9, "lens") + circle(0, 0, 4.6, "lens2") + `<circle class="ringl" cx="0" cy="0" r="5.2"/>` + circle(0, 0, 3.1, "lens3") + circle(0, 0, 1.5, "lens2");
+  s += `<path class="glint2" d="${arcD(0, 0, 3.8, 110, 170, 10)}${arcD(0, 0, 2.4, 170, 110, 10).replace("M", "L")}Z"/>` + circle(-1.3, 1.6, 0.62, "glint") + circle(1.7, -1.5, 0.3, "glint");
+  return s;
+})();
+const GIMBAL = [
+  mk({ id: "g-bridge", grp: "gimbal", node: "gimbal", meshes: [box([48.6, 0, 32.4], [2.4, 14.6, 1.8], 0.8, "frame")], outline: "ol-s", bias: -2 }),
+  mk({ id: "g-yokeL", grp: "gimbal", node: "gimbal", meshes: [box([52, 13.5, 24], [5, 1.1, 9.6], 0.8, "frame")], outline: "ol-s", bias: -3 }),
+  mk({ id: "g-head", grp: "gimbal", node: "gimbalHead", meshes: [box(HEAD.c, HEAD.h, 3, "shell", (n) => (n[0] > 0.7 ? "dark" : null))], bias: 0 }),
+  mk({ id: "g-lens", grp: "gimbal", node: "gimbalHead", meshes: [cylinder([HEAD.c[0] + HEAD.h[0], 0, HEAD.c[2]], [1, 0, 0], 6.2, 0, 2.2, "dark", 28)], decals: [plane([HEAD.c[0] + HEAD.h[0] + 2.25, 0, HEAD.c[2]], [0, -1, 0], [0, 0, 1], [1, 0, 0], lensPrint)], outline: "ol-s", bias: 1 }),
+  mk({ id: "g-yokeR", grp: "gimbal", node: "gimbal", meshes: [box([52, -13.5, 24], [5, 1.1, 9.6], 0.8, "frame")], outline: "ol-s", bias: 3 }),
+  mk({ id: "g-tilt", grp: "gimbal", node: "gimbal", meshes: [cylinder([54, -14.6, HEAD.c[2]], [0, -1, 0], 4.3, 0, 2.2, "bell", 22)], outline: "ol-s", bias: 4, decals: [plane([54, -16.85, HEAD.c[2]], [-1, 0, 0], [0, 0, 1], [0, -1, 0], circle(0, 0, 2.9, "ringl") + circle(0, 0, 0.9, "screw"))] }),
+];
+
+// ================================================================= THE GUARD FRAME, THE MOTORS, THE PROPS
+// Four round ducts moulded with the tray, joined along each side by a bridge; inside each, three struts hold a mount
+// and the motor stands on it, its prop turning below the duct's rim. Spin is named as seen from above (the kit's plan
+// is mirrored, see the drone figure): diagonal pairs turn the same way.
+const R_O = 28.6, R_L = 29.8, R_I = 26.4, GZ0 = 9, GZ1 = 27, LIP = 2.6, NR = 64; // the wall, its rim lip, the bore
+const MZ = 13; // the mount's top, where the motor stands
+const DUCTS = [
+  { id: "FL", c: [36, 55], spin: "CCW", ph: 0.3 },
+  { id: "FR", c: [36, -55], spin: "CW", ph: 1.9 },
+  { id: "RL", c: [-36, 55], spin: "CW", ph: 3.1 },
+  { id: "RR", c: [-36, -55], spin: "CCW", ph: 4.7 },
+];
+const SEEN = (spin) => (spin === "CW" ? 1 : -1);
+const RING = (() => {
+  const at2 = (r, a, z) => [r * Math.cos(a), r * Math.sin(a), z];
+  const walls = [];
+  const ZL = GZ1 - LIP;
+  for (let i = 0; i < NR; i++) {
+    const a0 = (i / NR) * TAU, a1 = ((i + 1) / NR) * TAU, am = (a0 + a1) / 2;
+    const rad = [Math.cos(am), Math.sin(am), 0];
+    walls.push({ q: [at2(R_O, a0, GZ0), at2(R_O, a1, GZ0), at2(R_O, a1, ZL), at2(R_O, a0, ZL)], n: rad, kind: "out" });
+    walls.push({ q: [at2(R_L, a0, ZL), at2(R_L, a1, ZL), at2(R_L, a1, GZ1), at2(R_L, a0, GZ1)], n: rad, kind: "lip" });
+    walls.push({ q: [at2(R_I, a0, GZ0), at2(R_I, a1, GZ0), at2(R_I, a1, GZ1), at2(R_I, a0, GZ1)], n: mul3(rad, -1), kind: "in" });
+  }
+  const circ = (r, z) => Array.from({ length: NR }, (_, i) => at2(r, (i / NR) * TAU, z));
+  return { walls, lTop: circ(R_L, GZ1), lBot: circ(R_L, ZL), oBot: circ(R_O, GZ0), iTop: circ(R_I, GZ1), iBot: circ(R_I, GZ0), bead: circ(R_I + 1.3, GZ1) };
+})();
+// one duct: its far inside wall (and the bottom edge of it seen through the opening), then whatever sits inside, then
+// its near outside wall, the rim lip, its top and the ink
+function ringSvg(tf, dim, d) {
+  const back = [], front = [];
+  let botD = "", creD = "";
+  for (const w of RING.walls) {
+    const nw = mv(tf.M, w.n);
+    if (dot3(nw, VIEW) <= 1e-4) continue;
+    const pts = w.q.map((p) => pr(ap(tf, p)));
+    const col = shade(w.kind === "in" ? "inner" : "frame", nw, dim);
+    const path = `<path class="f" d="${dPath(pts)}" fill="${col}" stroke="${col}"/>`;
+    if (w.kind === "in") { back.push(path); botD += `M${P2(pts[0])}L${P2(pts[1])}`; }
+    else { front.push(path); if (w.kind === "lip") creD += `M${P2(pts[0])}L${P2(pts[1])}M${P2(pts[3])}L${P2(pts[2])}`; }
+  }
+  const sc = (list) => list.map((p) => pr(ap(tf, p)));
+  const lTop = sc(RING.lTop), iTop = sc(RING.iTop);
+  const topCol = shade("frame", mv(tf.M, [0, 0, 1]), dim);
+  const top = `<path class="f" d="${dPath(lTop)}${dPath([...iTop].reverse())}" fill="${topCol}" stroke="${topCol}" fill-rule="evenodd"/>`;
+  const sil = dPath(hull([...lTop, ...sc(RING.lBot), ...sc(RING.oBot)]));
+  // the turn of its prop, printed on the rim on the side away from the body
+  let arrow = "";
+  if (d) {
+    const dir = SEEN(d.spin), ac = d.c[1] > 0 ? 90 : -90, rm = (R_I + R_L) / 2, zt = GZ1 + 0.05;
+    const arc = Array.from({ length: 13 }, (_, i) => { const a = (ac + dir * (-20 + (40 * i) / 12)) * DEG; return pr(ap(tf, [rm * Math.cos(a), rm * Math.sin(a), zt])); });
+    const a1 = (ac + dir * 20) * DEG, tg = [-Math.sin(a1) * dir, Math.cos(a1) * dir, 0], rd = [Math.cos(a1), Math.sin(a1), 0];
+    const c1 = [rm * Math.cos(a1), rm * Math.sin(a1), zt];
+    const head = [add3(c1, mul3(tg, 3.2)), add3(c1, mul3(rd, 1.5)), add3(c1, mul3(rd, -1.5))].map((p) => pr(ap(tf, p)));
+    arrow = `<path class="hair" d="${dOpen(arc)}" style="opacity:.7;stroke-width:.9px"/><path class="ink" d="${dPath(head)}" style="opacity:.7"/>`;
+  }
+  const op = dim > 0.01 ? ` style="opacity:${r3(1 - 0.6 * dim)}"` : "";
+  return {
+    back: back.join("") + `<g${op}><path class="seam" d="${botD}"/></g>`,
+    front: front.join("") + top + `<g${op}><path class="cr" d="${creD}" style="opacity:.6"/><path class="hair" d="${dPath(sc(RING.bead))}" style="opacity:.3"/><path class="ol-s" d="${dPath(iTop)}"/>${arrow}<path class="ol" d="${sil}"/></g>`,
+    pts: [...lTop, ...sc(RING.oBot)],
+  };
+}
+// the bridges joining the front and rear ducts along each side
+const bridgePrint = `<path class="seam" d="${lineD([[-23, 3.4], [23, 3.4]])}"/>` + [-6, 0, 6].map((x) => `<path class="vent" d="${rrD(x, -1.4, 3.4, 1.3, 0.6)}"/>`).join("");
+// a web under the rim lip, its ends sunk into the duct walls
+const BZ1 = GZ1 - LIP - 3;
+const BRIDGES = [1, -1].map((s) => mk({ id: "bridge" + s, grp: "frame", node: "body", meshes: [box([0, s * 82.3, (GZ0 + BZ1) / 2], [26.5, 1.3, (BZ1 - GZ0) / 2], 0.7, "frame")], decals: s < 0 ? [plane([0, -83.65, (GZ0 + BZ1) / 2], [-1, 0, 0], [0, 0, 1], [0, -1, 0], bridgePrint)] : null }));
+
+// the motor in its own frame: origin on the mount's top, z up. Stator: a base, a shaft, 9 wound teeth (drawn); the
+// bell (the rotor, with the magnets inside) drops over it.
+function motorMeshes() {
+  const out = [];
+  out.push({ k: "base", m: cylinder([0, 0, 0], [0, 0, 1], 7.2, 0, 1, "bell", 28) });
+  out.push({ k: "hub", m: cylinder([0, 0, 0], [0, 0, 1], 1.6, 1, 8.6, "steel", 14) });
+  for (let i = 0; i < 9; i++) {
+    const a = (i * 40 + 20) * DEG, rad = [Math.cos(a), Math.sin(a), 0], tan = [-Math.sin(a), Math.cos(a), 0];
+    out.push({ k: "coil", m: chamferBox(add3(mul3(rad, 4.3), [0, 0, 3.7]), [rad, tan, [0, 0, 1]], [1.5, 0.95, 2.1], 0.5, "copper") });
+    out.push({ k: "tooth", m: chamferBox(add3(mul3(rad, 6.1), [0, 0, 3.7]), [rad, tan, [0, 0, 1]], [0.32, 1.5, 2.5], 0.15, "steel") });
+  }
+  return out;
+}
+const MOTOR_PARTS = motorMeshes();
+const BELL_H = 7;
+const bellPrint = (() => {
+  let s = "";
+  for (let i = 0; i < 6; i++) s += `<path class="vent" d="${arcD(0, 0, 6.3, i * 60 + 8, i * 60 + 44, 6)}${arcD(0, 0, 4.1, i * 60 + 44, i * 60 + 8, 6).replace("M", "L")}Z"/>`;
+  return s + `<circle class="ringl" cx="0" cy="0" r="7.3"/>`;
+})();
+const BELL_MESH = cylinder([0, 0, 0], [0, 0, 1], 7.8, 0.6, BELL_H, "bell", 30);
+const magPrint = (() => {
+  let s = circle(0, 0, 7.7, "bell-in") + circle(0, 0, 5.9, "bell-in2");
+  const n = 12, w = 360 / n;
+  for (let i = 0; i < n; i++) s += `<path class="${i % 2 ? "mag-s" : "mag-n"}" d="${arcD(0, 0, 7.5, i * w + 1.4, (i + 1) * w - 1.4, 4)}${arcD(0, 0, 6.1, (i + 1) * w - 1.4, i * w + 1.4, 4).replace("M", "L")}Z"/>`;
+  return s + circle(0, 0, 1.8, "screw") + circle(0, 0, 0.8, "hair");
+})();
+// a blade in its own frame: x along the span from its pivot, y the chord, pitched round x; mirrored for the other turn
+const BLADE_POLY = [[0, 1.3], [1.8, 2.3], [4.8, 3.3], [9, 3.7], [13.8, 3.3], [17.4, 2.5], [19.8, 1.6], [21, 0.5], [21, -0.5], [20.1, -1.3], [17.4, -2.1], [13.2, -2.8], [8.4, -3.2], [4.2, -3.0], [1.5, -2.2], [0, -1.4]];
+function bladeMesh(cw) {
+  const poly = cw ? BLADE_POLY.map(([x, y]) => [x, -y]).reverse() : BLADE_POLY;
+  return posed(prism([0, 0, 0], [0, 0, 1], [1, 0, 0], [0, 1, 0], poly, -0.45, 0.45, "prop"), TF(Rx(cw ? -12 : 12)));
+}
+const BLADE = { CW: bladeMesh(false), CCW: bladeMesh(true) };
+const PIVOT = 3;
+const PROP_R = PIVOT + 21;
+const HUB_MESH = cylinder([0, 0, 0], [0, 0, 1], 4.2, 0, 2.8, "hub", 24);
+const hubPrint = screwSvg(0, 0, 1.2) + circle(0, 0, 3.1, "ringl");
+
+for (const d of DUCTS) {
+  const a0 = (d.c[1] > 0 ? -90 : 90) * DEG; // toward the body
+  [0, 120, 240].forEach((da, i) => {
+    const a = a0 + da * DEG, rad = [Math.cos(a), Math.sin(a), 0], tan = [-Math.sin(a), Math.cos(a), 0];
+    const r0 = 6, r1 = R_I + 0.6;
+    mk({ id: `${d.id}-strut${i}`, grp: "frame", node: `duct${d.id}`, duct: d.id, sub: 0, meshes: [chamferBox(add3(mul3(rad, (r0 + r1) / 2), [0, 0, 11.4]), [rad, tan, [0, 0, 1]], [(r1 - r0) / 2, 1.5, 1.4], 0.5, "frame")], outline: "ol-s" });
+  });
+  mk({ id: `${d.id}-mount`, grp: "frame", node: `duct${d.id}`, duct: d.id, sub: 0, meshes: [lathe([0, 0, 0], [0, 0, 1], [[8.4, 4.6], [10.4, 6.9], [MZ, 7.3]], "frame", 28)], outline: "ol-s", bias: 2 });
+  MOTOR_PARTS.forEach(({ k, m }, j) => {
+    const p = mk({ id: `${d.id}-m-${k}`, grp: "motor", node: `motor${d.id}`, duct: d.id, sub: 1, meshes: [m], outline: "ol-s", crease: k !== "coil", focusRoot: k === "base", coil: k === "coil" ? (j - 2) / 2 : -1 });
+    // the same coil, lit: drawn instead of it while the current runs through it
+    if (k === "coil") p.hot = { ...p, meshes: [{ ...m, mat: "copperHot" }] };
+  });
+  mk({ id: `${d.id}-bell`, grp: "motor", node: `bell${d.id}`, duct: d.id, sub: 2, meshes: [BELL_MESH], focusRoot: true, decals: [plane([0, 0, BELL_H + 0.04], TOPU, TOPV, UPN, bellPrint), plane([0, 0, 0.56], [1, 0, 0], [0, -1, 0], [0, 0, -1], magPrint)] });
+  for (const i of [0, 1]) mk({ id: `${d.id}-blade${i}`, grp: "prop", node: `blade${d.id}${i}`, duct: d.id, sub: 3, meshes: [BLADE[d.spin]], outline: "ol-s" });
+  mk({ id: `${d.id}-hub`, grp: "prop", node: `prop${d.id}`, duct: d.id, sub: 4, meshes: [HUB_MESH], decals: [plane([0, 0, 2.84], TOPU, TOPV, UPN, hubPrint)], outline: "ol-s" });
+}
+
+// ================================================================= THE PAD, on the mat
+// A round leather launch pad, stitched round its rim, two rings embossed in its top. It stands in for the palm the
+// drone takes off from and lands on; it is a pad, never a hand.
+const padPrint = (() => {
+  let s = circle(0, 0, PAD_R - 9, "stitch");
+  for (const [r, cls] of [[44, "emboss"], [44.7, "emboss-l"], [20, "emboss"], [20.7, "emboss-l"]]) s += circle(0, 0, r, cls);
+  return s;
+})();
+const PADP = mk({ id: "pad", grp: "pad", node: "pad", meshes: [lathe([0, 0, 0], [0, 0, 1], [[0, PAD_R - 1.4], [PAD_H - 3.6, PAD_R], [PAD_H - 1.1, PAD_R - 1.5], [PAD_H, PAD_R - 3.6]], "leather", 96)], decals: [plane([0, 0, PAD_H + 0.04], [1, 0, 0], [0, 1, 0], UPN, padPrint)], crease: false });
+
+// ================================================================= THE POSES
+const ROOT_YAW = D.YAW;
+const HL_DUCT = "FR"; // the motor picked out when the shell lifts (the one nearest us)
+const REST = { FL: 28, FR: 148, RL: 152, RR: 32 }; // where the props park
+const propZ = (Z, id) => BELL_H + Z.propLift + (id === HL_DUCT ? Z.hlLift : 0) + 34 * Z.e.prop;
+const about = (c, R) => cmp(tr(c[0], c[1], c[2]), cmp(TF(R), tr(-c[0], -c[1], -c[2])));
+// where the picked motor's bell goes once it is off: up, then turned over and out over the duct's near rim
+const BELL_OUT = [0, -22, 26];
+const bellTurn = (tip) => ({ lift: smoother(clamp(tip / 0.4)), turn: smoother(clamp((tip - 0.25) / 0.75)) });
+function nodes(Z) {
+  const N = {};
+  // the Dronie backs the whole drone away along its own tail
+  const bk = mv(Rz(ROOT_YAW), [-Z.back, 0, 0]);
+  // and the gap step slides it sideways over the pad, along the screen
+  const sl = [-Math.sin(D.AZ * DEG) * Z.slide, Math.cos(D.AZ * DEG) * Z.slide];
+  const root = cmp(TF(I3, [bk[0] + sl[0], bk[1] + sl[1], PAD_T + Z.hover]), cmp(TF(Rz(ROOT_YAW + Z.yaw)), about([0, 0, 20], Ry(Z.pitch))));
+  const at = (t) => cmp(root, TF(I3, t));
+  const e = Z.e;
+  N.body = root;
+  N.shell = at([Z.shellX, 0, Z.shellZ]);
+  N.battery = at([-112 * e.bat, 0, 0]);
+  N.fc = at([0, 0, 84 * e.fc]);
+  N.sensor = at([0, 0, 30 * e.sens]);
+  N.fcPost = root;
+  N.gimbal = at([66 * e.gim, 0, 0]);
+  N.gimbalHead = cmp(N.gimbal, about(HEAD.c, Ry(Z.tilt)));
+  for (const d of DUCTS) {
+    const duct = at([d.c[0], d.c[1], 0]);
+    N["duct" + d.id] = duct;
+    const motor = cmp(duct, TF(I3, [0, 0, MZ + 44 * e.motor]));
+    N["motor" + d.id] = motor;
+    let bell = motor;
+    if (d.id === HL_DUCT && Z.tip > 0) {
+      const { lift, turn } = bellTurn(Z.tip);
+      bell = cmp(motor, cmp(TF(I3, [BELL_OUT[0] * turn, BELL_OUT[1] * turn, 16 * lift + (BELL_OUT[2] - 16) * turn]), about([0, 0, BELL_H / 2], Rx(-180 * turn))));
+    }
+    N["bell" + d.id] = bell;
+    const prop = cmp(motor, TF(Rz(Z.sigma[d.id]), [0, 0, propZ(Z, d.id)]));
+    N["prop" + d.id] = prop;
+    N[`blade${d.id}0`] = cmp(prop, TF(I3, [PIVOT, 0, 1.3]));
+    N[`blade${d.id}1`] = cmp(prop, TF(Rz(180), [-PIVOT, 0, 1.3]));
+  }
+  N.pad = TF(I3, [0, 0, MAT_T]);
+  return N;
+}
+
+// ---------------------------------------------------------------- the steps
+const ORDER = ["lift", "gap", "dronie", "lid", "motor", "apart", "together"];
+const DUR = { lift: 3.4, gap: 5.0, dronie: 5.0, lid: 4.4, motor: 4.6, apart: 4.6, together: 4.8 };
+const TOUR = { gap: 0.4, lead: 0.1, tail: 0.5 };
+const FILM = TOUR.lead + ORDER.reduce((s, id) => s + TOUR.gap + DUR[id], 0) + TOUR.tail;
+const T0 = {};
+{ let t = 0; for (const s of ORDER) { T0[s] = t; t += DUR[s]; } }
+const HOV = 92; // the hover height in the drawing, mm over the pad
+const DRONIE = { back: 190, up: 105 }; // how far the Dronie backs away and climbs, in the drawing
+const N_ = BRAND.name, MK = BRAND.maker;
+const STEPS = {
+  lift: { dur: DUR.lift, hint: `The four props spin up inside their guards and it lifts straight off the pad, the way a ${N_} leaves an open palm (${MK}).` },
+  gap: { dur: DUR.gap, hint: `A sensor under its nose reads the gap to the pad (layout typical). When the gap shrinks, the props speed up and win it back.` },
+  dronie: { dur: DUR.dronie, hint: `QuickShots fly preset paths (${MK}). In a Dronie it backs away and climbs while the camera tilts down to keep the pad in frame.` },
+  lid: { dur: DUR.lid, hint: `It settles on the pad, the props stop and the top shell lifts: the flight board over the battery, the camera at the nose, a motor in each duct.` },
+  motor: { dur: DUR.motor, hint: `One motor: its bell lifts off and turns over to show a ring of magnets. The copper coils on the stator, lit in turn, pull that ring round (drawn).` },
+  apart: { dur: DUR.apart, hint: `Shell, board, battery, camera, sensor, ${M.motors} motors and their props, all off the guard frame. Together about ${M.weight} g · ${MK}.` },
+  together: { dur: DUR.together, hint: `Everything slides home and the shell closes; the props spin up for a short hop and it lands back on the pad.` },
+};
+const sine = (x) => (1 - Math.cos(Math.PI * clamp(x))) / 2;
+const bump = (u, a, b, w = 0.25) => ease(seg(u, a, a + (b - a) * w)) * (1 - ease(seg(u, b - (b - a) * w, b)));
+const IDS = DUCTS.map((d) => d.id);
+const SPIN_OF = Object.fromEntries(DUCTS.map((d) => [d.id, d.spin]));
+const per = (f) => Object.fromEntries(IDS.map((id) => [id, f(id)]));
+
+// how fast the props turn, 1 = hovering, as a pure function of the step and u
+function speedOf(st, u) {
+  if (st === "lift") return smoother(seg(u, 0, 0.09));
+  if (st === "gap") return 1 + 0.3 * bump(u, 0.12, 0.5, 0.3) - 0.1 * bump(u, 0.52, 0.84, 0.3);
+  if (st === "dronie") return 1 + 0.14 * bump(u, 0.06, 0.48) + 0.12 * bump(u, 0.52, 0.94);
+  if (st === "lid") return 1 - smoother(seg(u, 0.26, 0.38));
+  if (st === "together") return smoother(seg(u, 0.62, 0.68)) * (1 - smoother(seg(u, 0.9, 0.97)));
+  return 0;
+}
+// The blades are drawn turning at most VIS degrees a second; past that the blurred disc takes over. Each prop's turn is
+// the integral of its drawn rate, scaled so the whole tour comes out a whole number of turns and the end meets frame 0.
+const VIS = 540;
+const visRate = (w) => VIS * Math.min(1, w / 0.6);
+function turned(st, u) {
+  const n = Math.max(2, Math.ceil(180 * u));
+  let s = 0;
+  for (let i = 0; i < n; i++) s += visRate(speedOf(st, (u * (i + 0.5)) / n));
+  return (s * u * DUR[st]) / n;
+}
+const FULL = Object.fromEntries(ORDER.map((st) => [st, turned(st, 1)]));
+const KFIX = (() => { const t = ORDER.reduce((s, st) => s + FULL[st], 0); return t > 0 ? (Math.max(1, Math.round(t / 360)) * 360) / t : 1; })();
+function sigmaOf(st, u, id) {
+  let deg = 0;
+  for (const s of ORDER) { if (s === st) { deg += turned(s, u); break; } deg += FULL[s]; }
+  return REST[id] + SEEN(SPIN_OF[id]) * KFIX * deg;
+}
+// the Dronie: out along a straight line back and up, a beat at the far end, then home
+const dronieK = (u) => smoother(seg(u, 0.06, 0.48)) * (1 - smoother(seg(u, 0.52, 0.94)));
+// the tilt that keeps the pad's centre in the camera, given where the drone is (degrees, nose down positive)
+function trackTilt(Z) {
+  const N = nodes({ ...Z, tilt: 0 });
+  const lens = ap(N.gimbal, [HEAD.c[0] + HEAD.h[0], 0, HEAD.c[2]]);
+  const fwd = mv(N.body.M, [1, 0, 0]);
+  const to = sub3([0, 0, PAD_T], lens);
+  const ahead = dot3(to, unit3([fwd[0], fwd[1], 0]));
+  return Math.min(72, (Math.atan2(-to[2], Math.max(1, ahead)) * 180) / Math.PI) - Z.pitch;
+}
+
+const fresh = () => ({ step: null, u: 0 });
+let S = fresh();
+const NONE = () => 0;
+function base() {
+  return {
+    st: null, u: 0, t: 0, clk: 0, hover: 0, back: 0, slide: 0, pitch: 0, yaw: 0, tilt: 0, speed: per(() => 0), sigma: per((id) => REST[id]),
+    shellZ: 0, shellX: 0, e: { fc: 0, bat: 0, gim: 0, motor: 0, prop: 0, sens: 0 }, propLift: 0, hlLift: 0, tip: 0, lit: -1,
+    dim: 0, keep: () => true, hl: NONE, words: [], tags: [], beam: 0, wash: 0, path: 0, view: 0, cam: ["rest", "rest", 0], hot: [],
+  };
+}
+const OPEN_TAGS = ["board", "battery", "camera", "motor"];
+const X_TAGS = ["xshell", "xboard", "xbat", "xcam", "xmotor", "xprop", "xsensor", "xframe", "weight"];
+const hlMotor = (g) => (p) => (p.duct === HL_DUCT && p.grp === "motor" ? g : 0);
+function scene(time = 0) {
+  const st = S.step, u = S.u;
+  const Z = base();
+  Z.st = st; Z.u = u; Z.t = time;
+  if (!st) return Z;
+  Z.clk = T0[st] + u * DUR[st];
+  const sp = speedOf(st, u);
+  Z.speed = per(() => sp);
+  Z.sigma = per((id) => sigmaOf(st, u, id));
+  Z.wash = smoother(seg(sp, 0.25, 0.85));
+  Z.fast = clamp((sp - 1) / 0.25);
+  if (st === "lift") {
+    Z.hover = HOV * smoother(seg(u, 0.05, 0.86));
+    Z.beam = ease(seg(u, 0.16, 0.3));
+    Z.tags.push({ id: "gap", op: ease(seg(u, 0.24, 0.36)) }, { id: "wash", op: ease(seg(u, 0.42, 0.56)) });
+    Z.words.push({ id: "whirr", op: bump(u, 0.02, 0.5, 0.2) });
+    Z.cam = ["rest", "hover", sine(seg(u, 0.02, 0.98))];
+    Z.hot = ["height", "props"];
+    return Z;
+  }
+  if (st === "gap") {
+    // a dip, as if pushed down, then the props win the gap back and overshoot a little before they settle
+    Z.hover = HOV - 30 * bump(u, 0.06, 0.46, 0.35) + 10 * bump(u, 0.48, 0.82, 0.4);
+    // and it drifts across the pad and back, the beam's spot sliding over the embossed rings
+    Z.slide = 30 * Math.sin(TAU * u) * bump(u, 0, 1, 0.12);
+    Z.beam = 1;
+    Z.tags.push({ id: "gap", op: 1 }, { id: "wash", op: 1 - ease(seg(u, 0, 0.1)) });
+    Z.cam = u < 0.5 ? ["hover", "beam", sine(seg(u, 0, 0.46))] : ["beam", "hover", sine(seg(u, 0.54, 1))];
+    Z.hot = ["height"];
+    return Z;
+  }
+  if (st === "dronie") {
+    const k = dronieK(u);
+    Z.back = DRONIE.back * k;
+    Z.hover = HOV + DRONIE.up * k;
+    // nose up to back away, nose down to stop; nose down to come home, nose up to stop
+    Z.pitch = -8 * bump(u, 0.06, 0.3) + 6 * bump(u, 0.34, 0.52) + 8 * bump(u, 0.54, 0.76) - 6 * bump(u, 0.8, 0.97);
+    Z.tilt = trackTilt(Z) * smoother(seg(u, 0.02, 0.16)) * (1 - smoother(seg(u, 0.86, 1)));
+    Z.beam = 1;
+    Z.path = ease(seg(u, 0.02, 0.12)) * (1 - ease(seg(u, 0.9, 1)));
+    Z.view = ease(seg(u, 0.08, 0.2)) * (1 - ease(seg(u, 0.84, 0.96)));
+    Z.tags.push({ id: "gap", op: 1 - ease(seg(u, 0, 0.08)) }, { id: "dronie", op: ease(seg(u, 0.06, 0.16)) * (1 - ease(seg(u, 0.9, 1))) });
+    Z.cam = u < 0.5 ? ["hover", "dronie", sine(seg(u, 0, 0.48))] : ["dronie", "hover", sine(seg(u, 0.52, 1))];
+    Z.hot = ["shots"];
+    return Z;
+  }
+  if (st === "lid") {
+    Z.hover = HOV * (1 - smoother(seg(u, 0, 0.26)));
+    Z.beam = 1 - ease(seg(u, 0.18, 0.28));
+    const k = smoother(seg(u, 0.38, 0.76));
+    Z.shellZ = 76 * k;
+    Z.shellX = -6 * k;
+    Z.hlLift = 22 * smoother(seg(u, 0.46, 0.8));
+    Z.hl = hlMotor(ease(seg(u, 0.66, 0.78)));
+    Z.tags.push(...OPEN_TAGS.map((id) => ({ id, op: ease(seg(u, 0.76, 0.88)) })));
+    Z.words.push({ id: "tap", op: bump(u, 0.24, 0.46, 0.2) });
+    Z.cam = u < 0.3 ? ["hover", "rest", sine(seg(u, 0, 0.3))] : ["rest", "open", sine(seg(u, 0.3, 0.97))];
+    Z.hot = ["props"];
+    return Z;
+  }
+  Z.shellZ = 76; Z.shellX = -6; Z.hlLift = 22;
+  if (st === "motor") {
+    Z.hlLift = 22 + 40 * smoother(seg(u, 0, 0.24)) * (1 - smoother(seg(u, 0.76, 0.98)));
+    Z.tip = smoother(seg(u, 0.06, 0.42)) * (1 - smoother(seg(u, 0.62, 0.92)));
+    // the coils are lit three at a time, a third of the way round each beat, while the bell is off
+    if (Z.tip > 0.6) Z.lit = Math.floor(Z.clk * 4.5) % 3;
+    Z.hl = hlMotor(1);
+    Z.dim = ease(seg(u, 0.04, 0.2)) * (1 - ease(seg(u, 0.8, 0.96)));
+    Z.keep = (p) => p.duct === HL_DUCT;
+    Z.tags.push(...OPEN_TAGS.map((id) => ({ id, op: 1 - ease(seg(u, 0, 0.1)) })));
+    const tg = ease(seg(u, 0.36, 0.46)) * (1 - ease(seg(u, 0.62, 0.7)));
+    Z.tags.push({ id: "coils", op: tg }, { id: "magnets", op: tg });
+    Z.cam = u < 0.5 ? ["open", "motor", sine(seg(u, 0, 0.46))] : ["motor", "open", sine(seg(u, 0.54, 1))];
+    Z.hot = ["props"];
+    return Z;
+  }
+  if (st === "apart") {
+    const out = (a, b) => smoother(seg(u, a, b));
+    Z.shellZ = lerp(76, 150, out(0.04, 0.5));
+    Z.e = { fc: out(0.1, 0.52), bat: out(0.18, 0.64), gim: out(0.24, 0.7), motor: out(0.3, 0.76), prop: out(0.3, 0.9), sens: out(0.36, 0.82) };
+    Z.hl = hlMotor(1 - ease(seg(u, 0, 0.1)));
+    Z.tags.push(...X_TAGS.map((id) => ({ id, op: ease(seg(u, 0.8, 0.9)) })));
+    Z.cam = ["open", "apart", sine(seg(u, 0, 1))];
+    Z.hot = ["parts", "weight"];
+    return Z;
+  }
+  if (st === "together") {
+    const back = (a, b) => 1 - smoother(seg(u, a, b));
+    Z.e = { motor: back(0.0, 0.34), prop: back(0.0, 0.36), gim: back(0.04, 0.4), bat: back(0.08, 0.42), fc: back(0.12, 0.45), sens: back(0.0, 0.22) };
+    Z.shellZ = 150 * back(0.4, 0.62);
+    Z.shellX = -6 * back(0.4, 0.62);
+    Z.hlLift = 22 * back(0.46, 0.62);
+    // a short hop on the props, and down again
+    Z.hover = 34 * smoother(seg(u, 0.66, 0.78)) * (1 - smoother(seg(u, 0.8, 0.92)));
+    Z.tags.push(...X_TAGS.map((id) => ({ id, op: 1 - ease(seg(u, 0, 0.08)) })));
+    Z.words.push({ id: "tap", op: bump(u, 0.9, 1, 0.2) });
+    Z.cam = ["apart", "rest", sine(seg(u, 0, 0.97))];
+    Z.hot = ["parts", "props"];
+    return Z;
+  }
+  return Z;
+}
+
+// ---------------------------------------------------------------- drawing pieces
+const droneG = part("drone");
+const notesG = part("notes");
+const shadowEl = part("shadow-live");
+const shadowStatic = part("shadow-static");
+const artG = svg.querySelector("g.art");
+const DRAWN = {};
+const shadeHex = (h, dim) => (dim > 0.01 ? hexOf(rgbOf(h).map((x, i) => x + (PAPER[i] - x) * 0.58 * dim)) : h);
+
+// the motor leads from each plug over the tray's wall toward its duct, and the camera's flex, carried with the board
+function smooth3(pts, n = 6) {
+  const out = [];
+  for (let i = 0; i + 1 < pts.length; i++) {
+    const p0 = pts[Math.max(0, i - 1)], p1 = pts[i], p2 = pts[i + 1], p3 = pts[Math.min(pts.length - 1, i + 2)];
+    for (let k = 0; k < n; k++) { const t = k / n, t2 = t * t, t3 = t2 * t; out.push([0, 1, 2].map((c) => 0.5 * (2 * p1[c] + (-p0[c] + p2[c]) * t + (2 * p0[c] - 5 * p1[c] + 4 * p2[c] - p3[c]) * t2 + (-p0[c] + 3 * p1[c] - 3 * p2[c] + p3[c]) * t3))); }
+  }
+  out.push(pts[pts.length - 1]);
+  return out;
+}
+const LEAD_PTS = MCONN.map(([x, y]) => { const s = Math.sign(y), f = x > 0 ? 1 : -1; return smooth3([[x, y + s * 3.4, ZT + 0.6], [x - 1 * f, y + s * 6.4, ZT + 1], [x - 2.5 * f, s * 21.6, 22], [x - 4 * f, s * 22.6, 14.5]]); });
+const FLEX_PTS = smooth3([[FC.x1 - 1.4, 0, ZT + 1], [FC.x1 + 2.6, 0, ZT + 0.4], [45, 0, 28], [47.5, 0, 26.5]], 5);
+function cablesSvg(tf, dim) {
+  const w = KK * 0.42;
+  let s = "";
+  for (const pts of LEAD_PTS) {
+    const sc = pts.map((p) => pr(ap(tf, p)));
+    const cols = ["#e5583e", "#f2c14e", "#2f313a"];
+    s += `<path class="cable-o" d="${dOpen(sc)}" stroke-width="${r2(w * 4.3)}"/>`;
+    [-1, 0, 1].forEach((o, k) => {
+      const off = sc.map((p, i) => { const a = sc[Math.max(0, i - 1)], b = sc[Math.min(sc.length - 1, i + 1)]; const dx = b[0] - a[0], dy = b[1] - a[1], l = Math.hypot(dx, dy) || 1; return [p[0] - (dy / l) * o * w * 1.2, p[1] + (dx / l) * o * w * 1.2]; });
+      s += `<path class="wire" d="${dOpen(off)}" stroke="${shadeHex(cols[k], dim)}" stroke-width="${r2(w)}"/>`;
+    });
+  }
+  const a = FLEX_PTS.map((p) => pr(ap(tf, add3(p, [0, 4, 0])))), b = FLEX_PTS.map((p) => pr(ap(tf, add3(p, [0, -4, 0]))));
+  s += `<path class="flex" d="${dPath([...a, ...b.reverse()])}" style="fill:${shadeHex("#d08a3f", dim)}"/>`;
+  return s;
+}
+
+// a prop at speed: a blurred disc inside its duct, two darker smears that turn with it, and an amber glow on its rim
+// while it works harder than hovering
+function discSvg(tf, d, k, ang, fast) {
+  const R = PROP_R - 0.5;
+  const ring = (r, n = 64) => Array.from({ length: n }, (_, i) => { const t = (i / n) * TAU; return pr(ap(tf, [r * Math.cos(t), r * Math.sin(t), 1.3])); });
+  const rim = dPath(ring(R));
+  let s = fast > 0.01 ? `<path class="hl-glow" d="${rim}" stroke="#ffb648" stroke-width="9" filter="url(#dr-glow)" style="opacity:${r3(0.9 * fast)}"/>` : "";
+  s += `<path class="disc" d="${rim}" fill="#9eabbd" style="opacity:${r3(0.46 * k)}"/>`;
+  s += `<path class="disc" d="${dPath(ring(R * 0.46))}${dPath(ring(R * 0.22).reverse())}" fill="#4a4e5a" fill-rule="evenodd" style="opacity:${r3(0.14 * k)}"/>`;
+  const dir = SEEN(d.spin);
+  const sm = (r0, r1, a0, a1) => { const pts = []; for (let i = 0; i <= 12; i++) { const t = (a0 + ((a1 - a0) * i) / 12) * DEG; pts.push(pr(ap(tf, [r1 * Math.cos(t), r1 * Math.sin(t), 1.3]))); } for (let i = 12; i >= 0; i--) { const t = (a0 + ((a1 - a0) * i) / 12) * DEG; pts.push(pr(ap(tf, [r0 * Math.cos(t), r0 * Math.sin(t), 1.3]))); } return dPath(pts); };
+  for (const [r0, r1, o] of [[0.58, 0.96, 0.3], [0.26, 0.56, 0.18]]) s += `<path class="disc" d="${sm(R * r0, R * r1, ang - 22 * dir, ang + 48 * dir)}${sm(R * r0, R * r1, ang + 180 - 22 * dir, ang + 180 + 48 * dir)}" fill="#4a4e5a" style="opacity:${r3(o * k)}"/>`;
+  s += `<path class="disc-e" d="${rim}" style="opacity:${r3(0.7 * k)}"/>`;
+  s += `<path class="disc-e" d="${dPath(ring(R * 0.8))}" style="opacity:${r3(0.25 * k)}"/>`;
+  return s;
+}
+
+// the downwash: soft air lines falling from under each duct to the pad, splaying out where they meet it; bright puffs
+// run down them with the film's clock, so they keep moving between steps
+function washSvg(N, Z) {
+  const k = Z.wash;
+  if (k < 0.01) return "";
+  let s = "";
+  for (const d of DUCTS) {
+    const tf = N["duct" + d.id];
+    for (let i = 0; i < 5; i++) {
+      const a = (i / 5) * TAU + d.ph;
+      const r0 = PROP_R * (i % 2 ? 0.48 : 0.8);
+      const top = ap(tf, [r0 * Math.cos(a), r0 * Math.sin(a), GZ0 - 1.5]);
+      const dW = unit3([...mv(tf.M, [Math.cos(a), Math.sin(a), 0]).slice(0, 2), 0]);
+      const pp = [-dW[1], dW[0], 0];
+      const gz = groundZ(top[0], top[1]) + 0.4;
+      const Hh = top[2] - gz;
+      if (Hh < 4) continue;
+      // the higher it flies, the fainter the air that reaches the ground
+      const kk = k * clamp((300 - Hh) / 170);
+      if (kk < 0.01) continue;
+      const at = (t) => {
+        const fall = Math.min(1, t / 0.82);
+        const z = gz + Hh * (1 - fall * fall * (3 - 2 * fall));
+        const spread = 2.5 * t + 26 * Math.max(0, (t - 0.68) / 0.32) ** 1.6;
+        const wig = 1.5 * Math.sin(t * 8.5 + i * 1.7 + d.ph * 2 + Z.t * 4.2) * (1 - 0.6 * t);
+        return pr([top[0] + dW[0] * spread + pp[0] * wig, top[1] + dW[1] * spread + pp[1] * wig, z]);
+      };
+      const n = 22;
+      s += `<path class="wash" d="${dOpen(Array.from({ length: n + 1 }, (_, j) => at(j / n)))}" style="opacity:${r3(0.26 * kk)};stroke-width:1.1px"/>`;
+      for (let p = 0; p < 2; p++) {
+        const s0 = frac(Z.t * 0.75 + p / 2 + i * 0.17 + d.ph * 0.11), s1 = Math.min(1, s0 + 0.24);
+        s += `<path class="wash" d="${dOpen(Array.from({ length: 9 }, (_, j) => at(s0 + ((s1 - s0) * j) / 8)))}" style="opacity:${r3(0.85 * kk * (1 - 0.7 * s0))};stroke-width:1.7px"/>`;
+      }
+    }
+  }
+  return s;
+}
+
+// the sensor's beam: a narrow cone from the belly window to whatever is below (the pad, or the mat past its edge), a
+// dashed core with a tick every 10 mm, the spot it lands on and the pulses spreading from it
+const LEFTW = [-Math.sin(D.AZ * DEG), Math.cos(D.AZ * DEG), 0]; // screen left, in the world
+const groundZ = (x, y) => (Math.hypot(x, y) < PAD_R - 4 ? PAD_T : x > D.MAT.x && x < D.MAT.x + D.MAT.w && y > D.MAT.y && y < D.MAT.y + D.MAT.d ? MAT_T : 0);
+function beamPts(N) {
+  const S0 = ap(N.body, SENSOR_PT);
+  return { S0, G0: [S0[0], S0[1], groundZ(S0[0], S0[1]) + 0.2] };
+}
+const GAP_FULL = HOV + 40; // the gap that fills the bar
+const gapFrac = (N) => { const { S0, G0 } = beamPts(N); return clamp((S0[2] - G0[2]) / GAP_FULL); };
+const circW = (c, r, n = 40) => Array.from({ length: n }, (_, i) => { const a = (i / n) * TAU; return [c[0] + r * Math.cos(a), c[1] + r * Math.sin(a), c[2]]; });
+function beamSvg(N, Z) {
+  const k = Z.beam;
+  if (k < 0.01) return "";
+  const { S0, G0 } = beamPts(N);
+  const H = S0[2] - G0[2];
+  if (H < 1) return "";
+  const rB = 3.4 + H * 0.05;
+  let s = `<g style="opacity:${r3(k)}">`;
+  s += `<path class="beam" d="${dPath(circW(G0, rB + 3).map(pr))}" filter="url(#dr-soft)" style="opacity:.55"/>`;
+  s += `<path class="beam" d="${dPath(hull([pr(S0), ...circW(G0, rB).map(pr)]))}" style="opacity:.24"/>`;
+  s += `<path class="beam-c" d="M${P2(pr(S0))}L${P2(pr(G0))}"/>`;
+  let ticks = "";
+  for (let z = 10; z < H - 2; z += 10) { const c = [G0[0], G0[1], G0[2] + z], w = z % 50 === 0 ? 4.2 : 2.6; ticks += `M${P2(pr(add3(c, mul3(LEFTW, w))))}L${P2(pr(add3(c, mul3(LEFTW, -w))))}`; }
+  s += `<path class="rule-t" d="${ticks}"/>`;
+  for (let j = 0; j < 2; j++) { const f = frac(Z.t * 1.1 + j / 2); s += `<path class="beam-ring" d="${dPath(circW(G0, rB + 16 * f).map(pr))}" style="opacity:${r3((1 - f) * 0.9)};stroke-width:${r2(1.5 - f)}px"/>`; }
+  s += `<path class="beam-spot" d="${dPath(circW(G0, 2.4).map(pr))}"/>`;
+  return s + "</g>";
+}
+
+// the Dronie: its preset path drawn as a dashed line back and up, with an arrow at the far end, and the camera's view
+// down to the pad
+function dronieSvg(N, Z) {
+  let s = "";
+  if (Z.path > 0.01) {
+    const P0 = pr([0, 0, PAD_T + HOV + 24]);
+    const bk = mv(Rz(ROOT_YAW), [-DRONIE.back, 0, 0]);
+    const P1 = pr([bk[0], bk[1], PAD_T + HOV + DRONIE.up + 24]);
+    const dx = P1[0] - P0[0], dy = P1[1] - P0[1], l = Math.hypot(dx, dy) || 1, ux = dx / l, uy = dy / l;
+    // the arrow sits a little past halfway, where the drone never covers it
+    const M0 = [lerp(P0[0], P1[0], 0.5), lerp(P0[1], P1[1], 0.5)];
+    const hd = 7 / KK, tip = [M0[0] + ux * hd * 1.2, M0[1] + uy * hd * 1.2], bA = [M0[0] - uy * hd * 0.6, M0[1] + ux * hd * 0.6], bB = [M0[0] + uy * hd * 0.6, M0[1] - ux * hd * 0.6];
+    s += `<g style="opacity:${r3(Z.path)}"><path class="path-o" d="M${P2(P0)}L${P2(P1)}"/><path class="path" d="M${P2(P0)}L${P2(P1)}"/><path class="path-h" d="${dPath([tip, bA, bB])}"/><circle class="path-d" cx="${r2(P0[0])}" cy="${r2(P0[1])}" r="${r2(3 / KK)}"/></g>`;
+  }
+  if (Z.view > 0.01) {
+    const lens = ap(N.gimbalHead, [HEAD.c[0] + HEAD.h[0] + 2.2, 0, HEAD.c[2]]);
+    const subj = [0, 0, PAD_T + 0.3];
+    s += `<g style="opacity:${r3(Z.view)}"><path class="view" d="${dPath(hull([pr(lens), ...circW(subj, 30).map(pr)]))}"/><path class="view-c" d="M${P2(pr(lens))}L${P2(pr(subj))}"/><path class="view-r" d="${dPath(circW(subj, 30, 48).map(pr))}"/></g>`;
+  }
+  return s;
+}
+
+// ---------------------------------------------------------------- the labels
+// Boxed tags in the house style: each knows the point it names and where its box sits on the stage (at: the box's
+// corner in stage px, anchor end to hang it from the right), or is pinned to the stage with no leader.
+const TAG = {
+  gap: (N) => { const { S0, G0 } = beamPts(N); return { p: lerp3(S0, G0, 0.55), text: "gap · downward sensor", bar: gapFrac(N), sub: "layout typical", at: [16, 396] }; },
+  wash: (N, Z) => ({ p: ap(N.ductRR, [PROP_R * 0.62 * Math.cos(DUCTS[3].ph), PROP_R * 0.62 * Math.sin(DUCTS[3].ph) - 4, GZ0 - 0.42 * (Z.hover + GZ0)]), text: "downwash", at: [686, 268], anchor: "end" }),
+  dronie: () => ({ text: "QuickShot · Dronie", sub: `preset paths: ${M.quickshots.join(", ")} · ${MK}`, stage: [16, 16] }),
+  board: (N) => ({ p: ap(N.fc, [FC.x1 - 5, FC.hw - 3, ZT]), text: "flight board", at: [16, 150] }),
+  camera: (N) => ({ p: ap(N.gimbalHead, [HEAD.c[0] + 2, HEAD.h[1], HEAD.c[2] + HEAD.h[2]]), text: "camera", at: [16, 300] }),
+  battery: (N) => ({ p: ap(N.battery, [-50, -16, BAT.c[2] + BAT.h[2]]), text: "battery", at: [686, 120], anchor: "end" }),
+  motor: (N) => ({ p: ap(N.bellFR, [0, -7.8, 3.5]), text: "motor", at: [686, 412], anchor: "end" }),
+  coils: (N) => ({ p: ap(N.motorFR, [2, 4.3, 4.5]), text: "copper coils · lit in turn", sub: "drawn", at: [16, 380] }),
+  magnets: (N) => ({ p: ap(N.bellFR, [0, 6.8, 0.6]), text: "ring of magnets", sub: "inside the bell", at: [686, 70], anchor: "end" }),
+  xshell: (N) => ({ p: ap(N.shell, [20, 25, 40]), text: "top shell", at: [16, 40] }),
+  xboard: (N) => ({ p: ap(N.fc, [FC.x0 + 6, FC.hw, ZT]), text: "flight board", at: [16, 124] }),
+  xbat: (N) => ({ p: ap(N.battery, [-50, -16, BAT.c[2] + BAT.h[2]]), text: "battery", at: [686, 150], anchor: "end" }),
+  xcam: (N) => ({ p: ap(N.gimbalHead, [HEAD.c[0], HEAD.h[1], HEAD.c[2] + HEAD.h[2]]), text: "camera", at: [16, 396] }),
+  xmotor: (N) => ({ p: ap(N.bellRR, [0, -7.8, 3.5]), text: "motor", at: [686, 232], anchor: "end" }),
+  xprop: (N) => ({ p: ap(N.propFL, [PROP_R * 0.72, 0, 1.6]), text: "prop", at: [16, 206] }),
+  xsensor: (N) => ({ p: ap(N.sensor, [SENS.c[0], 0, SENS.c[2] + 1.6]), text: "downward sensor", at: [16, 300] }),
+  xframe: (N) => ({ p: ap(N.ductFR, [-10, -R_O + 2, GZ0 + 4]), text: "guard frame", at: [686, 440], anchor: "end" }),
+  weight: () => ({ text: `about ${M.weight} g`, sub: `the whole drone · ${MK}`, stage: [686 - 133, 16] }),
+};
+function tagSvg(t, cam) {
+  const s = cam.s;
+  const cw = 6.62, cw2 = 5.42, pad = 7;
+  const wpx = Math.max(t.text.length * cw, (t.sub || "").length * cw2, t.bar != null ? 120 : 0) + 2 * pad;
+  const barH = t.bar != null ? 12 : 0;
+  const hpx = (t.sub ? 32 : 20) + barH;
+  let bx, by, lead = "";
+  if (t.stage) {
+    bx = cam.F[0] + (t.stage[0] - D.W / 2) / s;
+    by = cam.F[1] + (t.stage[1] - D.H / 2) / s;
+  } else {
+    const p = pr(t.p);
+    const ax = t.anchor === "end" ? wpx : t.anchor === "middle" ? wpx / 2 : 0;
+    bx = cam.F[0] + (t.at[0] - ax - D.W / 2) / s;
+    by = cam.F[1] + (t.at[1] - D.H / 2) / s;
+    const qx = clamp(p[0], bx, bx + wpx / s), qy = clamp(p[1], by, by + hpx / s);
+    lead = `<path class="lead" d="M${r2(p[0])} ${r2(p[1])}L${r2(qx)} ${r2(qy)}"/><circle class="lead-dot" cx="${r2(p[0])}" cy="${r2(p[1])}" r="${r2(2.4 / s)}"/>`;
+  }
+  const box = `<rect class="tag" x="${r2(bx)}" y="${r2(by)}" width="${r2(wpx / s)}" height="${r2(hpx / s)}" rx="${r2(4 / s)}"/>`;
+  const t1 = `<text class="tag-t" x="${r2(bx + pad / s)}" y="${r2(by + 14 / s)}" style="font-size:${r2(11 / s)}px">${esc(t.text)}</text>`;
+  let bar = "";
+  if (t.bar != null) {
+    const bw = (wpx - 2 * pad) / s, y0 = by + 19 / s, h = 6 / s;
+    bar = `<rect class="bar-t" x="${r2(bx + pad / s)}" y="${r2(y0)}" width="${r2(bw)}" height="${r2(h)}" rx="${r2(3 / s)}"/><rect class="bar-f" x="${r2(bx + pad / s)}" y="${r2(y0)}" width="${r2(Math.max(h, bw * t.bar))}" height="${r2(h)}" rx="${r2(3 / s)}"/>`;
+    for (let i = 1; i < 10; i++) bar += `<path class="bar-k" d="M${r2(bx + pad / s + (bw * i) / 10)} ${r2(y0)}L${r2(bx + pad / s + (bw * i) / 10)} ${r2(y0 + h)}"/>`;
+  }
+  const t2 = t.sub ? `<text class="tag-s" x="${r2(bx + pad / s)}" y="${r2(by + (26.5 + barH) / s)}" style="font-size:${r2(9 / s)}px">${esc(t.sub)}</text>` : "";
+  return `<g style="opacity:${r3(t.op)}">${lead}${box}${t1}${bar}${t2}</g>`;
+}
+// the sound words, hand-lettered on the action
+const WORD_PX = 22;
+const WORD = {
+  whirr: (N) => ({ p: ap(N.ductRR, [0, -R_O, GZ1]), text: "whirr", dx: 10, dy: -8 }),
+  tap: (N) => ({ p: ap(N.ductFR, [0, -R_O, GZ0]), text: "tap", dx: 16, dy: 18 }),
+};
+
+// ---------------------------------------------------------------- one picture of a state
+// html, the drone's points on the base projection (for the camera), the drone's shadow pieces
+function build(Z) {
+  const N = nodes(Z);
+  const exploded = Math.max(Z.e.fc, Z.e.bat) > 0.001;
+  const open = Z.shellZ > 0.5 || exploded;
+  const items = [];
+  const pts = [];
+  const dsh = [];
+  const dimOf = (p) => (Z.dim > 0.001 && !Z.keep(p) ? Z.dim * (p.dimScale ?? 1) : 0);
+  const hlOf = (p) => (p.focusRoot ? Z.hl(p) : 0);
+  const draws = (p, keep = true) => { const r = partSvg(p, N[p.node], dimOf(p), hlOf(p)); if (keep) pts.push(...r.pts); return r.s; };
+  const keyOf = (p) => depth(ap(N[p.node], p.c)) + p.bias;
+  const worldPts = (list) => list.flatMap((p) => p.meshes.flatMap((m) => m.v.map((v) => ap(N[p.node], v))));
+  const sortDraw = (list) => list.map((p) => ({ p, k: keyOf(p) })).sort((a, b) => a.k - b.k).map(({ p }) => draws(p)).join("");
+  const frameDim = (duct) => (Z.dim > 0.001 && !Z.keep({ grp: "frame", duct }) ? Z.dim : 0);
+  const anyDim = frameDim(null);
+
+  // ---- the body: the tray's inside, whatever sits in it, the cables, the tray's outside, the shell on top. A part
+  // that has come well out of the body is painted on its own instead.
+  const inside = PARTS.filter((p) => p.layer === "in");
+  const outOf = { battery: Z.e.bat > 0.62, fc: Z.e.fc > 0.3, sensor: Z.e.sens > 0.3 };
+  const tray = traySvg(N.body, anyDim);
+  pts.push(...tray.pts);
+  let bodyS = sortDraw(FEET) + tray.back;
+  if (open) {
+    bodyS += sortDraw(inside.filter((p) => p.node === "fcPost" || !outOf[p.grp]));
+    const ck = 1 - smoother(clamp(Z.e.fc / 0.15));
+    if (ck > 0.001) bodyS += `<g style="opacity:${r3(ck)}">${cablesSvg(N.fc, anyDim)}</g>`;
+    for (const grp of ["battery", "fc", "sensor"]) {
+      if (!outOf[grp]) continue;
+      const list = inside.filter((p) => p.grp === grp && p.node !== "fcPost");
+      items.push({ k: keyOf(list[0]) + (grp === "fc" ? 60 : grp === "sensor" ? 40 : 0), s: sortDraw(list) });
+    }
+  }
+  bodyS += tray.front;
+  const shellS = draws(SHELL);
+  if (!open) bodyS += shellS;
+  else items.push({ k: keyOf(SHELL) + 400, s: shellS });
+  items.push({ k: depth(ap(N.body, [0, 0, 24])), s: bodyS });
+  dsh.push({ pts: [...worldPts([SHELL]), ...TRAY.outerPts.map((p) => ap(N.body, p))] });
+  if (Z.e.bat > 0.01) dsh.push({ pts: worldPts([BATTERY]) });
+
+  // ---- the side bridges and the camera
+  for (const b of BRIDGES) { items.push({ k: keyOf(b), s: draws(b) }); dsh.push({ pts: worldPts([b]) }); }
+  items.push({ k: depth(ap(N.gimbal, [55, 0, 22])), s: sortDraw(GIMBAL) });
+  dsh.push({ pts: worldPts(GIMBAL) });
+
+  // ---- each duct: far wall, struts, motor, prop, near wall. A motor, a bell or a prop lifted clear of its duct goes
+  // on its own.
+  for (const d of DUCTS) {
+    const tf = N["duct" + d.id];
+    const ring = ringSvg(tf, frameDim(d.id), d);
+    pts.push(...ring.pts);
+    const mine = PARTS.filter((p) => p.duct === d.id);
+    let s = ring.back + sortDraw(mine.filter((p) => p.sub === 0));
+    const picked = d.id === HL_DUCT;
+    const bellOff = picked && Z.tip > 0.01;
+    const lit = (p) => (picked && Z.lit >= 0 && p.coil >= 0 && p.coil % 3 === Z.lit ? p.hot : p);
+    const statorS = bellOff ? sortDraw(mine.filter((p) => p.sub === 1).map(lit)) : "";
+    const bellS = draws(mine.find((p) => p.sub === 2));
+    const bellOut = picked && Z.tip > 0.3;
+    const motorS = statorS + (bellOut ? "" : bellS);
+    const w = Z.speed[d.id];
+    const bo = 1 - smoother(seg(w, 0.35, 0.7)), dk = smoother(seg(w, 0.3, 0.65));
+    let propS = "";
+    if (bo > 0.001) { const bs = sortDraw(mine.filter((p) => p.sub === 3)); propS += bo < 0.999 ? `<g style="opacity:${r3(bo)}">${bs}</g>` : bs; }
+    const ptf = cmp(N["motor" + d.id], TF(I3, [0, 0, propZ(Z, d.id)]));
+    if (dk > 0.001) propS += discSvg(ptf, d, dk, Z.sigma[d.id] + SEEN(d.spin) * 260 * Z.t, Z.fast || 0);
+    propS += draws(mine.find((p) => p.sub === 4));
+    const liftM = 44 * Z.e.motor > 3, liftP = propZ(Z, d.id) - BELL_H > 3;
+    if (!liftM) s += motorS;
+    if (!liftP) s += propS;
+    s += ring.front;
+    items.push({ k: depth(ap(tf, [0, 0, 18])), s });
+    if (liftM) items.push({ k: depth(ap(N["motor" + d.id], [0, 0, 4])) + 30, s: motorS });
+    if (bellOut) items.push({ k: depth(ap(N["bell" + d.id], [0, 0, BELL_H / 2])) + 50, s: bellS });
+    if (liftP) {
+      items.push({ k: depth(ap(ptf, [0, 0, 1])) + 40, s: propS });
+      for (let i = 0; i < 12; i++) { const t = (i / 12) * TAU; pts.push(pr(ap(ptf, [PROP_R * Math.cos(t), PROP_R * Math.sin(t), 1]))); }
+    }
+    dsh.push({ pts: [...RING.lTop, ...RING.oBot].map((p) => ap(tf, p)) });
+    if (liftM) dsh.push({ pts: worldPts(mine.filter((p) => p.sub === 2)) });
+  }
+  items.sort((a, b) => a.k - b.k);
+
+  // ---- under the drone: the pad, the drone's shadow on it, the downwash, the beam and the Dronie's path
+  const under = partSvg(PADP, N.pad, 0, 0).s;
+  const html = under + `<path class="shadow-pad" clip-path="url(#padclip)" d="__PADSHADOW__"/>` + washSvg(N, Z) + beamSvg(N, Z) + dronieSvg(N, Z) + items.map((x) => x.s).join("");
+  return { html, pts, dsh, N };
+}
+
+// ---------------------------------------------------------------- the camera
+// Named aims, each the box of a still pose measured once; the camera blends between two of them and always keeps the
+// whole drone on the stage. A close aim keeps only its subject, and the box to keep slides between the two aims', so
+// nothing snaps at either end. Over the whole film a slow drift of its own (a dolly and a pan, periodic in the film's
+// length, so the last frame meets the first) keeps the camera from ever sitting locked.
+const PAD = 14;
+const boxOf = (pts) => { let x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9; for (const p of pts) { if (p[0] < x0) x0 = p[0]; if (p[0] > x1) x1 = p[0]; if (p[1] < y0) y0 = p[1]; if (p[1] > y1) y1 = p[1]; } return [x0, y0, x1, y1]; };
+const unionBox = (...bs) => [Math.min(...bs.map((b) => b[0])), Math.min(...bs.map((b) => b[1])), Math.max(...bs.map((b) => b[2])), Math.max(...bs.map((b) => b[3]))];
+const fitOf = (b, fill = 1) => Math.min(((D.W - 2 * PAD) * fill) / (b[2] - b[0]), ((D.H - 2 * PAD) * fill) / (b[3] - b[1]));
+const pose = (o) => { const Z = base(); const { e, ...rest } = o; Object.assign(Z, rest); if (e) Z.e = { ...Z.e, ...e }; return Z; };
+const padPts = (r = PAD_R) => Array.from({ length: 24 }, (_, i) => { const a = (i / 24) * TAU; return pr([r * Math.cos(a), r * Math.sin(a), PAD_T]); });
+const ALL_OUT = { fc: 1, bat: 1, gim: 1, motor: 1, prop: 1, sens: 1 };
+const HOVERING = { hover: HOV, speed: per(() => 1) };
+const AIM_SPEC = {
+  rest: { poses: [{}], fill: 0.84, shift: [-0.02, -0.01] },
+  hover: { poses: [HOVERING], extra: () => padPts(PAD_R * 0.8), fill: 0.92, shift: [0.03, 0.01] },
+  // close: the nose, the belly window and the spot on the pad
+  beam: { poses: [HOVERING], close: (N) => {
+    const { S0, G0 } = beamPts(N);
+    const out = [...circW(G0, 26).map(pr), pr(S0)];
+    for (const x of [30, 66]) for (const y of [-16, 16]) for (const z of [4, 34]) out.push(pr(ap(N.body, [x, y, z])));
+    return out;
+  }, fill: 0.62 },
+  dronie: { poses: [{ ...HOVERING, back: DRONIE.back, hover: HOV + DRONIE.up }], extra: () => padPts(PAD_R * 0.5), fill: 0.92 },
+  open: { poses: [{ shellZ: 76, shellX: -6, hlLift: 22 }], fill: 0.93 },
+  // close: the picked motor's stator and its bell turned over beside it
+  motor: { poses: [{ shellZ: 76, shellX: -6, hlLift: 62, tip: 1 }], close: (N) => {
+    const out = [];
+    for (const x of [-9, 9]) for (const y of [-9, 9]) for (const z of [0, 9]) out.push(pr(ap(N["motor" + HL_DUCT], [x, y, z])));
+    for (const x of [-9, 9]) for (const y of [-9, 9]) for (const z of [0, BELL_H]) out.push(pr(ap(N["bell" + HL_DUCT], [x, y, z])));
+    return out;
+  }, fill: 0.5 },
+  apart: { poses: [{ shellZ: 150, shellX: -6, hlLift: 22, e: ALL_OUT }], fill: 0.9 },
+};
+const AIMS = {};
+function aimOf(name) {
+  if (AIMS[name]) return AIMS[name];
+  const o = AIM_SPEC[name];
+  const boxes = o.poses.map((q) => { const Z = pose(q); if (o.close) return boxOf(o.close(nodes(Z))); return boxOf([...build(Z).pts, ...(o.extra ? o.extra() : [])]); });
+  const b = unionBox(...boxes);
+  const s = fitOf(b, o.fill);
+  const sh = o.shift || [0, 0];
+  AIMS[name] = { s, F: [(b[0] + b[2]) / 2 - (sh[0] * D.W) / s, (b[1] + b[3]) / 2 - (sh[1] * D.H) / s], close: o.close ? b : null };
+  return AIMS[name];
+}
+const drift = (t) => { const w = (TAU * t) / FILM; return { dolly: 1 + 0.06 * Math.sin(5 * w + 0.7), px: 0.03 * Math.sin(6 * w + 1.9), py: 0.022 * Math.sin(7 * w + 2.6) }; };
+function camFor(Z, box) {
+  const [n0, n1, kk] = Z.cam;
+  const a0 = aimOf(n0), a1 = aimOf(n1);
+  const dr = drift(Z.t);
+  let s = a0.s * (a1.s / a0.s) ** kk * dr.dolly;
+  let F = [lerp(a0.F[0], a1.F[0], kk) + (dr.px * D.W) / s, lerp(a0.F[1], a1.F[1], kk) + (dr.py * D.H) / s];
+  // never crop the drone (or the close subject): zoom out if it would not fit, then slide just enough to keep it in
+  const k0 = a0.close || box, k1 = a1.close || box;
+  box = k0.map((v, i) => lerp(v, k1[i], kk));
+  s = Math.min(s, fitOf(box, 1));
+  const hw = D.W / 2 / s, hh = D.H / 2 / s, pd = PAD / s;
+  F = [clamp(F[0], box[2] + pd - hw, box[0] - pd + hw), clamp(F[1], box[3] + pd - hh, box[1] - pd + hh)];
+  return { s, F, keep: box };
+}
+
+// ---------------------------------------------------------------- the frame
+const toPlane = (z0) => (p) => pr([p[0] + D.SHADOW[0] * (p[2] - z0), p[1] + D.SHADOW[1] * (p[2] - z0), z0]);
+const shadowD = (list, proj) => list.filter((s) => s.pts.length).map((s) => dPath(hull(s.pts.map(proj)))).join("");
+// the pad's shadow on the mat never moves
+{
+  const N0 = nodes(base());
+  shadowStatic.setAttribute("d", shadowD([{ pts: PADP.meshes[0].v.map((v) => ap(N0.pad, v)) }], toPlane(MAT_T)));
+}
+const GAP_CELLS = 10;
+function draw(time = 0) {
+  const Z = scene(time);
+  const B = build(Z);
+  const lift = clamp(Z.hover / HOV);
+  droneG.innerHTML = B.html.replace("__PADSHADOW__", shadowD(B.dsh, toPlane(PAD_T)));
+  const ps = droneG.querySelector(".shadow-pad");
+  const soft = lift > 0.04 ? "url(#dr-sh)" : "";
+  if (ps) { ps.style.opacity = String(r3(1 - 0.5 * lift)); if (soft) ps.setAttribute("filter", soft); }
+  shadowEl.setAttribute("d", shadowD(B.dsh, toPlane(MAT_T)));
+  shadowEl.style.opacity = String(r3(1 - 0.5 * lift));
+  if (soft) shadowEl.setAttribute("filter", soft); else shadowEl.removeAttribute("filter");
+  const box = boxOf(B.pts);
+  const cam = camFor(Z, box);
+  let notesS = Z.words.filter((w) => w.op > 0.001).map((w) => {
+    const n = WORD[w.id](B.N), p = pr(n.p);
+    const x = p[0] + n.dx / cam.s, y = p[1] + n.dy / cam.s;
+    return `<g style="opacity:${r3(w.op)}"><text class="note snd" x="${r2(x)}" y="${r2(y)}" style="font-size:${r2(WORD_PX / cam.s)}px;stroke-width:${r2(4 / cam.s)}px">${esc(n.text)}</text></g>`;
+  }).join("");
+  notesS += Z.tags.filter((t) => t.op > 0.001).map((t) => tagSvg({ ...TAG[t.id](B.N, Z), op: t.op }, cam)).join("");
+  notesG.innerHTML = notesS;
+  artG.setAttribute("transform", `translate(${D.W / 2} ${D.H / 2}) scale(${cam.s.toFixed(4)}) translate(${(-cam.F[0]).toFixed(3)} ${(-cam.F[1]).toFixed(3)})`);
+  const toStage = (p) => [(p[0] - cam.F[0]) * cam.s + D.W / 2, (p[1] - cam.F[1]) * cam.s + D.H / 2];
+  DRAWN.Z = Z;
+  DRAWN.cam = cam;
+  DRAWN.stageBox = [...toStage([box[0], box[1]]), ...toStage([box[2], box[3]])];
+  DRAWN.keepBox = [...toStage([cam.keep[0], cam.keep[1]]), ...toStage([cam.keep[2], cam.keep[3]])];
+  // a few fixed points on the drone, on the stage, for the jump check
+  DRAWN.track = [pr(ap(B.N.body, [0, 0, 24])), pr(ap(B.N.shell, [-6, 0, 44])), ...DUCTS.map((d) => pr(ap(B.N["motor" + d.id], [0, 0, 0]))), pr(ap(B.N.bellFR, [0, 0, BELL_H])), pr(ap(B.N.fc, [FCX, 0, ZT])), pr(ap(B.N.battery, BAT.c)), pr(ap(B.N.gimbalHead, HEAD.c))].map(toStage).map((p) => [r2(p[0]), r2(p[1])]);
+  // readouts
+  const g = Z.beam > 0.5 ? Math.round(gapFrac(B.N) * GAP_CELLS) : -1;
+  DRAWN.gap = g;
+  setText(chip("height"), g < 0 ? "–" : "█".repeat(g) + "░".repeat(GAP_CELLS - g));
+  const outN = (Z.shellZ > 100 ? 1 : 0) + ["fc", "bat", "gim", "sens"].filter((k) => Z.e[k] > 0.5).length + (Z.e.motor > 0.5 ? 4 : 0) + (Z.e.prop > 0.5 ? 4 : 0);
+  DRAWN.out = outN;
+  setText(chip("parts"), outN ? `${outN + 1} parts` : "1 架无人机");
+  ["height", "props", "weight", "shots", "parts"].forEach((n) => chipHot(n, Z.hot.includes(n)));
+  return Z;
+}
+
+const UPDATE = Object.fromEntries(ORDER.map((id) => [id, (u) => { S.step = id; S.u = u; }]));
+tour({
+  STEPS,
+  ORDER,
+  update: (id, u) => UPDATE[id](u),
+  reset: () => { S = fresh(); },
+  onFinish: (id) => { if (id === "together") S = fresh(); },
+  draw,
+  paint: (c) => mixHex(c, "#f5f0e5", 0.5),
+  ...TOUR,
+  probe: () => {
+    const Z = DRAWN.Z || scene();
+    return {
+      step: S.step, u: S.u, spd: Z.speed.FL, hover: Z.hover, back: Z.back, pitch: Z.pitch, tilt: Z.tilt, beam: Z.beam, fast: Z.fast || 0,
+      shellZ: Z.shellZ, out: DRAWN.out, tip: Z.tip, lit: Z.lit, hlLift: Z.hlLift, gap: DRAWN.gap,
+      stageBox: DRAWN.stageBox, keepBox: DRAWN.keepBox, track: DRAWN.track, cam: DRAWN.cam ? { s: DRAWN.cam.s, F: DRAWN.cam.F } : null,
+    };
+  },
+});
+
+}
+</script><script src="/i18n/lang-switch.js?v=2"></script>
+</body></html>

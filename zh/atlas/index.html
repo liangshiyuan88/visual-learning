@@ -1,0 +1,2597 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Atlas 机器人 · 可视化学习</title><script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
+<meta name="description" content="它的关节是能够转动的电机">
+<meta property="og:type" content="website"><meta property="og:title" content="Atlas 机器人 · 可视化学习"><meta property="og:description" content="它的关节是能够转动的电机">
+<meta property="og:image" content="https://visual-learning.app/atlas-og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:url" content="https://visual-learning.app/atlas">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Atlas 机器人 · 可视化学习"><meta name="twitter:description" content="它的关节是能够转动的电机"><meta name="twitter:image" content="https://visual-learning.app/atlas-og.png">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20x%3D%223%22%20y%3D%223%22%20width%3D%2226%22%20height%3D%2226%22%20rx%3D%226%22%20fill%3D%22%23f2c14e%22%20stroke%3D%22%2323263a%22%20stroke-width%3D%222.4%22%2F%3E%3Ccircle%20cx%3D%2216%22%20cy%3D%2216%22%20r%3D%226%22%20fill%3D%22%23fffaf0%22%20stroke%3D%22%2323263a%22%20stroke-width%3D%222.4%22%2F%3E%3C%2Fsvg%3E"><style>
+.site{width:min(980px,100% - 32px);margin:22px auto 0;padding:0 20px;display:flex;align-items:center;gap:10px;font:600 12px ui-monospace,"SF Mono",Menlo,Consolas,monospace;color:#23263a;position:relative;z-index:5}
+.site a{color:inherit;text-decoration:none}
+.site .home{font:700 15px ui-sans-serif,system-ui,"Segoe UI",sans-serif;white-space:nowrap;margin-right:auto}
+.site .home:hover{text-decoration:underline;text-underline-offset:3px}
+.pill{background:#fffaf0;border:1.3px solid #23263a;border-radius:999px;padding:5px 11px;white-space:nowrap;box-shadow:2px 2px 0 #23263a;transition:transform .12s,box-shadow .12s;cursor:pointer}
+.pill:hover{transform:translate(-1px,-1px);box-shadow:3px 3px 0 #23263a}
+.menu{position:relative}
+.menu summary{list-style:none;display:flex;align-items:center;gap:7px}
+.menu summary::-webkit-details-marker{display:none}
+.menu summary b{opacity:.5}
+.menu summary i{font-style:normal;font-size:9px;opacity:.6;transition:transform .15s}
+.menu[open] summary{background:#23263a;color:#fffaf0}
+.menu[open] summary i{transform:rotate(180deg)}
+.panel{position:absolute;right:0;top:calc(100% + 10px);width:min(560px,calc(100vw - 32px));background:#f5f0e5;border:1.4px solid #23263a;border-radius:8px;box-shadow:4px 4px 0 #23263a;padding:10px;display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.panel a{display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 6px 8px;border-radius:6px;border:1.2px solid transparent;text-align:center}
+.panel a:hover{border-color:#23263a;background:#fffaf0}
+.panel a[aria-current]{background:#efe8d8;border-color:#23263a}
+.panel img{width:100%;aspect-ratio:1/1;object-fit:contain}
+.panel b{font-size:10px;opacity:.55;letter-spacing:.06em}
+.panel span{font:600 12px/1.25 ui-sans-serif,system-ui,"Segoe UI",sans-serif}
+.arrows{display:flex;gap:6px}
+.arrows a{padding:5px 10px}
+.iso-page{padding-top:16px!important}
+.credit{margin:16px 2px 0;font:500 12px/1.5 ui-sans-serif,system-ui,"Segoe UI",sans-serif;color:#7b7666}
+.credit a{color:inherit;text-underline-offset:2px}
+.keys{font:600 11px ui-monospace,Menlo,Consolas,monospace;color:#8a8676}
+@media (max-width:760px){
+.site{width:100%;padding:10px 10px 0;margin-top:0;gap:6px;flex-wrap:wrap}
+.site .badges{order:-2;margin-left:auto}
+.site .maker,.site .guide{font-size:11px;padding:4px 10px}
+.site::after{content:"";order:-1;flex-basis:100%;height:0}
+.site .home{font-size:14px}
+.menu summary .nm{display:none}
+.panel{position:fixed;left:10px;right:10px;top:52px;width:auto;max-height:calc(100vh - 70px);overflow:auto;grid-template-columns:repeat(3,1fr);gap:4px;padding:8px}
+.panel span{font-size:11px}
+.iso-page{padding-top:10px!important}
+.keys{display:none}
+.credit{margin:12px 2px 0}
+}
+.render .site,.render .credit{display:none}
+.embed .site,.embed .credit{display:none!important}
+.embed .iso-page{margin:0 auto!important;padding:6px!important;width:100%!important}
+.embed.fill .iso-page{height:100vh;display:flex;flex-direction:column}
+.embed.fill .card{flex:1;grid-template-rows:auto 1fr auto}
+.embed.fill .main{display:flex;flex-direction:column}
+.embed.fill .stage{flex:1;display:grid;place-items:center}
+a.guide,.site a.guide{font:700 12px ui-monospace,"SF Mono",Menlo,Consolas,monospace;white-space:nowrap;text-decoration:none;color:#23263a;background:#f2c14e;border:1.3px solid #23263a;border-radius:999px;padding:5px 12px;box-shadow:2px 2px 0 #23263a;transition:transform .12s,box-shadow .12s}
+a.guide:hover{transform:translate(-1px,-1px);box-shadow:3px 3px 0 #23263a}
+.badges{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+a.maker,.site a.maker{font:600 12px ui-monospace,"SF Mono",Menlo,Consolas,monospace;white-space:nowrap;text-decoration:none;color:#fffaf0;background:#23263a;border:1.3px solid #23263a;border-radius:999px;padding:5px 12px;box-shadow:2px 2px 0 #23263a55;transition:transform .12s}
+.maker b{font-weight:700;color:#f2c14e}
+.maker:hover{transform:translate(-1px,-1px)}
+</style><style>
+.iso{
+  --anatomy-page:#0b0b0b;--anatomy-card:#131313;--anatomy-text:#a3a3a3;--anatomy-strong:#e6e6e6;--anatomy-muted:#6e6e6e;
+  --anatomy-paper:#131313;--anatomy-face:#1b1b1b;--anatomy-top:#1c1c1c;
+  --anatomy-shade-0:#0f0f0f;--anatomy-shade-1:#121212;--anatomy-shade-2:#151515;--anatomy-shade-3:#181818;
+  --anatomy-lit-top:#262626;--anatomy-lit-shade:#1d1d1d;
+  --anatomy-hi:#d4d4d4;--anatomy-mid:#6a6a6a;--anatomy-lo:#3e3e3e;--anatomy-faint:#2a2a2a;--anatomy-lit:#ffffff;
+  --anatomy-halo:#050505;--anatomy-halo-opacity:.9;--anatomy-dot:#e6e6e6;
+  --anatomy-red:#ff6b6b;--anatomy-green:#6be0a0;--anatomy-blue:#6b9bff;
+  --anatomy-weight:.6px;--anatomy-ease:cubic-bezier(.32,.72,0,1);
+  --anatomy-mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --anatomy-lift:inset 0 1px 0 0 #ffffff0a,inset 0 0 0 1px #ffffff06,0 0 0 1px #00000026,0 1px 1px -.5px #00000014,0 3px 3px -1.5px #00000014,0 6px 6px -3px #00000014,0 12px 12px -6px #00000014;
+}
+.iso[data-theme="light"]{
+  --anatomy-page:#f2f2ef;--anatomy-card:#fbfbfa;--anatomy-text:#57575a;--anatomy-strong:#18181a;--anatomy-muted:#8c8c90;
+  --anatomy-paper:#fbfbfa;--anatomy-face:#ffffff;--anatomy-top:#ffffff;
+  --anatomy-shade-0:#dcdcd9;--anatomy-shade-1:#e5e5e2;--anatomy-shade-2:#ededea;--anatomy-shade-3:#f4f4f1;
+  --anatomy-lit-top:#ffffff;--anatomy-lit-shade:#eeeeeb;
+  --anatomy-hi:#26262a;--anatomy-mid:#8a8a8f;--anatomy-lo:#b4b4b8;--anatomy-faint:#d4d4d6;--anatomy-lit:#000000;
+  --anatomy-halo:#8a8a80;--anatomy-halo-opacity:.32;--anatomy-dot:#3a3a3e;
+  --anatomy-red:#e5484d;--anatomy-green:#30a46c;--anatomy-blue:#3e63dd;
+  --anatomy-lift:inset 0 1px 0 0 #ffffff,0 0 0 1px #0000000f,0 1px 1px -.5px #0000000a,0 3px 3px -1.5px #0000000a,0 6px 6px -3px #0000000a,0 12px 12px -6px #0000000a;
+}
+.iso-svg{display:block;width:100%;height:auto;overflow:visible}
+.iso-svg path,.iso-svg circle{vector-effect:non-scaling-stroke}
+.iso-fill{fill:var(--anatomy-paper);stroke:none}
+.iso-solid[data-lit]>.iso-fill{fill:var(--anatomy-face)}
+.iso-shade,.iso-top{stroke:none}
+.iso-shade[data-shade="0"]{fill:var(--anatomy-shade-0)}
+.iso-shade[data-shade="1"]{fill:var(--anatomy-shade-1)}
+.iso-shade[data-shade="2"]{fill:var(--anatomy-shade-2)}
+.iso-shade[data-shade="3"]{fill:var(--anatomy-shade-3)}
+.iso-top{fill:var(--anatomy-top)}
+.iso-solid[data-lit]>.iso-top{fill:var(--anatomy-lit-top)}
+.iso-solid[data-lit]>.iso-shade{fill:var(--anatomy-lit-shade)}
+.iso-solid[data-seamless]>.iso-shade,.iso-solid[data-seamless]>.iso-top{stroke-width:.4;stroke-linejoin:round}
+.iso-solid[data-seamless]>.iso-shade[data-shade="0"]{stroke:var(--anatomy-shade-0)}
+.iso-solid[data-seamless]>.iso-shade[data-shade="1"]{stroke:var(--anatomy-shade-1)}
+.iso-solid[data-seamless]>.iso-shade[data-shade="2"]{stroke:var(--anatomy-shade-2)}
+.iso-solid[data-seamless]>.iso-shade[data-shade="3"]{stroke:var(--anatomy-shade-3)}
+.iso-solid[data-seamless]>.iso-top{stroke:var(--anatomy-top)}
+.iso-solid[data-seamless][data-lit]>.iso-top{stroke:var(--anatomy-lit-top)}
+.iso-solid[data-seamless][data-lit]>.iso-shade{stroke:var(--anatomy-lit-shade)}
+.iso-solid[data-lit]>.iso-edge{stroke:var(--anatomy-lit)}
+.iso-halo{fill:var(--anatomy-halo);stroke:none;filter:blur(9px);opacity:var(--anatomy-halo-opacity);transform:translateY(3px)}
+.iso-line{fill:none;stroke:var(--anatomy-lo);stroke-width:var(--anatomy-weight);stroke-linecap:round;stroke-linejoin:round}
+.iso-line[data-tone="hi"]{stroke:var(--anatomy-hi)}
+.iso-line[data-tone="mid"]{stroke:var(--anatomy-mid)}
+.iso-line[data-tone="lo"]{stroke:var(--anatomy-lo)}
+.iso-line[data-tone="faint"]{stroke:var(--anatomy-faint)}
+.iso-line[data-tone="lit"]{stroke:var(--anatomy-lit)}
+.iso-line[data-tone="red"]{stroke:var(--anatomy-red)}
+.iso-line[data-tone="green"]{stroke:var(--anatomy-green)}
+.iso-line[data-tone="blue"]{stroke:var(--anatomy-blue)}
+.iso-line[data-dotted]{stroke-dasharray:.01 3.5;stroke-width:1}
+.iso-line[data-dashed]{stroke-dasharray:3 3}
+.iso-line[data-flow]{stroke-dasharray:2 6}
+.iso-wire-end{fill:var(--anatomy-paper);stroke:var(--anatomy-lo);stroke-width:var(--anatomy-weight)}
+.iso-wire[data-tone="hi"] .iso-wire-end{stroke:var(--anatomy-hi)}
+.iso-wire[data-tone="mid"] .iso-wire-end{stroke:var(--anatomy-mid)}
+.iso-wire[data-tone="faint"] .iso-wire-end{stroke:var(--anatomy-faint)}
+.iso-wire[data-tone="lit"] .iso-wire-end{stroke:var(--anatomy-lit)}
+.iso-dots circle{fill:var(--anatomy-dot);stroke:none;opacity:.32}
+.iso-dots[data-tone="hi"] circle{opacity:.85}
+.iso-dots[data-tone="mid"] circle{opacity:.45}
+.iso-dots[data-tone="lo"] circle{opacity:.22}
+.iso-dots[data-tone="faint"] circle{opacity:.12}
+.iso-face-text{fill:var(--anatomy-mid);font-family:var(--anatomy-mono);letter-spacing:.04em}
+.iso-face-text[data-tone="hi"]{fill:var(--anatomy-hi)}
+.iso-face-text[data-tone="lo"]{fill:var(--anatomy-lo)}
+.iso-face-text[data-tone="faint"]{fill:var(--anatomy-faint)}
+.tb-body{fill:var(--anatomy-shade-2);stroke:none}
+.tb-shine{fill:var(--anatomy-top);stroke:none}
+.tb-shade{fill:var(--anatomy-shade-0);stroke:none}
+.tb-ring{fill:none;stroke:var(--anatomy-lo);stroke-width:.45;stroke-linecap:butt;stroke-linejoin:round}
+.tb-ring[data-tone="mid"]{stroke:var(--anatomy-mid)}
+.tb-ring[data-tone="faint"]{stroke:var(--anatomy-faint)}
+.tb-ring[data-tone="hi"]{stroke:var(--anatomy-hi)}
+@keyframes iso-flow{to{stroke-dashoffset:-32}}
+@keyframes iso-pulse{0%,100%{opacity:.18}12%{opacity:1}40%{opacity:.18}}
+.iso-line[data-flow]{animation:iso-flow 1600ms linear infinite}
+.iso-dots circle[data-pulse]{animation:iso-pulse 1600ms steps(1,end) infinite;animation-delay:var(--pulse-at,0ms)}
+.iso-figure{margin:32px 0 36px}
+.iso-plate{position:relative;padding:52px 24px;border-radius:0;background:var(--anatomy-card);box-shadow:0 0 0 1px var(--anatomy-mid);--anatomy-paper:var(--anatomy-card)}
+.iso-plate-corners{position:absolute;inset:18px 20px;pointer-events:none}
+.iso-plate-corner{position:absolute;color:var(--anatomy-muted);font-family:var(--anatomy-mono);font-size:10.5px;line-height:1;letter-spacing:.04em;white-space:nowrap}
+.iso-plate-corner[data-corner="fig"]{top:0;left:0;color:var(--anatomy-text)}
+.iso-plate-corner[data-corner="title"]{top:0;right:0;text-transform:uppercase;letter-spacing:.1em}
+.iso-plate-corner[data-corner="hint"]{bottom:0;left:0;text-transform:uppercase;letter-spacing:.1em}
+.iso-plate-corner[data-corner="readout"]{right:0;bottom:0;color:var(--anatomy-text);font-variant-numeric:tabular-nums}
+.iso-plate .iso-svg{margin:0 auto}
+.iso-legend{display:grid;gap:8px;margin-top:12px;color:var(--anatomy-muted);font-size:13px;line-height:1.55}
+.iso-keys{display:flex;flex-wrap:wrap;gap:6px 18px}
+.iso-key{display:inline-flex;align-items:center;gap:7px}
+.iso-swatch{width:16px;height:10px;flex:none;overflow:visible}
+.iso-swatch path{fill:none;stroke:var(--anatomy-hi);stroke-width:1;vector-effect:non-scaling-stroke;stroke-linejoin:round;stroke-linecap:round}
+.iso-swatch[data-mark="raised"] path,.iso-swatch[data-mark="flat"] path{stroke:var(--anatomy-mid)}
+.iso-swatch[data-mark="lit"] path{stroke:var(--anatomy-lit)}
+.iso-swatch[data-mark="dim"] path{stroke:var(--anatomy-lo)}
+.iso-swatch[data-mark="dotted"] path{stroke-dasharray:.01 3;stroke-width:1.4}
+.iso-swatch[data-mark="dashed"] path{stroke-dasharray:3 2.5}
+.iso-swatch[data-mark="red"] path{stroke:var(--anatomy-red)}
+.iso-swatch[data-mark="green"] path{stroke:var(--anatomy-green)}
+.iso-swatch[data-mark="blue"] path{stroke:var(--anatomy-blue)}
+.iso-swatch-crease{stroke:var(--anatomy-lo)!important}
+@media (max-width:560px){.iso-plate{padding:48px 12px 70px}.iso-plate-corner[data-corner="hint"]{bottom:18px}}
+@media (prefers-reduced-motion:reduce){.iso-line[data-flow],.iso-dots circle[data-pulse]{animation:none}}
+
+*{box-sizing:border-box}
+html{color-scheme:dark}
+body[data-theme="light"]{color-scheme:light}
+body{margin:0;background:var(--anatomy-page);color:var(--anatomy-text);font:14px/1.6 ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+.iso-page{width:min(980px,100% - 32px);margin:64px auto 96px}
+</style></head><body class="iso" data-theme="light"><header class="site">
+  <a class="home" href="/">← 可视化学习</a>
+  <details class="menu"><summary class="pill"><b>35</b><span class="nm">Atlas 机器人</span><span>· 全部 40 个</span><i>▼</i></summary>
+    <nav class="panel"><a href="/dji-drone"><img src="/thumbs/dji-drone.webp" alt="" loading="lazy"><b>图 29</b><span>大疆无人机</span></a><a href="/dji-neo"><img src="/thumbs/dji-neo.webp" alt="" loading="lazy"><b>图 36</b><span>大疆 Neo</span></a><a href="/vision-pro"><img src="/thumbs/vision-pro.webp" alt="" loading="lazy"><b>图 28</b><span>Vision Pro</span></a><a href="/rolex"><img src="/thumbs/rolex.webp" alt="" loading="lazy"><b>图 38</b><span>劳力士潜航者</span></a><a href="/meta-glasses"><img src="/thumbs/meta-glasses.webp" alt="" loading="lazy"><b>图 37</b><span>Meta Ray-Ban 显示眼镜</span></a><a href="/ipad-pro"><img src="/thumbs/ipad-pro.webp" alt="" loading="lazy"><b>图 41</b><span>iPad Pro</span></a><a href="/dgx-spark"><img src="/thumbs/dgx-spark.webp" alt="" loading="lazy"><b>图 25</b><span>NVIDIA DGX Spark</span></a><a href="/spot"><img src="/thumbs/spot.webp" alt="" loading="lazy"><b>图 30</b><span>Spot 机器狗</span></a><a href="/robot-vacuum"><img src="/thumbs/robot-vacuum.webp" alt="" loading="lazy"><b>图 40</b><span>带机械臂的扫地机器人</span></a><a href="/atlas" aria-current="page"><img src="/thumbs/atlas.webp" alt="" loading="lazy"><b>图 35</b><span>Atlas 机器人</span></a><a href="/combination-lock"><img src="/thumbs/combination-lock.webp" alt="" loading="lazy"><b>图 39</b><span>密码锁</span></a><a href="/starlink"><img src="/thumbs/starlink.webp" alt="" loading="lazy"><b>图 33</b><span>星链天线</span></a><a href="/switch-2"><img src="/thumbs/switch-2.webp" alt="" loading="lazy"><b>图 32</b><span>任天堂 Switch 2</span></a><a href="/f1-wheel"><img src="/thumbs/f1-wheel.webp" alt="" loading="lazy"><b>图 34</b><span>F1 方向盘</span></a><a href="/ps-controller"><img src="/thumbs/ps-controller.webp" alt="" loading="lazy"><b>图 24</b><span>PlayStation 手柄</span></a><a href="/iphone"><img src="/thumbs/iphone.webp" alt="" loading="lazy"><b>图 20</b><span>iPhone</span></a><a href="/macbook"><img src="/thumbs/macbook.webp" alt="" loading="lazy"><b>图 21</b><span>MacBook</span></a><a href="/rtx-5090"><img src="/thumbs/rtx-5090.webp" alt="" loading="lazy"><b>图 27</b><span>RTX 5090</span></a><a href="/mac-mini"><img src="/thumbs/mac-mini.webp" alt="" loading="lazy"><b>图 26</b><span>Mac mini</span></a><a href="/apple-watch"><img src="/thumbs/apple-watch.webp" alt="" loading="lazy"><b>图 23</b><span>Apple Watch</span></a><a href="/airpods"><img src="/thumbs/airpods.webp" alt="" loading="lazy"><b>图 22</b><span>AirPods Pro</span></a><a href="/mechanical-watch"><img src="/thumbs/mechanical-watch.webp" alt="" loading="lazy"><b>图 18</b><span>机械表</span></a><a href="/rubiks-cube"><img src="/thumbs/rubiks-cube.webp" alt="" loading="lazy"><b>图 15</b><span>魔方</span></a><a href="/instant-camera"><img src="/thumbs/instant-camera.webp" alt="" loading="lazy"><b>图 16</b><span>拍立得</span></a><a href="/atom"><img src="/thumbs/atom.webp" alt="" loading="lazy"><b>图 19</b><span>原子</span></a><a href="/lava-lamp"><img src="/thumbs/lava-lamp.webp" alt="" loading="lazy"><b>图 17</b><span>熔岩灯</span></a><a href="/claw-machine"><img src="/thumbs/claw-machine.webp" alt="" loading="lazy"><b>图 02</b><span>抓娃娃机</span></a><a href="/microwave"><img src="/thumbs/microwave.webp" alt="" loading="lazy"><b>图 07</b><span>微波炉</span></a><a href="/espresso-machine"><img src="/thumbs/espresso-machine.webp" alt="" loading="lazy"><b>图 01</b><span>意式咖啡机</span></a><a href="/car-engine"><img src="/thumbs/car-engine.webp" alt="" loading="lazy"><b>图 03</b><span>汽车发动机</span></a><a href="/vending-machine"><img src="/thumbs/vending-machine.webp" alt="" loading="lazy"><b>图 04</b><span>自动售货机</span></a><a href="/washing-machine"><img src="/thumbs/washing-machine.webp" alt="" loading="lazy"><b>图 05</b><span>洗衣机</span></a><a href="/toaster"><img src="/thumbs/toaster.webp" alt="" loading="lazy"><b>图 06</b><span>烤面包机</span></a><a href="/pencil-sharpener"><img src="/thumbs/pencil-sharpener.webp" alt="" loading="lazy"><b>图 08</b><span>卷笔刀</span></a><a href="/smoke-alarm"><img src="/thumbs/smoke-alarm.webp" alt="" loading="lazy"><b>图 09</b><span>烟雾报警器</span></a><a href="/fridge"><img src="/thumbs/fridge.webp" alt="" loading="lazy"><b>图 10</b><span>冰箱</span></a><a href="/capsule-toy-machine"><img src="/thumbs/capsule-toy-machine.webp" alt="" loading="lazy"><b>图 11</b><span>扭蛋机</span></a><a href="/photo-booth"><img src="/thumbs/photo-booth.webp" alt="" loading="lazy"><b>图 12</b><span>大头贴机</span></a><a href="/roller-coaster"><img src="/thumbs/roller-coaster.webp" alt="" loading="lazy"><b>图 13</b><span>过山车</span></a><a href="/elevator"><img src="/thumbs/elevator.webp" alt="" loading="lazy"><b>图 14</b><span>电梯</span></a></nav>
+  </details>
+  <span class="arrows"><a class="pill" href="/robot-vacuum" data-go="prev" title="带机械臂的扫地机器人 (←)">←</a><a class="pill" href="/combination-lock" data-go="next" title="密码锁 (→)">→</a></span>
+  <span class="badges"><a class="guide" href="https://x.com/elvar_official/status/2111831136171151589" target="_blank" rel="noopener">完整指南 ↗</a><a class="maker" href="https://x.com/elvar_official" target="_blank" rel="noopener">作者 <b>@elvar_official</b></a></span>
+</header><main class="iso-page"><style>.c-chrome{--f:#cfd7e0;--t:#e3e8ed;--s3:#d8dee6;--s2:#cfd7e0;--s1:#b8bfc9;--s0:#a0a7b1}
+.c-steel{--f:#bcc5cf;--t:#d8dde3;--s3:#c8cfd8;--s2:#bcc5cf;--s1:#a7afba;--s0:#9299a5}
+.c-dark{--f:#8e98a6;--t:#bdc3cb;--s3:#a2abb6;--s2:#8e98a6;--s1:#7f8896;--s0:#707886}
+.c-iron{--f:#7d8593;--t:#b4b8c0;--s3:#949ba6;--s2:#7d8593;--s1:#707786;--s0:#646a78}
+.c-brass{--f:#e3b866;--t:#efd6a6;--s3:#e8c582;--s2:#e3b866;--s1:#c9a45e;--s0:#af9057}
+.c-copper{--f:#d98a5a;--t:#e9bb9f;--s3:#e09f78;--s2:#d98a5a;--s1:#c07c54;--s0:#a86e4e}
+.c-black{--f:#383a4e;--t:#8c8d98;--s3:#5c5d6e;--s2:#383a4e;--s1:#34364a;--s0:#303245}
+.c-rubber{--f:#44465a;--t:#93949f;--s3:#666778;--s2:#44465a;--s1:#3f4154;--s0:#393b4e}
+.c-wood{--f:#cf9460;--t:#e3c1a3;--s3:#d8a77d;--s2:#cf9460;--s1:#b88559;--s0:#a07552}
+.c-porcelain{--f:#f7f3ea;--t:#faf8f3;--s3:#f8f5ee;--s2:#f7f3ea;--s1:#dad7d1;--s0:#bebbb9}
+.c-glass{--f:#d9eef5;--t:#e9f5f9;--s3:#e0f1f7;--s2:#d9eef5;--s1:#c0d3db;--s0:#a8b8c1}
+.c-amber{--f:#ffb648;--t:#ffd595;--s3:#ffc369;--s2:#ffb648;--s1:#e1a244;--s0:#c48e41}
+.c-mint{--f:#86d3ad;--t:#b9e5cf;--s3:#9cdbbc;--s2:#86d3ad;--s1:#78bb9c;--s0:#6aa48b}
+.c-butter{--f:#f2c14e;--t:#f7db98;--s3:#f4cc6e;--s2:#f2c14e;--s1:#d6ac4a;--s0:#ba9645}
+.c-tomato{--f:#e5583e;--t:#f09e8f;--s3:#ea7661;--s2:#e5583e;--s1:#cb503c;--s0:#b04939}
+.c-sky{--f:#7fb9e9;--t:#b5d6f2;--s3:#96c6ed;--s2:#7fb9e9;--s1:#72a5d0;--s0:#6590b8}
+.c-rose{--f:#f2a5bf;--t:#f7cbda;--s3:#f4b5cb;--s2:#f2a5bf;--s1:#d693ac;--s0:#ba8299}
+.c-lilac{--f:#b9a6e8;--t:#d6cbf2;--s3:#c6b6ec;--s2:#b9a6e8;--s1:#a494d0;--s0:#9082b7}
+.c-cream{--f:#f6eedb;--t:#faf5ea;--s3:#f8f1e1;--s2:#f6eedb;--s1:#dad3c4;--s0:#bdb8ae}
+.c-paper{--f:#fbf7ee;--t:#fdfaf5;--s3:#fcf8f1;--s2:#fbf7ee;--s1:#dedbd5;--s0:#c1bebc}
+.c-green{--f:#5fae7b;--t:#a2d0b2;--s3:#7cbd93;--s2:#5fae7b;--s1:#569b71;--s0:#4d8866}
+.c-pcb{--f:#3f8f5c;--t:#90bea0;--s3:#62a379;--s2:#3f8f5c;--s1:#3a8056;--s0:#367150}
+.c{--anatomy-paper:var(--f);--anatomy-face:var(--f);--anatomy-top:var(--t);--anatomy-shade-3:var(--s3);--anatomy-shade-2:var(--s2);--anatomy-shade-1:var(--s1);--anatomy-shade-0:var(--s0);--anatomy-lit-top:var(--t);--anatomy-lit-shade:var(--s2)}
+.c-body{--f:var(--body);--t:var(--body-t);--s3:var(--body-3);--s2:var(--body);--s1:var(--body-1);--s0:var(--body-0)}
+.c-alt{--f:var(--alt);--t:var(--alt-t);--s3:var(--alt-3);--s2:var(--alt);--s1:var(--alt-1);--s0:var(--alt-0)}
+.iso[data-theme="light"]{--anatomy-page:#ece6d8;--anatomy-card:#f5f0e5;--anatomy-hi:#23263a;--anatomy-mid:#23263aa8;--anatomy-lo:#23263a70;--anatomy-faint:#23263a45;--anatomy-lit:#23263a;--anatomy-dot:#23263a;--anatomy-weight:1.15px;--anatomy-halo-opacity:0;--anatomy-text:#4a4c5e;--anatomy-strong:#23263a;--anatomy-muted:#8a8676}
+body.iso{background:var(--anatomy-page);margin:0}
+.iso-page{max-width:980px;margin:0 auto;padding:28px 20px 40px;font-family:ui-sans-serif,system-ui,"Segoe UI",sans-serif;color:var(--anatomy-text)}
+.card{background:var(--anatomy-card);border:1.4px solid #23263a;border-radius:6px;box-shadow:4px 4px 0 #23263a;display:grid;grid-template-columns:200px 1fr;overflow:hidden}
+.side{border-right:1.4px solid #23263a;padding:18px 16px;display:flex;flex-direction:column;gap:10px;background:#efe8d8}
+.fig{font:600 11px var(--anatomy-mono);letter-spacing:.08em;text-transform:uppercase;color:#6b6656}
+.title{font:700 21px/1.15 ui-sans-serif,system-ui,"Segoe UI",sans-serif;color:#23263a;margin:2px 0 6px}
+.steps{display:flex;flex-direction:column;gap:7px;margin-top:4px}
+.step{appearance:none;text-align:left;font:600 12.5px var(--anatomy-mono);color:#23263a;background:#fffaf0;border:1.3px solid #23263a;border-radius:999px;padding:7px 12px 7px 10px;cursor:pointer;display:flex;gap:8px;align-items:center;box-shadow:2px 2px 0 #23263a;transition:transform .12s,box-shadow .12s,background .2s,opacity .2s}
+.step b{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;background:#23263a;color:#fffaf0;font-size:10px;flex:none}
+.step:hover:not([disabled]){transform:translate(-1px,-1px);box-shadow:3px 3px 0 #23263a}
+.step:active:not([disabled]),.step[data-press]{transform:translate(2px,2px);box-shadow:0 0 0 #23263a}
+.step[disabled]{opacity:.38;cursor:default;box-shadow:none}
+.step[data-on]{background:var(--body);opacity:1;box-shadow:2px 2px 0 #23263a}
+.step[data-done]{opacity:.55;box-shadow:none}
+.main{position:relative;padding:14px 18px 12px}
+.hint{font:500 13.5px/1.45 ui-sans-serif,system-ui,"Segoe UI",sans-serif;color:#23263a;min-height:40px;max-width:600px}
+.lapse{display:inline-block;margin-left:8px;font:700 11px var(--anatomy-mono);background:#23263a;color:#fffaf0;border-radius:4px;padding:2px 6px;vertical-align:1px;opacity:0;transition:opacity .2s}
+.lapse[data-on]{opacity:1}
+.stage svg{display:block;width:100%;height:auto;overflow:visible}
+.chips{display:flex;flex-wrap:wrap;gap:6px 8px;margin-top:4px}
+.chip{font:600 11.5px var(--anatomy-mono);color:#23263a;background:#fffaf0;border:1.2px solid #23263a;border-radius:6px;padding:5px 8px;font-variant-numeric:tabular-nums;white-space:nowrap;transition:background .25s}
+.chip i{font-style:normal;color:#7b7666;font-weight:500;margin-right:5px;text-transform:uppercase;font-size:10px;letter-spacing:.06em}
+.chip[data-hot]{background:var(--body)}
+.foot{display:flex;align-items:center;gap:18px;flex-wrap:wrap;border-top:1.4px solid #23263a;padding:10px 18px;grid-column:1/-1;background:#efe8d8}
+.idea{font:500 13px/1.45 ui-sans-serif,system-ui,"Segoe UI",sans-serif;color:#23263a;flex:1 1 340px}
+.idea b{font-weight:700}
+.ctl{display:flex;align-items:center;gap:8px;font:600 10px var(--anatomy-mono);letter-spacing:.07em;text-transform:uppercase;color:#6b6656}
+.sw{width:18px;height:18px;border-radius:50%;border:1.3px solid #23263a;cursor:pointer;padding:0}
+.sw[data-on]{box-shadow:0 0 0 2px #f5f0e5,0 0 0 3.4px #23263a}
+.shadow{fill:#ddd4c3}
+.slot{fill:#23263a;opacity:.62}
+.plate{fill:#e3b866;stroke:#23263a;stroke-width:1px;vector-effect:non-scaling-stroke}
+.dial-face{fill:#fffdf6;stroke:#23263a;stroke-width:1px;vector-effect:non-scaling-stroke}
+.dial-red{fill:none;stroke:#e5583e;stroke-width:2.2px;stroke-linecap:round;vector-effect:non-scaling-stroke}
+.glint{fill:none;stroke:#fff;stroke-width:1.6px;stroke-linecap:round;opacity:.85;vector-effect:non-scaling-stroke}
+.needle{fill:none;stroke:#e5583e;stroke-width:1.6px;stroke-linecap:round;vector-effect:non-scaling-stroke}
+.lcd{fill:#cde7c3;stroke:#23263a;stroke-width:1px;vector-effect:non-scaling-stroke}
+.lcd-text{fill:#23263a;font-family:var(--anatomy-mono);font-weight:700;letter-spacing:.02em}
+.glass .iso-fill,.glass .iso-shade,.glass .iso-top{fill-opacity:.32}
+.ink{fill:none;stroke:#23263a;stroke-width:1.15px;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+.word{font:700 15px "Segoe Print","Bradley Hand","Comic Sans MS",cursive;fill:#23263a;paint-order:stroke;stroke:#f5f0e5;stroke-width:4px;stroke-linejoin:round}
+.cursor{position:fixed;left:0;top:0;z-index:10;pointer-events:none;transform-origin:3px 2px;filter:drop-shadow(1px 2px 0 #23263a55)}
+.render *{transition:none!important}
+.modes{display:flex;gap:2px;padding:2px;background:#fffaf0;border:1.3px solid #23263a;border-radius:999px;box-shadow:2px 2px 0 #23263a;margin:2px 0 6px}
+.mode{flex:1;appearance:none;border:0;background:none;border-radius:999px;padding:5px 6px;font:700 11.5px var(--anatomy-mono);color:#6b6656;cursor:pointer;white-space:nowrap;transition:background .15s,color .15s;display:flex;align-items:center;justify-content:center;gap:6px}
+.mode:hover:not([aria-checked="true"]){color:#23263a}
+.mode[aria-checked="true"]{background:#23263a;color:#fffaf0}
+.restart{appearance:none;background:none;border:0;padding:2px 0;margin-top:auto;align-self:flex-start;font:600 11px var(--anatomy-mono);color:#6b6656;cursor:pointer;text-decoration:underline;text-decoration-color:#6b665666;text-underline-offset:3px}
+.restart:hover{color:#23263a;text-decoration-color:#23263a}
+.render .modes,.render .restart{display:none}
+.manual .step:not([disabled]):not([data-on]){animation:nudge 1.5s ease-in-out infinite}
+@keyframes nudge{0%,100%{box-shadow:2px 2px 0 #23263a,0 0 0 0 #23263a55}60%{box-shadow:2px 2px 0 #23263a,0 0 0 6px #23263a00}}
+@media (prefers-reduced-motion:reduce){.manual .step{animation:none!important}}
+@media (max-width:760px){
+.iso-page{width:100%;margin:0 auto;padding:10px 10px 28px}
+.card{grid-template-columns:1fr;box-shadow:3px 3px 0 #23263a}
+.side{border-right:0;border-bottom:1.4px solid #23263a;padding:12px 12px 10px;gap:6px}
+.title{font-size:18px;margin:0 0 4px}
+.steps{flex-direction:row;flex-wrap:wrap;gap:6px}
+.step{padding:5px 10px 5px 6px;font-size:11.5px;gap:6px}
+.modes{max-width:280px;margin:0 0 4px}
+.restart{margin-top:2px}
+.main{padding:10px 10px 10px}
+.hint{min-height:57px;font-size:13px}
+.foot{padding:10px 12px;gap:10px 16px}
+.idea{flex-basis:100%}
+}
+
+.stage svg{overflow:hidden}
+.step[data-on],.chip[data-hot]{background:var(--alt)}
+.shadow-floor{mix-blend-mode:multiply}
+.grid path{fill:none;stroke:#23263a;stroke-width:.8px;opacity:.15;vector-effect:non-scaling-stroke}
+.at path,.at circle,.at rect,.at ellipse,.at use{vector-effect:non-scaling-stroke;stroke-linejoin:round}
+.at .f{stroke-width:.65px}
+.at .ol{fill:none;stroke:#23263a;stroke-width:1.15px}
+.at .ol-s{fill:none;stroke:#23263a;stroke-width:.8px}
+.at .cr{fill:none;stroke:#23263a;stroke-width:.5px;opacity:.36}
+.at .seam{fill:none;stroke:#23263a;stroke-width:.6px;opacity:.55}
+.at .seam-d{fill:none;stroke:#23263a;stroke-width:.9px;opacity:.75}
+.at .seam-l{fill:none;stroke:#fff;stroke-width:.6px;opacity:.5}
+.at .hair{fill:none;stroke:#23263a;stroke-width:.4px;opacity:.5}
+.at .turn{fill:none;stroke:#fff;stroke-width:.35px;opacity:.13}
+.at .band{fill:none;stroke:#15161b;stroke-width:.7px;opacity:.6}
+.at .lite{fill:none;stroke:#fff;stroke-width:.8px;opacity:.5;stroke-linecap:round}
+.at .gl-soft{fill:none;stroke:#fff;stroke-linecap:round;stroke-linejoin:round}
+.at .gl-core{fill:none;stroke:#fffdf8;stroke-linecap:round;stroke-linejoin:round}
+.at .grain{stroke:none;mix-blend-mode:screen}
+.at .logo{fill:#23263a;stroke:none;fill-rule:evenodd}
+.at .logo-lt{fill:#e9ebef;stroke:none;fill-rule:evenodd}
+.at .logo-gr{fill:#8f95a1;stroke:none;fill-rule:evenodd}
+.at text{font-family:ui-sans-serif,system-ui,"Segoe UI",sans-serif;font-weight:800}
+.at .wm{fill:#23263a;font-weight:900}
+.at .wm-lt{fill:#e9ebef;font-weight:900}
+.at .print{fill:#23263a;font-weight:700}
+.at .print2{fill:#23263a;font-weight:600;opacity:.7}
+.at .wprint{fill:#e9ebef;font-weight:700}
+.at .wprint2{fill:#c9ccd3;font-weight:600;opacity:.8}
+.at .glint{fill:#fff;opacity:.9;stroke:none}
+.at .glint2{fill:#fff;opacity:.3;stroke:none}
+.at .screw{fill:#a7adb7;stroke:#23263a;stroke-width:.45px}
+.at .screw-d{fill:#4a4d58;stroke:#15161b;stroke-width:.45px}
+.at .slot{fill:none;stroke:#23263a;stroke-width:.55px;stroke-linecap:round}
+.at .hole{fill:#15161b;stroke:none}
+.at .groove{fill:#1a1b21;stroke:none}
+.at .groove-l{fill:#6d717a;stroke:none}
+.at .hi{fill:#fff;opacity:.6;stroke:none}
+.at .chipb{fill:#2b2d37;stroke:#23263a;stroke-width:.4px}
+.at .pad{fill:#e3b866;stroke:none}
+.at .trace{fill:none;stroke:#7fc49a;stroke-width:.45px;opacity:.55}
+.at .conn{fill:#3a3c48;stroke:#23263a;stroke-width:.4px}
+.at .conn-l{fill:#e9e6dd;stroke:#23263a;stroke-width:.4px}
+.at .pins{fill:none;stroke:#e3b866;stroke-width:.6px}
+.at .led{fill:#6fe39b;stroke:#23263a;stroke-width:.35px}
+.at .led-off{fill:#4a4e58;stroke:#23263a;stroke-width:.35px}
+.at .ledbar{fill:#d9f6ff;stroke:#23263a;stroke-width:.4px}
+.at .ledglow{fill:#9fe0f2;stroke:none;opacity:.75}
+.at .label{fill:#efece4;stroke:#23263a;stroke-width:.4px}
+.at .label-d{fill:#2c2e36;stroke:#23263a;stroke-width:.4px}
+.at .warn{fill:#f3c11f;stroke:#23263a;stroke-width:.35px}
+.at .fin{fill:#9ca3ae;stroke:none}
+.at .fin-d{fill:#5d636e;stroke:none}
+.at .fan{fill:#2c2e36;stroke:#23263a;stroke-width:.45px}
+.at .blade{fill:#4b4e59;stroke:#23263a;stroke-width:.3px}
+.at .tread{fill:none;stroke:#101115;stroke-width:.7px;opacity:.55;stroke-linecap:round}
+.at .lite{fill:none;stroke:#fff;stroke-width:.8px;opacity:.5;stroke-linecap:round}
+.at .flex{fill:#d08a3f;stroke:#23263a;stroke-width:.45px}
+.at .hl-glow{fill:none;stroke-linejoin:round}
+.at .hl-rim{fill:none;stroke-linejoin:round}
+.at .ring-core{fill:none;stroke:#f6fdff}
+.at .ring-glow{fill:none;stroke:#a9e7f7}
+.at .ring-edge{fill:none;stroke:#0a0b0e;stroke-width:.45px;opacity:.6}
+.at .insert{fill:#3a3c45;stroke:#23263a;stroke-width:.5px}
+.at .arc-far{fill:none;stroke:#e5583e;stroke-width:2.2px;stroke-linecap:round;stroke-dasharray:6 4;opacity:.75}
+.at .arc{fill:none;stroke:#e5583e;stroke-width:4px;stroke-linecap:round}
+.at .arc-glow{fill:none;stroke:#ff9d3a;stroke-width:11px;stroke-linecap:round}
+.at .arc-track{fill:none;stroke:#23263a;stroke-width:1px;stroke-dasharray:3 3;opacity:.45}
+.at .arc-head{fill:#e5583e;stroke:#23263a;stroke-width:.8px;stroke-linejoin:round}
+.at .tick{fill:none;stroke:#23263a;stroke-width:1.4px;stroke-linecap:round}
+.at .badge{fill:#fffaf0;stroke:#23263a;stroke-width:1.1px}
+.at .badge-t{fill:#23263a;font:700 11px ui-monospace,"Cascadia Mono",Consolas,monospace}
+.at .tag{fill:#fffaf0;stroke:#23263a;stroke-width:1.1px}
+.at .tag-t{fill:#23263a;font:700 11px ui-monospace,"Cascadia Mono",Consolas,monospace}
+.at .tag-s{fill:#6b6656;font:600 9px ui-monospace,"Cascadia Mono",Consolas,monospace}
+.at .lead{fill:none;stroke:#23263a;stroke-width:.9px;stroke-dasharray:3 2.2}
+.at .lead-dot{fill:#23263a;stroke:none}
+</style>
+<div class="card">
+  <aside class="side">
+    <div class="fig">图 35 · 机器人</div>
+    <div class="title">Atlas 机器人</div>
+    <div class="modes" role="radiogroup" aria-label="Mode"><button class="mode" data-mode="auto" role="radio" aria-checked="false"><svg viewBox="0 0 12 12" width="9" height="9" aria-hidden="true"><path d="M2 1.2v9.6L10.4 6z" fill="currentColor"/></svg>自动</button><button class="mode" data-mode="manual" role="radio" aria-checked="true"><svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M4 2.5l14.5 8.6-6.2 1.4 3.2 7-2.9 1.3-3.1-7-5.5 4.3z" fill="currentColor"/></svg>手动</button></div>
+    <div class="steps"><button class="step" data-step="walk" ><b>1</b>行走</button><button class="step" data-step="turn" disabled><b>2</b>转动腰部</button><button class="step" data-step="head" disabled><b>3</b>转动头部</button><button class="step" data-step="getup" disabled><b>4</b>从地上站起来</button><button class="step" data-step="lid" disabled><b>5</b>打开板</button><button class="step" data-step="leg" disabled><b>6</b>一条腿，三个关节</button><button class="step" data-step="apart" disabled><b>7</b>拆开它</button><button class="step" data-step="together" disabled><b>↺</b>重新装好</button></div>
+    <button class="restart" data-restart>⟲ 重新开始</button>
+  </aside>
+  <section class="main">
+    <div class="hint"><span data-hint>人形机器人是如何走路、扭腰转身和从地上站起来的？按下步骤，或者等待机器人自行执行这些步骤。</span><span class="lapse" data-lapse>×3</span></div>
+    <div class="stage"><svg xmlns="http://www.w3.org/2000/svg" class="iso-svg" viewBox="0 0 700 500" role="img" aria-label="A sleek grey-white Atlas humanoid robot with BOSTON DYNAMICS printed across its chest 和 ATLAS 开启 its hips, 开启 a lab 楼层. Its 头部 is a wide flat disc with a glowing ring of light for a face. It walks, 转数 its whole upper body round 开启 the 腰部 while its legs stand still, 转数 its 头部 a full circle, lies down with its knees folding backward 和 gets up facing away before turning back; its chest opens like a door over the compute 时松开， 电池 while the hip 和 knee actuators light up; one leg works its hip, knee 和 ankle; then it comes apart into 头部, shells, boxes, arms 和 legs laid out piece by piece, 和 goes back together."><defs><clipPath id="floorclip"><path d="M515.4 592.4L514.4 593L513.1 593.5L511.5 593.9L509.7 594.1L507.8 594.3L505.9 594.3L503.9 594.2L502.1 594L-108.8 492.1L-110.4 491.7L-111.9 491.3L-113 490.7L-113.8 490.1L-114.3 489.5L-114.4 488.8L-114.1 488.1L-113.4 487.5L184.6 278.6L185.6 278L186.9 277.5L188.5 277.1L190.3 276.8L192.2 276.7L194.1 276.7L196.1 276.8L197.9 277L808.8 378.9L810.4 379.3L811.9 379.7L813 380.3L813.8 380.9L814.3 381.5L814.4 382.2L814.1 382.8L813.4 383.5Z"/></clipPath>
+<filter id="at-glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="3.4"/></filter>
+<filter id="at-soft" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="1.3"/></filter>
+<filter id="at-ring" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="5"/></filter>
+<filter id="at-ring2" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="12"/></filter>
+<filter id="at-led" x="-150%" y="-150%" width="400%" height="400%"><feGaussianBlur stdDeviation="1.6"/></filter>
+<linearGradient id="at-band" x1="0" y1="0" x2="1" y2=".55"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".16" stop-color="#fff" stop-opacity="0"/><stop offset=".23" stop-color="#fff" stop-opacity=".42"/><stop offset=".27" stop-color="#fff" stop-opacity=".08"/><stop offset=".33" stop-color="#fff" stop-opacity=".22"/><stop offset=".39" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+<linearGradient id="at-sheen" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#fff" stop-opacity=".34"/><stop offset=".5" stop-color="#fff" stop-opacity=".02"/><stop offset="1" stop-color="#5d5a52" stop-opacity=".16"/></linearGradient>
+<linearGradient id="at-glass" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#0b0c10"/><stop offset=".45" stop-color="#161920"/><stop offset=".62" stop-color="#2a303c"/><stop offset="1" stop-color="#11131a"/></linearGradient>
+<radialGradient id="at-face" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#1b1f28"/><stop offset=".7" stop-color="#11141a"/><stop offset="1" stop-color="#08090c"/></radialGradient>
+<linearGradient id="at-matte" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".1"/><stop offset=".6" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".12"/></linearGradient>
+<pattern id="at-grain" width="2.2" height="2.2" patternUnits="userSpaceOnUse" patternTransform="rotate(32)"><rect width="2.2" height="1" fill="#fff" fill-opacity=".55"/></pattern></defs><g class="art"><g data-part="floor"><g class="c c-alt"><g class="iso-solid"><path class="iso-fill" d="M-114.4 488.8L-114.1 488.1L-113.4 487.5L184.6 278.6L185.6 278L186.9 277.5L188.5 277.1L190.3 276.8L192.2 276.7L194.1 276.7L196.1 276.8L197.9 277L808.8 378.9L810.4 379.3L811.9 379.7L813 380.3L813.8 380.9L814.3 381.5L814.4 382.2L814.4 384.5L814.1 385.2L813.4 385.8L515.4 594.8L514.4 595.3L513.1 595.8L511.5 596.2L509.7 596.5L507.8 596.6L505.9 596.7L503.9 596.6L502.1 596.3L-108.8 494.4L-110.4 494.1L-111.9 493.6L-113 493.1L-113.8 492.5L-114.3 491.8L-114.4 491.1Z"/><path class="iso-shade" data-shade="0" d="M515.4 594.8L514.4 595.3L514.4 593L515.4 592.4ZM514.4 595.3L513.1 595.8L513.1 593.5L514.4 593ZM513.1 595.8L511.5 596.2L511.5 593.9L513.1 593.5ZM814.4 384.5L814.1 385.2L814.1 382.8L814.4 382.2ZM814.1 385.2L813.4 385.8L813.4 383.5L814.1 382.8ZM813.4 385.8L515.4 594.8L515.4 592.4L813.4 383.5Z"/><path class="iso-shade" data-shade="1" d="M511.5 596.2L509.7 596.5L509.7 594.1L511.5 593.9ZM509.7 596.5L507.8 596.6L507.8 594.3L509.7 594.1ZM507.8 596.6L505.9 596.7L505.9 594.3L507.8 594.3Z"/><path class="iso-shade" data-shade="2" d="M505.9 596.7L503.9 596.6L503.9 594.2L505.9 594.3ZM503.9 596.6L502.1 596.3L502.1 594L503.9 594.2ZM502.1 596.3L-108.8 494.4L-108.8 492.1L502.1 594Z"/><path class="iso-shade" data-shade="3" d="M-108.8 494.4L-110.4 494.1L-110.4 491.7L-108.8 492.1ZM-110.4 494.1L-111.9 493.6L-111.9 491.3L-110.4 491.7ZM-111.9 493.6L-113 493.1L-113 490.7L-111.9 491.3ZM-113 493.1L-113.8 492.5L-113.8 490.1L-113 490.7ZM-113.8 492.5L-114.3 491.8L-114.3 489.5L-113.8 490.1ZM-114.3 491.8L-114.4 491.1L-114.4 488.8L-114.3 489.5Z"/><path class="iso-top" d="M515.4 592.4L514.4 593L513.1 593.5L511.5 593.9L509.7 594.1L507.8 594.3L505.9 594.3L503.9 594.2L502.1 594L-108.8 492.1L-110.4 491.7L-111.9 491.3L-113 490.7L-113.8 490.1L-114.3 489.5L-114.4 488.8L-114.1 488.1L-113.4 487.5L184.6 278.6L185.6 278L186.9 277.5L188.5 277.1L190.3 276.8L192.2 276.7L194.1 276.7L196.1 276.8L197.9 277L808.8 378.9L810.4 379.3L811.9 379.7L813 380.3L813.8 380.9L814.3 381.5L814.4 382.2L814.1 382.8L813.4 383.5Z"/><path class="iso-line iso-crease" data-tone="faint" d="M814.4 382.2L814.1 382.8L813.4 383.5L515.4 592.4L514.4 593L513.1 593.5L511.5 593.9L509.7 594.1L507.8 594.3L505.9 594.3L503.9 594.2L502.1 594L-108.8 492.1L-110.4 491.7L-111.9 491.3L-113 490.7L-113.8 490.1L-114.3 489.5L-114.4 488.8"/><path class="iso-line iso-bevel" data-tone="faint" d="M814.4 382.2L813.8 382.8L813.1 383.4L515.2 592.4L514.2 592.9L512.9 593.4L511.3 593.8L509.6 594L507.8 594.2L505.9 594.2L504 594.1L502.2 593.9L-108.6 492L-110.3 491.6L-111.7 491.2L-112.8 490.7L-113.6 490.1L-114 489.5L-114.4 488.8"/><path class="iso-line" data-tone="faint" d="M814.4 384L814.1 384.6L813.4 385.3L515.4 594.2L514.4 594.8L513.1 595.3L511.5 595.6L509.7 595.9L507.8 596.1L505.9 596.1L503.9 596L502.1 595.8L-108.8 493.9L-110.4 493.5L-111.9 493.1L-113 492.5L-113.8 491.9L-114.3 491.3L-114.4 490.6"/><path class="iso-line iso-edge" data-tone="hi" d="M-114.4 488.8L-114.1 488.1L-113.4 487.5L184.6 278.6L185.6 278L186.9 277.5L188.5 277.1L190.3 276.8L192.2 276.7L194.1 276.7L196.1 276.8L197.9 277L808.8 378.9L810.4 379.3L811.9 379.7L813 380.3L813.8 380.9L814.3 381.5L814.4 382.2M814.4 384.5L814.1 385.2L813.4 385.8L515.4 594.8L514.4 595.3L513.1 595.8L511.5 596.2L509.7 596.5L507.8 596.6L505.9 596.7L503.9 596.6L502.1 596.3L-108.8 494.4L-110.4 494.1L-111.9 493.6L-113 493.1L-113.8 492.5L-114.3 491.8L-114.4 491.1M-114.4 488.8L-114.4 491.1M814.4 382.2L814.4 384.5"/></g></g><path class="iso-line" data-tone="faint" data-dotted="" d="M508.7 591.3L508.5 591.4L508.1 591.5L507.7 591.6L507.3 591.7L506.8 591.8L506.3 591.8L505.8 591.7L505.4 591.7L-105.5 489.8L-105.9 489.7L-106.3 489.6L-106.6 489.4L-106.8 489.3L-106.9 489.1L-106.9 489L-106.8 488.8L-106.6 488.6L191.3 279.7L191.5 279.6L191.9 279.4L192.3 279.3L192.7 279.3L193.2 279.2L193.7 279.2L194.2 279.3L194.6 279.3L805.5 381.2L805.9 381.3L806.3 381.4L806.6 381.5L806.8 381.7L806.9 381.9L806.9 382L806.8 382.2L806.6 382.4Z"/></g><g class="grid" data-part="grid" clip-path="url(#floorclip)"></g><g class="shadow-floor" clip-path="url(#floorclip)"><path class="shadow" data-part="shadow-live" d=""/><path class="shadow" data-part="shadow-float" d="" opacity=".45"/></g><g class="at" data-part="under"></g><g class="at" data-part="robot"></g><g class="at" data-part="notes"></g><g data-part="sounds"></g></g></svg></div>
+    <div class="chips"><span class="chip" data-chipbox="power"><i>电源 · BD</i><span data-chip="power">电动</span></span><span class="chip" data-chipbox="work"><i>专为……打造 · BD</i><span data-chip="work">工厂</span></span><span class="chip" data-chipbox="range"><i>关节活动范围 · BD</i><span data-chip="range">超过人类</span></span><span class="chip" data-chipbox="height"><i>高度 · 已绘制</i><span data-chip="height">≈1.5 m</span></span><span class="chip" data-chipbox="waist"><i>腰部</i><span data-chip="waist">0°</span></span><span class="chip" data-chipbox="head"><i>头部</i><span data-chip="head">0°</span></span><span class="chip" data-chipbox="feet"><i>向下数英尺</i><span data-chip="feet">2</span></span><span class="chip" data-chipbox="joint"><i>关节</i><span data-chip="joint">–</span></span><span class="chip" data-chipbox="parts"><i>零件</i><span data-chip="parts">1 个机器人</span></span></div>
+  </section>
+  <footer class="foot">
+    <div class="idea"><b>核心原理：</b> 它的关节是能够转动的电机 <b>远远超出人类的感知范围</b>，这样它就可以将腰部和头部完全旋转一圈（波士顿动力）。它 <b>全电动</b>，专为工厂作业而设计。</div>
+    <div class="ctl">配色 <button class="sw" data-swatch="#f2c14e" title="butter" style="background:#f2c14e" data-on></button><button class="sw" data-swatch="#e5583e" title="tomato" style="background:#e5583e" ></button><button class="sw" data-swatch="#86d3ad" title="mint" style="background:#86d3ad" ></button><button class="sw" data-swatch="#7fb9e9" title="sky" style="background:#7fb9e9" ></button><button class="sw" data-swatch="#f2a5bf" title="rose" style="background:#f2a5bf" ></button></div>
+  </footer>
+</div><p class="credit"><span class="keys">按空格或回车执行下一步 · ← → 切换机器<br></span>作者 <a target="_blank" rel="noopener" href="https://x.com/elvar_official">@elvar_official</a></p></main><script>
+if (/[?&]embed\b/.test(location.search)) document.body.classList.add("embed");
+addEventListener("keydown", (e) => {
+  if (e.key === "Escape") document.querySelector(".menu").open = false;
+  if (e.altKey || e.ctrlKey || e.metaKey || e.target.closest("input,textarea,select")) return;
+  const go = e.key === "ArrowLeft" ? "prev" : e.key === "ArrowRight" ? "next" : null;
+  if (go) location.href = document.querySelector('[data-go="' + go + '"]').href;
+});
+addEventListener("click", (e) => { const m = document.querySelector(".menu"); if (m.open && !m.contains(e.target)) m.open = false; });
+</script><script type="module">const AZIMUTH = 45;
+const ELEVATION = 30;
+const SHADES = 4;
+const RADIANS = Math.PI / 180;
+const UNIT = Math.sqrt(1.6);
+function cameraOf({ scale, azimuth = AZIMUTH, elevation = ELEVATION }) {
+    const a = azimuth * RADIANS;
+    const e = elevation * RADIANS;
+    return { sinA: Math.sin(a), cosA: Math.cos(a), sinE: Math.sin(e), cosE: Math.cos(e), k: scale * UNIT };
+}
+function iso([x, y, z], projection) {
+    const { origin } = projection;
+    const { sinA, cosA, sinE, cosE, k } = cameraOf(projection);
+    return [origin[0] + (x * sinA - y * cosA) * k, origin[1] + ((x * cosA + y * sinA) * sinE - z * cosE) * k];
+}
+function towardViewer(projection) {
+    const { sinA, cosA } = cameraOf(projection);
+    return [cosA, sinA];
+}
+function depthOf([x, y, z], projection) {
+    const { sinA, cosA, sinE, cosE } = cameraOf(projection);
+    return (x * cosA + y * sinA) * cosE + z * sinE;
+}
+const tenth = (value) => {
+    const text = (Math.round(value * 10) / 10).toFixed(1).replace(/\.0$/, "");
+    return text === "-0" ? "0" : text;
+};
+function pathOf(points, closed = false) {
+    if (!points.length)
+        return "";
+    return points.map(([x, y], at) => `${at ? "L" : "M"}${tenth(x)} ${tenth(y)}`).join("") + (closed ? "Z" : "");
+}
+const joinPaths = (paths) => paths.filter(Boolean).join("");
+function roundedPlan({ x, y, w, d, r }, steps = 8) {
+    const radius = Math.max(0, Math.min(r, w / 2, d / 2));
+    const corners = [
+        [x + w - radius, y + radius, -90],
+        [x + w - radius, y + d - radius, 0],
+        [x + radius, y + d - radius, 90],
+        [x + radius, y + radius, 180],
+    ];
+    const out = [];
+    for (const [cx, cy, start] of corners) {
+        const count = radius > 0 ? steps : 0;
+        for (let step = 0; step <= count; step++) {
+            const angle = (start + (count ? (90 * step) / count : 45)) * RADIANS;
+            out.push([cx + radius * Math.cos(angle), cy + radius * Math.sin(angle)]);
+        }
+    }
+    return out;
+}
+function signedArea(points) {
+    let area = 0;
+    for (let index = 0; index < points.length; index++) {
+        const [ax, ay] = points[index];
+        const [bx, by] = points[(index + 1) % points.length];
+        area += ax * by - bx * ay;
+    }
+    return area / 2;
+}
+const oriented = (points) => (signedArea(points) < 0 ? [...points].reverse() : points);
+function convexHull(points) {
+    const sorted = [...points].sort((a, b) => a[0] - b[0] || a[1] - b[1]);
+    if (sorted.length < 3)
+        return sorted;
+    const cross = (o, a, b) => (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0]);
+    const lower = [];
+    for (const point of sorted) {
+        while (lower.length >= 2 && cross(lower[lower.length - 2], lower[lower.length - 1], point) <= 0)
+            lower.pop();
+        lower.push(point);
+    }
+    const upper = [];
+    for (let index = sorted.length - 1; index >= 0; index--) {
+        const point = sorted[index];
+        while (upper.length >= 2 && cross(upper[upper.length - 2], upper[upper.length - 1], point) <= 0)
+            upper.pop();
+        upper.push(point);
+    }
+    return [...lower.slice(0, -1), ...upper.slice(0, -1)];
+}
+function runsOf(flags, want) {
+    const count = flags.length;
+    const runs = [];
+    const start = flags.findIndex((flag, index) => flag !== flags[(index + count - 1) % count]);
+    if (start < 0)
+        return flags[0] === want ? [Array.from({ length: count + 1 }, (_, index) => index % count)] : [];
+    let run = null;
+    for (let step = 0; step < count; step++) {
+        const index = (start + step) % count;
+        if (flags[index] === want) {
+            if (!run)
+                run = [index];
+            run.push((index + 1) % count);
+        }
+        else if (run) {
+            runs.push(run);
+            run = null;
+        }
+    }
+    if (run)
+        runs.push(run);
+    return runs;
+}
+function extrude(ring, z, height, projection, options = {}) {
+    const convex = options.convex ?? true;
+    const count = ring.length;
+    const counter = signedArea(ring) > 0;
+    const [vx, vy] = towardViewer(projection);
+    const { sinA, cosA } = cameraOf(projection);
+    const normals = ring.map(([ax, ay], index) => {
+        const [bx, by] = ring[(index + 1) % count];
+        const dx = bx - ax;
+        const dy = by - ay;
+        const length = Math.hypot(dx, dy) || 1;
+        return (counter ? [dy / length, -dx / length] : [-dy / length, dx / length]);
+    });
+    const facing = normals.map(([nx, ny]) => nx * vx + ny * vy > 1e-9);
+    const top = ring.map(([x, y]) => iso([x, y, z + height], projection));
+    const bottom = ring.map(([x, y]) => iso([x, y, z], projection));
+    const outline = [];
+    const crease = [];
+    for (const run of runsOf(facing, false))
+        outline.push(pathOf(run.map((index) => top[index])));
+    for (const run of runsOf(facing, true)) {
+        crease.push(pathOf(run.map((index) => top[index])));
+        if (height > 0)
+            outline.push(pathOf(run.map((index) => bottom[index])));
+    }
+    if (height > 0) {
+        for (let index = 0; index < count; index++) {
+            if (facing[(index + count - 1) % count] !== facing[index])
+                outline.push(pathOf([top[index], bottom[index]]));
+        }
+    }
+    let fill;
+    if (convex) {
+        fill = pathOf(convexHull([...top, ...bottom]), true);
+    }
+    else {
+        const parts = [pathOf(oriented(top), true), pathOf(oriented(bottom), true)];
+        for (let index = 0; index < count; index++) {
+            if (!facing[index])
+                continue;
+            const next = (index + 1) % count;
+            parts.push(pathOf(oriented([top[index], top[next], bottom[next], bottom[index]]), true));
+        }
+        fill = parts.join("");
+    }
+    const buckets = Array.from({ length: SHADES }, () => []);
+    if (height > 0) {
+        const [lx, ly] = [-sinA, cosA];
+        for (let index = 0; index < count; index++) {
+            if (!facing[index])
+                continue;
+            const [nx, ny] = normals[index];
+            const lit = (nx * lx + ny * ly + 1) / 2;
+            const shade = Math.min(SHADES - 1, Math.max(0, Math.floor(lit * SHADES)));
+            const next = (index + 1) % count;
+            buckets[shade].push(pathOf(oriented([top[index], top[next], bottom[next], bottom[index]]), true));
+        }
+    }
+    let bevel;
+    if (options.bevel && options.bevel > 0) {
+        const by = options.bevel;
+        const inset = ring.map(([x, y], index) => {
+            const [ax, ay] = normals[(index + count - 1) % count];
+            const [bx, by2] = normals[index];
+            const mx = ax + bx;
+            const my = ay + by2;
+            const length = Math.hypot(mx, my) || 1;
+            return [x - (mx / length) * by, y - (my / length) * by];
+        });
+        const insetTop = inset.map(([x, y]) => iso([x, y, z + height], projection));
+        bevel = runsOf(facing, true)
+            .map((run) => pathOf([top[run[0]], ...run.slice(1, -1).map((index) => insetTop[index]), top[run[run.length - 1]]]))
+            .join("");
+    }
+    return {
+        fill,
+        outline: outline.join(""),
+        crease: crease.join(""),
+        top: pathOf(oriented(top), true),
+        shades: buckets.map((paths) => paths.join("")),
+        bevel,
+    };
+}
+const ringOf = (plan, steps = 8) => roundedPlan(plan, steps);
+function slabOf(plan, z, height, projection, steps = 8, bevel = 0) {
+    return extrude(ringOf(plan, steps), z, height, projection, { convex: true, bevel });
+}
+function circleRing(cx, cy, radius, steps = 40) {
+    return Array.from({ length: steps }, (_, step) => {
+        const angle = (step / steps) * Math.PI * 2;
+        return [cx + radius * Math.cos(angle), cy + radius * Math.sin(angle)];
+    });
+}
+function cylinder(cx, cy, radius, z, height, projection, steps = 32, bevel = 0) {
+    return extrude(circleRing(cx, cy, radius, steps), z, height, projection, { convex: true, bevel });
+}
+const insetPlan = ({ x, y, w, d, r }, by) => ({ x: x + by, y: y + by, w: w - by * 2, d: d - by * 2, r: Math.max(0, r - by) });
+function onTop(points, z, projection, closed = false) {
+    return pathOf(points.map(([x, y]) => iso([x, y, z], projection)), closed);
+}
+const planOutline = (plan, z, projection, steps = 8) => onTop(ringOf(plan, steps), z, projection, true);
+const lineOnTop = (from, to, z, projection) => onTop([from, to], z, projection);
+const segment = (from, to, projection) => pathOf([iso(from, projection), iso(to, projection)]);
+const rise = (at, from, to, projection) => segment([at[0], at[1], from], [at[0], at[1], to], projection);
+const ring = (cx, cy, radius, z, projection, steps = 40) => onTop(circleRing(cx, cy, radius, steps), z, projection, true);
+const pointsAt = (points, projection) => points.map((point) => iso(point, projection));
+function dotGrid(x, y, columns, rows, gap, z, projection) {
+    const dots = [];
+    for (let row = 0; row < rows; row++) {
+        for (let column = 0; column < columns; column++)
+            dots.push(iso([x + column * gap, y + row * gap, z], projection));
+    }
+    return dots;
+}
+function corners({ x, y, w, d }, inset = 0) {
+    return [
+        [x + inset, y + inset],
+        [x + w - inset, y + inset],
+        [x + inset, y + d - inset],
+        [x + w - inset, y + d - inset],
+    ];
+}
+function boxCorners({ x, y, w, d }, z0, z1) {
+    const out = [];
+    for (const px of [x, x + w])
+        for (const py of [y, y + d])
+            for (const z of [z0, z1])
+                out.push([px, py, z]);
+    return out;
+}
+function knurl(cx, cy, radius, z0, z1, count, projection, inset = 0.4) {
+    const [vx, vy] = towardViewer(projection);
+    const lines = [];
+    for (let index = 0; index < count; index++) {
+        const angle = (index / count) * Math.PI * 2;
+        const nx = Math.cos(angle);
+        const ny = Math.sin(angle);
+        if (nx * vx + ny * vy < 0.15)
+            continue;
+        lines.push(segment([cx + radius * nx, cy + radius * ny, z0 + inset], [cx + radius * nx, cy + radius * ny, z1 - inset], projection));
+    }
+    return lines.join("");
+}
+function sideArc(cx, cy, radius, z, projection, steps = 24) {
+    const [vx, vy] = towardViewer(projection);
+    const facing = Math.atan2(vy, vx);
+    const points = [];
+    for (let step = 0; step <= steps; step++) {
+        const angle = facing - Math.PI / 2 + (step / steps) * Math.PI;
+        points.push(iso([cx + radius * Math.cos(angle), cy + radius * Math.sin(angle), z], projection));
+    }
+    return pathOf(points);
+}
+function ringSeam(ring, z, projection) {
+    const count = ring.length;
+    const counter = signedArea(ring) > 0;
+    const [vx, vy] = towardViewer(projection);
+    const facing = ring.map(([ax, ay], index) => {
+        const [bx, by] = ring[(index + 1) % count];
+        const dx = bx - ax;
+        const dy = by - ay;
+        const [nx, ny] = counter ? [dy, -dx] : [-dy, dx];
+        return nx * vx + ny * vy > 1e-9;
+    });
+    return runsOf(facing, true).map((run) => pathOf(run.map((index) => iso([ring[index][0], ring[index][1], z], projection)))).join("");
+}
+const sideSeam = (plan, z, projection, steps = 8) => ringSeam(ringOf(plan, steps), z, projection);
+function sideRing(center, radius, axis, projection, steps = 20) {
+    const [px, py, pz] = center;
+    const points = [];
+    for (let step = 0; step < steps; step++) {
+        const angle = (step / steps) * Math.PI * 2;
+        const u = radius * Math.cos(angle);
+        const v = radius * Math.sin(angle);
+        points.push(iso(axis === "x" ? [px, py + u, pz + v] : [px + u, py, pz + v], projection));
+    }
+    return pathOf(points, true);
+}
+function coil(from, to, center, radius, turns, axis, projection, perTurn = 16) {
+    const count = Math.max(1, Math.round(turns * perTurn));
+    const back = [];
+    const front = [];
+    let run = [];
+    let near = null;
+    for (let index = 0; index <= count; index++) {
+        const share = index / count;
+        const angle = share * turns * Math.PI * 2;
+        const u = radius * Math.cos(angle);
+        const v = radius * Math.sin(angle);
+        const along = from + (to - from) * share;
+        const point = axis === "x" ? [along, center[0] + u, center[1] + v] : [center[0] + u, along, center[1] + v];
+        const normal = axis === "x" ? [0, Math.cos(angle), Math.sin(angle)] : [Math.cos(angle), 0, Math.sin(angle)];
+        const facing = depthOf(normal, projection) > 0;
+        const flat = iso(point, projection);
+        if (near === null)
+            near = facing;
+        if (facing !== near) {
+            run.push(flat);
+            (near ? front : back).push(pathOf(run));
+            run = [flat];
+            near = facing;
+            continue;
+        }
+        run.push(flat);
+    }
+    if (run.length > 1)
+        (near ? front : back).push(pathOf(run));
+    return { back: back.join(""), front: front.join("") };
+}
+function topTicks(from, to, step, every, edge, z, lengths, projection, axis = "x") {
+    const minor = [];
+    const major = [];
+    const first = Math.ceil(from / step) * step;
+    for (let at = first, index = Math.round(first / step); at <= to + 1e-9; at += step, index++) {
+        const big = index % every === 0;
+        const length = big ? lengths[1] : lengths[0];
+        const a = axis === "x" ? [at, edge] : [edge, at];
+        const b = axis === "x" ? [at, edge + length] : [edge + length, at];
+        (big ? major : minor).push(lineOnTop(a, b, z, projection));
+    }
+    return { minor: minor.join(""), major: major.join("") };
+}
+function sideTicks(from, to, step, every, face, top, lengths, projection, axis = "x") {
+    const minor = [];
+    const major = [];
+    const first = Math.ceil(from / step) * step;
+    for (let at = first, index = Math.round(first / step); at <= to + 1e-9; at += step, index++) {
+        const big = index % every === 0;
+        const length = big ? lengths[1] : lengths[0];
+        const a = axis === "x" ? [at, face, top] : [face, at, top];
+        const b = axis === "x" ? [at, face, top - length] : [face, at, top - length];
+        (big ? major : minor).push(segment(a, b, projection));
+    }
+    return { minor: minor.join(""), major: major.join("") };
+}
+function radialTicks(cx, cy, radius, count, every, z, lengths, projection, from = 0, span = Math.PI * 2) {
+    const minor = [];
+    const major = [];
+    const closed = Math.abs(span - Math.PI * 2) < 1e-9;
+    const steps = closed ? count : count + 1;
+    for (let index = 0; index < steps; index++) {
+        const angle = from + (index / count) * span;
+        const big = index % every === 0;
+        const inner = radius - (big ? lengths[1] : lengths[0]);
+        const sx = Math.sin(angle);
+        const sy = -Math.cos(angle);
+        (big ? major : minor).push(lineOnTop([cx + sx * inner, cy + sy * inner], [cx + sx * radius, cy + sy * radius], z, projection));
+    }
+    return { minor: minor.join(""), major: major.join("") };
+}
+const haloOf = (plan, z, height, projection) => slabOf(plan, z, height, projection).fill;
+function axisVector(projection, [dx, dy, dz]) {
+    const origin = iso([0, 0, 0], projection);
+    const moved = iso([dx, dy, dz], projection);
+    return [moved[0] - origin[0], moved[1] - origin[1]];
+}
+const fine = (value) => Math.round(value * 100) / 100;
+function translateAlong(projection, by) {
+    const [x, y] = axisVector(projection, by);
+    return `translate(${fine(x)} ${fine(y)})`;
+}
+const thousandth = (value) => Math.round(value * 1000) / 1000;
+function axesAt(at, z, projection) {
+    const origin = iso([at[0], at[1], z], projection);
+    const along = (point) => {
+        const [px, py] = iso(point, projection);
+        return [px - origin[0], py - origin[1]];
+    };
+    return { origin, x: along([at[0] + 1, at[1], z]), y: along([at[0], at[1] + 1, z]), z: along([at[0], at[1], z + 1]) };
+}
+const matrixOf = (u, v, origin) => `matrix(${thousandth(u[0])} ${thousandth(u[1])} ${thousandth(v[0])} ${thousandth(v[1])} ${thousandth(origin[0])} ${thousandth(origin[1])})`;
+function holdStill(element, [dx, dy]) {
+    const text = dx || dy ? `translate(${-dx} ${-dy})` : "";
+    element.querySelectorAll("[data-hold]").forEach((node) => (text ? node.setAttribute("transform", text) : node.removeAttribute("transform")));
+}
+function topMatrix(at, z, projection, along = "x") {
+    const { origin, x, y } = axesAt(at, z, projection);
+    return along === "x" ? matrixOf(x, y, origin) : matrixOf([-y[0], -y[1]], x, origin);
+}
+function sideMatrix(at, z, projection, face) {
+    const { origin, x, y, z: up } = axesAt(at, z, projection);
+    const down = [-up[0], -up[1]];
+    return face === "left" ? matrixOf(x, down, origin) : matrixOf([-y[0], -y[1]], down, origin);
+}
+function screenRise(height, projection) {
+    const { cosE, k } = cameraOf(projection);
+    return height * cosE * k;
+}
+function fitProjection(points, width, height, { pad = 24, headroom = 0, azimuth = AZIMUTH, elevation = ELEVATION } = {}) {
+    const unit = { origin: [0, 0], scale: 1, azimuth, elevation };
+    const flat = points.map((point) => iso(point, unit));
+    const xs = flat.map(([x]) => x);
+    const ys = flat.map(([, y]) => y);
+    const left = Math.min(...xs);
+    const right = Math.max(...xs);
+    const up = Math.min(...ys);
+    const down = Math.max(...ys);
+    const scale = Math.min((width - pad * 2) / (right - left), (height - pad * 2 - headroom) / (down - up));
+    return {
+        origin: [width / 2 - ((left + right) / 2) * scale, headroom + (height - headroom) / 2 - ((up + down) / 2) * scale],
+        scale,
+        azimuth,
+        elevation,
+    };
+}
+const escape = (text) => text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+const attrs = (pairs) => Object.entries(pairs)
+    .filter(([, value]) => value !== undefined && value !== false)
+    .map(([key, value]) => ` ${key}="${escape(String(value))}"`)
+    .join("");
+function solidSvg(paths, { tone = "hi", crease = "faint", halo = false, lit = false, flat = false, className, inner = "" } = {}) {
+    const parts = [];
+    if (halo)
+        parts.push(`<path class="iso-halo" d="${paths.fill}"/>`);
+    parts.push(`<path class="iso-fill" d="${paths.fill}"/>`);
+    if (!flat) {
+        paths.shades.forEach((d, shade) => {
+            if (d)
+                parts.push(`<path class="iso-shade" data-shade="${shade}" d="${d}"/>`);
+        });
+        parts.push(`<path class="iso-top" d="${paths.top}"/>`);
+    }
+    if (crease !== "none" && paths.crease)
+        parts.push(`<path class="iso-line iso-crease" data-tone="${crease}" d="${paths.crease}"/>`);
+    if (crease !== "none" && paths.bevel)
+        parts.push(`<path class="iso-line iso-bevel" data-tone="${crease}" d="${paths.bevel}"/>`);
+    if (inner)
+        parts.push(inner);
+    parts.push(`<path class="iso-line iso-edge" data-tone="${tone}" d="${paths.outline}"/>`);
+    return `<g${attrs({ class: className ? `iso-solid ${className}` : "iso-solid", "data-lit": lit ? "" : undefined, "data-seamless": paths.seamless ? "" : undefined })}>${parts.join("")}</g>`;
+}
+function lineSvg(d, { tone = "lo", dotted = false, dashed = false, flow = false, className, free } = {}) {
+    if (!d)
+        return "";
+    return `<path${attrs({
+        class: className ? `iso-line ${className}` : "iso-line",
+        "data-tone": tone,
+        "data-free": free === true ? "" : free || undefined,
+        "data-dotted": dotted ? "" : undefined,
+        "data-dashed": dashed ? "" : undefined,
+        "data-flow": flow ? "" : undefined,
+        d,
+    })}/>`;
+}
+function dotsSvg(points, { size = 0.5, tone = "mid", pulse = false } = {}) {
+    const dots = points
+        .map(([x, y, alpha], index) => `<circle cx="${tenth(x)}" cy="${tenth(y)}" r="${size}"${alpha !== undefined && alpha < 1 ? ` fill-opacity="${Math.max(0, alpha).toFixed(2)}"` : ""}${pulse ? ` data-pulse="" style="--pulse-at:${(index * 137) % 1600}ms"` : ""}/>`)
+        .join("");
+    return `<g class="iso-dots" data-tone="${tone}">${dots}</g>`;
+}
+function fadedSvg(list, style = {}) {
+    const groups = new Map();
+    for (const entry of list) {
+        const [d, alpha] = Array.isArray(entry) ? entry : [entry.d, entry.alpha];
+        if (!d || !(alpha > 0.02))
+            continue;
+        const level = Math.min(1, Math.round(alpha * 20) / 20);
+        groups.set(level, (groups.get(level) ?? "") + d);
+    }
+    return [...groups].map(([alpha, d]) => (alpha >= 1 ? lineSvg(d, style) : `<g opacity="${alpha.toFixed(2)}">${lineSvg(d, style)}</g>`)).join("");
+}
+function fadeLineSvg(points, { fade = [0, 0], tone = "lo", className, stops = 6 } = {}) {
+    if (points.length < 2)
+        return "";
+    const ease = (t) => t * t * (3 - 2 * t);
+    const hashOf = (text) => {
+        let hash = 2166136261;
+        for (let index = 0; index < text.length; index++)
+            hash = Math.imul(hash ^ text.charCodeAt(index), 16777619);
+        return (hash >>> 0).toString(36);
+    };
+    const lengths = [0];
+    for (let index = 1; index < points.length; index++)
+        lengths.push(lengths[index - 1] + Math.hypot(points[index][0] - points[index - 1][0], points[index][1] - points[index - 1][1]));
+    const at = (length) => {
+        let index = 1;
+        while (index < points.length - 1 && lengths[index] < length)
+            index++;
+        const span = lengths[index] - lengths[index - 1] || 1;
+        const t = Math.max(0, Math.min(1, (length - lengths[index - 1]) / span));
+        return [points[index - 1][0] + (points[index][0] - points[index - 1][0]) * t, points[index - 1][1] + (points[index][1] - points[index - 1][1]) * t];
+    };
+    const pieceOf = (from, to) => [at(from), ...points.filter((_, index) => lengths[index] > from + 1e-6 && lengths[index] < to - 1e-6), at(to)];
+    const total = lengths[lengths.length - 1];
+    if (total < 1e-6)
+        return "";
+    let [start, end] = Array.isArray(fade) ? fade : [fade, fade];
+    if (start + end > total) {
+        const share = total / (start + end);
+        start *= share;
+        end *= share;
+    }
+    const paint = `var(--anatomy-${tone})`;
+    const ramp = (piece, rising) => {
+        const d = pathOf(piece);
+        const [x1, y1] = piece[0];
+        const [x2, y2] = piece[piece.length - 1];
+        const id = `iso-fade-${hashOf(`${d}|${tone}|${rising}`)}`;
+        const marks = Array.from({ length: stops + 1 }, (_, index) => {
+            const t = index / stops;
+            const alpha = ease(rising ? t : 1 - t);
+            return `<stop offset="${t.toFixed(3)}" stop-opacity="${alpha.toFixed(3)}" style="stop-color:${paint}"/>`;
+        }).join("");
+        const gradient = `<linearGradient id="${id}" gradientUnits="userSpaceOnUse" x1="${tenth(x1)}" y1="${tenth(y1)}" x2="${tenth(x2)}" y2="${tenth(y2)}">${marks}</linearGradient>`;
+        return `<defs>${gradient}</defs><path${attrs({ class: className ? `iso-line ${className}` : "iso-line", "data-tone": tone, "data-free": rising ? "start" : "end", d, style: `stroke:url(#${id})` })}/>`;
+    };
+    const parts = [];
+    if (start > 0.05)
+        parts.push(ramp(pieceOf(0, start), true));
+    if (total - end - start > 0.05)
+        parts.push(lineSvg(pathOf(pieceOf(start, total - end)), { tone, className }));
+    if (end > 0.05)
+        parts.push(ramp(pieceOf(total - end, total), false));
+    return `<g class="iso-fade">${parts.join("")}</g>`;
+}
+function wireSvg(from, to, { via = [], tone = "lo", dotted = false, dashed = false, flow = false, ends = "both", size = 1.2 } = {}) {
+    const d = pathOf([from, ...via, to]);
+    const end = ([x, y]) => `<circle class="iso-wire-end" cx="${tenth(x)}" cy="${tenth(y)}" r="${size}"/>`;
+    return `<g class="iso-wire" data-tone="${tone}">${lineSvg(d, { tone, dotted, dashed, flow })}${ends === "both" || ends === "from" ? end(from) : ""}${ends === "both" || ends === "to" ? end(to) : ""}</g>`;
+}
+function faceTextSvg(transform, text, { size = 3, tone = "mid", anchor = "start" } = {}) {
+    return `<text class="iso-face-text" data-tone="${tone}" transform="${transform}" font-size="${size}" text-anchor="${anchor}">${escape(text)}</text>`;
+}
+function groupSvg(children, extra = {}) {
+    return `<g${attrs(extra)}>${Array.isArray(children) ? children.join("") : children}</g>`;
+}
+function figureSvg({ width, height, label, body, standalone = false, className }) {
+    const style = standalone ? `<style>${ISO_CSS}</style>` : "";
+    return `<svg${attrs({
+        xmlns: "http://www.w3.org/2000/svg",
+        class: `iso-svg${standalone ? " iso" : ""}${className ? ` ${className}` : ""}`,
+        "data-theme": standalone || undefined,
+        viewBox: `0 0 ${width} ${height}`,
+        role: "img",
+        "aria-label": label,
+    })}>${style}${Array.isArray(body) ? body.join("") : body}</svg>`;
+}
+function swatchSvg(mark) {
+    if (mark === "raised" || mark === "flat" || mark === "lit") {
+        const body = mark === "flat" ? "M2 6.5 8 3.5 14 6.5 8 9.5Z" : "M2 4.5 8 1.5 14 4.5 14 6 8 9 2 6Z";
+        const crease = mark === "flat" ? "" : `<path class="iso-swatch-crease" d="M2 4.5 8 7.5 14 4.5"/>`;
+        return `<svg class="iso-swatch" data-mark="${mark}" viewBox="0 0 16 10" aria-hidden="true"><path d="${body}"/>${crease}</svg>`;
+    }
+    return `<svg class="iso-swatch" data-mark="${mark}" viewBox="0 0 16 10" aria-hidden="true"><path d="M1.5 5h13"/></svg>`;
+}
+function plateHtml({ fig, title, hint, readout = "", keys = [], caption, body }) {
+    const corner = (name, text, extra = "") => `<span class="iso-plate-corner" data-corner="${name}"${extra}>${escape(text)}</span>`;
+    const legend = keys.length || caption
+        ? `<figcaption class="iso-legend">${keys.length ? `<span class="iso-keys">${keys.map((key) => `<span class="iso-key">${swatchSvg(key.mark)}${escape(key.label)}</span>`).join("")}</span>` : ""}${caption ? `<span class="iso-caption">${escape(caption)}</span>` : ""}</figcaption>`
+        : "";
+    return `<figure class="iso-figure"><div class="iso-plate"><div class="iso-plate-corners" aria-hidden="true">${corner("fig", fig)}${title ? corner("title", title) : ""}${hint ? corner("hint", hint) : ""}${corner("readout", readout, " data-readout")}</div>${body}</div>${legend}</figure>`;
+}
+function pageHtml({ title, theme = "dark", body, script = "", width = 650 }) {
+    return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>${escape(title)}</title><style>${ISO_CSS}${PAGE_CSS.replace("__WIDTH__", String(width))}</style></head><body class="iso" data-theme="${theme}"><main class="iso-page">${body}</main>${script ? `<script type="module">${script.replace(/<\/(script)/gi, "<\\/$1")}<\/script>` : ""}</body></html>`;
+}
+const PAGE_CSS = `
+*{box-sizing:border-box}
+html{color-scheme:dark}
+body[data-theme="light"]{color-scheme:light}
+body{margin:0;background:var(--anatomy-page);color:var(--anatomy-text);font:14px/1.6 ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+.iso-page{width:min(__WIDTH__px,100% - 32px);margin:64px auto 96px}
+`;
+const ISO_CSS = `
+.iso{
+  --anatomy-page:#0b0b0b;--anatomy-card:#131313;--anatomy-text:#a3a3a3;--anatomy-strong:#e6e6e6;--anatomy-muted:#6e6e6e;
+  --anatomy-paper:#131313;--anatomy-face:#1b1b1b;--anatomy-top:#1c1c1c;
+  --anatomy-shade-0:#0f0f0f;--anatomy-shade-1:#121212;--anatomy-shade-2:#151515;--anatomy-shade-3:#181818;
+  --anatomy-lit-top:#262626;--anatomy-lit-shade:#1d1d1d;
+  --anatomy-hi:#d4d4d4;--anatomy-mid:#6a6a6a;--anatomy-lo:#3e3e3e;--anatomy-faint:#2a2a2a;--anatomy-lit:#ffffff;
+  --anatomy-halo:#050505;--anatomy-halo-opacity:.9;--anatomy-dot:#e6e6e6;
+  --anatomy-red:#ff6b6b;--anatomy-green:#6be0a0;--anatomy-blue:#6b9bff;
+  --anatomy-weight:.6px;--anatomy-ease:cubic-bezier(.32,.72,0,1);
+  --anatomy-mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --anatomy-lift:inset 0 1px 0 0 #ffffff0a,inset 0 0 0 1px #ffffff06,0 0 0 1px #00000026,0 1px 1px -.5px #00000014,0 3px 3px -1.5px #00000014,0 6px 6px -3px #00000014,0 12px 12px -6px #00000014;
+}
+.iso[data-theme="light"]{
+  --anatomy-page:#f2f2ef;--anatomy-card:#fbfbfa;--anatomy-text:#57575a;--anatomy-strong:#18181a;--anatomy-muted:#8c8c90;
+  --anatomy-paper:#fbfbfa;--anatomy-face:#ffffff;--anatomy-top:#ffffff;
+  --anatomy-shade-0:#dcdcd9;--anatomy-shade-1:#e5e5e2;--anatomy-shade-2:#ededea;--anatomy-shade-3:#f4f4f1;
+  --anatomy-lit-top:#ffffff;--anatomy-lit-shade:#eeeeeb;
+  --anatomy-hi:#26262a;--anatomy-mid:#8a8a8f;--anatomy-lo:#b4b4b8;--anatomy-faint:#d4d4d6;--anatomy-lit:#000000;
+  --anatomy-halo:#8a8a80;--anatomy-halo-opacity:.32;--anatomy-dot:#3a3a3e;
+  --anatomy-red:#e5484d;--anatomy-green:#30a46c;--anatomy-blue:#3e63dd;
+  --anatomy-lift:inset 0 1px 0 0 #ffffff,0 0 0 1px #0000000f,0 1px 1px -.5px #0000000a,0 3px 3px -1.5px #0000000a,0 6px 6px -3px #0000000a,0 12px 12px -6px #0000000a;
+}
+.iso-svg{display:block;width:100%;height:auto;overflow:visible}
+.iso-svg path,.iso-svg circle{vector-effect:non-scaling-stroke}
+.iso-fill{fill:var(--anatomy-paper);stroke:none}
+.iso-solid[data-lit]>.iso-fill{fill:var(--anatomy-face)}
+.iso-shade,.iso-top{stroke:none}
+.iso-shade[data-shade="0"]{fill:var(--anatomy-shade-0)}
+.iso-shade[data-shade="1"]{fill:var(--anatomy-shade-1)}
+.iso-shade[data-shade="2"]{fill:var(--anatomy-shade-2)}
+.iso-shade[data-shade="3"]{fill:var(--anatomy-shade-3)}
+.iso-top{fill:var(--anatomy-top)}
+.iso-solid[data-lit]>.iso-top{fill:var(--anatomy-lit-top)}
+.iso-solid[data-lit]>.iso-shade{fill:var(--anatomy-lit-shade)}
+.iso-solid[data-seamless]>.iso-shade,.iso-solid[data-seamless]>.iso-top{stroke-width:.4;stroke-linejoin:round}
+.iso-solid[data-seamless]>.iso-shade[data-shade="0"]{stroke:var(--anatomy-shade-0)}
+.iso-solid[data-seamless]>.iso-shade[data-shade="1"]{stroke:var(--anatomy-shade-1)}
+.iso-solid[data-seamless]>.iso-shade[data-shade="2"]{stroke:var(--anatomy-shade-2)}
+.iso-solid[data-seamless]>.iso-shade[data-shade="3"]{stroke:var(--anatomy-shade-3)}
+.iso-solid[data-seamless]>.iso-top{stroke:var(--anatomy-top)}
+.iso-solid[data-seamless][data-lit]>.iso-top{stroke:var(--anatomy-lit-top)}
+.iso-solid[data-seamless][data-lit]>.iso-shade{stroke:var(--anatomy-lit-shade)}
+.iso-solid[data-lit]>.iso-edge{stroke:var(--anatomy-lit)}
+.iso-halo{fill:var(--anatomy-halo);stroke:none;filter:blur(9px);opacity:var(--anatomy-halo-opacity);transform:translateY(3px)}
+.iso-line{fill:none;stroke:var(--anatomy-lo);stroke-width:var(--anatomy-weight);stroke-linecap:round;stroke-linejoin:round}
+.iso-line[data-tone="hi"]{stroke:var(--anatomy-hi)}
+.iso-line[data-tone="mid"]{stroke:var(--anatomy-mid)}
+.iso-line[data-tone="lo"]{stroke:var(--anatomy-lo)}
+.iso-line[data-tone="faint"]{stroke:var(--anatomy-faint)}
+.iso-line[data-tone="lit"]{stroke:var(--anatomy-lit)}
+.iso-line[data-tone="red"]{stroke:var(--anatomy-red)}
+.iso-line[data-tone="green"]{stroke:var(--anatomy-green)}
+.iso-line[data-tone="blue"]{stroke:var(--anatomy-blue)}
+.iso-line[data-dotted]{stroke-dasharray:.01 3.5;stroke-width:1}
+.iso-line[data-dashed]{stroke-dasharray:3 3}
+.iso-line[data-flow]{stroke-dasharray:2 6}
+.iso-wire-end{fill:var(--anatomy-paper);stroke:var(--anatomy-lo);stroke-width:var(--anatomy-weight)}
+.iso-wire[data-tone="hi"] .iso-wire-end{stroke:var(--anatomy-hi)}
+.iso-wire[data-tone="mid"] .iso-wire-end{stroke:var(--anatomy-mid)}
+.iso-wire[data-tone="faint"] .iso-wire-end{stroke:var(--anatomy-faint)}
+.iso-wire[data-tone="lit"] .iso-wire-end{stroke:var(--anatomy-lit)}
+.iso-dots circle{fill:var(--anatomy-dot);stroke:none;opacity:.32}
+.iso-dots[data-tone="hi"] circle{opacity:.85}
+.iso-dots[data-tone="mid"] circle{opacity:.45}
+.iso-dots[data-tone="lo"] circle{opacity:.22}
+.iso-dots[data-tone="faint"] circle{opacity:.12}
+.iso-face-text{fill:var(--anatomy-mid);font-family:var(--anatomy-mono);letter-spacing:.04em}
+.iso-face-text[data-tone="hi"]{fill:var(--anatomy-hi)}
+.iso-face-text[data-tone="lo"]{fill:var(--anatomy-lo)}
+.iso-face-text[data-tone="faint"]{fill:var(--anatomy-faint)}
+.tb-body{fill:var(--anatomy-shade-2);stroke:none}
+.tb-shine{fill:var(--anatomy-top);stroke:none}
+.tb-shade{fill:var(--anatomy-shade-0);stroke:none}
+.tb-ring{fill:none;stroke:var(--anatomy-lo);stroke-width:.45;stroke-linecap:butt;stroke-linejoin:round}
+.tb-ring[data-tone="mid"]{stroke:var(--anatomy-mid)}
+.tb-ring[data-tone="faint"]{stroke:var(--anatomy-faint)}
+.tb-ring[data-tone="hi"]{stroke:var(--anatomy-hi)}
+@keyframes iso-flow{to{stroke-dashoffset:-32}}
+@keyframes iso-pulse{0%,100%{opacity:.18}12%{opacity:1}40%{opacity:.18}}
+.iso-line[data-flow]{animation:iso-flow 1600ms linear infinite}
+.iso-dots circle[data-pulse]{animation:iso-pulse 1600ms steps(1,end) infinite;animation-delay:var(--pulse-at,0ms)}
+.iso-figure{margin:32px 0 36px}
+.iso-plate{position:relative;padding:52px 24px;border-radius:0;background:var(--anatomy-card);box-shadow:0 0 0 1px var(--anatomy-mid);--anatomy-paper:var(--anatomy-card)}
+.iso-plate-corners{position:absolute;inset:18px 20px;pointer-events:none}
+.iso-plate-corner{position:absolute;color:var(--anatomy-muted);font-family:var(--anatomy-mono);font-size:10.5px;line-height:1;letter-spacing:.04em;white-space:nowrap}
+.iso-plate-corner[data-corner="fig"]{top:0;left:0;color:var(--anatomy-text)}
+.iso-plate-corner[data-corner="title"]{top:0;right:0;text-transform:uppercase;letter-spacing:.1em}
+.iso-plate-corner[data-corner="hint"]{bottom:0;left:0;text-transform:uppercase;letter-spacing:.1em}
+.iso-plate-corner[data-corner="readout"]{right:0;bottom:0;color:var(--anatomy-text);font-variant-numeric:tabular-nums}
+.iso-plate .iso-svg{margin:0 auto}
+.iso-legend{display:grid;gap:8px;margin-top:12px;color:var(--anatomy-muted);font-size:13px;line-height:1.55}
+.iso-keys{display:flex;flex-wrap:wrap;gap:6px 18px}
+.iso-key{display:inline-flex;align-items:center;gap:7px}
+.iso-swatch{width:16px;height:10px;flex:none;overflow:visible}
+.iso-swatch path{fill:none;stroke:var(--anatomy-hi);stroke-width:1;vector-effect:non-scaling-stroke;stroke-linejoin:round;stroke-linecap:round}
+.iso-swatch[data-mark="raised"] path,.iso-swatch[data-mark="flat"] path{stroke:var(--anatomy-mid)}
+.iso-swatch[data-mark="lit"] path{stroke:var(--anatomy-lit)}
+.iso-swatch[data-mark="dim"] path{stroke:var(--anatomy-lo)}
+.iso-swatch[data-mark="dotted"] path{stroke-dasharray:.01 3;stroke-width:1.4}
+.iso-swatch[data-mark="dashed"] path{stroke-dasharray:3 2.5}
+.iso-swatch[data-mark="red"] path{stroke:var(--anatomy-red)}
+.iso-swatch[data-mark="green"] path{stroke:var(--anatomy-green)}
+.iso-swatch[data-mark="blue"] path{stroke:var(--anatomy-blue)}
+.iso-swatch-crease{stroke:var(--anatomy-lo)!important}
+@media (max-width:560px){.iso-plate{padding:48px 12px 70px}.iso-plate-corner[data-corner="hint"]{bottom:18px}}
+@media (prefers-reduced-motion:reduce){.iso-line[data-flow],.iso-dots circle[data-pulse]{animation:none}}
+`;
+
+{ // the figure's own scope, so nothing collides with the inlined kit
+const D = {"P":{"origin":[350,437.8402914694374],"scale":0.19753904902452513,"azimuth":40,"elevation":20},"KS":0.24986932869646483,"W":700,"H":500,"MODEL":{"power":"electric","work":"factories","range":"超过人类","height":1.5},"BRAND":{"name":"Atlas","heading":"Atlas 机器人","maker":"Boston Dynamics","wordmark":["BOSTON","DYNAMICS"],"badge":"ATLAS","logo":"M50 4A46 46 0 1 1 49.99 4ZM50 14A36 36 0 1 0 50.01 14ZM50 22L75 72L63 72L50 45L37 72L25 72Z"},"SHADOW":[-0.06,0.17],"FLOOR_T":10,"AZ":40,"EL":20,"YAW":66,"FLOOR_HALF":1400};
+// Shared runtime for the figures, inlined after the kit (iso, ring, lineOnTop, translateAlong exist).
+// A figure's live.js defines its state, UPDATE and draw, then calls tour({...}).
+
+const P = D.P;
+const svg = document.querySelector(".stage svg");
+const part = (name) => svg.querySelector(`[data-part="${name}"]`);
+const slot = (name) => svg.querySelector(`[data-slot="${name}"]`);
+const chip = (name) => document.querySelector(`[data-chip="${name}"]`);
+const chipHot = (name, on) => document.querySelector(`[data-chipbox="${name}"]`)?.toggleAttribute("data-hot", !!on);
+const still = matchMedia("(prefers-reduced-motion: reduce)");
+const f1 = (n) => Math.round(n * 10) / 10;
+const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+const ease = (x) => { const t = clamp(x); return t * t * (3 - 2 * t); };
+const seg = (u, a, b) => clamp((u - a) / (b - a));
+const lerp = (a, b, t) => a + (b - a) * t;
+const lerp3 = (a, b, t) => a.map((v, i) => lerp(v, b[i], t));
+const pathOf = (pts, close = true) => (pts.length ? "M" + pts.map((p) => f1(p[0]) + " " + f1(p[1])).join("L") + (close ? "Z" : "") : "");
+const at = (p) => iso(p, P);
+const toward = towardViewer(P);
+function hull(points) {
+  const pts = [...points].sort((a, b) => a[0] - b[0] || a[1] - b[1]);
+  if (pts.length < 3) return pts;
+  const cross = (o, a, b) => (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0]);
+  const lo = [];
+  for (const p of pts) { while (lo.length >= 2 && cross(lo[lo.length - 2], lo[lo.length - 1], p) <= 0) lo.pop(); lo.push(p); }
+  const hi = [];
+  for (const p of pts.reverse()) { while (hi.length >= 2 && cross(hi[hi.length - 2], hi[hi.length - 1], p) <= 0) hi.pop(); hi.push(p); }
+  return lo.slice(0, -1).concat(hi.slice(0, -1));
+}
+const circle3 = (cx, cy, r, z, n = 36) => Array.from({ length: n }, (_, i) => { const a = (i / n) * Math.PI * 2; return [cx + r * Math.cos(a), cy + r * Math.sin(a), z]; });
+const cylPath = (cx, cy, r, z0, z1, n = 36) => pathOf(hull([...circle3(cx, cy, r, z0, n), ...circle3(cx, cy, r, z1, n)].map(at)));
+const discPath = (cx, cy, r, z, n = 44) => pathOf(circle3(cx, cy, r, z, n).map(at));
+// a circle in a vertical plane: axis "x" means the circle lies in the plane x = c[0]
+const vcircle = (c, r, axis = "x", n = 36) => Array.from({ length: n }, (_, i) => { const a = (i / n) * Math.PI * 2; return axis === "x" ? [c[0], c[1] + r * Math.cos(a), c[2] + r * Math.sin(a)] : [c[0] + r * Math.cos(a), c[1], c[2] + r * Math.sin(a)]; });
+// a straight rod between two world points, as a screen quad with round ends; r in world units
+function rodPath(a, b, r) {
+  const A = at(a), B = at(b), KS = D.KS;
+  const dx = B[0] - A[0], dy = B[1] - A[1], len = Math.hypot(dx, dy) || 1;
+  const nx = (-dy / len) * r * KS, ny = (dx / len) * r * KS, R = r * KS;
+  return `M${f1(A[0] + nx)} ${f1(A[1] + ny)}L${f1(B[0] + nx)} ${f1(B[1] + ny)}A${f1(R)} ${f1(R)} 0 0 1 ${f1(B[0] - nx)} ${f1(B[1] - ny)}L${f1(A[0] - nx)} ${f1(A[1] - ny)}A${f1(R)} ${f1(R)} 0 0 1 ${f1(A[0] + nx)} ${f1(A[1] + ny)}Z`;
+}
+const mixHex = (a, b, t) => {
+  const h = (x) => [1, 3, 5].map((i) => parseInt(x.slice(i, i + 2), 16));
+  const A = h(a), B = h(b);
+  return "#" + A.map((v, i) => Math.round(v + (B[i] - v) * t).toString(16).padStart(2, "0")).join("");
+};
+const along = (pts, u) => {
+  const n = pts.length - 1;
+  const x = clamp(u) * n;
+  const i = Math.min(n - 1, Math.floor(x));
+  return lerp3(pts[i], pts[i + 1], ease(x - i));
+};
+const lapseEl = document.querySelector("[data-lapse]");
+function setLapse(text) {
+  if (text) { if (lapseEl.textContent !== text) lapseEl.textContent = text; lapseEl.setAttribute("data-on", ""); } else lapseEl.removeAttribute("data-on");
+}
+const soundsG = part("sounds");
+function setWord(w) {
+  if (!w) { if (soundsG.firstChild) soundsG.textContent = ""; return; }
+  const [x, y] = at(w.p);
+  let t = soundsG.querySelector("text");
+  if (!t) { t = document.createElementNS("http://www.w3.org/2000/svg", "text"); t.setAttribute("class", "word"); soundsG.appendChild(t); }
+  if (t.textContent !== w.text) t.textContent = w.text;
+  t.setAttribute("x", f1(x)); t.setAttribute("y", f1(y));
+  t.setAttribute("font-size", w.size || 15);
+}
+const setText = (el, text) => { if (el && el.textContent !== text) el.textContent = text; };
+
+// Steps, buttons, the idle tour, the drawn cursor and window.seek(t) for frame-exact recording.
+function tour({ STEPS, ORDER, update, reset, onBegin = () => {}, onFinish = () => {}, draw, paint, probe = () => null, gap = 0.7, lead = 0.2, tail = 1.0 }) {
+  const buttons = [...document.querySelectorAll("[data-step]")];
+  const hintEl = document.querySelector("[data-hint]");
+  const INTRO = hintEl.textContent;
+  let next = 0, run = null, idle = 0, last = 0, auto = true;
+  const setButtons = () => buttons.forEach((b, i) => {
+    b.disabled = !!run || i !== next;
+    b.toggleAttribute("data-on", !!run && ORDER[i] === run.id);
+    b.toggleAttribute("data-done", !run && i < next && next !== 0);
+  });
+  const begin = (id) => { run = { id, t: 0 }; onBegin(id); hintEl.textContent = STEPS[id].hint; };
+  const finish = () => { const id = run.id; update(id, 1); onFinish(id); run = null; next = (next + 1) % ORDER.length; idle = 0; setButtons(); };
+  const start = (id) => { if (run || ORDER[next] !== id) return; begin(id); setButtons(); if (still.matches) finish(); };
+  // two modes: Auto runs the steps on a loop, Manual waits for the visitor to press each one in order
+  const modeEls = [...document.querySelectorAll("[data-mode]")];
+  const INTRO_MANUAL = INTRO.split(/(?<=[.?!])\s+/)[0] + " 按顺序点击步骤。";
+  const setAuto = (on, save = true) => {
+    auto = on;
+    idle = 0;
+    document.body.classList.toggle("manual", !on);
+    modeEls.forEach((m) => m.setAttribute("aria-checked", String((m.dataset.mode === "auto") === on)));
+    if (save) try { localStorage.setItem("fig-mode2", on ? "auto" : "manual"); } catch {}
+  };
+  const restart = () => { reset(); run = null; next = 0; hintEl.textContent = auto ? INTRO : INTRO_MANUAL; idle = 0; setButtons(); };
+  modeEls.forEach((m) => m.addEventListener("click", () => {
+    const on = m.dataset.mode === "auto";
+    if (on === auto) return;
+    setAuto(on);
+    // Manual starts the visitor from step 1; Auto picks up from wherever the machine stands
+    if (!on) restart(); else idle = gap;
+  }));
+  buttons.forEach((b) => b.addEventListener("click", () => { if (auto) setAuto(false); start(b.dataset.step); }));
+  // a press on a step that is still greyed out also switches to Manual once the running step ends
+  document.querySelector(".steps")?.addEventListener("pointerdown", () => { if (auto) setAuto(false); });
+  document.querySelector("[data-restart]")?.addEventListener("click", restart);
+  document.addEventListener("keydown", (e) => {
+    if (e.target.closest?.("button,input,a,select,textarea")) return;
+    if (e.key === " " || e.key === "Enter") { e.preventDefault(); setAuto(false); start(ORDER[next]); }
+  });
+  function tick(now) {
+    const dt = last ? Math.min((now - last) / 1000, 1 / 20) : 1 / 60;
+    last = now;
+    if (run) { run.t += dt; const u = run.t / STEPS[run.id].dur; update(run.id, Math.min(1, u)); if (u >= 1) finish(); }
+    else if (auto && !still.matches) { idle += dt; if (idle > gap) start(ORDER[next]); }
+    draw(now / 1000);
+    requestAnimationFrame(tick);
+  }
+  const PLAN = [];
+  { let t = lead; for (const id of ORDER) { t += gap; PLAN.push({ id, t0: t, t1: t + STEPS[id].dur }); t += STEPS[id].dur; } }
+  const TOTAL = PLAN[PLAN.length - 1].t1 + tail;
+  const cursor = document.createElement("div");
+  cursor.className = "cursor";
+  cursor.innerHTML = '<svg viewBox="0 0 24 24" width="28" height="28"><path d="M3 2l15.5 9.2-6.6 1.5 3.4 7.4-3.1 1.4-3.3-7.4L3 18.6z" fill="#fff" stroke="#23263a" stroke-width="1.6" stroke-linejoin="round"/></svg>';
+  const aim = (i) => { const r = buttons[i].getBoundingClientRect(); return [r.left + r.width * 0.62, r.top + r.height * 0.55]; };
+  const restPoint = () => { const r = document.querySelector(".stage").getBoundingClientRect(); return [r.left + r.width * 0.55, r.top + r.height * 0.62]; };
+  function placeCursor(time) {
+    let from = restPoint(), to = from, u = 0, press = -1;
+    for (let i = 0; i < PLAN.length; i++) {
+      const p = PLAN[i];
+      const leave = i ? PLAN[i - 1].t1 - 0.35 : 0.05, arrive = p.t0 - 0.16;
+      if (time < leave) break;
+      from = i ? aim(i - 1) : restPoint();
+      to = aim(i);
+      u = ease((time - leave) / (arrive - leave));
+      if (time > p.t0 - 0.12 && time < p.t0 + 0.08) press = i;
+    }
+    const x = lerp(from[0], to[0], u) + Math.sin(u * Math.PI) * 18, y = lerp(from[1], to[1], u) - Math.sin(u * Math.PI) * 10;
+    cursor.style.transform = `translate(${f1(x - 3.3)}px, ${f1(y - 2.2)}px) scale(${press >= 0 ? 0.86 : 1})`;
+    buttons.forEach((b, i) => b.toggleAttribute("data-press", i === press));
+  }
+  function seekTo(time) {
+    reset();
+    run = null;
+    next = 0;
+    hintEl.textContent = INTRO;
+    for (const p of PLAN) {
+      if (time < p.t0) break;
+      begin(p.id);
+      if (time >= p.t1) { run.t = STEPS[p.id].dur; finish(); continue; }
+      run.t = time - p.t0;
+      update(p.id, run.t / STEPS[p.id].dur);
+      break;
+    }
+    setButtons();
+    draw(time);
+    placeCursor(time);
+  }
+  // colour swatches
+  document.querySelectorAll("[data-swatch]").forEach((sw) => sw.addEventListener("click", () => {
+    document.querySelectorAll("[data-swatch]").forEach((o) => o.toggleAttribute("data-on", o === sw));
+    paintBody(sw.dataset.swatch);
+  }));
+  function paintBody(c) {
+    const t = (x) => ({ f: x, t: mixHex(x, "#ffffff", 0.42), s3: mixHex(x, "#ffffff", 0.18), s1: mixHex(x, "#1b1d2c", 0.13), s0: mixHex(x, "#1b1d2c", 0.26) });
+    const set = (name, x) => { const v = t(x); const s = document.body.style; s.setProperty(`--${name}`, v.f); s.setProperty(`--${name}-t`, v.t); s.setProperty(`--${name}-3`, v.s3); s.setProperty(`--${name}-1`, v.s1); s.setProperty(`--${name}-0`, v.s0); };
+    set("body", c);
+    set("alt", paint ? paint(c) : c);
+  }
+  paintBody(document.querySelector("[data-swatch]").dataset.swatch);
+  reset();
+  setButtons();
+  draw(0);
+  // probe() hands the figure state to tools outside the page (videos/_kit/timeline.mjs samples it for the score)
+  window.__fig = { start, seek: seekTo, total: TOTAL, plan: PLAN, get state() { return probe(); } };
+  if (location.search.includes("render")) {
+    document.body.classList.add("render");
+    document.body.appendChild(cursor);
+    window.DURATION = TOTAL;
+    window.seek = seekTo;
+    seekTo(0);
+  } else {
+    // Manual is the default; Auto only when the visitor picked it on an earlier page
+    let saved = null;
+    try { saved = localStorage.getItem("fig-mode2"); } catch {}
+    // ?auto in the address starts the tour by itself (pages shown side by side), without touching the saved choice
+    setAuto(/[?&]auto\b/.test(location.search) || saved === "auto", false);
+    hintEl.textContent = auto ? INTRO : INTRO_MANUAL;
+    requestAnimationFrame(tick);
+  }
+}
+
+// Live code for the robot. Runs inside the figure scope after _kit/runtime.js.
+// The robot is real 3D: every shell is a smooth loft of superellipse rings built once in its own frame (the pelvis's
+// parts in the pelvis frame, the torso's above the waist joint, a limb segment in the frame of its joint), placed
+// every frame by its chain of poses (the stance, the pelvis's tilt, the waist, the head, the hips, knees and ankles,
+// the shoulders and elbows, the plates, the explode), culled, shaded by facing with a specular term (satin grey-white
+// composite shells, satin black actuators, matte rubber, smoked glass), and painted back to front in groups: the limbs
+// on the far side of the body, the body, the limbs on the near side, inside a limb the actuators before the shells.
+// The legs are solved with 2-link IK from the hip to where each foot stands, so a planted foot never slides. Flat
+// print (the wordmark, the ring light, the labels) lives on a part's face and is placed every frame by that plane's
+// 2 x 2 screen matrix; seams on curved shells are 3D lines on the surface. Every frame is a pure function of
+// (S.step, S.u), so window.seek(t) lands on the same picture.
+const M = D.MODEL;
+const BRAND = D.BRAND;
+const FT = D.FLOOR_T;
+const DEG = Math.PI / 180;
+const TAU = Math.PI * 2;
+
+// ---------------------------------------------------------------- vectors, matrices and the camera
+const add3 = (a, b) => [a[0] + b[0], a[1] + b[1], a[2] + b[2]];
+const sub3 = (a, b) => [a[0] - b[0], a[1] - b[1], a[2] - b[2]];
+const mul3 = (a, s) => [a[0] * s, a[1] * s, a[2] * s];
+const dot3 = (a, b) => a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
+const cross3 = (a, b) => [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]];
+const unit3 = (a) => { const l = Math.hypot(a[0], a[1], a[2]) || 1; return [a[0] / l, a[1] / l, a[2] / l]; };
+const I3 = [1, 0, 0, 0, 1, 0, 0, 0, 1];
+const mm = (a, b) => [0, 1, 2].flatMap((r) => [0, 1, 2].map((c) => a[r * 3] * b[c] + a[r * 3 + 1] * b[3 + c] + a[r * 3 + 2] * b[6 + c]));
+const mv = (a, v) => [a[0] * v[0] + a[1] * v[1] + a[2] * v[2], a[3] * v[0] + a[4] * v[1] + a[5] * v[2], a[6] * v[0] + a[7] * v[1] + a[8] * v[2]];
+const mtv = (a, v) => [a[0] * v[0] + a[3] * v[1] + a[6] * v[2], a[1] * v[0] + a[4] * v[1] + a[7] * v[2], a[2] * v[0] + a[5] * v[1] + a[8] * v[2]];
+function rotAxis(n, th) {
+  const c = Math.cos(th), s = Math.sin(th), t = 1 - c, [x, y, z] = n;
+  return [t * x * x + c, t * x * y - s * z, t * x * z + s * y, t * x * y + s * z, t * y * y + c, t * y * z - s * x, t * x * z - s * y, t * y * z + s * x, t * z * z + c];
+}
+const Rz = (deg) => rotAxis([0, 0, 1], deg * DEG);
+const Rx = (deg) => rotAxis([1, 0, 0], deg * DEG);
+const Ry = (deg) => rotAxis([0, 1, 0], deg * DEG);
+const TF = (M = I3, t = [0, 0, 0]) => ({ M, t });
+const about = (c, R) => ({ M: R, t: sub3(c, mv(R, c)) });
+const cmp = (a, b) => ({ M: mm(a.M, b.M), t: add3(mv(a.M, b.t), a.t) });
+const tr = (x, y, z) => TF(I3, [x, y, z]);
+const ap = (tf, p) => add3(mv(tf.M, p), tf.t);
+
+const CAM = cameraOf(P);
+const SA = CAM.sinA, CA = CAM.cosA, SE = CAM.sinE, CE = CAM.cosE, KK = CAM.k, OX = P.origin[0], OY = P.origin[1];
+const pr = (p) => [OX + (p[0] * SA - p[1] * CA) * KK, OY + ((p[0] * CA + p[1] * SA) * SE - p[2] * CE) * KK];
+const prv = (v) => [(v[0] * SA - v[1] * CA) * KK, ((v[0] * CA + v[1] * SA) * SE - v[2] * CE) * KK];
+const VIEW = [CA * CE, SA * CE, SE];
+const LIGHT = unit3([-SA, CA, 1.25]);
+const HALF = unit3(add3(LIGHT, VIEW));
+const depth = (p) => dot3(p, VIEW);
+const r2 = (n) => Math.round(n * 100) / 100;
+const r3 = (n) => Math.round(n * 1000) / 1000;
+const P2 = (p) => r2(p[0]) + " " + r2(p[1]);
+const dPath = (pts) => { let s = "M" + P2(pts[0]); for (let i = 1; i < pts.length; i++) s += "L" + P2(pts[i]); return s + "Z"; };
+const dOpen = (pts) => { let s = "M" + P2(pts[0]); for (let i = 1; i < pts.length; i++) s += "L" + P2(pts[i]); return s; };
+const loc = (pts, close = true) => "M" + pts.map((p) => r3(p[0]) + " " + r3(p[1])).join("L") + (close ? "Z" : "");
+const smoother = (x) => { const t = clamp(x); return t * t * t * (t * (t * 6 - 15) + 10); };
+const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
+// ---------------------------------------------------------------- colours: diffuse toward a lit and a shade tone of
+// the material's own (a warm grey under the shells, never a blue), a specular glint, dimmed toward the paper
+const rgbOf = (h) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16));
+const hexOf = (c) => "#" + c.map((v) => Math.round(Math.max(0, Math.min(255, v))).toString(16).padStart(2, "0")).join("");
+const mixc = (a, b, t) => a.map((x, i) => x + (b[i] - x) * t);
+const WHITE = [255, 255, 255], PAPER = rgbOf("#f5f0e5");
+const MATS = {
+  shell: { c: "#d3d5d4", lit: "#fbfbf9", dark: "#7e7f7a", hi: 0.62, lo: 0.6, spec: 0.62, pw: 26 }, // grey-white composite, satin
+  shell2: { c: "#c4c7c7", lit: "#f3f4f2", dark: "#73746f", hi: 0.58, lo: 0.6, spec: 0.5, pw: 20 }, // the plates' rims and the yoke
+  black: { c: "#2e3038", lit: "#8b909d", dark: "#121318", hi: 0.34, lo: 0.55, spec: 0.22, pw: 12 }, // the frame, matte
+  satin: { c: "#33353e", lit: "#9aa0ad", dark: "#121318", hi: 0.38, lo: 0.55, spec: 0.55, pw: 22 }, // the actuator housings
+  rubber: { c: "#3c3e45", lit: "#6c6f79", dark: "#17181c", hi: 0.3, lo: 0.55, spec: 0.07, pw: 6 },
+  steel: { c: "#b4bac4", lit: "#ffffff", dark: "#545a65", hi: 0.55, lo: 0.55, spec: 0.85, pw: 26 },
+  alu: { c: "#c2c7cf", lit: "#ffffff", dark: "#626874", hi: 0.5, lo: 0.5, spec: 0.55, pw: 16 },
+  battery: { c: "#43464f", lit: "#a1a6b2", dark: "#16171c", hi: 0.36, lo: 0.5, spec: 0.3, pw: 14 },
+  pack: { c: "#3b3e47", lit: "#a2a7b3", dark: "#141519", hi: 0.42, lo: 0.55, spec: 0.5, pw: 22 }, // the battery pack on the back
+  glass: { c: "#16181e", lit: "#4c5262", dark: "#07080a", hi: 0.4, lo: 0.4, spec: 0.95, pw: 44 },
+};
+for (const m of Object.values(MATS)) { m.rgb = rgbOf(m.c); m.L = rgbOf(m.lit); m.Dk = rgbOf(m.dark); }
+const shadeCache = new Map();
+function shade(mat, n, dim = 0) {
+  const m = MATS[mat];
+  const q = Math.round(dot3(n, LIGHT) * 120) / 120;
+  const sp = m.spec ? Math.round(Math.max(0, dot3(n, HALF)) ** m.pw * 60) / 60 : 0;
+  const dn = Math.round(Math.max(0, -n[2]) * 10) / 10;
+  const dq = Math.round(dim * 20) / 20;
+  const key = mat + q + "|" + sp + "|" + dn + "|" + dq;
+  let v = shadeCache.get(key);
+  if (v) return v;
+  let c = q >= 0 ? mixc(m.rgb, m.L, m.hi * Math.min(1, q / 0.9) ** 1.3) : mixc(m.rgb, m.Dk, m.lo * Math.min(1, -q / 0.9) ** 0.85);
+  if (dn) c = mixc(c, m.Dk, 0.3 * dn);
+  if (sp) c = mixc(c, WHITE, sp * m.spec);
+  if (dq) c = mixc(c, PAPER, 0.64 * dq);
+  v = hexOf(c);
+  shadeCache.set(key, v);
+  return v;
+}
+const shadeHex = (h, dim) => (dim > 0.01 ? hexOf(mixc(rgbOf(h), PAPER, 0.64 * dim)) : h);
+
+// ---------------------------------------------------------------- solids, built once in their own frame
+// A solid: points, faces as index lists, outward normals (turned away from the solid's own centre; every solid here
+// is convex), face centres, and the creases (edges between faces that meet at a sharp angle) for the ink.
+function finish(v, f, mat, fm = null, refs = null) {
+  const c = mul3(v.reduce(add3, [0, 0, 0]), 1 / v.length);
+  const fc = f.map((ix) => mul3(ix.reduce((s, i) => add3(s, v[i]), [0, 0, 0]), 1 / ix.length));
+  const n = f.map((ix, k) => {
+    let nn = [0, 0, 0];
+    for (let i = 0; i < ix.length; i++) { const a = v[ix[i]], b = v[ix[(i + 1) % ix.length]]; nn = add3(nn, [(a[1] - b[1]) * (a[2] + b[2]), (a[2] - b[2]) * (a[0] + b[0]), (a[0] - b[0]) * (a[1] + b[1])]); }
+    nn = unit3(nn);
+    return dot3(nn, sub3(fc[k], refs ? refs[k] : c)) < 0 ? mul3(nn, -1) : nn;
+  });
+  const fmA = typeof fm === "function" ? n.map((nn, k) => fm(nn, fc[k]) || mat) : fm;
+  const em = new Map();
+  f.forEach((ix, k) => ix.forEach((a, i) => { const b = ix[(i + 1) % ix.length]; const key = a < b ? a + "_" + b : b + "_" + a; const e = em.get(key); if (e) e.push(k); else em.set(key, [k]); }));
+  const creases = [];
+  for (const [key, fs] of em) if (fs.length === 2 && dot3(n[fs[0]], n[fs[1]]) < Math.cos(40 * DEG)) { const [a, b] = key.split("_").map(Number); creases.push([a, b, fs[0], fs[1]]); }
+  return { v, f, n, fc, fm: fmA, mat, c, creases, refs };
+}
+const perpOf = (a) => { const h = Math.abs(a[2]) > 0.9 ? [1, 0, 0] : [0, 0, 1]; const u = unit3(cross3(h, a)); return [u, cross3(a, u)]; };
+function prism(o, a, u, w, poly, s0, s1, mat, fm) {
+  const v = [];
+  for (const s of [s0, s1]) for (const [x, y] of poly) v.push(add3(o, add3(mul3(a, s), add3(mul3(u, x), mul3(w, y)))));
+  const n = poly.length, f = [];
+  f.push([...Array(n).keys()]);
+  f.push([...Array(n).keys()].map((i) => n + i));
+  for (let i = 0; i < n; i++) f.push([i, (i + 1) % n, n + ((i + 1) % n), n + i]);
+  return finish(v, f, mat, fm);
+}
+const circlePoly = (r, n) => Array.from({ length: n }, (_, i) => [r * Math.cos((i / n) * TAU + Math.PI / n), r * Math.sin((i / n) * TAU + Math.PI / n)]);
+function rrPoly(w, h, r, per = 4) {
+  r = Math.min(r, w / 2, h / 2);
+  const out = [];
+  for (const [cx, cy, a0] of [[w / 2 - r, h / 2 - r, 0], [-(w / 2 - r), h / 2 - r, 90], [-(w / 2 - r), -(h / 2 - r), 180], [w / 2 - r, -(h / 2 - r), 270]])
+    for (let i = 0; i <= per; i++) { const a = (a0 + (90 * i) / per) * DEG; out.push([cx + r * Math.cos(a), cy + r * Math.sin(a)]); }
+  return out;
+}
+const cylinder = (c, a, r, s0, s1, mat, n = 28) => { const [u, w] = perpOf(a); return prism(c, a, u, w, circlePoly(r, n), s0, s1, mat); };
+function loft(rings, mat, fm) {
+  const v = [], f = [], refs = [], m = rings[0].length;
+  rings.forEach((r) => v.push(...r));
+  const rc = rings.map((r) => mul3(r.reduce(add3, [0, 0, 0]), 1 / m));
+  const mid = mul3(rc.reduce(add3, [0, 0, 0]), 1 / rc.length);
+  for (let i = 0; i + 1 < rings.length; i++) for (let j = 0; j < m; j++) { const a = i * m + j, b = i * m + ((j + 1) % m); f.push([a, b, b + m, a + m]); refs.push(mul3(add3(rc[i], rc[i + 1]), 0.5)); }
+  f.push([...Array(m).keys()]);
+  f.push([...Array(m).keys()].map((j) => (rings.length - 1) * m + j));
+  refs.push(mid, mid);
+  return finish(v, f, mat, fm, refs);
+}
+// a turned solid: rings of radius r at stations s along axis a through c
+function lathe(c, a, prof, mat, n = 28) {
+  const [u, w] = perpOf(a);
+  return loft(prof.map(([s, r]) => circlePoly(r, n).map(([x, y]) => add3(c, add3(mul3(a, s), add3(mul3(u, x), mul3(w, y)))))), mat);
+}
+function chamferBox(cen, ax, h, b, mat, fm) {
+  const v = [], id = new Map();
+  const vid = (i, si, sj, sk) => id.get(`${i}${si}${sj}${sk}`);
+  for (let i = 0; i < 3; i++) {
+    const j = (i + 1) % 3, kx = (i + 2) % 3;
+    for (const si of [-1, 1]) for (const sj of [-1, 1]) for (const sk of [-1, 1]) {
+      id.set(`${i}${si}${sj}${sk}`, v.length);
+      v.push(add3(cen, add3(mul3(ax[i], si * h[i]), add3(mul3(ax[j], sj * (h[j] - b)), mul3(ax[kx], sk * (h[kx] - b))))));
+    }
+  }
+  const f = [];
+  for (let i = 0; i < 3; i++) for (const si of [-1, 1]) f.push([vid(i, si, -1, -1), vid(i, si, 1, -1), vid(i, si, 1, 1), vid(i, si, -1, 1)]);
+  for (let i = 0; i < 3; i++) {
+    const j = (i + 1) % 3;
+    for (const si of [-1, 1]) for (const sj of [-1, 1]) f.push([vid(i, si, sj, -1), vid(i, si, sj, 1), vid(j, sj, 1, si), vid(j, sj, -1, si)]);
+  }
+  for (const s0 of [-1, 1]) for (const s1 of [-1, 1]) for (const s2 of [-1, 1]) { const s = [s0, s1, s2]; f.push([0, 1, 2].map((i) => vid(i, s[i], s[(i + 1) % 3], s[(i + 2) % 3]))); }
+  return finish(v, f, mat, fm);
+}
+const AXES = [[1, 0, 0], [0, 1, 0], [0, 0, 1]];
+const box = (cen, h, b, mat, fm) => chamferBox(cen, AXES, h, b, mat, fm);
+const mirrored = (sol, sx, sy) => { if (sx === 1 && sy === 1) return sol; const m = ([x, y, z]) => [x * sx, y * sy, z]; return finish(sol.v.map(m), sol.f, sol.mat, sol.fm, sol.refs && sol.refs.map(m)); };
+// a slab of a convex outline outl(d) (in the plane (u, w), inset by d) between t0 and t1 along a, its edges rounded
+// by re in nb steps a side: the bevels catch the light the way a moulded part does
+function roundSlab(o, a, u, w, outl, t0, t1, re, mat, nb = 3) {
+  const ringAt = (t, d) => outl(d).map(([x, y]) => add3(o, add3(mul3(a, t), add3(mul3(u, x), mul3(w, y)))));
+  const rings = [];
+  for (let i = nb; i >= 0; i--) { const ph = (i / nb) * 90 * DEG; rings.push(ringAt(t0 + re * (1 - Math.sin(ph)), re * (1 - Math.cos(ph)))); }
+  for (let i = 0; i <= nb; i++) { const ph = (i / nb) * 90 * DEG; rings.push(ringAt(t1 - re * (1 - Math.sin(ph)), re * (1 - Math.cos(ph)))); }
+  return loft(rings, mat);
+}
+// a tapered stadium in (x, y): circle r1 at the origin, circle r2 at (0, -L), joined by their tangents, inset by d
+function stadium(r1, r2, L, d = 0, n1 = 18, n2 = 12) {
+  const b = Math.asin((r2 - r1) / L);
+  const out = [];
+  for (let i = 0; i <= n1; i++) { const a = b + ((Math.PI - 2 * b) * i) / n1; out.push([(r1 - d) * Math.cos(a), (r1 - d) * Math.sin(a)]); }
+  for (let i = 0; i <= n2; i++) { const a = Math.PI - b + ((Math.PI + 2 * b) * i) / n2; out.push([(r2 - d) * Math.cos(a), -L + (r2 - d) * Math.sin(a)]); }
+  return out;
+}
+// a convex polygon moved in by d (either winding)
+function offsetPoly(poly, d) {
+  if (!d) return poly;
+  const n = poly.length;
+  let A = 0;
+  for (let i = 0; i < n; i++) { const a = poly[i], b = poly[(i + 1) % n]; A += a[0] * b[1] - b[0] * a[1]; }
+  const s = A > 0 ? 1 : -1;
+  const lines = poly.map((a, i) => { const b = poly[(i + 1) % n]; const dx = b[0] - a[0], dy = b[1] - a[1], l = Math.hypot(dx, dy); return { p: [a[0] - (dy / l) * s * d, a[1] + (dx / l) * s * d], d: [dx / l, dy / l] }; });
+  return poly.map((_, i) => {
+    const L1 = lines[(i + n - 1) % n], L2 = lines[i];
+    const den = L1.d[0] * L2.d[1] - L1.d[1] * L2.d[0];
+    if (Math.abs(den) < 1e-9) return L2.p;
+    const t = ((L2.p[0] - L1.p[0]) * L2.d[1] - (L2.p[1] - L1.p[1]) * L2.d[0]) / den;
+    return [L1.p[0] + L1.d[0] * t, L1.p[1] + L1.d[1] * t];
+  });
+}
+// a rounded trapezoid in (x, y): half width wb at y = -h, wt at y = +h, corners rounded by r (bottom) and rt (top)
+function trapPoly(wb, wt, h, r, rt = r, per = 6) {
+  const out = [];
+  const corner = (cx, cy, rr, a0, a1) => { for (let i = 0; i <= per; i++) { const a = (a0 + ((a1 - a0) * i) / per) * DEG; out.push([cx + rr * Math.cos(a), cy + rr * Math.sin(a)]); } };
+  // the slanted side's angle, so each fillet meets it tangentially
+  const sl = Math.atan2(wt - wb, 2 * h) / DEG;
+  corner(wt - rt, h - rt, rt, sl, 90);
+  corner(-(wt - rt), h - rt, rt, 90, 180 - sl);
+  corner(-(wb - r), -h + r, r, 180 - sl, 270);
+  corner(wb - r, -h + r, r, 270, 360 + sl);
+  return out;
+}
+
+// ---------------------------------------------------------------- flat print, drawn in a plane (mm, y up)
+const circPts = (cx, cy, r, n = 32) => Array.from({ length: n }, (_, i) => { const a = (i / n) * TAU; return [cx + r * Math.cos(a), cy + r * Math.sin(a)]; });
+const rrD = (cx, cy, w, h, r, per = 4) => loc(rrPoly(w, h, r, per).map(([x, y]) => [x + cx, y + cy]));
+const circD = (cx, cy, r, n = 32) => loc(circPts(cx, cy, r, n));
+const lineD = (pts) => loc(pts, false);
+const txt = (x, y, s, size, cls = "print", anchor = "middle", extra = "") => `<text class="${cls}" x="${r3(x)}" y="${r3(-y)}" font-size="${size}" text-anchor="${anchor}" transform="scale(1 -1)"${extra}>${esc(s)}</text>`;
+const rect = (x, y, w, h, cls, extra = "") => `<rect class="${cls}" x="${r3(x - w / 2)}" y="${r3(y - h / 2)}" width="${r3(w)}" height="${r3(h)}"${extra}/>`;
+const circle = (x, y, r, cls, extra = "") => `<circle class="${cls}" cx="${r3(x)}" cy="${r3(y)}" r="${r3(r)}"${extra}/>`;
+// the brand's logo, centred at (cx, cy), h tall (its 100-box), y up
+const logoAt = (cx, cy, h, cls) => { const k = h / 100; return `<g transform="matrix(${r3(k)} 0 0 ${r3(-k)} ${r3(cx - 50 * k)} ${r3(cy + 50 * k)})"><path d="${BRAND.logo}" class="${cls}"/></g>`; };
+let screwN = 0;
+function screwSvg(x, y, r = 2.2) {
+  const a = (31 + screwN++ * 67) * DEG, c = Math.cos(a) * r * 0.6, s = Math.sin(a) * r * 0.6;
+  return `<circle class="screw" cx="${r3(x)}" cy="${r3(y)}" r="${r}"/><path class="slot" d="M${r3(x - c)} ${r3(y - s)}L${r3(x + c)} ${r3(y + s)}M${r3(x + s)} ${r3(y - c)}L${r3(x - s)} ${r3(y + c)}"/>`;
+}
+function capScrew(x, y, r = 2.6) {
+  const a = (17 + screwN++ * 53) * DEG;
+  const hex = Array.from({ length: 6 }, (_, i) => [x + r * 0.5 * Math.cos(a + (i * TAU) / 6), y + r * 0.5 * Math.sin(a + (i * TAU) / 6)]);
+  return `<circle class="screw-d" cx="${r3(x)}" cy="${r3(y)}" r="${r}"/><path class="hole" d="${loc(hex)}"/>` + circle(x - r * 0.35, y + r * 0.4, r * 0.22, "hi");
+}
+// fine turning marks on a machined face, a bolt circle and a hub
+function turnedFace(r, bolts, rb, hub, logo = 0) {
+  let s = "";
+  for (let rr = hub + 2.4; rr < r - 1; rr += 2.6) s += `<circle class="turn" cx="0" cy="0" r="${r3(rr)}"/>`;
+  s += `<circle class="seam" cx="0" cy="0" r="${r3(r - 2.4)}"/>`;
+  for (let i = 0; i < bolts; i++) { const a = (i / bolts) * TAU + 0.3; s += capScrew(rb * Math.cos(a), rb * Math.sin(a), 2.6); }
+  s += circle(0, 0, hub, "screw-d") + `<circle class="turn" cx="0" cy="0" r="${r3(hub * 0.7)}"/>`;
+  if (logo) s += logoAt(0, 0, logo, "logo-gr");
+  return s;
+}
+// a plane in a part's frame: origin o, in-plane axes u (print's x) and v (print's y), outward normal n
+const plane = (o, u, v, n, svg) => ({ o, u, v, n, svg });
+// a print plane from its outward normal and its up: print reads left to right from outside (this camera is mirrored,
+// so print's x is n × up)
+function face(o, n, up, svg) {
+  n = unit3(n);
+  const u = unit3(cross3(n, up));
+  return plane(o, u, cross3(u, n), n, svg);
+}
+// the inset seam of an outline, an ink line with a light line beside it, the way a moulded panel's edge reads
+const seamOf = (pts, cls = "seam") => `<path class="${cls}" d="${loc(pts)}"/><path class="seam-l" d="${loc(pts.map(([x, y]) => [x + 0.9, y - 0.9]))}"/>`;
+
+// ---------------------------------------------------------------- painting one part
+// faces that look at us (sorted among themselves), the creases, the texture, the marks on curved surfaces, the
+// print, the glints, then the outline (the hull of its corners) and its highlight
+function lines3(Ln, tf) {
+  const S = Ln.pts.map((p) => pr(ap(tf, p)));
+  const vis = Ln.pts.map((_, i) => dot3(mv(tf.M, Ln.ns ? Ln.ns[i] : Ln.n), VIEW) > 0.04);
+  const n = S.length, m = Ln.closed ? n : n - 1;
+  let d = "", open = false;
+  for (let i = 0; i < m; i++) {
+    const j = (i + 1) % n;
+    if (vis[i] && vis[j]) { d += (open ? "" : "M" + P2(S[i])) + "L" + P2(S[j]); open = true; } else open = false;
+  }
+  return d ? `<path class="${Ln.cls}" d="${d}"/>` : "";
+}
+function decalSvg(dc, tf) {
+  if (dot3(mv(tf.M, dc.n), VIEW) <= 0.02) return "";
+  const U = prv(mv(tf.M, dc.u)), V = prv(mv(tf.M, dc.v)), O = pr(ap(tf, dc.o));
+  return `<g transform="matrix(${r3(U[0])} ${r3(U[1])} ${r3(V[0])} ${r3(V[1])} ${r2(O[0])} ${r2(O[1])})">${typeof dc.svg === "function" ? dc.svg() : dc.svg}</g>`;
+}
+function partSvg(pt, tf, dim, hl) {
+  let s = "";
+  const all = [];
+  for (const m of pt.meshes) {
+    const sc = m.v.map((p) => pr(ap(tf, p)));
+    all.push(...sc);
+    const nw = m.n.map((nn) => mv(tf.M, nn));
+    const vis = nw.map((nn) => dot3(nn, VIEW) > 1e-4);
+    const order = [];
+    for (let i = 0; i < m.f.length; i++) if (vis[i]) order.push([depth(ap(tf, m.fc[i])), i]);
+    order.sort((a, b) => a[0] - b[0]);
+    for (const [, i] of order) {
+      const col = shade(m.fm ? m.fm[i] : m.mat, nw[i], dim);
+      s += `<path class="f" d="${dPath(m.f[i].map((j) => sc[j]))}" fill="${col}" stroke="${col}"/>`;
+    }
+    if (pt.crease !== false) {
+      let d = "";
+      for (const [a, b, f1, f2] of m.creases) if (vis[f1] && vis[f2]) d += `M${P2(sc[a])}L${P2(sc[b])}`;
+      if (d) s += `<path class="cr" d="${d}"/>`;
+    }
+  }
+  const hullD = dPath(hull(all));
+  if (pt.tex && dim < 0.98) s += `<path class="grain" d="${hullD}" fill="url(#at-grain)" style="opacity:${r3(pt.tex * (1 - dim))}"/><path d="${hullD}" fill="url(#at-matte)" stroke="none" style="opacity:${r3(1 - dim)}"/>`;
+  if (pt.lines) for (const Ln of pt.lines) s += lines3(Ln, tf);
+  let deco = "";
+  if (pt.decals) for (const dc of pt.decals) deco += decalSvg(dc, tf);
+  if (pt.gloss && dim < 0.97) deco += pt.gloss(tf, dim);
+  const glow = hl > 0.01 ? `<path class="hl-glow" d="${hullD}" stroke="#ff9d3a" stroke-width="13" filter="url(#at-glow)" style="opacity:${r3(hl * 0.95)}"/>` : "";
+  const ol = pt.outline === false ? "" : `<path class="${pt.outline || "ol"}" d="${hullD}"/>`;
+  const rim = hl > 0.01 ? `<path class="hl-rim" d="${hullD}" stroke="#e5583e" stroke-width="2.4" style="opacity:${r3(hl)}"/>` : "";
+  const after = deco + ol;
+  return { s: glow + s + (dim > 0.01 ? `<g style="opacity:${r3(1 - 0.55 * dim)}">${after}</g>` : after) + rim, pts: all };
+}
+
+// a cable as a tube on the screen: its ink, its colour, a lit line along it; r in mm
+function tubeSvg(world, r, col, dim = 0) {
+  const S = world.map(pr);
+  const R = r * KK;
+  const L = [], Rr = [];
+  for (let i = 0; i < S.length; i++) {
+    const a = S[Math.max(0, i - 1)], b = S[Math.min(S.length - 1, i + 1)];
+    const dx = b[0] - a[0], dy = b[1] - a[1], l = Math.hypot(dx, dy) || 1;
+    const nx = -dy / l, ny = dx / l;
+    L.push([S[i][0] + nx * R, S[i][1] + ny * R]);
+    Rr.push([S[i][0] - nx * R, S[i][1] - ny * R]);
+  }
+  const lit = S.map((p, i) => { const k = (L[i][0] - p[0]) * -0.6 + (L[i][1] - p[1]) * -0.8 > 0 ? L[i] : Rr[i]; return [p[0] + (k[0] - p[0]) * 0.45, p[1] + (k[1] - p[1]) * 0.45]; });
+  return `<path d="${dPath([...L, ...Rr.reverse()])}" fill="${shadeHex(col, dim)}" stroke="#23263a" stroke-width=".8"/><path class="lite" d="${dOpen(lit)}" style="opacity:${r3(0.4 * (1 - dim))}"/>`;
+}
+function smooth3(pts, n = 6) {
+  const out = [];
+  for (let i = 0; i + 1 < pts.length; i++) {
+    const p0 = pts[Math.max(0, i - 1)], p1 = pts[i], p2 = pts[i + 1], p3 = pts[Math.min(pts.length - 1, i + 2)];
+    for (let k = 0; k < n; k++) { const t = k / n, t2 = t * t, t3 = t2 * t; out.push([0, 1, 2].map((c) => 0.5 * (2 * p1[c] + (-p0[c] + p2[c]) * t + (2 * p0[c] - 5 * p1[c] + 4 * p2[c] - p3[c]) * t2 + (-p0[c] + 3 * p1[c] - 3 * p2[c] + p3[c]) * t3))); }
+  }
+  out.push(pts[pts.length - 1]);
+  return out;
+}
+// a satin glint along a slab's rounded edge, where that edge turns toward the light: the outline ol (in the slab's
+// (x, z) plane) at y = yF, its normals leaning outward by sg
+function edgeGlint(ol, yF, sg, k = 1) {
+  const n2 = ol.map((p, i) => { const a = ol[(i + ol.length - 1) % ol.length], b = ol[(i + 1) % ol.length]; return unit3([b[1] - a[1], 0, -(b[0] - a[0])]); });
+  const pts = ol.map(([x, z]) => [x, yF, z]);
+  const ns = n2.map((n) => unit3([n[0], sg, n[2]]));
+  return (tf, dim) => {
+    let out = "", run = [];
+    const flush = () => { if (run.length > 2) { const d = dOpen(run); out += `<path class="gl-soft" d="${d}" stroke-width="4" filter="url(#at-soft)" style="opacity:${r3(0.4 * k * (1 - dim))}"/><path class="gl-core" d="${d}" stroke-width="1.1" style="opacity:${r3(0.6 * k * (1 - dim))}"/>`; } run = []; };
+    for (let i = 0; i < pts.length; i++) {
+      const nw = mv(tf.M, ns[i]);
+      if (dot3(nw, VIEW) > 0.05 && dot3(nw, HALF) > 0.55) run.push(pr(ap(tf, pts[i]))); else flush();
+    }
+    flush();
+    return out;
+  };
+}
+
+const PARTS = [];
+const mk = (o) => { const p = { bias: 0, lay: 1, ...o }; p.c = p.c || mul3(p.meshes.reduce((s, m) => add3(s, m.c), [0, 0, 0]), 1 / p.meshes.length); PARTS.push(p); return p; };
+
+// ================================================================= SMOOTH SHELLS
+// Every shell is a loft of superellipse rings: round at n = 2, squarer as n grows. A profile is a list of stations
+// [s, c, a, b]: s along the part's axis, c an offset of the ring's centre across it, a and b the ring's half sizes.
+// The stations are smoothed (Catmull-Rom) before lofting, so the silhouettes run as curves, not as steps.
+const seXY = (t, a, b, n) => { const c = Math.cos(t), s = Math.sin(t); return [a * Math.sign(c) * Math.abs(c) ** (2 / n), b * Math.sign(s) * Math.abs(s) ** (2 / n)]; };
+function smoothProf(st, k = 2) {
+  const out = [];
+  for (let i = 0; i + 1 < st.length; i++) {
+    const p0 = st[Math.max(0, i - 1)], p1 = st[i], p2 = st[i + 1], p3 = st[Math.min(st.length - 1, i + 2)];
+    for (let j = 0; j < k; j++) { const t = j / k, t2 = t * t, t3 = t2 * t; out.push(p1.map((_, c) => 0.5 * (2 * p1[c] + (-p0[c] + p2[c]) * t + (2 * p0[c] - 5 * p1[c] + 4 * p2[c] - p3[c]) * t2 + (-p0[c] + 3 * p1[c] - 3 * p2[c] + p3[c]) * t3))); }
+  }
+  out.push(st[st.length - 1]);
+  return out;
+}
+// a profile read at s (linear between its smoothed stations)
+function profAt(st, s) {
+  const up = st[0][0] < st[st.length - 1][0];
+  for (let i = 0; i + 1 < st.length; i++) {
+    const a = st[i][0], b = st[i + 1][0];
+    if (up ? s <= b : s >= b) { const t = clamp((s - a) / (b - a)); return st[i].map((v, c) => lerp(v, st[i + 1][c], t)); }
+  }
+  return st[st.length - 1];
+}
+// a shell along z (limbs, pelvis, torso): station [z, cx, a (x), b (y)]
+function zShell(prof, n, N, mat, k = 2) {
+  const st = smoothProf(prof, k);
+  return { st, n, mesh: loft(st.map(([z, cx, a, b]) => Array.from({ length: N }, (_, j) => { const [x, y] = seXY((j / N) * TAU, a, b, n); return [cx + x, y, z]; })), mat) };
+}
+// a point on a z shell at (z, t), pushed out along its normal by off, and that normal
+function zSurf(sh, z, t, off = 0.4) {
+  const [, cx, a, b] = profAt(sh.st, z), n = sh.n;
+  const p = seXY(t, a, b, n), p1 = seXY(t + 0.01, a, b, n), p0 = seXY(t - 0.01, a, b, n);
+  const tx = p1[0] - p0[0], ty = p1[1] - p0[1], l = Math.hypot(tx, ty) || 1;
+  const nn = [ty / l, -tx / l, 0];
+  return { p: [cx + p[0] + nn[0] * off, p[1] + nn[1] * off, z], n: nn };
+}
+const zRingLine = (sh, z, cls, off = 0.4, N = 64) => { const pts = [], ns = []; for (let i = 0; i < N; i++) { const q = zSurf(sh, z, (i / N) * TAU, off); pts.push(q.p); ns.push(q.n); } return { pts, ns, cls, closed: true }; };
+const zMeridian = (sh, t, z0, z1, cls, off = 0.4, N = 24) => { const pts = [], ns = []; for (let i = 0; i <= N; i++) { const q = zSurf(sh, lerp(z0, z1, i / N), t, off); pts.push(q.p); ns.push(q.n); } return { pts, ns, cls }; };
+// the plane tangent to a z shell at (z, t): the print on it reads upright, left to right from outside
+function zFace(sh, z, t, svg, off = 0.5) {
+  const q = zSurf(sh, z, t, off), a = zSurf(sh, z - 6, t, 0).p, b = zSurf(sh, z + 6, t, 0).p;
+  const up = unit3(sub3(b, a));
+  const n = unit3(cross3(cross3(up, q.n), up));
+  return face(q.p, n, up, svg);
+}
+// a curved panel cut out of a z shell: between -th and +th round the ring (centred on t0), from z0 to z1, its outer
+// face off0 proud of the shell and its inner face off1 inside it
+function zPanel(sh, thProf, t0, off0, off1, M, mat) {
+  const th = smoothProf(thProf, 3);
+  const v = [], rings = [], axes = [], mids = [];
+  for (const [z, deg] of th) {
+    const T = deg * DEG, ring = [];
+    for (let i = 0; i < M; i++) ring.push(zSurf(sh, z, t0 - T + (2 * T * i) / (M - 1), off0).p);
+    for (let i = M - 1; i >= 0; i--) ring.push(zSurf(sh, z, t0 - T + (2 * T * i) / (M - 1), -off1).p);
+    rings.push(ring);
+    const [, cx] = profAt(sh.st, z);
+    axes.push([cx, 0, z]);
+    mids.push(zSurf(sh, z, t0, (off0 - off1) / 2).p);
+  }
+  const m = 2 * M, f = [], refs = [];
+  rings.forEach((r) => v.push(...r));
+  for (let i = 0; i + 1 < rings.length; i++) for (let j = 0; j < m; j++) {
+    const a = i * m + j, b = i * m + ((j + 1) % m);
+    f.push([a, b, b + m, a + m]);
+    const fc = mul3([v[a], v[b], v[b + m], v[a + m]].reduce(add3, [0, 0, 0]), 0.25);
+    const ax = mul3(add3(axes[i], axes[i + 1]), 0.5), md = mul3(add3(mids[i], mids[i + 1]), 0.5);
+    if (j < M - 1) refs.push(ax);
+    else if (j >= M && j < m - 1) refs.push(add3(fc, sub3(fc, ax)));
+    else refs.push(md);
+  }
+  f.push([...Array(m).keys()]);
+  f.push([...Array(m).keys()].map((j) => (rings.length - 1) * m + j));
+  const cen = mul3(v.reduce(add3, [0, 0, 0]), 1 / v.length);
+  refs.push(cen, cen);
+  return finish(v, f, mat, null, refs);
+}
+// a shell along x (the head): station [x, b (y), c (z)] round a centre at height zc
+function xShell(prof, n, N, mat, zc, k = 2) {
+  const st = smoothProf(prof, k);
+  return { st, mesh: loft(st.map(([x, b, c]) => Array.from({ length: N }, (_, j) => { const [y, z] = seXY((j / N) * TAU, b, c, n); return [x, y, zc + z]; })), mat) };
+}
+// a drum: a dark actuator housing round axis a through c, from s0 to s1 along it, its ends chamfered
+const drum = (c, a, r, s0, s1, ch = 3, N = 36) => lathe(c, a, [[s0, r - ch], [s0 + ch, r], [s1 - ch, r], [s1, r - ch]], "satin", N);
+
+// ================================================================= SIZES
+// The drawing's proportions (about 1.5 m standing), not a spec. The pelvis frame sits at the hip joints; the torso
+// frame at the waist joint on top of the waist actuator; the head frame on the shoulders.
+const LU = 380, LL = 380, AK = 88, HY = 112;
+const WZ = 128; // the waist joint above the hip joints
+const SY = 250, ZS = 286; // the shoulder joints in the torso frame
+const LA1 = 270, LA2 = 240, WRL = 26; // upper arm, forearm, wrist
+const NZ = 344, HC = 98; // the head's seat in the torso frame, the disc's centre above it
+const STANCE_X = 6; // the ankles a touch ahead of the hips
+
+// ================================================================= THE PELVIS
+const PELVIS_SH = zShell([[-58, 0, 26, 30], [-50, 0, 56, 52], [-32, 0, 80, 78], [0, 0, 94, 96], [40, 0, 98, 106], [70, 0, 94, 102], [86, 0, 82, 92], [96, 0, 62, 72]], 2.8, 32, "shell");
+const PELVIS = mk({ id: "pelvis", grp: "pelvis", node: "pelvis", tex: 0.03, meshes: [PELVIS_SH.mesh], crease: false,
+  lines: [zRingLine(PELVIS_SH, 74, "seam"), zRingLine(PELVIS_SH, 72.8, "seam-l")] });
+// the badge across the front of the hips
+const BADGE = (() => {
+  const W2 = 66, H2 = 24;
+  const outl = (d) => rrPoly(2 * (W2 - d), 2 * (H2 - d), Math.max(2, 12 - d), 4);
+  let s = seamOf(rrPoly(2 * W2 - 9, 2 * H2 - 9, 9, 4));
+  s += txt(0, -12.5, BRAND.badge, 38, "wm", "middle", ' textLength="100" lengthAdjust="spacingAndGlyphs"');
+  for (const x of [-57, 57]) s += screwSvg(x, 0, 2.2);
+  return mk({ id: "badge", grp: "pelvis", node: "pelvis", meshes: [roundSlab([94, 0, 30], [1, 0, 0], [0, 1, 0], [0, 0, 1], outl, 0, 10, 3.5, "shell2", 2)], decals: [face([104.06, 0, 30], [1, 0, 0], [0, 0, 1], s)], front: true });
+})();
+// the waist actuator: a dark banded drum between the pelvis and the torso, the joint the torso turns on
+const drumLines = [100, 106, 118, 124].map((z) => { const r = 76.4, pts = [], ns = []; for (let i = 0; i < 48; i++) { const a = (i / 48) * TAU; pts.push([r * Math.cos(a), r * Math.sin(a), z]); ns.push([Math.cos(a), Math.sin(a), 0]); } return { pts, ns, cls: "band", closed: true }; });
+const WAIST = mk({ id: "waist", grp: "pelvis", node: "pelvis", act: "waist", tex: 0.05, meshes: [lathe([0, 0, 88], [0, 0, 1], [[0, 70], [4, 76], [36, 76], [40, 70]], "satin", 44)], lines: drumLines, crease: false });
+
+// ================================================================= THE TORSO (torso frame, origin at the waist joint)
+// One smooth tapered shell, narrow at the waist, widest across the chest, rounding over into the shoulders. Its
+// front is a door hinged at the left edge (the wordmark on it); its back carries a dark plate hinged at the top.
+// Behind the door a pocket holds the compute over the battery.
+const TUB_N = 3.4;
+const TUB_SH = zShell([[-6, -6, 66, 86], [4, -6, 90, 116], [40, -4, 104, 142], [100, 0, 116, 172], [170, 2, 124, 198], [228, 0, 124, 208], [272, -4, 116, 204], [306, -8, 100, 188], [330, -10, 78, 160], [344, -12, 50, 118], [350, -12, 22, 62]], TUB_N, 60, "shell");
+const doorTh = [[28, 30], [40, 42], [70, 50], [140, 54], [220, 56], [262, 54], [286, 46], [298, 32]];
+const backTh = [[46, 28], [60, 38], [110, 44], [190, 46], [250, 44], [284, 36], [296, 24]];
+// the pocket behind the door: its outline is the door's own, seen from the front
+const POCKET = { on: false };
+const doorEdgeY = (z) => { const [, , , b] = profAt(TUB_SH.st, z), th = profAt(smoothProf(doorTh, 3), z)[1] * DEG; return b * Math.abs(Math.sin(th)) ** (2 / TUB_N) - 6; };
+const pocketPts = (() => { const th = smoothProf(doorTh, 3), L = th.map(([z]) => [doorEdgeY(z), z]); return [...L, ...L.slice().reverse().map(([y, z]) => [-y, z])].map(([y, z]) => [y, z - 165]); })();
+const pocketSvg = (() => {
+  let s = `<path d="${loc(pocketPts)}" fill="#1b1d23" stroke="#23263a" stroke-width=".8"/>`;
+  // the pocket's walls: lit along the top and the left, the floor of it darker, ribs across its back
+  s += `<path d="${loc(offsetPoly(pocketPts, 10))}" fill="#26282f" stroke="none"/>`;
+  for (let y = -80; y <= 100; y += 30) s += `<path class="groove-l" d="${rrD(0, y, 190, 3, 1.5)}" style="opacity:.35"/>`;
+  s += `<path d="${lineD(pocketPts.slice(0, Math.floor(pocketPts.length / 2)))}" fill="none" stroke="#5a5e69" stroke-width="2.4" style="opacity:.6"/>`;
+  return s;
+})();
+const TUB = mk({ id: "tub", grp: "torso", node: "torso", tex: 0.03, meshes: [TUB_SH.mesh], crease: false,
+  lines: [zRingLine(TUB_SH, 22, "seam"), zRingLine(TUB_SH, 20.8, "seam-l"), zRingLine(TUB_SH, 318, "seam"), zRingLine(TUB_SH, 316.8, "seam-l"), zMeridian(TUB_SH, Math.PI / 2, 24, 316, "seam"), zMeridian(TUB_SH, -Math.PI / 2, 24, 316, "seam")],
+  decals: [plane([118, 0, 165], [0, -1, 0], [0, 0, 1], [1, 0, 0], () => (POCKET.on ? pocketSvg : "")),
+    zFace(TUB_SH, 150, Math.PI / 2 - 0.3, `<path class="label" d="${rrD(0, 0, 70, 26, 3)}"/>` + txt(-28, 2, BRAND.badge, 9, "print", "start") + txt(-28, -8, "ELECTRIC", 6, "print2", "start") + logoAt(24, 0, 17, "logo")),
+    zFace(TUB_SH, 150, -Math.PI / 2 + 0.3, `<path class="label" d="${rrD(0, 0, 70, 26, 3)}"/>` + txt(-28, 2, BRAND.badge, 9, "print", "start") + txt(-28, -8, "ELECTRIC", 6, "print2", "start") + logoAt(24, 0, 17, "logo")),
+    zFace(TUB_SH, 334, 0.0, logoAt(0, 0, 28, "logo-gr"))] });
+// the wordmark: two lines, condensed to fit the chest
+function wordmark(y0, size, cls = "wm") {
+  const [a, b] = BRAND.wordmark;
+  return txt(0, y0, a, size, cls, "middle", ` textLength="${r3(size * 2.9)}" lengthAdjust="spacingAndGlyphs"`) +
+    txt(0, y0 - size * 0.97, b, size, cls, "middle", ` textLength="${r3(size * 3.24)}" lengthAdjust="spacingAndGlyphs"`);
+}
+const doorPrint = (() => {
+  let s = wordmark(14, 84);
+  s += `<path class="hair" d="${lineD([[-100, -96], [100, -96]])}"/>`;
+  s += logoAt(-66, -118, 26, "logo");
+  s += `<g><path class="ledglow" d="${rrD(6, -118, 64, 10, 5)}" filter="url(#at-led)"/><path class="ledbar" d="${rrD(6, -118, 54, 4.5, 2.25)}"/></g>`;
+  s += screwSvg(70, -118, 2.4);
+  return s;
+})();
+const DOOR_MESH = zPanel(TUB_SH, doorTh, 0, 3, 16, 18, "shell");
+const doorFace = zFace(TUB_SH, 175, 0, doorPrint, 3.6);
+const DOOR = mk({ id: "door", grp: "torso", node: "door", tex: 0.03, meshes: [DOOR_MESH], crease: false, decals: [doorFace,
+  // inside the door: a part label
+  face(add3(zSurf(TUB_SH, 160, 0, -16.6).p, [0, 0, 0]), [-1, 0, 0], [0, 0, 1], `<path class="label" d="${rrD(0, 0, 84, 28, 3)}"/>` + txt(0, 1, "CHEST · L", 9, "print", "middle") + txt(0, -9, BRAND.maker.toUpperCase(), 5.5, "print2", "middle"))] });
+const backPrint = (() => {
+  let s = txt(0, 8, BRAND.badge, 84, "wm-lt", "middle", ' textLength="206" lengthAdjust="spacingAndGlyphs"');
+  s += txt(0, -16, BRAND.wordmark.join(" "), 16, "wprint", "middle", ' textLength="184" lengthAdjust="spacingAndGlyphs"');
+  s += logoAt(0, 84, 22, "logo-lt");
+  s += `<path class="groove" d="${rrD(-26, -58, 104, 16, 8)}"/>`;
+  s += circle(64, -58, 10, "screw-d") + circle(64, -58, 6, "conn") + circle(62.5, -55.5, 1.8, "hi");
+  for (let i = 0; i < 5; i++) s += circle(-54 + i * 16, -88, 2.8, i < 4 ? "led" : "led-off");
+  for (let i = 0; i < 4; i++) s += `<path class="warn" d="${loc([[34 + i * 12, -93], [44 + i * 12, -93], [39 + i * 12, -84]])}"/>`;
+  return s;
+})();
+const BACK_MESH = zPanel(TUB_SH, backTh, Math.PI, 4, 14, 16, "pack");
+const BACK = mk({ id: "back", grp: "torso", node: "back", tex: 0.05, meshes: [BACK_MESH], crease: false, decals: [zFace(TUB_SH, 175, Math.PI, backPrint, 4.6)] });
+// the hinges: the door's left edge (a vertical line), the back plate's top edge (a line across)
+const DOOR_HINGE = (() => { const q = zSurf(TUB_SH, 175, 54 * DEG, -6).p; return [q[0], q[1], 175]; })();
+const BACK_HINGE = (() => { const q = zSurf(TUB_SH, 296, Math.PI, -5).p; return [q[0], 0, 296]; })();
+// inside the pocket: the compute above, the battery below, and the runs between them and out to the limbs
+const CMP = { c: [62, 0, 226], h: [40, 92, 46] };
+const cmpPrint = (() => {
+  let s = "";
+  for (let i = 0; i < 12; i++) s += rect(-38, -38 + i * 7, 72, 3.6, i % 2 ? "fin" : "fin-d");
+  s += circle(-38, 0, 28, "fan") + circle(-38, 0, 9, "conn");
+  for (let i = 0; i < 7; i++) { const a = (i / 7) * TAU; s += `<path class="blade" d="${loc([[-38 + 10 * Math.cos(a), 10 * Math.sin(a)], [-38 + 26 * Math.cos(a + 0.42), 26 * Math.sin(a + 0.42)], [-38 + 25 * Math.cos(a + 0.8), 25 * Math.sin(a + 0.8)], [-38 + 10 * Math.cos(a + 0.6), 10 * Math.sin(a + 0.6)]])}"/>`; }
+  s += `<path class="label-d" d="${rrD(44, 20, 70, 28, 3)}"/>` + logoAt(22, 20, 17, "logo-lt") + txt(34, 17, "COMPUTE", 7.5, "wprint", "start");
+  for (let i = 0; i < 2; i++) s += `<path class="conn" d="${rrD(44, -6 - i * 12, 44, 8, 1.5)}"/><path class="pins" d="${lineD([[28, -6 - i * 12], [60, -6 - i * 12]])}"/>`;
+  for (let i = 0; i < 3; i++) s += circle(28 + i * 9, -34, 2.3, i < 2 ? "led" : "led-off");
+  for (const sx of [-1, 1]) for (const sy of [-1, 1]) s += screwSvg(sx * 84, sy * 38, 2.2);
+  return s;
+})();
+const COMPUTE = mk({ id: "compute", grp: "comp", node: "comp", inside: true, meshes: [box(CMP.c, CMP.h, 4, "alu")], decals: [face([CMP.c[0] + CMP.h[0] + 0.06, 0, CMP.c[2]], [1, 0, 0], [0, 0, 1], cmpPrint)] });
+const BAT = { c: [58, 0, 112], h: [42, 94, 58] };
+const batPrint = (() => {
+  let s = `<path class="label" d="${rrD(-8, 12, 160, 92, 4)}"/>` + logoAt(-60, 32, 38, "logo");
+  s += txt(-34, 38, "BATTERY", 16, "print", "start") + txt(-34, 25, BRAND.maker.toUpperCase(), 7, "print2", "start");
+  s += `<path class="hair" d="${lineD([[-34, 19], [62, 19]])}"/>` + txt(-34, 9, "SERVICE SIDE", 6.5, "print2", "start");
+  for (let i = 0; i < 4; i++) s += `<path class="warn" d="${loc([[-76 + i * 12, -20], [-66 + i * 12, -20], [-71 + i * 12, -11]])}"/>`;
+  for (let i = 0; i < 5; i++) s += circle(30 + i * 9, -16, 2.4, i < 4 ? "led" : "led-off");
+  s += `<path class="groove" d="${rrD(0, -48, 150, 13, 6.5)}"/>`;
+  return s;
+})();
+const BATTERY = mk({ id: "battery", grp: "bat", node: "bat", inside: true, tex: 0.03, meshes: [box(BAT.c, BAT.h, 6, "battery")], decals: [face([BAT.c[0] + BAT.h[0] + 0.06, 0, BAT.c[2]], [1, 0, 0], [0, 0, 1], batPrint)] });
+const RUNS = [
+  { pts: [[84, -40, 166], [98, -44, 176], [84, -40, 186]], r: 6, col: "#c9412c", front: true },
+  { pts: [[84, 40, 166], [98, 44, 176], [84, 40, 186]], r: 6, col: "#2b2d35", front: true },
+  ...[1, -1].flatMap((s) => [
+    { pts: [[80, s * 96, 210], [96, s * 116, 160], [90, s * 116, 80], [60, s * 104, 20], [20, s * 80, -10]], r: 6, col: "#e3a03a" },
+  ]),
+];
+const RUN_PTS = RUNS.map((r) => ({ ...r, pts: smooth3(r.pts, 6) }));
+
+// ================================================================= THE HEAD (head frame, on the shoulders)
+// A wide, flat disc standing on its edge, sitting low on the shoulders; its face a smoked glass with a ring of light
+// running round it. Nothing else on it.
+const HEAD_SH = xShell([[-48, 92, 60], [-44, 118, 78], [-36, 134, 90], [-22, 142, 97], [10, 144, 98], [26, 140, 95], [36, 132, 89], [42, 122, 82]], 2.3, 64, "shell", HC);
+const RING = { b: 94, c: 59 };
+const facePrint = (() => {
+  let s = `<ellipse cx="0" cy="0" rx="107" ry="69" fill="url(#at-face)"/>`;
+  const ell = (rx, ry, cls, extra = "") => `<ellipse class="${cls}" cx="0" cy="0" rx="${rx}" ry="${ry}"${extra}/>`;
+  s += ell(RING.b, RING.c, "ring-glow", ' stroke-width="18" filter="url(#at-ring2)" style="opacity:.4"');
+  s += ell(RING.b, RING.c, "ring-glow", ' stroke-width="8" filter="url(#at-ring)" style="opacity:.9"');
+  s += ell(RING.b, RING.c, "ring-core", ' stroke-width="6.5"');
+  s += ell(RING.b, RING.c, "ring-core", ' stroke-width="2.4" style="stroke:#fff"');
+  s += ell(RING.b - 6, RING.c - 6, "ring-edge") + ell(RING.b + 6, RING.c + 6, "ring-edge");
+  const arcE = (rx, ry, a0, a1) => lineD(Array.from({ length: 16 }, (_, i) => { const a = (a0 + ((a1 - a0) * i) / 15) * DEG; return [rx * Math.cos(a), ry * Math.sin(a)]; }));
+  s += `<path d="${arcE(76, 44, 110, 158)}" fill="none" stroke="#fff" stroke-width="4.5" stroke-linecap="round" style="opacity:.16"/>`;
+  s += `<path d="${arcE(76, 44, 118, 134)}" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" style="opacity:.6"/>`;
+  return s;
+})();
+const headBackPrint = `<ellipse class="seam" cx="0" cy="0" rx="104" ry="68"/>` + logoAt(0, 0, 54, "logo-gr") + [0, 1, 2, 3, 4, 5].map((i) => { const a = (i / 6) * TAU + 0.5; return capScrew(114 * Math.cos(a), 76 * Math.sin(a), 2.6); }).join("");
+const headRing = (x, cls) => { const [, b, c] = profAt(HEAD_SH.st, x), pts = [], ns = []; for (let i = 0; i < 80; i++) { const t = (i / 80) * TAU; const [y, z] = seXY(t, b + 0.4, c + 0.4, 2.3); pts.push([x, y, HC + z]); ns.push(unit3([0, Math.cos(t) / b, Math.sin(t) / c])); } return { pts, ns, cls, closed: true }; };
+// the satin glint round the disc's rim, where it turns toward the light
+function rimGlint(tf, dim) {
+  let out = "";
+  const [, b, c] = profAt(HEAD_SH.st, -6);
+  let run = [];
+  const flush = () => { if (run.length > 2) { const d = dOpen(run); out += `<path class="gl-soft" d="${d}" stroke-width="6" filter="url(#at-soft)" style="opacity:${r3(0.45 * (1 - dim))}"/><path class="gl-core" d="${d}" stroke-width="1.4" style="opacity:${r3(0.7 * (1 - dim))}"/>`; } run = []; };
+  for (let i = 0; i <= 90; i++) {
+    const t = (i / 90) * TAU, [y, z] = seXY(t, b, c, 2.3);
+    const nw = mv(tf.M, unit3([0, Math.cos(t) / b, Math.sin(t) / c]));
+    if (dot3(nw, VIEW) > 0.08 && dot3(nw, HALF) > 0.8) run.push(pr(ap(tf, [-6, y, HC + z]))); else flush();
+  }
+  flush();
+  return out;
+}
+const HEAD = mk({ id: "head", grp: "head", node: "head", tex: 0.03, meshes: [HEAD_SH.mesh], gloss: rimGlint, crease: false, lines: [headRing(22, "seam"), headRing(23.2, "seam-l")],
+  decals: [face([-48.06, 0, HC], [-1, 0, 0], [0, 0, 1], headBackPrint)] });
+const FACE = mk({ id: "face", grp: "head", node: "head", meshes: [xShell([[40, 122, 80], [44, 118, 77], [47, 110, 72]], 2.3, 56, "glass", HC).mesh], crease: false, outline: "ol-s",
+  decals: [face([47.06, 0, HC], [1, 0, 0], [0, 0, 1], facePrint)], bias: 4 });
+const COLLAR = mk({ id: "collar", grp: "head", node: "head", act: "neck", meshes: [lathe([0, 0, -10], [0, 0, 1], [[0, 50], [3, 54], [14, 54], [18, 50]], "satin", 36)], crease: false, bias: -60 });
+
+// ================================================================= THE LEGS
+// Built for the left leg (y outward) and mirrored. Each joint is a dark drum that shows only in the gap between two
+// shells: the hip above the thigh, the knee between the thigh and the shin, the ankle above the foot. The thigh is
+// massive at the hip and tapers hard to the knee; the shin is slim; the foot is low and wide.
+const THIGH_SH = zShell([[20, 2, 24, 26], [12, 4, 62, 58], [-2, 6, 86, 76], [-28, 8, 96, 84], [-74, 10, 97, 84], [-136, 9, 90, 78], [-206, 6, 77, 68], [-272, 3, 63, 58], [-320, 0, 53, 50], [-350, 0, 45, 44], [-366, 0, 34, 35], [-374, 0, 16, 19]], 2.4, 48, "shell");
+const SHIN_SH = zShell([[16, 0, 18, 21], [8, 1, 40, 40], [-6, 3, 50, 46], [-44, 8, 54, 46], [-112, 8, 50, 42], [-200, 4, 42, 37], [-280, 1, 35, 32], [-334, 0, 31, 29], [-356, 0, 25, 26], [-364, 0, 12, 14]], 2.4, 40, "shell");
+const FOOT_SH = zShell([[-34, 12, 30, 28], [-42, 26, 70, 44], [-50, 44, 120, 60], [-56, 50, 138, 66], [-64, 50, 142, 67], [-78, 50, 142, 67]], 4.6, 44, "shell");
+const SOLE_SH = zShell([[-77, 50, 143, 68], [-84, 50, 142, 67], [-88, 50, 137, 63]], 4.6, 44, "rubber", 1);
+const thighMark = logoAt(0, 0, 30, "logo-gr") + capScrew(0, 34, 2.4) + capScrew(0, -34, 2.4);
+const LEG_CANON = {
+  hipDrum: drum([0, 0, 0], [0, 1, 0], 64, -16, 40, 4, 40),
+  thigh: THIGH_SH.mesh,
+  kneeDrum: drum([0, 0, 0], [0, 1, 0], 44, -47, 47, 3, 32),
+  shin: SHIN_SH.mesh,
+  ankleDrum: drum([0, 0, 0], [0, 1, 0], 30, -35, 35, 3, 28),
+  foot: FOOT_SH.mesh, sole: SOLE_SH.mesh,
+};
+const thighLines = [zRingLine(THIGH_SH, -300, "seam"), zRingLine(THIGH_SH, -298.8, "seam-l"), zMeridian(THIGH_SH, Math.PI / 2, -40, -296, "seam"), zMeridian(THIGH_SH, -Math.PI / 2, -40, -296, "seam")];
+const shinLines = [zRingLine(SHIN_SH, -52, "seam"), zRingLine(SHIN_SH, -50.8, "seam-l"), zMeridian(SHIN_SH, Math.PI / 2, -56, -330, "seam"), zMeridian(SHIN_SH, -Math.PI / 2, -56, -330, "seam")];
+const footLines = [zRingLine(FOOT_SH, -70, "seam"), zRingLine(FOOT_SH, -71.2, "seam-l"), zRingLine(SOLE_SH, -81, "tread"), zRingLine(SOLE_SH, -85, "tread")];
+// the foot's top: the toe split and two screws (print x runs across the foot, print y along it)
+const footTop = `<path class="seam-d" d="${lineD([[-54, 118], [54, 118]])}"/><path class="seam-l" d="${lineD([[-54, 116.8], [54, 116.8]])}"/>` + capScrew(-40, 90, 2.4) + capScrew(40, 90, 2.4) + capScrew(-40, -20, 2.4) + capScrew(40, -20, 2.4);
+const mirLine = (Ln, s) => (s > 0 ? Ln : { ...Ln, pts: Ln.pts.map(([x, y, z]) => [x, -y, z]), ns: Ln.ns.map(([x, y, z]) => [x, -y, z]) });
+const LEGS = [{ id: "L", s: 1 }, { id: "R", s: -1 }];
+for (const L of LEGS) {
+  const s = L.s, my = (sol) => mirrored(sol, 1, s);
+  const leg = { limb: "leg" + L.id, side: s };
+  const flat = (y0, svg) => face([0, s * y0, 0], [0, s, 0], [0, 0, 1], svg);
+  mk({ ...leg, id: L.id + "-hip", node: "hipB" + L.id, seg: "hip", lay: 0, act: "hip", meshes: [my(LEG_CANON.hipDrum)], crease: false, decals: [flat(40.06, turnedFace(62, 8, 50, 16, 22))], pop: [0, 70, 0] });
+  mk({ ...leg, id: L.id + "-thigh", node: "thigh" + L.id, seg: "thigh", lay: 1, bias: 60, tex: 0.03, meshes: [my(LEG_CANON.thigh)], crease: false, lines: thighLines.map((Ln) => mirLine(Ln, s)),
+    decals: [zFace(THIGH_SH, -150, s * Math.PI / 2, thighMark)] });
+  mk({ ...leg, id: L.id + "-knee", node: "knee" + L.id, seg: "knee", lay: 0, act: "knee", meshes: [my(LEG_CANON.kneeDrum)], crease: false, decals: [flat(47.06, turnedFace(41, 6, 32, 11)), face([0, -s * 47.06, 0], [0, -s, 0], [0, 0, 1], turnedFace(41, 6, 32, 11))] });
+  mk({ ...leg, id: L.id + "-shin", node: "shin" + L.id, seg: "shin", lay: 1, tex: 0.03, meshes: [my(LEG_CANON.shin)], crease: false, lines: shinLines.map((Ln) => mirLine(Ln, s)) });
+  mk({ ...leg, id: L.id + "-ankle", node: "ankle" + L.id, seg: "ankle", lay: 0, act: "ankle", meshes: [my(LEG_CANON.ankleDrum)], crease: false, decals: [flat(35.06, turnedFace(28, 4, 21, 8)), face([0, -s * 35.06, 0], [0, -s, 0], [0, 0, 1], turnedFace(28, 4, 21, 8))] });
+  mk({ ...leg, id: L.id + "-foot", node: "foot" + L.id, seg: "foot", lay: 1, bias: -60, tex: 0.03, meshes: [my(LEG_CANON.sole), my(LEG_CANON.foot)], crease: false, lines: footLines.map((Ln) => mirLine(Ln, s)), decals: [face([0, 0, -55.4], [0, 0, 1], [1, 0, 0], footTop)] });
+}
+
+// ================================================================= THE ARMS
+// Built for the left arm and mirrored. The shoulder drum is fixed to the torso and shows between it and the arm; the
+// upper arm rounds over the shoulder and tapers to the elbow, the forearm tapers to the wrist; a three-digit
+// gripper below it.
+const UPPER_SH = zShell([[50, 0, 22, 20], [42, 0, 48, 40], [26, 2, 62, 50], [0, 4, 64, 52], [-60, 4, 58, 48], [-140, 2, 50, 43], [-206, 0, 43, 38], [-238, 0, 37, 34], [-252, 0, 27, 27], [-258, 0, 12, 14]], 2.3, 40, "shell");
+const FORE_SH = zShell([[12, 0, 13, 15], [3, 0, 35, 31], [-20, 2, 43, 35], [-90, 2, 41, 33], [-168, 0, 34, 29], [-212, 0, 28, 26], [-226, 0, 19, 19], [-232, 0, 9, 11]], 2.3, 28, "shell");
+function digitMeshes(phi) {
+  const rad = [Math.cos(phi * DEG), Math.sin(phi * DEG), 0], tan = [-Math.sin(phi * DEG), Math.cos(phi * DEG), 0];
+  const base = [rad[0] * 25, rad[1] * 25, -24];
+  const d1 = unit3(add3(mul3(rad, Math.sin(12 * DEG)), [0, 0, -Math.cos(12 * DEG)]));
+  const k1 = add3(base, mul3(d1, 52));
+  const d2 = unit3(add3(mul3(rad, -Math.sin(30 * DEG)), [0, 0, -Math.cos(30 * DEG)]));
+  const k2 = add3(k1, mul3(d2, 40));
+  const link = (a, d, len, hw, ht, mat) => { const thick = unit3(cross3(d, tan)); return chamferBox(add3(a, mul3(d, len / 2)), [d, tan, thick], [len / 2 + 6, hw, ht], 5, mat); };
+  return {
+    links: [link(base, d1, 52, 12, 9, "shell"), link(k1, d2, 40, 11, 8, "shell")],
+    pad: chamferBox(add3(k2, mul3(d2, -5)), [d2, tan, unit3(cross3(d2, tan))], [8, 10.5, 10.5], 4, "rubber"),
+    pins: [cylinder(base, tan, 6, -13.5, 13.5, "satin", 14), cylinder(k1, tan, 5.5, -12.5, 12.5, "satin", 14)],
+    base,
+  };
+}
+const ARM_CANON = {
+  shDrum: drum([0, -70, 0], [0, 1, 0], 54, 0, 36, 4, 40),
+  upper: UPPER_SH.mesh,
+  elbowDrum: drum([0, 0, 0], [0, 1, 0], 36, -39, 39, 3, 30),
+  fore: FORE_SH.mesh,
+  wrist: lathe([0, 0, -LA2 + 4], [0, 0, -1], [[0, 25], [3, 28], [WRL + 2, 28], [WRL + 4, 25]], "satin", 30),
+  palm: lathe([0, 0, 0], [0, 0, -1], [[0, 32], [4, 37], [20, 37], [25, 32]], "shell", 32),
+};
+const upperLines = [zRingLine(UPPER_SH, -150, "seam"), zRingLine(UPPER_SH, -148.8, "seam-l"), zMeridian(UPPER_SH, Math.PI / 2, -10, -146, "seam")];
+const foreLines = [zRingLine(FORE_SH, -150, "seam"), zRingLine(FORE_SH, -148.8, "seam-l"), zMeridian(FORE_SH, Math.PI / 2, -24, -146, "seam")];
+const DIGITS = [270, 30, 150].map(digitMeshes);
+const ARMS = [{ id: "L", s: 1 }, { id: "R", s: -1 }];
+for (const A of ARMS) {
+  const s = A.s, my = (sol) => mirrored(sol, 1, s);
+  const arm = { limb: "arm" + A.id, side: s };
+  const flat = (y0, svg) => face([0, s * y0, 0], [0, s, 0], [0, 0, 1], svg);
+  mk({ ...arm, id: A.id + "-shoulder", node: "shBase" + A.id, seg: "shoulder", lay: 0, act: "shoulder", meshes: [my(ARM_CANON.shDrum)], crease: false, pop: [0, 60, 0] });
+  mk({ ...arm, id: A.id + "-upper", node: "upper" + A.id, seg: "upper", lay: 1, bias: 60, tex: 0.03, meshes: [my(ARM_CANON.upper)], crease: false, lines: upperLines.map((Ln) => mirLine(Ln, s)),
+    decals: [zFace(UPPER_SH, -70, s * Math.PI / 2, logoAt(0, 0, 24, "logo-gr"))] });
+  mk({ ...arm, id: A.id + "-elbow", node: "elbow" + A.id, seg: "elbow", lay: 0, act: "elbow", meshes: [my(ARM_CANON.elbowDrum)], crease: false, decals: [flat(39.06, turnedFace(33, 5, 25, 9)), face([0, -s * 39.06, 0], [0, -s, 0], [0, 0, 1], turnedFace(33, 5, 25, 9))] });
+  mk({ ...arm, id: A.id + "-fore", node: "fore" + A.id, seg: "fore", lay: 1, tex: 0.03, meshes: [my(ARM_CANON.fore)], crease: false, lines: foreLines.map((Ln) => mirLine(Ln, s)) });
+  mk({ ...arm, id: A.id + "-wrist", node: "fore" + A.id, seg: "fore", lay: 0, act: "wrist", meshes: [my(ARM_CANON.wrist)], crease: false });
+  mk({ ...arm, id: A.id + "-palm", node: "hand" + A.id, seg: "hand", lay: 1, bias: -120, meshes: [my(ARM_CANON.palm)], crease: false, c: [0, 0, -12] });
+  DIGITS.forEach((dg, i) => mk({ ...arm, id: A.id + "-digit" + i, node: "hand" + A.id, seg: "hand", lay: 1, bias: -120, meshes: [...dg.links, ...dg.pins, dg.pad].map(my), outline: "ol-s", c: [dg.base[0], dg.base[1] * s, dg.base[2]] }));
+}
+
+// ================================================================= THE POSES
+// 2-link IK for a leg in the pelvis's own plane: the hip at the origin, the ankle at (qx, qz). sg +1 bends the knee
+// forward (the rest), -1 backward (the robot can; a person cannot). Returns the hip pitch, the knee, and the shin's
+// own angle bs, from which the ankle keeps the foot flat on the floor.
+function ik2(qx, qz, sg) {
+  const d = Math.min(Math.hypot(qx, qz), LU + LL - 1e-6);
+  const a = Math.acos(clamp((LU * LU + d * d - LL * LL) / (2 * LU * d), -1, 1));
+  const bt = Math.atan2(-qx, -qz) - sg * a;
+  const kx = -LU * Math.sin(bt), kz = -LU * Math.cos(bt);
+  const bs = Math.atan2(-(qx - kx), -(qz - kz));
+  return { pitch: bt / DEG, knee: (bs - bt) / DEG, bs: bs / DEG };
+}
+const HIP_REST = 805, HIP_STRAIGHT = LU + LL + AK; // knees soft at rest; straight, the two knee solutions meet
+const ARM_REST = { sp: -7, sr: 7, el: -22, wr: 0, tw: 0 };
+const Z0 = [0, 0, 0];
+const PANEL = {
+  rest: { door: 0, hatch: 0, doorOff: Z0, backOff: Z0, bat: Z0, comp: Z0, headLift: 0, torsoLift: 0 },
+  lid: { door: 104, hatch: 80, doorOff: Z0, backOff: Z0, bat: Z0, comp: Z0, headLift: 0, torsoLift: 0 },
+  apart: { door: 0, hatch: 0, doorOff: [300, 250, -10], backOff: [-300, -250, 10], bat: [190, 0, -34], comp: [190, 0, 46], headLift: 210, torsoLift: 90 },
+};
+const LEG_DROP = { thigh: 50, knee: 55, shin: 110, ankle: 50, foot: 100 };
+const ARM_OUT = { base: 50, upper: 60, elbow: 50, fore: 100, hand: 80 };
+const EXPLODE_LIFT = LEG_DROP.thigh + LEG_DROP.shin + LEG_DROP.foot;
+const lerpObj = (a, b, t) => { const o = {}; for (const k of Object.keys(a)) o[k] = Array.isArray(a[k]) ? lerp3(a[k], b[k], t) : lerp(a[k], b[k], t); return o; };
+const lerpJ = (a, b, t) => ({ pitch: lerp(a.pitch, b.pitch, t), knee: lerp(a.knee, b.knee, t), ankle: lerp(a.ankle, b.ankle, t) });
+
+function nodes(Z) {
+  const N = {};
+  const world = cmp(TF(I3, [0, 0, FT]), TF(Rz(D.YAW + Z.camYaw)));
+  N.world = world;
+  N.floor = cmp(world, tr(-Z.scroll, 0, 0));
+  const pelvis = cmp(world, cmp(tr(Z.body.x, 0, Z.hip), TF(Ry(Z.pitch))));
+  N.pelvis = pelvis;
+  const torso = cmp(pelvis, cmp(tr(0, 0, WZ + Z.torsoLift), TF(Rz(Z.twist))));
+  N.torso = torso;
+  const off = (v) => cmp(torso, tr(v[0], v[1], v[2]));
+  N.door = cmp(off(Z.doorOff), about(DOOR_HINGE, Rz(Z.door)));
+  N.back = cmp(off(Z.backOff), about(BACK_HINGE, Ry(Z.hatch)));
+  N.bat = off(Z.bat);
+  N.comp = off(Z.comp);
+  N.head = cmp(torso, cmp(tr(0, 0, NZ + Z.headLift), TF(Rz(Z.neck))));
+  const e = Z.legE, ea = Z.armE;
+  for (const L of LEGS) {
+    const s = L.s, j = Z.legs[L.id];
+    const hipB = cmp(pelvis, cmp(tr(0, s * HY, 0), TF(Ry(j.pitch))));
+    N["hipB" + L.id] = hipB;
+    N["thigh" + L.id] = cmp(hipB, tr(0, 0, -LEG_DROP.thigh * e));
+    N["knee" + L.id] = cmp(N["thigh" + L.id], cmp(tr(0, 0, -LU - LEG_DROP.knee * e), TF(Ry(j.knee))));
+    N["shin" + L.id] = cmp(N["thigh" + L.id], cmp(tr(0, 0, -LU - LEG_DROP.shin * e), TF(Ry(j.knee))));
+    N["ankle" + L.id] = cmp(N["shin" + L.id], cmp(tr(0, 0, -LL - LEG_DROP.ankle * e), TF(Ry(j.ankle))));
+    N["foot" + L.id] = cmp(N["shin" + L.id], cmp(tr(0, 0, -LL - LEG_DROP.foot * e), TF(Ry(j.ankle))));
+  }
+  for (const A of ARMS) {
+    const s = A.s, j = Z.arms[A.id];
+    N["shBase" + A.id] = cmp(torso, tr(0, s * SY, ZS));
+    const B = cmp(torso, cmp(tr(0, s * (SY + ARM_OUT.base * ea), ZS), cmp(TF(Ry(j.sp)), cmp(TF(Rx(s * j.sr)), TF(Rz(-s * j.tw))))));
+    N["upper" + A.id] = cmp(B, tr(0, 0, -ARM_OUT.upper * ea));
+    N["elbow" + A.id] = cmp(N["upper" + A.id], cmp(tr(0, 0, -LA1 - ARM_OUT.elbow * ea), TF(Ry(j.el))));
+    N["fore" + A.id] = cmp(N["upper" + A.id], cmp(tr(0, 0, -LA1 - ARM_OUT.fore * ea), TF(Ry(j.el))));
+    N["hand" + A.id] = cmp(N["fore" + A.id], cmp(tr(0, 0, -LA2 - WRL - ARM_OUT.hand * ea), TF(Rz(j.wr))));
+  }
+  return N;
+}
+// a part's frame this instant: its node, plus its own pop while the robot is apart
+function tfOf(N, Z, p) {
+  const tf = N[p.node];
+  if (!p.pop) return tf;
+  const e = p.limb && p.limb.startsWith("arm") ? Z.armE : Z.legE;
+  return e > 0.001 ? cmp(tf, tr(p.pop[0] * e, p.pop[1] * e * (p.side || 1), p.pop[2] * e)) : tf;
+}
+// the legs from where the feet stand: each foot's target (x on the ground under the robot, a lift, which way the
+// knee bends, a tip of the foot), solved in the pelvis's plane, the ankle keeping the sole flat
+function solveLegs(Z) {
+  for (const L of LEGS) {
+    const f = Z.feet[L.id];
+    const q = mtv(Ry(Z.pitch), [f.x - Z.body.x, 0, AK + (f.lift || 0) - Z.hip]);
+    const r = ik2(q[0], q[2], f.sg);
+    Z.legs[L.id] = { pitch: r.pitch, knee: r.knee, ankle: -(Z.pitch + r.bs) + (f.tip || 0) };
+  }
+}
+// points spread over the robot (not the feet), to keep everything above the floor while it lies down and gets up
+const KEY_PTS = PARTS.filter((p) => !p.inside && p.seg !== "foot").map((p) => ({ p, v: p.meshes.flatMap((m) => m.v.filter((_, i) => i % Math.max(1, Math.floor(m.v.length / 40)) === 0)) }));
+function lowestOf(Z) {
+  const N = nodes(Z);
+  let lo = 1e9;
+  for (const { p, v } of KEY_PTS) { const tf = tfOf(N, Z, p); for (const q of v) { const z = ap(tf, q)[2]; if (z < lo) lo = z; } }
+  return lo;
+}
+function settle(Z) {
+  for (let i = 0; i < 3; i++) { const lo = lowestOf(Z); if (lo >= FT - 0.3) break; Z.hip += FT - lo + 0.2; solveLegs(Z); }
+}
+
+// ---------------------------------------------------------------- the steps
+// it moves first (walk, the waist, the head, the get-up), then opens, shows a leg, comes apart and goes back together,
+// ending exactly where it started
+const ORDER = ["walk", "turn", "head", "getup", "lid", "leg", "apart", "together"];
+const DUR = { walk: 4.2, turn: 3.6, head: 2.8, getup: 6.0, lid: 3.2, leg: 3.6, apart: 3.2, together: 3.2 };
+const STEPS = {
+  walk: { dur: DUR.walk, hint: `It strides off at a walking pace, every planted foot held still while the other swings, and on the third stride its whole upper body spins round on the waist without breaking step. Fully electric, built for factory work (${BRAND.maker}).` },
+  turn: { dur: DUR.turn, hint: `Its legs stand still while its upper body turns round on the waist: half way, a beat facing backward, then all the way. Joints that turn this far are part of the design (${BRAND.maker}).` },
+  head: { dur: DUR.head, hint: `The body stays put and the head turns a full circle on the shoulders. There is no neck to strain, just a joint.` },
+  getup: { dur: DUR.getup, hint: `In one move it lies down with its knees bent backward and its feet still planted, swings its arms over its back, and rises with its torso turning round to face you. No person gets up like this.` },
+  lid: { dur: DUR.lid, hint: `The chest opens like a door: the compute above, the battery below, the cable runs; the back plate lifts. The hip and knee actuators light up (layout as drawn).` },
+  leg: { dur: DUR.leg, hint: `One leg lifts and works its three joints in turn: the hip swings it, the knee folds it, the ankle tips the foot.` },
+  apart: { dur: DUR.apart, hint: `Head, chest door, back plate, compute and battery lifted off; each arm and each leg pulled apart along its own line, the actuators between the shells.` },
+  together: { dur: DUR.together, hint: `Back together: the pieces slide home, the plates close, and it stands where it started.` },
+};
+const fresh = () => ({ step: null, u: 0 });
+let S = fresh();
+const NONE = () => 0;
+function base() {
+  const Z = {
+    ...PANEL.rest, body: { x: 0 }, hip: HIP_REST, pitch: 0, scroll: 0, twist: 0, neck: 0, legE: 0, armE: 0, camYaw: CAMPATH.walk.yaw[0], dolly: CAMPATH.walk.dolly[0], pan: CAMPATH.walk.pan[0],
+    feet: { L: { x: STANCE_X, lift: 0, sg: 1 }, R: { x: STANCE_X, lift: 0, sg: 1 } }, legs: {}, arms: { L: { ...ARM_REST }, R: { ...ARM_REST } },
+    dim: 0, keep: () => true, dimFn: null, hl: NONE, tags: [], arc: null, cam: ["full", "full", 0], hot: [], joint: "–", lit: 0, moving: 0,
+  };
+  solveLegs(Z);
+  return Z;
+}
+const sine = (x) => (1 - Math.cos(Math.PI * clamp(x))) / 2;
+const bump = (u, a, b, w = 0.25) => ease(seg(u, a, a + (b - a) * w)) * (1 - ease(seg(u, b - (b - a) * w, b)));
+
+// ---- the camera's own path: every step orbits the robot a little (a yaw of the whole world, floor and all) and
+// dollies in or out, at a steady rate, each step ending where the next one starts, the last where the first starts,
+// so the frame never locks
+const CAMPATH = {
+  walk: { yaw: [-16, 2], dolly: [0.92, 1.05], pan: [-0.09, 0.07] },
+  turn: { yaw: [2, 22], dolly: [1.05, 0.95], pan: [0.07, -0.05] },
+  head: { yaw: [22, 0], dolly: [0.95, 1.07], pan: [-0.05, 0.06] },
+  getup: { yaw: [0, 48, -18], at: 0.36, dolly: [1.07, 0.93], pan: [0.06, -0.06] }, // swings round to a side view while it lies
+  lid: { yaw: [-18, 0], dolly: [0.93, 1.0], pan: [-0.06, 0.05] },
+  leg: { yaw: [0, 18], dolly: [1.0, 0.94], pan: [0.05, -0.05] },
+  apart: { yaw: [18, -22], dolly: [0.94, 0.99], pan: [-0.05, 0.03] },
+  together: { yaw: [-22, 10, -16], at: 0.45, dolly: [0.99, 0.92], pan: [0.03, -0.09] },
+};
+// and over the whole film a slow drift of its own (an orbit, a dolly, a sideways pan), periodic in the film's
+// length so the loop closes, and running through the short gaps between steps too
+const FILM = 0.1 + ORDER.reduce((s, id) => s + 0.3 + DUR[id], 0) + 0.3; // lead, a gap before each step, tail (as in tour() below)
+const drift = (t) => { const w = (TAU * t) / FILM; return { yaw: 17 * Math.sin(4 * w), dolly: 1 + 0.05 * Math.sin(5 * w + 0.7), pan: 0.045 * Math.sin(6 * w + 1.9), rise: 0.025 * Math.sin(5 * w + 2.6) }; };
+
+// ---- walk: six strides at a walking pace, the floor carried back under the feet so the robot stays in frame; on the
+// third stride its upper body whips a full turn round on the waist while the legs keep walking. Every swing is planned
+// on the floor first; the legs are solved to reach the feet, so a planted foot never moves.
+const GAIT = { T0: 0.06, SW: 0.42, PER: 0.52, LIFT: 72 };
+const GAIT_PLAN = [["L", 0, 480], ["R", 0, 960], ["L", 480, 1440], ["R", 960, 1920], ["L", 1440, 2400], ["R", 1920, 2400]].map(([id, a, b], i) => ({ id, a, b, t0: GAIT.T0 + i * GAIT.PER, t1: GAIT.T0 + i * GAIT.PER + GAIT.SW }));
+const GAIT_END = GAIT_PLAN[GAIT_PLAN.length - 1].t1;
+function gaitFoot(id, t) {
+  let X = 0, lift = 0;
+  for (const s of GAIT_PLAN) {
+    if (s.id !== id) continue;
+    if (t >= s.t1) { X = s.b; continue; }
+    if (t > s.t0) { const k = (t - s.t0) / (s.t1 - s.t0); X = lerp(s.a, s.b, smoother(clamp((k - 0.08) / 0.84))); lift = GAIT.LIFT * Math.sin(Math.PI * k); }
+    break;
+  }
+  return { X, lift };
+}
+const feetMid = (t) => (gaitFoot("L", t).X + gaitFoot("R", t).X) / 2;
+// the body rides the middle of the feet, smoothed over a quarter second either side (narrower near the ends, so it
+// starts and stops exactly over the feet)
+function bodyX(t) {
+  const w = Math.min(0.26, Math.max(0, t), Math.max(0, GAIT_END + 0.3 - t));
+  let s = 0;
+  for (let i = -4; i <= 4; i++) s += feetMid(t + (i / 4) * w);
+  return s / 9;
+}
+const WALK_SPIN = [1.15, 2.55];
+function sWalk(Z, u) {
+  const t = u * DUR.walk, xb = bodyX(t);
+  Z.scroll = xb;
+  Z.hip = HIP_REST - 48 * (ease(seg(t, 0.0, 0.3)) - ease(seg(t, GAIT_END - 0.1, GAIT_END + 0.5)));
+  const F = { L: gaitFoot("L", t), R: gaitFoot("R", t) };
+  for (const L of LEGS) Z.feet[L.id] = { x: F[L.id].X + STANCE_X - xb, lift: F[L.id].lift, sg: 1 };
+  solveLegs(Z);
+  const sw = clamp((F.R.X - F.L.X) / 480, -1, 1);
+  Z.arms.L = { ...ARM_REST, sp: ARM_REST.sp - 16 * sw, el: ARM_REST.el - 8 * Math.abs(sw) };
+  Z.arms.R = { ...ARM_REST, sp: ARM_REST.sp + 16 * sw, el: ARM_REST.el - 8 * Math.abs(sw) };
+  const spin = smoother(seg(t, ...WALK_SPIN));
+  Z.twist = -360 * spin;
+  Z.arc = { a: Z.twist, op: ease(seg(t, WALK_SPIN[0] - 0.15, WALK_SPIN[0])) * (1 - ease(seg(t, WALK_SPIN[1], WALK_SPIN[1] + 0.25))), node: "pelvis", z: WZ + 4, r: 250 };
+  Z.hl = (p) => (p.act === "waist" ? 0.85 * bump(t, WALK_SPIN[0] - 0.1, WALK_SPIN[1] + 0.15, 0.15) : 0);
+  if (u < 0.97) Z.tags.push({ id: "walk", op: ease(seg(u, 0.02, 0.08)) * (1 - ease(seg(u, 0.9, 0.97))) });
+  Z.hot = ["power", "work", "feet", "waist"];
+  return Z;
+}
+// ---- the waist: a brisk half turn, a short hold, the rest of the way; clockwise seen from above, so the sweep runs
+// round the side that faces us. The head goes round with the torso; the legs never move.
+const TURN_A = [0.04, 0.3], TURN_B = [0.52, 0.9];
+function sTurn(Z, u) {
+  const tw = -180 * smoother(seg(u, ...TURN_A)) - 180 * smoother(seg(u, ...TURN_B));
+  Z.twist = tw;
+  const sw = 9 * (Math.sin(Math.PI * seg(u, ...TURN_A)) + Math.sin(Math.PI * seg(u, ...TURN_B)));
+  for (const A of ARMS) Z.arms[A.id] = { ...ARM_REST, sr: ARM_REST.sr + sw * 0.7, sp: ARM_REST.sp + sw * 0.3 * A.s };
+  Z.arc = { a: tw, op: ease(seg(u, 0.01, 0.05)) * (1 - ease(seg(u, 0.91, 0.98))), node: "pelvis", z: WZ + 4, r: 250 };
+  Z.hl = (p) => (p.act === "waist" ? 0.85 * bump(u, 0.02, 0.96, 0.06) : 0);
+  if (u > 0.26 && u < 0.58) Z.tags.push({ id: "half", op: ease(seg(u, 0.26, 0.31)) * (1 - ease(seg(u, 0.53, 0.58))) });
+  Z.cam = ["full", "knees", sine(seg(u, 0, 0.32))];
+  Z.hot = ["range", "waist"];
+  return Z;
+}
+// ---- the head: one brisk full turn on the shoulders, the body still
+const HEAD_A = [0.04, 0.84];
+function sHead(Z, u) {
+  const nk = -360 * smoother(seg(u, ...HEAD_A));
+  Z.neck = nk;
+  Z.arc = { a: nk, op: ease(seg(u, 0.01, 0.06)) * (1 - ease(seg(u, 0.88, 0.97))), node: "torso", z: NZ + 6, r: 200 };
+  Z.hl = (p) => (p.act === "neck" ? 0.85 * bump(u, 0.02, 0.94, 0.08) : 0);
+  if (u > 0.2 && u < 0.7) Z.tags.push({ id: "headfull", op: ease(seg(u, 0.2, 0.26)) * (1 - ease(seg(u, 0.64, 0.7))) });
+  Z.cam = ["knees", "bust", sine(seg(u, 0, 0.5))];
+  Z.hot = ["range", "head"];
+  return Z;
+}
+// ---- the get-up, one continuous move: the legs straighten, it lies down face first with its feet still planted and
+// its knees folding backward, its arms reaching ahead; the arms swing on round over its back to its sides while it
+// rises, its torso turning round as it comes up; it finishes the turn standing, and its knees fold forward again
+const X_PRONE = 470, H_PRONE = 60;
+function sGetup(Z, u) {
+  const kA = smoother(seg(u, 0.0, 0.06));
+  const kB = smoother(seg(u, 0.05, 0.32));
+  const kS = smoother(seg(u, 0.3, 0.44));
+  const kR = smoother(seg(u, 0.34, 0.66));
+  const kT1 = smoother(seg(u, 0.42, 0.64)), kT2 = smoother(seg(u, 0.66, 0.84));
+  const kF = smoother(seg(u, 0.8, 0.94));
+  const lie = kB * (1 - kR);
+  const back = u > 0.06 && u < 0.8;
+  Z.pitch = 90 * lie;
+  Z.body.x = X_PRONE * Math.sin((lie * Math.PI) / 2);
+  Z.hip = u < 0.06 ? lerp(HIP_REST, HIP_STRAIGHT, kA) : u < 0.8 ? H_PRONE + (HIP_STRAIGHT - H_PRONE) * Math.cos((lie * Math.PI) / 2) : lerp(HIP_STRAIGHT, HIP_REST, kF);
+  for (const L of LEGS) Z.feet[L.id] = { x: STANCE_X, lift: 0, sg: back ? -1 : 1 };
+  Z.twist = -180 * kT1 - 180 * kT2;
+  // the arms: forward and up over the head as it lies down, then on round over the back to the sides (a full turn of
+  // the shoulder, which lands back on the rest angle)
+  const sp = kS >= 1 ? ARM_REST.sp : lerp(ARM_REST.sp, -166, kB) + (ARM_REST.sp - 360 + 166) * kS;
+  const el = lerp(lerp(ARM_REST.el, -4, kB), ARM_REST.el, kS);
+  for (const A of ARMS) Z.arms[A.id] = { ...ARM_REST, sp, el, sr: lerp(lerp(ARM_REST.sr, 3, kB), ARM_REST.sr, kS) };
+  solveLegs(Z);
+  settle(Z);
+  Z.hl = (p) => (p.act === "knee" ? 0.75 * bump(u, 0.07, 0.8, 0.12) : p.act === "waist" ? 0.8 * (bump(u, 0.42, 0.64, 0.2) + bump(u, 0.66, 0.84, 0.25)) : p.act === "shoulder" ? 0.7 * bump(u, 0.3, 0.44, 0.25) : 0);
+  if (u > 0.16 && u < 0.4) Z.tags.push({ id: "knees", op: ease(seg(u, 0.16, 0.21)) * (1 - ease(seg(u, 0.35, 0.4))) });
+  if (u > 0.6 && u < 0.78) Z.tags.push({ id: "facing", op: ease(seg(u, 0.6, 0.64)) * (1 - ease(seg(u, 0.74, 0.78))) });
+  // the framing follows the body down and back up: the bust, the whole robot as it folds, the robot lying, the whole robot
+  Z.cam = u < 0.17 ? ["bust", "full", sine(seg(u, 0, 0.17))] : u < 0.36 ? ["full", "prone", sine(seg(u, 0.17, 0.35))] : u < 0.86 ? ["prone", "full", sine(seg(u, 0.36, 0.6))] : ["full", "knees", sine(seg(u, 0.86, 1))];
+  Z.hot = ["range", "feet"];
+  return Z;
+}
+// ---- the plates: the chest door swings open, the back plate lifts; the hip and knee actuators light one by one
+const LIT = ["L-hip", "R-hip", "L-knee", "R-knee"];
+const litT = (i) => 0.36 + 0.07 * i;
+function lidGlow(p, u) {
+  const i = LIT.indexOf(p.id);
+  if (i < 0) return 0;
+  return ease(seg(u, litT(i), litT(i) + 0.05)) * (1 - 0.4 * ease(seg(u, litT(i) + 0.07, litT(i) + 0.2)));
+}
+const showsOpen = (p) => p.act === "hip" || p.act === "knee" || !!p.inside;
+function sLid(Z, u) {
+  Z.door = 104 * smoother(seg(u, 0.03, 0.28));
+  Z.hatch = 80 * smoother(seg(u, 0.08, 0.33));
+  Z.dim = 0.3 * ease(seg(u, 0.25, 0.35));
+  Z.keep = showsOpen;
+  Z.hl = (p) => lidGlow(p, u);
+  Z.lit = LIT.filter((_, i) => u > litT(i) + 0.02).length;
+  if (u > 0.7) Z.tags.push({ id: "acts", op: ease(seg(u, 0.7, 0.8)) });
+  Z.cam = ["knees", "open", sine(seg(u, 0, 0.35))];
+  Z.hot = ["power"];
+  return Z;
+}
+// ---- one leg: the near foot lifts; the hip swings it, the knee folds it, the ankle tips the foot, each lit in turn
+const LEG_ID = "R";
+const LEG_PH = { hip: [0.13, 0.22, 0.25, 0.34, -36], knee: [0.36, 0.45, 0.48, 0.57, 78], ankle: [0.59, 0.66, 0.69, 0.76, 30] };
+const legDelta = (u, k) => { const [a, b, c, d, amp] = LEG_PH[k]; return amp * (smoother(seg(u, a, b)) - smoother(seg(u, c, d))); };
+function sLeg(Z, u) {
+  Object.assign(Z, PANEL.lid);
+  const up = ease(seg(u, 0.02, 0.12)) - ease(seg(u, 0.84, 0.98));
+  Z.feet[LEG_ID] = { x: STANCE_X + 50 * up, lift: 150 * up, sg: 1 };
+  solveLegs(Z);
+  const d = { hip: legDelta(u, "hip"), knee: legDelta(u, "knee"), ankle: legDelta(u, "ankle") };
+  const j = Z.legs[LEG_ID];
+  Z.legs[LEG_ID] = { pitch: j.pitch + d.hip, knee: j.knee + d.knee, ankle: j.ankle + d.ankle };
+  const which = Object.keys(LEG_PH).find((k) => u >= LEG_PH[k][0] - 0.01 && u <= LEG_PH[k][3] + 0.01);
+  const glow = which ? bump(u, LEG_PH[which][0] - 0.01, LEG_PH[which][3] + 0.01, 0.2) : 0;
+  // the plates' look (actuators bright, the rest dimmed) hands over to this leg's, and back at the end
+  const k = ease(seg(u, 0, 0.1)) * (1 - ease(seg(u, 0.88, 1)));
+  Z.dimFn = (p) => lerp(showsOpen(p) ? 0 : 0.3, p.limb === "leg" + LEG_ID ? 0 : 0.25, k);
+  Z.hl = (p) => lidGlow(p, 1) * (1 - k) + (which && p.limb === "leg" + LEG_ID && p.act === which ? glow : 0);
+  Z.tags.push({ id: "acts", op: 1 - k });
+  Z.joint = which ? `${which} ${d[which] >= 0 ? "+" : "−"}${Math.abs(Math.round(d[which]))}°` : "–";
+  Z.moving = which ? ["hip", "knee", "ankle"].indexOf(which) + 1 : 0;
+  Z.cam = ["open", "legs", sine(seg(u, 0, 0.3))];
+  Z.hot = ["feet"];
+  return Z;
+}
+// ---- the clean exploded view: legs straighten and drop apart along their own line, arms swing out level and come
+// apart along theirs, the plates and the boxes lift off the torso
+function sApart(Z, u) {
+  const kStand = smoother(seg(u, 0.0, 0.28));
+  const kArm = smoother(seg(u, 0.04, 0.38));
+  Z.hip = lerp(HIP_REST, HIP_STRAIGHT, kStand);
+  solveLegs(Z);
+  const e = smoother(seg(u, 0.3, 0.84));
+  Z.legE = e;
+  Z.hip += EXPLODE_LIFT * e;
+  for (const A of ARMS) Z.arms[A.id] = { sp: lerp(ARM_REST.sp, 0, kArm), sr: lerp(ARM_REST.sr, 90, kArm), el: lerp(ARM_REST.el, 0, kArm), wr: 0, tw: 90 * smoother(seg(u, 0.18, 0.48)) };
+  Z.armE = smoother(seg(u, 0.34, 0.88));
+  const k1 = smoother(seg(u, 0.08, 0.7)), k2 = smoother(seg(u, 0.2, 0.84));
+  const pa = lerpObj(PANEL.lid, PANEL.apart, k1), pb = lerpObj(PANEL.lid, PANEL.apart, k2);
+  Object.assign(Z, pa, { bat: pb.bat, comp: pb.comp, headLift: pb.headLift, torsoLift: pb.torsoLift });
+  const kd = 1 - ease(seg(u, 0, 0.14));
+  Z.dimFn = (p) => (showsOpen(p) ? 0 : 0.3 * kd);
+  Z.hl = (p) => lidGlow(p, 1) * kd;
+  if (u < 0.08) Z.tags.push({ id: "acts", op: 1 - ease(seg(u, 0, 0.08)) });
+  if (u > 0.8) Z.tags.push(...XTAGS.map((id) => ({ id, op: ease(seg(u, 0.8, 0.9)) })));
+  Z.cam = ["legs", "apart", sine(seg(u, 0.0, 0.7))];
+  Z.hot = ["parts"];
+  return Z;
+}
+function sTogether(Z, u) {
+  const k = 1 - smoother(seg(u, 0.0, 0.9));
+  Object.assign(Z, sApart(base(), k), { tags: [], dimFn: null, dim: 0, hl: NONE });
+  Object.assign(Z, lerpObj(PANEL.rest, PANEL.apart, k));
+  if (u < 0.1) Z.tags.push(...XTAGS.map((id) => ({ id, op: 1 - ease(seg(u, 0, 0.1)) })));
+  Z.cam = ["apart", "full", sine(seg(u, 0.05, 1))];
+  Z.hot = ["parts"];
+  return Z;
+}
+const STEP_FN = { walk: sWalk, turn: sTurn, head: sHead, getup: sGetup, lid: sLid, leg: sLeg, apart: sApart, together: sTogether };
+function sceneAt(st, u) {
+  const Z = base();
+  if (!st) return Z;
+  STEP_FN[st](Z, u);
+  const c = CAMPATH[st];
+  Z.camYaw = c.yaw.length === 3 ? (u < c.at ? lerp(c.yaw[0], c.yaw[1], u / c.at) : lerp(c.yaw[1], c.yaw[2], (u - c.at) / (1 - c.at))) : lerp(c.yaw[0], c.yaw[1], u);
+  Z.dolly = lerp(c.dolly[0], c.dolly[1], u);
+  Z.pan = lerp(c.pan[0], c.pan[1], u);
+  return Z;
+}
+const scene = () => sceneAt(S.step, S.u);
+
+// ---------------------------------------------------------------- one picture of a state
+const robotG = part("robot");
+const underG = part("under");
+const gridG = part("grid");
+const notesG = part("notes");
+const shadowEl = part("shadow-live");
+const floatEl = part("shadow-float");
+const artG = svg.querySelector("g.art");
+const DRAWN = {};
+const LIMBS = ["legL", "legR", "armL", "armR"];
+const LIMB_PARTS = Object.fromEntries(LIMBS.map((l) => [l, PARTS.filter((p) => p.limb === l)]));
+const BODY_PARTS = PARTS.filter((p) => !p.limb && !p.front);
+const FRONT_PARTS = PARTS.filter((p) => p.front);
+const LOOSE = ["door", "back", "bat", "comp"];
+
+function build(Z) {
+  const N = nodes(Z);
+  const items = [], pts = [], shadows = [], floats = [];
+  const dimOf = (p) => (Z.dimFn ? Z.dimFn(p) : Z.dim > 0.001 && !Z.keep(p) ? Z.dim : 0);
+  const TFp = (p) => tfOf(N, Z, p);
+  const draws = (p) => { const r = partSvg(p, TFp(p), dimOf(p), Z.hl(p)); pts.push(...r.pts); return r.s; };
+  const keyOf = (p) => depth(ap(TFp(p), p.c)) + (p.bias || 0);
+  const wpts = (list) => list.flatMap((p) => { const tf = TFp(p); return p.meshes.flatMap((m) => m.v.filter((_, i) => i % 3 === 0).map((v) => ap(tf, v))); });
+  POCKET.on = Z.door > 0.5 || Math.abs(Z.doorOff[0]) > 1;
+  const open = POCKET.on;
+  const apart = Z.headLift > 3;
+
+  // ---- the body: the pelvis, the waist, the torso shell and what opens on it, the head, by depth
+  const bodyList = BODY_PARTS.filter((p) => open || !p.inside);
+  const body = bodyList.map((p) => ({ k: keyOf(p), s: () => draws(p) }));
+  if (open) {
+    const torsoDim = Z.dimFn ? Z.dimFn({ inside: true }) : 0;
+    const ck = 1 - smoother(clamp(Math.abs(Z.comp[0]) / 40));
+    if (ck > 0.001) for (const r of RUN_PTS) {
+      const w = r.pts.map((p) => ap(N.torso, p));
+      const k = r.front ? depth(ap(N.torso, [70, 0, 176])) : depth(ap(N.torso, [40, 0, r.pts[Math.floor(r.pts.length / 2)][2]]));
+      body.push({ k, s: () => `<g style="opacity:${r3(ck)}">${tubeSvg(w, r.r, r.col, torsoDim)}</g>` });
+    }
+  }
+  body.sort((a, b) => a.k - b.k);
+  const bodyKey = depth(N.torso.t);
+  items.push({ k: bodyKey, s: body.map((x) => x.s()).join("") });
+  // the badge stands proud of the hips: painted after the near leg while it faces us, hidden in the hips otherwise
+  for (const p of FRONT_PARTS) if (dot3(mv(TFp(p).M, [1, 0, 0]), VIEW) > 0.05) items.push({ k: bodyKey + 3e4, s: draws(p) });
+  // shadows: each part its own hull, so the gaps between the legs stay open; what floats off casts a fainter one
+  for (const p of bodyList) (LOOSE.includes(p.node) && (open || apart) && p.node !== "back" ? floats : shadows).push(wpts([p]));
+
+  // ---- the limbs: each on the side of the body it hangs from; inside a limb the actuators first (they show only in
+  // the gaps), then the shells by depth; once an arm is swung out level, everything by depth
+  for (const lb of LIMBS) {
+    const list = LIMB_PARTS[lb];
+    const isArm = lb.startsWith("arm");
+    const id = lb.slice(3);
+    const rootN = isArm ? N["shBase" + id] : N["hipB" + id];
+    const centre = isArm ? N.torso : N.pelvis;
+    const side = depth(rootN.t) > depth(centre.t) ? 1 : -1;
+    const roll = isArm ? Math.abs(Z.arms[id].sr) : 0;
+    const W = 2600 * (1 - clamp(roll / 90));
+    const keyed = list.map((p) => ({ p, k: keyOf(p) + p.lay * W }));
+    keyed.sort((a, b) => a.k - b.k);
+    const reach = isArm ? SY + 60 : HY;
+    items.push({ k: bodyKey + side * (1e4 + reach), s: keyed.map((x) => draws(x.p)).join("") });
+    for (const p of list) (Z.legE > 0.05 || Z.armE > 0.05 ? floats : shadows).push(wpts([p]));
+  }
+  items.sort((a, b) => a.k - b.k);
+  return { html: items.map((x) => x.s).join(""), pts, shadows, floats, N };
+}
+
+// ---------------------------------------------------------------- the floor tiles, carried back under the walk
+function gridSvg(Z, N) {
+  const half = D.FLOOR_HALF - 40, step = 400, S0 = Z.scroll;
+  const Q = (x, y) => P2(pr(ap(N.world, [x, y, 0.02])));
+  let d = "";
+  for (let k = Math.ceil((-half + S0) / step); k <= Math.floor((half + S0) / step); k++) { const x = k * step - S0; d += `M${Q(x, -half)}L${Q(x, half)}`; }
+  for (let y = -1200; y <= 1200; y += step) d += `M${Q(-half, y)}L${Q(half, y)}`;
+  return `<path d="${d}"/>`;
+}
+
+// ---------------------------------------------------------------- the arc of a turn
+// a dashed track round the joint, level with it, and an arc from where the part faced to where it faces now, with an
+// arrowhead; the track's far half goes under the robot, the sweep is drawn over it (its far half faint)
+function arcSvg(N, Z) {
+  if (!Z.arc || Z.arc.op < 0.01) return { under: "", over: "" };
+  const W = N[Z.arc.node], zc = Z.arc.z, R = Z.arc.r;
+  const c = ap(W, [0, 0, zc]), dc = depth(c);
+  const at3 = (a, r = R) => ap(W, [r * Math.cos(a * DEG), r * Math.sin(a * DEG), zc]);
+  const runs = (a0, a1, n) => {
+    const out = { far: [], near: [] };
+    let cur = null, curFar = null;
+    for (let i = 0; i <= n; i++) {
+      const a = a0 + ((a1 - a0) * i) / n, p = at3(a), far = depth(p) < dc;
+      if (cur && far !== curFar) { cur.push(pr(p)); (curFar ? out.far : out.near).push(cur); cur = null; }
+      if (!cur) { cur = []; curFar = far; }
+      cur.push(pr(p));
+    }
+    if (cur && cur.length > 1) (curFar ? out.far : out.near).push(cur);
+    return out;
+  };
+  const track = runs(0, 360, 96);
+  let under = "", over = "";
+  for (const r of track.far) under += `<path class="arc-track" d="${dOpen(r)}"/>`;
+  for (const r of track.near) over += `<path class="arc-track" d="${dOpen(r)}"/>`;
+  const a1 = Z.arc.a;
+  if (Math.abs(a1) > 1) {
+    const sg = Math.sign(a1);
+    const sweep = runs(0, a1, Math.max(4, Math.round(Math.abs(a1) / 4)));
+    for (const r of sweep.far) over += `<path class="arc-far" d="${dOpen(r)}"/>`;
+    for (const r of sweep.near) over += `<path class="arc-glow" d="${dOpen(r)}" filter="url(#at-glow)" style="opacity:.55"/><path class="arc" d="${dOpen(r)}"/>`;
+    const tip = at3(a1 + 7 * sg), tng = [-Math.sin(a1 * DEG) * sg, Math.cos(a1 * DEG) * sg, 0], rad = [Math.cos(a1 * DEG), Math.sin(a1 * DEG), 0];
+    const toW = (v) => mv(W.M, v);
+    const bk = sub3(tip, mul3(toW(tng), 60));
+    over += `<path class="arc-head" d="${dPath([pr(tip), pr(add3(bk, mul3(toW(rad), 30))), pr(add3(bk, mul3(toW(rad), -30)))])}"/>`;
+  }
+  const t0 = [pr(at3(0, R - 24)), pr(at3(0, R + 24))];
+  (depth(at3(0)) < dc ? (x) => (under += x) : (x) => (over += x))(`<path class="tick" d="${dOpen(t0)}"/>`);
+  const wrap = (x) => (Z.arc.op < 0.999 ? `<g style="opacity:${r3(Z.arc.op)}">${x}</g>` : x);
+  return { under: wrap(under), over: wrap(over) };
+}
+
+// ---------------------------------------------------------------- the labels
+const XTAGS = ["xhead", "xdoor", "xcomp", "xbat", "xback", "xarm", "xhip", "xknee", "xleg"];
+const TAG = {
+  walk: () => ({ text: "fully electric · built for factories", sub: BRAND.maker, stage: [16, 16] }),
+  half: (N, Z) => ({ text: `waist · turned ${Math.round(Math.abs(Z.twist))}° · legs still`, sub: `joint range far past a person's · ${BRAND.maker}`, stage: [16, 16] }),
+  headfull: () => ({ text: "head · a full turn · body still", sub: "a joint, not a neck", stage: [16, 16] }),
+  knees: () => ({ text: "knees bent backward · feet still planted", sub: "a range no person has", stage: [16, 16] }),
+  facing: () => ({ text: "stands up facing away", sub: "then turns its torso round", stage: [16, 16] }),
+  acts: () => ({ text: "hip + knee actuators", sub: "electric · layout as drawn", stage: [16, 16] }),
+  xhead: (N) => ({ p: ap(N.head, [0, 0, HC + 98]), text: "head · ring light", at: [16, 40] }),
+  xdoor: (N) => ({ p: ap(N.door, [130, 150, 250]), text: "chest door", at: [16, 132] }),
+  xcomp: (N) => ({ p: ap(N.comp, [CMP.c[0] + CMP.h[0] + 0.1, -20, CMP.c[2] + 10]), text: "compute", at: [16, 186] }),
+  xbat: (N) => ({ p: ap(N.bat, [BAT.c[0] + BAT.h[0] + 0.1, -30, BAT.c[2] + 6]), text: "battery", at: [16, 240] }),
+  xback: (N) => ({ p: ap(N.back, [BACK_HINGE[0] - 4, 0, BACK_HINGE[2] - 30]), text: "back plate", at: [686, 70], anchor: "end" }),
+  xarm: (N) => ({ p: ap(N.foreR, [0, 0, -LA2 / 2]), text: "arm · shells, actuators, gripper", at: [686, 228], anchor: "end" }),
+  xhip: (N, Z) => ({ p: ap(N.hipBR, [0, -(40 + 70 * Z.legE), 30]), text: "hip actuator", at: [686, 300], anchor: "end" }),
+  xknee: (N) => ({ p: ap(N.kneeR, [0, -47, 0]), text: "knee actuator", at: [686, 360], anchor: "end" }),
+  xleg: (N) => ({ p: ap(N.shinR, [0, -40, -LL / 2]), text: "leg · thigh, shin, foot", at: [686, 440], anchor: "end" }),
+};
+function tagSvg(t, cam) {
+  const s = cam.s;
+  const cw = 6.62, cw2 = 5.42, pad = 7;
+  const wpx = Math.max(t.text.length * cw, (t.sub || "").length * cw2) + 2 * pad, hpx = t.sub ? 32 : 20;
+  let bx, by, lead = "";
+  if (t.stage) {
+    bx = cam.F[0] + (t.stage[0] - D.W / 2) / s;
+    by = cam.F[1] + (t.stage[1] - D.H / 2) / s;
+  } else {
+    const p = pr(t.p);
+    const ax = t.anchor === "end" ? wpx : t.anchor === "middle" ? wpx / 2 : 0;
+    bx = cam.F[0] + (t.at[0] - ax - D.W / 2) / s;
+    by = cam.F[1] + (t.at[1] - D.H / 2) / s;
+    const qx = clamp(p[0], bx, bx + wpx / s), qy = clamp(p[1], by, by + hpx / s);
+    lead = `<path class="lead" d="M${r2(p[0])} ${r2(p[1])}L${r2(qx)} ${r2(qy)}"/><circle class="lead-dot" cx="${r2(p[0])}" cy="${r2(p[1])}" r="${r2(2.4 / s)}"/>`;
+  }
+  const bx2 = `<rect class="tag" x="${r2(bx)}" y="${r2(by)}" width="${r2(wpx / s)}" height="${r2(hpx / s)}" rx="${r2(4 / s)}"/>`;
+  const t1 = `<text class="tag-t" x="${r2(bx + pad / s)}" y="${r2(by + 14 / s)}" style="font-size:${r2(11 / s)}px">${esc(t.text)}</text>`;
+  const t2 = t.sub ? `<text class="tag-s" x="${r2(bx + pad / s)}" y="${r2(by + 26.5 / s)}" style="font-size:${r2(9 / s)}px">${esc(t.sub)}</text>` : "";
+  return `<g style="opacity:${r3(t.op)}">${lead}${bx2}${t1}${t2}</g>`;
+}
+
+// ---------------------------------------------------------------- the camera
+// Named aims, each the box of a few still frames of a step measured once; the camera blends between two of them and
+// always keeps the whole robot on the stage.
+const PAD = 14;
+const boxOf = (pts) => { let x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9; for (const p of pts) { if (p[0] < x0) x0 = p[0]; if (p[0] > x1) x1 = p[0]; if (p[1] < y0) y0 = p[1]; if (p[1] > y1) y1 = p[1]; } return [x0, y0, x1, y1]; };
+const unionBox = (...bs) => [Math.min(...bs.map((b) => b[0])), Math.min(...bs.map((b) => b[1])), Math.max(...bs.map((b) => b[2])), Math.max(...bs.map((b) => b[3]))];
+const fitOf = (b, fill = 1) => Math.min(((D.W - 2 * PAD) * fill) / (b[2] - b[0]), ((D.H - 2 * PAD) * fill) / (b[3] - b[1]));
+const ringPts = (node, z, r) => () => { const N = nodes(base()); return Array.from({ length: 48 }, (_, i) => pr(ap(N[node], [(r + 30) * Math.cos((i / 48) * TAU), (r + 30) * Math.sin((i / 48) * TAU), z]))); };
+// the robot's points above a height (mid-shin, for the upper-body framings) or all of them, on the screen
+function scenePts(Z, cut, cap) {
+  const N = nodes(Z), out = [];
+  for (const p of PARTS) {
+    if (p.inside && !(Z.door > 0.5)) continue;
+    const tf = tfOf(N, Z, p);
+    for (const m of p.meshes) for (let i = 0; i < m.v.length; i += 3) { const w = ap(tf, m.v[i]); if ((cut == null || w[2] > FT + cut) && (cap == null || w[2] < FT + cap)) out.push(pr(w)); }
+  }
+  return out;
+}
+// the framings, each from a few frames of its step: the whole robot, from the knees up for the waist turn, from the
+// waist up for the head, from mid-thigh up for the open plates, the hips and legs for the one-leg step
+const AIM_SPEC = {
+  full: { frames: [[null, 0]], fill: 0.99 },
+  knees: { frames: [[null, 0]], cut: 470, fill: 0.92 },
+  bust: { frames: [[null, 0]], cut: 900, fill: 0.88 },
+  prone: { frames: [["getup", 0.22], ["getup", 0.33], ["getup", 0.4]], fill: 0.97 },
+  open: { frames: [["lid", 1]], cut: 400, fill: 0.92 },
+  legs: { frames: [["leg", 0.25], ["leg", 0.5], ["leg", 0.7]], cap: 1050, fill: 0.95 },
+  apart: { frames: [["apart", 1]], fill: 0.97 },
+};
+const AIMS = {};
+function aimOf(name) {
+  if (AIMS[name]) return AIMS[name];
+  const o = AIM_SPEC[name];
+  const b = unionBox(...o.frames.map(([st, u]) => boxOf(scenePts(sceneAt(st, u), o.cut, o.cap))));
+  AIMS[name] = { s: fitOf(b, o.fill), F: [(b[0] + b[2]) / 2, (b[1] + b[3]) / 2], box: b };
+  return AIMS[name];
+}
+// the framing blends between two aims and dollies by the step's own factor; it may crop (the upper-body framings
+// cut at mid-shin), so it never clamps to the whole robot
+function camFor(Z, dr) {
+  const [n0, n1, kk] = Z.cam;
+  const a0 = aimOf(n0), a1 = aimOf(n1);
+  const s = a0.s * (a1.s / a0.s) ** kk * Z.dolly * dr.dolly;
+  const F = [lerp(a0.F[0], a1.F[0], kk) - ((Z.pan + dr.pan) * D.W) / s, lerp(a0.F[1], a1.F[1], kk) - (dr.rise * D.H) / s];
+  return { s, F };
+}
+
+// ---------------------------------------------------------------- the floor plate, laid square to the robot and
+// turned with the orbit (the same plate build.mjs draws, redrawn when the yaw moves), and the clip the grid and the
+// shadows live in
+const floorG = part("floor"), clipP = svg.querySelector("#floorclip path");
+let floorYaw = null;
+function floorRingAt(yaw, d = 0) {
+  const h = D.FLOOR_HALF - d, r = Math.max(2, 40 - d), c = Math.cos(yaw * DEG), sn = Math.sin(yaw * DEG), out = [];
+  for (const [cx, cy, a0] of [[h - r, -(h - r), -90], [h - r, h - r, 0], [-(h - r), h - r, 90], [-(h - r), -(h - r), 180]])
+    for (let i = 0; i <= 8; i++) { const a = (a0 + (90 * i) / 8) * DEG, x = cx + r * Math.cos(a), y = cy + r * Math.sin(a); out.push([x * c - y * sn, x * sn + y * c]); }
+  return out;
+}
+function drawFloor(yaw) {
+  if (floorYaw !== null && Math.abs(yaw - floorYaw) < 0.004) return;
+  floorYaw = yaw;
+  const R = floorRingAt(yaw);
+  floorG.innerHTML = `<g class="c c-alt">${solidSvg(extrude(R, 0, FT, P, { bevel: 1.2 }), { crease: "faint", inner: lineSvg(ringSeam(R, 2.4, P), { tone: "faint" }) })}</g>` + lineSvg(onTop(floorRingAt(yaw, 30), FT, P, true), { tone: "faint", dotted: true });
+  clipP.setAttribute("d", pathOf(R.map(([x, y]) => at([x, y, FT])), true));
+}
+
+// ---------------------------------------------------------------- the frame
+// which feet stand on the floor: the sole within 3 mm of it and lying flat
+function feetDown(N) {
+  const ids = [];
+  for (const L of LEGS) {
+    const tf = N["foot" + L.id];
+    const c = ap(tf, [48, 0, -AK]);
+    if (c[2] - FT < 3 && mv(tf.M, [0, 0, 1])[2] > 0.995) ids.push(L.id);
+  }
+  return ids;
+}
+const deg360 = (a) => ((Math.round(a) % 360) + 360) % 360;
+function draw(time = 0) {
+  const Z = scene();
+  const dr = drift(time);
+  Z.camYaw += dr.yaw;
+  const B = build(Z);
+  robotG.innerHTML = B.html;
+  const toFloor = (p) => pr([p[0] + D.SHADOW[0] * (p[2] - FT), p[1] + D.SHADOW[1] * (p[2] - FT), FT]);
+  shadowEl.setAttribute("d", B.shadows.filter((s) => s.length > 2).map((s) => dPath(hull(s.map(toFloor)))).join(""));
+  floatEl.setAttribute("d", B.floats.filter((s) => s.length > 2).map((s) => dPath(hull(s.map(toFloor)))).join(""));
+  const cam = camFor(Z, dr);
+  drawFloor(D.YAW + Z.camYaw);
+  gridG.innerHTML = gridSvg(Z, B.N);
+  const arc = arcSvg(B.N, Z);
+  underG.innerHTML = arc.under;
+  notesG.innerHTML = arc.over + Z.tags.map((t) => ({ ...TAG[t.id](B.N, Z), op: t.op })).map((t) => tagSvg(t, cam)).join("");
+  artG.setAttribute("transform", `translate(${D.W / 2} ${D.H / 2}) scale(${cam.s.toFixed(4)}) translate(${(-cam.F[0]).toFixed(3)} ${(-cam.F[1]).toFixed(3)})`);
+  if (DRAWN.Z) DRAWN.prev = { Z: DRAWN.Z, step: DRAWN.step, u: DRAWN.u };
+  DRAWN.Z = Z;
+  DRAWN.step = S.step;
+  DRAWN.u = S.u;
+  DRAWN.B = B;
+  DRAWN.cam = cam;
+  const down = feetDown(B.N);
+  setText(chip("waist"), `${deg360(-Z.twist)}°`);
+  setText(chip("head"), `${deg360(-Z.neck)}°`);
+  setText(chip("feet"), Z.legE > 0.02 ? "–" : down.length === 2 ? "2" : down.length === 1 ? `1 · ${down[0]}` : "0");
+  setText(chip("parts"), Z.legE > 0.5 ? `${PARTS.length} parts` : Z.door > 60 ? "plates open" : "1 个机器人");
+  setText(chip("joint"), Z.joint);
+  ["power", "work", "range", "height", "waist", "head", "feet", "parts", "joint"].forEach((n) => chipHot(n, Z.hot.includes(n) || (n === "joint" && Z.moving > 0)));
+  return Z;
+}
+
+// how fast the joints turn this instant, in degrees a second, from the pose a frame earlier in the same step
+const wrapD = (a) => { a = ((a % 360) + 540) % 360 - 180; return a; };
+function jointSpeed() {
+  if (!S.step) return 0;
+  const du = 1 / 120 / DUR[S.step];
+  const Z = DRAWN.Z || scene();
+  const prev = DRAWN.prev;
+  const Zp = prev && prev.step === S.step && Math.abs(S.u - du - prev.u) < 1e-6 ? prev.Z : sceneAt(S.step, Math.max(0, S.u - du));
+  let jv = 0;
+  for (const L of LEGS) for (const a of ["pitch", "knee", "ankle"]) jv = Math.max(jv, Math.abs(wrapD(Z.legs[L.id][a] - Zp.legs[L.id][a])) * 120);
+  for (const A of ARMS) for (const a of ["sp", "sr", "el", "tw"]) jv = Math.max(jv, Math.abs(wrapD(Z.arms[A.id][a] - Zp.arms[A.id][a])) * 120);
+  return Math.round(jv);
+}
+const UPDATE = Object.fromEntries(ORDER.map((id) => [id, (u) => { S.step = id; S.u = u; }]));
+tour({
+  STEPS,
+  ORDER,
+  update: (id, u) => UPDATE[id](u),
+  reset: () => { S = fresh(); },
+  onFinish: (id) => { if (id === "together") S = fresh(); },
+  draw,
+  paint: (c) => mixHex(c, "#ece7dc", 0.8),
+  gap: 0.3,
+  lead: 0.1,
+  tail: 0.3,
+  probe: () => {
+    const Z = DRAWN.Z || scene();
+    const N = DRAWN.B ? DRAWN.B.N : nodes(Z);
+    const down = feetDown(N);
+    const feet = {};
+    for (const L of LEGS) { const c = ap(N["foot" + L.id], [48, 0, -AK]); const f = mtv(N.floor.M, sub3(c, N.floor.t)); feet[L.id] = [Math.round(f[0] * 10) / 10, Math.round(f[1] * 10) / 10, Math.round((c[2] - FT) * 10) / 10]; }
+    // only the get-up brings the body near the floor; everywhere else it stands on its feet
+    const lowBody = S.step === "getup" ? lowestOf(Z) - FT : 999;
+    return {
+      step: S.step, u: S.u,
+      lf: Z.legE < 0.02 && down.includes("L") ? 1 : 0, rf: Z.legE < 0.02 && down.includes("R") ? 1 : 0,
+      jv: jointSpeed(), twist: Math.round(Z.twist * 10) / 10, neck: Math.round(Z.neck * 10) / 10, pitch: Math.round(Z.pitch * 10) / 10,
+      floor: lowBody < 4 ? 1 : 0, door: Math.round(Z.door), hatch: Math.round(Z.hatch), lit: Z.lit, moving: Z.moving,
+      legE: Math.round(Z.legE * 1000) / 1000, armE: Math.round(Z.armE * 1000) / 1000, scroll: Math.round(Z.scroll),
+      feet, cam: DRAWN.cam ? { s: DRAWN.cam.s, F: DRAWN.cam.F } : null, low: Math.round(lowBody * 10) / 10,
+      sig: [Z.hip, Z.body.x, Z.pitch, Z.twist % 360, Z.neck % 360, Z.door, Z.hatch, Z.legE, Z.armE, Z.headLift, Z.torsoLift, ...Z.doorOff, ...Z.comp,
+        ...LEGS.flatMap((L) => [Z.legs[L.id].pitch, Z.legs[L.id].knee, Z.legs[L.id].ankle]), ...ARMS.flatMap((A) => ["sp", "sr", "el", "tw"].map((k) => Z.arms[A.id][k]))].map((v) => Math.round(v * 10) / 10),
+    };
+  },
+});
+
+}
+</script><script src="/i18n/lang-switch.js?v=2"></script>
+</body></html>

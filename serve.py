@@ -11,6 +11,10 @@ ROOT = Path(__file__).resolve().parent
 
 
 class Handler(http.server.SimpleHTTPRequestHandler):
+    def end_headers(self) -> None:
+        self.send_header("Cache-Control", "no-store")
+        super().end_headers()
+
     def translate_path(self, path: str) -> str:
         clean = urllib.parse.unquote(urllib.parse.urlsplit(path).path)
         rel = clean.lstrip("/").replace("\\", "/")

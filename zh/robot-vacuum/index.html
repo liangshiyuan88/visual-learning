@@ -1,0 +1,2668 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>带机械臂的扫地机器人 · 可视化学习</title><script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
+<meta name="description" content="A 这种类型的Roborock扫地机器人保持">
+<meta property="og:type" content="website"><meta property="og:title" content="带机械臂的扫地机器人 · 可视化学习"><meta property="og:description" content="A 这种类型的Roborock扫地机器人保持">
+<meta property="og:image" content="https://visual-learning.app/robot-vacuum-og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:url" content="https://visual-learning.app/robot-vacuum">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="带机械臂的扫地机器人 · 可视化学习"><meta name="twitter:description" content="A 这种类型的Roborock扫地机器人保持"><meta name="twitter:image" content="https://visual-learning.app/robot-vacuum-og.png">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20x%3D%223%22%20y%3D%223%22%20width%3D%2226%22%20height%3D%2226%22%20rx%3D%226%22%20fill%3D%22%23f2c14e%22%20stroke%3D%22%2323263a%22%20stroke-width%3D%222.4%22%2F%3E%3Ccircle%20cx%3D%2216%22%20cy%3D%2216%22%20r%3D%226%22%20fill%3D%22%23fffaf0%22%20stroke%3D%22%2323263a%22%20stroke-width%3D%222.4%22%2F%3E%3C%2Fsvg%3E"><style>
+.site{width:min(980px,100% - 32px);margin:22px auto 0;padding:0 20px;display:flex;align-items:center;gap:10px;font:600 12px ui-monospace,"SF Mono",Menlo,Consolas,monospace;color:#23263a;position:relative;z-index:5}
+.site a{color:inherit;text-decoration:none}
+.site .home{font:700 15px ui-sans-serif,system-ui,"Segoe UI",sans-serif;white-space:nowrap;margin-right:auto}
+.site .home:hover{text-decoration:underline;text-underline-offset:3px}
+.pill{background:#fffaf0;border:1.3px solid #23263a;border-radius:999px;padding:5px 11px;white-space:nowrap;box-shadow:2px 2px 0 #23263a;transition:transform .12s,box-shadow .12s;cursor:pointer}
+.pill:hover{transform:translate(-1px,-1px);box-shadow:3px 3px 0 #23263a}
+.menu{position:relative}
+.menu summary{list-style:none;display:flex;align-items:center;gap:7px}
+.menu summary::-webkit-details-marker{display:none}
+.menu summary b{opacity:.5}
+.menu summary i{font-style:normal;font-size:9px;opacity:.6;transition:transform .15s}
+.menu[open] summary{background:#23263a;color:#fffaf0}
+.menu[open] summary i{transform:rotate(180deg)}
+.panel{position:absolute;right:0;top:calc(100% + 10px);width:min(560px,calc(100vw - 32px));background:#f5f0e5;border:1.4px solid #23263a;border-radius:8px;box-shadow:4px 4px 0 #23263a;padding:10px;display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.panel a{display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 6px 8px;border-radius:6px;border:1.2px solid transparent;text-align:center}
+.panel a:hover{border-color:#23263a;background:#fffaf0}
+.panel a[aria-current]{background:#efe8d8;border-color:#23263a}
+.panel img{width:100%;aspect-ratio:1/1;object-fit:contain}
+.panel b{font-size:10px;opacity:.55;letter-spacing:.06em}
+.panel span{font:600 12px/1.25 ui-sans-serif,system-ui,"Segoe UI",sans-serif}
+.arrows{display:flex;gap:6px}
+.arrows a{padding:5px 10px}
+.iso-page{padding-top:16px!important}
+.credit{margin:16px 2px 0;font:500 12px/1.5 ui-sans-serif,system-ui,"Segoe UI",sans-serif;color:#7b7666}
+.credit a{color:inherit;text-underline-offset:2px}
+.keys{font:600 11px ui-monospace,Menlo,Consolas,monospace;color:#8a8676}
+@media (max-width:760px){
+.site{width:100%;padding:10px 10px 0;margin-top:0;gap:6px;flex-wrap:wrap}
+.site .badges{order:-2;margin-left:auto}
+.site .maker,.site .guide{font-size:11px;padding:4px 10px}
+.site::after{content:"";order:-1;flex-basis:100%;height:0}
+.site .home{font-size:14px}
+.menu summary .nm{display:none}
+.panel{position:fixed;left:10px;right:10px;top:52px;width:auto;max-height:calc(100vh - 70px);overflow:auto;grid-template-columns:repeat(3,1fr);gap:4px;padding:8px}
+.panel span{font-size:11px}
+.iso-page{padding-top:10px!important}
+.keys{display:none}
+.credit{margin:12px 2px 0}
+}
+.render .site,.render .credit{display:none}
+.embed .site,.embed .credit{display:none!important}
+.embed .iso-page{margin:0 auto!important;padding:6px!important;width:100%!important}
+.embed.fill .iso-page{height:100vh;display:flex;flex-direction:column}
+.embed.fill .card{flex:1;grid-template-rows:auto 1fr auto}
+.embed.fill .main{display:flex;flex-direction:column}
+.embed.fill .stage{flex:1;display:grid;place-items:center}
+a.guide,.site a.guide{font:700 12px ui-monospace,"SF Mono",Menlo,Consolas,monospace;white-space:nowrap;text-decoration:none;color:#23263a;background:#f2c14e;border:1.3px solid #23263a;border-radius:999px;padding:5px 12px;box-shadow:2px 2px 0 #23263a;transition:transform .12s,box-shadow .12s}
+a.guide:hover{transform:translate(-1px,-1px);box-shadow:3px 3px 0 #23263a}
+.badges{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+a.maker,.site a.maker{font:600 12px ui-monospace,"SF Mono",Menlo,Consolas,monospace;white-space:nowrap;text-decoration:none;color:#fffaf0;background:#23263a;border:1.3px solid #23263a;border-radius:999px;padding:5px 12px;box-shadow:2px 2px 0 #23263a55;transition:transform .12s}
+.maker b{font-weight:700;color:#f2c14e}
+.maker:hover{transform:translate(-1px,-1px)}
+</style><style>
+.iso{
+  --anatomy-page:#0b0b0b;--anatomy-card:#131313;--anatomy-text:#a3a3a3;--anatomy-strong:#e6e6e6;--anatomy-muted:#6e6e6e;
+  --anatomy-paper:#131313;--anatomy-face:#1b1b1b;--anatomy-top:#1c1c1c;
+  --anatomy-shade-0:#0f0f0f;--anatomy-shade-1:#121212;--anatomy-shade-2:#151515;--anatomy-shade-3:#181818;
+  --anatomy-lit-top:#262626;--anatomy-lit-shade:#1d1d1d;
+  --anatomy-hi:#d4d4d4;--anatomy-mid:#6a6a6a;--anatomy-lo:#3e3e3e;--anatomy-faint:#2a2a2a;--anatomy-lit:#ffffff;
+  --anatomy-halo:#050505;--anatomy-halo-opacity:.9;--anatomy-dot:#e6e6e6;
+  --anatomy-red:#ff6b6b;--anatomy-green:#6be0a0;--anatomy-blue:#6b9bff;
+  --anatomy-weight:.6px;--anatomy-ease:cubic-bezier(.32,.72,0,1);
+  --anatomy-mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --anatomy-lift:inset 0 1px 0 0 #ffffff0a,inset 0 0 0 1px #ffffff06,0 0 0 1px #00000026,0 1px 1px -.5px #00000014,0 3px 3px -1.5px #00000014,0 6px 6px -3px #00000014,0 12px 12px -6px #00000014;
+}
+.iso[data-theme="light"]{
+  --anatomy-page:#f2f2ef;--anatomy-card:#fbfbfa;--anatomy-text:#57575a;--anatomy-strong:#18181a;--anatomy-muted:#8c8c90;
+  --anatomy-paper:#fbfbfa;--anatomy-face:#ffffff;--anatomy-top:#ffffff;
+  --anatomy-shade-0:#dcdcd9;--anatomy-shade-1:#e5e5e2;--anatomy-shade-2:#ededea;--anatomy-shade-3:#f4f4f1;
+  --anatomy-lit-top:#ffffff;--anatomy-lit-shade:#eeeeeb;
+  --anatomy-hi:#26262a;--anatomy-mid:#8a8a8f;--anatomy-lo:#b4b4b8;--anatomy-faint:#d4d4d6;--anatomy-lit:#000000;
+  --anatomy-halo:#8a8a80;--anatomy-halo-opacity:.32;--anatomy-dot:#3a3a3e;
+  --anatomy-red:#e5484d;--anatomy-green:#30a46c;--anatomy-blue:#3e63dd;
+  --anatomy-lift:inset 0 1px 0 0 #ffffff,0 0 0 1px #0000000f,0 1px 1px -.5px #0000000a,0 3px 3px -1.5px #0000000a,0 6px 6px -3px #0000000a,0 12px 12px -6px #0000000a;
+}
+.iso-svg{display:block;width:100%;height:auto;overflow:visible}
+.iso-svg path,.iso-svg circle{vector-effect:non-scaling-stroke}
+.iso-fill{fill:var(--anatomy-paper);stroke:none}
+.iso-solid[data-lit]>.iso-fill{fill:var(--anatomy-face)}
+.iso-shade,.iso-top{stroke:none}
+.iso-shade[data-shade="0"]{fill:var(--anatomy-shade-0)}
+.iso-shade[data-shade="1"]{fill:var(--anatomy-shade-1)}
+.iso-shade[data-shade="2"]{fill:var(--anatomy-shade-2)}
+.iso-shade[data-shade="3"]{fill:var(--anatomy-shade-3)}
+.iso-top{fill:var(--anatomy-top)}
+.iso-solid[data-lit]>.iso-top{fill:var(--anatomy-lit-top)}
+.iso-solid[data-lit]>.iso-shade{fill:var(--anatomy-lit-shade)}
+.iso-solid[data-seamless]>.iso-shade,.iso-solid[data-seamless]>.iso-top{stroke-width:.4;stroke-linejoin:round}
+.iso-solid[data-seamless]>.iso-shade[data-shade="0"]{stroke:var(--anatomy-shade-0)}
+.iso-solid[data-seamless]>.iso-shade[data-shade="1"]{stroke:var(--anatomy-shade-1)}
+.iso-solid[data-seamless]>.iso-shade[data-shade="2"]{stroke:var(--anatomy-shade-2)}
+.iso-solid[data-seamless]>.iso-shade[data-shade="3"]{stroke:var(--anatomy-shade-3)}
+.iso-solid[data-seamless]>.iso-top{stroke:var(--anatomy-top)}
+.iso-solid[data-seamless][data-lit]>.iso-top{stroke:var(--anatomy-lit-top)}
+.iso-solid[data-seamless][data-lit]>.iso-shade{stroke:var(--anatomy-lit-shade)}
+.iso-solid[data-lit]>.iso-edge{stroke:var(--anatomy-lit)}
+.iso-halo{fill:var(--anatomy-halo);stroke:none;filter:blur(9px);opacity:var(--anatomy-halo-opacity);transform:translateY(3px)}
+.iso-line{fill:none;stroke:var(--anatomy-lo);stroke-width:var(--anatomy-weight);stroke-linecap:round;stroke-linejoin:round}
+.iso-line[data-tone="hi"]{stroke:var(--anatomy-hi)}
+.iso-line[data-tone="mid"]{stroke:var(--anatomy-mid)}
+.iso-line[data-tone="lo"]{stroke:var(--anatomy-lo)}
+.iso-line[data-tone="faint"]{stroke:var(--anatomy-faint)}
+.iso-line[data-tone="lit"]{stroke:var(--anatomy-lit)}
+.iso-line[data-tone="red"]{stroke:var(--anatomy-red)}
+.iso-line[data-tone="green"]{stroke:var(--anatomy-green)}
+.iso-line[data-tone="blue"]{stroke:var(--anatomy-blue)}
+.iso-line[data-dotted]{stroke-dasharray:.01 3.5;stroke-width:1}
+.iso-line[data-dashed]{stroke-dasharray:3 3}
+.iso-line[data-flow]{stroke-dasharray:2 6}
+.iso-wire-end{fill:var(--anatomy-paper);stroke:var(--anatomy-lo);stroke-width:var(--anatomy-weight)}
+.iso-wire[data-tone="hi"] .iso-wire-end{stroke:var(--anatomy-hi)}
+.iso-wire[data-tone="mid"] .iso-wire-end{stroke:var(--anatomy-mid)}
+.iso-wire[data-tone="faint"] .iso-wire-end{stroke:var(--anatomy-faint)}
+.iso-wire[data-tone="lit"] .iso-wire-end{stroke:var(--anatomy-lit)}
+.iso-dots circle{fill:var(--anatomy-dot);stroke:none;opacity:.32}
+.iso-dots[data-tone="hi"] circle{opacity:.85}
+.iso-dots[data-tone="mid"] circle{opacity:.45}
+.iso-dots[data-tone="lo"] circle{opacity:.22}
+.iso-dots[data-tone="faint"] circle{opacity:.12}
+.iso-face-text{fill:var(--anatomy-mid);font-family:var(--anatomy-mono);letter-spacing:.04em}
+.iso-face-text[data-tone="hi"]{fill:var(--anatomy-hi)}
+.iso-face-text[data-tone="lo"]{fill:var(--anatomy-lo)}
+.iso-face-text[data-tone="faint"]{fill:var(--anatomy-faint)}
+.tb-body{fill:var(--anatomy-shade-2);stroke:none}
+.tb-shine{fill:var(--anatomy-top);stroke:none}
+.tb-shade{fill:var(--anatomy-shade-0);stroke:none}
+.tb-ring{fill:none;stroke:var(--anatomy-lo);stroke-width:.45;stroke-linecap:butt;stroke-linejoin:round}
+.tb-ring[data-tone="mid"]{stroke:var(--anatomy-mid)}
+.tb-ring[data-tone="faint"]{stroke:var(--anatomy-faint)}
+.tb-ring[data-tone="hi"]{stroke:var(--anatomy-hi)}
+@keyframes iso-flow{to{stroke-dashoffset:-32}}
+@keyframes iso-pulse{0%,100%{opacity:.18}12%{opacity:1}40%{opacity:.18}}
+.iso-line[data-flow]{animation:iso-flow 1600ms linear infinite}
+.iso-dots circle[data-pulse]{animation:iso-pulse 1600ms steps(1,end) infinite;animation-delay:var(--pulse-at,0ms)}
+.iso-figure{margin:32px 0 36px}
+.iso-plate{position:relative;padding:52px 24px;border-radius:0;background:var(--anatomy-card);box-shadow:0 0 0 1px var(--anatomy-mid);--anatomy-paper:var(--anatomy-card)}
+.iso-plate-corners{position:absolute;inset:18px 20px;pointer-events:none}
+.iso-plate-corner{position:absolute;color:var(--anatomy-muted);font-family:var(--anatomy-mono);font-size:10.5px;line-height:1;letter-spacing:.04em;white-space:nowrap}
+.iso-plate-corner[data-corner="fig"]{top:0;left:0;color:var(--anatomy-text)}
+.iso-plate-corner[data-corner="title"]{top:0;right:0;text-transform:uppercase;letter-spacing:.1em}
+.iso-plate-corner[data-corner="hint"]{bottom:0;left:0;text-transform:uppercase;letter-spacing:.1em}
+.iso-plate-corner[data-corner="readout"]{right:0;bottom:0;color:var(--anatomy-text);font-variant-numeric:tabular-nums}
+.iso-plate .iso-svg{margin:0 auto}
+.iso-legend{display:grid;gap:8px;margin-top:12px;color:var(--anatomy-muted);font-size:13px;line-height:1.55}
+.iso-keys{display:flex;flex-wrap:wrap;gap:6px 18px}
+.iso-key{display:inline-flex;align-items:center;gap:7px}
+.iso-swatch{width:16px;height:10px;flex:none;overflow:visible}
+.iso-swatch path{fill:none;stroke:var(--anatomy-hi);stroke-width:1;vector-effect:non-scaling-stroke;stroke-linejoin:round;stroke-linecap:round}
+.iso-swatch[data-mark="raised"] path,.iso-swatch[data-mark="flat"] path{stroke:var(--anatomy-mid)}
+.iso-swatch[data-mark="lit"] path{stroke:var(--anatomy-lit)}
+.iso-swatch[data-mark="dim"] path{stroke:var(--anatomy-lo)}
+.iso-swatch[data-mark="dotted"] path{stroke-dasharray:.01 3;stroke-width:1.4}
+.iso-swatch[data-mark="dashed"] path{stroke-dasharray:3 2.5}
+.iso-swatch[data-mark="red"] path{stroke:var(--anatomy-red)}
+.iso-swatch[data-mark="green"] path{stroke:var(--anatomy-green)}
+.iso-swatch[data-mark="blue"] path{stroke:var(--anatomy-blue)}
+.iso-swatch-crease{stroke:var(--anatomy-lo)!important}
+@media (max-width:560px){.iso-plate{padding:48px 12px 70px}.iso-plate-corner[data-corner="hint"]{bottom:18px}}
+@media (prefers-reduced-motion:reduce){.iso-line[data-flow],.iso-dots circle[data-pulse]{animation:none}}
+
+*{box-sizing:border-box}
+html{color-scheme:dark}
+body[data-theme="light"]{color-scheme:light}
+body{margin:0;background:var(--anatomy-page);color:var(--anatomy-text);font:14px/1.6 ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+.iso-page{width:min(980px,100% - 32px);margin:64px auto 96px}
+</style></head><body class="iso" data-theme="light"><header class="site">
+  <a class="home" href="/">← 可视化学习</a>
+  <details class="menu"><summary class="pill"><b>40</b><span class="nm">带机械臂的扫地机器人</span><span>· 全部 40 个</span><i>▼</i></summary>
+    <nav class="panel"><a href="/dji-drone"><img src="/thumbs/dji-drone.webp" alt="" loading="lazy"><b>图 29</b><span>大疆无人机</span></a><a href="/dji-neo"><img src="/thumbs/dji-neo.webp" alt="" loading="lazy"><b>图 36</b><span>大疆 Neo</span></a><a href="/vision-pro"><img src="/thumbs/vision-pro.webp" alt="" loading="lazy"><b>图 28</b><span>Vision Pro</span></a><a href="/rolex"><img src="/thumbs/rolex.webp" alt="" loading="lazy"><b>图 38</b><span>劳力士潜航者</span></a><a href="/meta-glasses"><img src="/thumbs/meta-glasses.webp" alt="" loading="lazy"><b>图 37</b><span>Meta Ray-Ban 显示眼镜</span></a><a href="/ipad-pro"><img src="/thumbs/ipad-pro.webp" alt="" loading="lazy"><b>图 41</b><span>iPad Pro</span></a><a href="/dgx-spark"><img src="/thumbs/dgx-spark.webp" alt="" loading="lazy"><b>图 25</b><span>NVIDIA DGX Spark</span></a><a href="/spot"><img src="/thumbs/spot.webp" alt="" loading="lazy"><b>图 30</b><span>Spot 机器狗</span></a><a href="/robot-vacuum" aria-current="page"><img src="/thumbs/robot-vacuum.webp" alt="" loading="lazy"><b>图 40</b><span>带机械臂的扫地机器人</span></a><a href="/atlas"><img src="/thumbs/atlas.webp" alt="" loading="lazy"><b>图 35</b><span>Atlas 机器人</span></a><a href="/combination-lock"><img src="/thumbs/combination-lock.webp" alt="" loading="lazy"><b>图 39</b><span>密码锁</span></a><a href="/starlink"><img src="/thumbs/starlink.webp" alt="" loading="lazy"><b>图 33</b><span>星链天线</span></a><a href="/switch-2"><img src="/thumbs/switch-2.webp" alt="" loading="lazy"><b>图 32</b><span>任天堂 Switch 2</span></a><a href="/f1-wheel"><img src="/thumbs/f1-wheel.webp" alt="" loading="lazy"><b>图 34</b><span>F1 方向盘</span></a><a href="/ps-controller"><img src="/thumbs/ps-controller.webp" alt="" loading="lazy"><b>图 24</b><span>PlayStation 手柄</span></a><a href="/iphone"><img src="/thumbs/iphone.webp" alt="" loading="lazy"><b>图 20</b><span>iPhone</span></a><a href="/macbook"><img src="/thumbs/macbook.webp" alt="" loading="lazy"><b>图 21</b><span>MacBook</span></a><a href="/rtx-5090"><img src="/thumbs/rtx-5090.webp" alt="" loading="lazy"><b>图 27</b><span>RTX 5090</span></a><a href="/mac-mini"><img src="/thumbs/mac-mini.webp" alt="" loading="lazy"><b>图 26</b><span>Mac mini</span></a><a href="/apple-watch"><img src="/thumbs/apple-watch.webp" alt="" loading="lazy"><b>图 23</b><span>Apple Watch</span></a><a href="/airpods"><img src="/thumbs/airpods.webp" alt="" loading="lazy"><b>图 22</b><span>AirPods Pro</span></a><a href="/mechanical-watch"><img src="/thumbs/mechanical-watch.webp" alt="" loading="lazy"><b>图 18</b><span>机械表</span></a><a href="/rubiks-cube"><img src="/thumbs/rubiks-cube.webp" alt="" loading="lazy"><b>图 15</b><span>魔方</span></a><a href="/instant-camera"><img src="/thumbs/instant-camera.webp" alt="" loading="lazy"><b>图 16</b><span>拍立得</span></a><a href="/atom"><img src="/thumbs/atom.webp" alt="" loading="lazy"><b>图 19</b><span>原子</span></a><a href="/lava-lamp"><img src="/thumbs/lava-lamp.webp" alt="" loading="lazy"><b>图 17</b><span>熔岩灯</span></a><a href="/claw-machine"><img src="/thumbs/claw-machine.webp" alt="" loading="lazy"><b>图 02</b><span>抓娃娃机</span></a><a href="/microwave"><img src="/thumbs/microwave.webp" alt="" loading="lazy"><b>图 07</b><span>微波炉</span></a><a href="/espresso-machine"><img src="/thumbs/espresso-machine.webp" alt="" loading="lazy"><b>图 01</b><span>意式咖啡机</span></a><a href="/car-engine"><img src="/thumbs/car-engine.webp" alt="" loading="lazy"><b>图 03</b><span>汽车发动机</span></a><a href="/vending-machine"><img src="/thumbs/vending-machine.webp" alt="" loading="lazy"><b>图 04</b><span>自动售货机</span></a><a href="/washing-machine"><img src="/thumbs/washing-machine.webp" alt="" loading="lazy"><b>图 05</b><span>洗衣机</span></a><a href="/toaster"><img src="/thumbs/toaster.webp" alt="" loading="lazy"><b>图 06</b><span>烤面包机</span></a><a href="/pencil-sharpener"><img src="/thumbs/pencil-sharpener.webp" alt="" loading="lazy"><b>图 08</b><span>卷笔刀</span></a><a href="/smoke-alarm"><img src="/thumbs/smoke-alarm.webp" alt="" loading="lazy"><b>图 09</b><span>烟雾报警器</span></a><a href="/fridge"><img src="/thumbs/fridge.webp" alt="" loading="lazy"><b>图 10</b><span>冰箱</span></a><a href="/capsule-toy-machine"><img src="/thumbs/capsule-toy-machine.webp" alt="" loading="lazy"><b>图 11</b><span>扭蛋机</span></a><a href="/photo-booth"><img src="/thumbs/photo-booth.webp" alt="" loading="lazy"><b>图 12</b><span>大头贴机</span></a><a href="/roller-coaster"><img src="/thumbs/roller-coaster.webp" alt="" loading="lazy"><b>图 13</b><span>过山车</span></a><a href="/elevator"><img src="/thumbs/elevator.webp" alt="" loading="lazy"><b>图 14</b><span>电梯</span></a></nav>
+  </details>
+  <span class="arrows"><a class="pill" href="/spot" data-go="prev" title="Spot 机器狗 (←)">←</a><a class="pill" href="/atlas" data-go="next" title="Atlas 机器人 (→)">→</a></span>
+  <span class="badges"><a class="guide" href="https://x.com/elvar_official/status/2111831136171151589" target="_blank" rel="noopener">完整指南 ↗</a><a class="maker" href="https://x.com/elvar_official" target="_blank" rel="noopener">作者 <b>@elvar_official</b></a></span>
+</header><main class="iso-page"><style>.c-chrome{--f:#cfd7e0;--t:#e3e8ed;--s3:#d8dee6;--s2:#cfd7e0;--s1:#b8bfc9;--s0:#a0a7b1}
+.c-steel{--f:#bcc5cf;--t:#d8dde3;--s3:#c8cfd8;--s2:#bcc5cf;--s1:#a7afba;--s0:#9299a5}
+.c-dark{--f:#8e98a6;--t:#bdc3cb;--s3:#a2abb6;--s2:#8e98a6;--s1:#7f8896;--s0:#707886}
+.c-iron{--f:#7d8593;--t:#b4b8c0;--s3:#949ba6;--s2:#7d8593;--s1:#707786;--s0:#646a78}
+.c-brass{--f:#e3b866;--t:#efd6a6;--s3:#e8c582;--s2:#e3b866;--s1:#c9a45e;--s0:#af9057}
+.c-copper{--f:#d98a5a;--t:#e9bb9f;--s3:#e09f78;--s2:#d98a5a;--s1:#c07c54;--s0:#a86e4e}
+.c-black{--f:#383a4e;--t:#8c8d98;--s3:#5c5d6e;--s2:#383a4e;--s1:#34364a;--s0:#303245}
+.c-rubber{--f:#44465a;--t:#93949f;--s3:#666778;--s2:#44465a;--s1:#3f4154;--s0:#393b4e}
+.c-wood{--f:#cf9460;--t:#e3c1a3;--s3:#d8a77d;--s2:#cf9460;--s1:#b88559;--s0:#a07552}
+.c-porcelain{--f:#f7f3ea;--t:#faf8f3;--s3:#f8f5ee;--s2:#f7f3ea;--s1:#dad7d1;--s0:#bebbb9}
+.c-glass{--f:#d9eef5;--t:#e9f5f9;--s3:#e0f1f7;--s2:#d9eef5;--s1:#c0d3db;--s0:#a8b8c1}
+.c-amber{--f:#ffb648;--t:#ffd595;--s3:#ffc369;--s2:#ffb648;--s1:#e1a244;--s0:#c48e41}
+.c-mint{--f:#86d3ad;--t:#b9e5cf;--s3:#9cdbbc;--s2:#86d3ad;--s1:#78bb9c;--s0:#6aa48b}
+.c-butter{--f:#f2c14e;--t:#f7db98;--s3:#f4cc6e;--s2:#f2c14e;--s1:#d6ac4a;--s0:#ba9645}
+.c-tomato{--f:#e5583e;--t:#f09e8f;--s3:#ea7661;--s2:#e5583e;--s1:#cb503c;--s0:#b04939}
+.c-sky{--f:#7fb9e9;--t:#b5d6f2;--s3:#96c6ed;--s2:#7fb9e9;--s1:#72a5d0;--s0:#6590b8}
+.c-rose{--f:#f2a5bf;--t:#f7cbda;--s3:#f4b5cb;--s2:#f2a5bf;--s1:#d693ac;--s0:#ba8299}
+.c-lilac{--f:#b9a6e8;--t:#d6cbf2;--s3:#c6b6ec;--s2:#b9a6e8;--s1:#a494d0;--s0:#9082b7}
+.c-cream{--f:#f6eedb;--t:#faf5ea;--s3:#f8f1e1;--s2:#f6eedb;--s1:#dad3c4;--s0:#bdb8ae}
+.c-paper{--f:#fbf7ee;--t:#fdfaf5;--s3:#fcf8f1;--s2:#fbf7ee;--s1:#dedbd5;--s0:#c1bebc}
+.c-green{--f:#5fae7b;--t:#a2d0b2;--s3:#7cbd93;--s2:#5fae7b;--s1:#569b71;--s0:#4d8866}
+.c-pcb{--f:#3f8f5c;--t:#90bea0;--s3:#62a379;--s2:#3f8f5c;--s1:#3a8056;--s0:#367150}
+.c{--anatomy-paper:var(--f);--anatomy-face:var(--f);--anatomy-top:var(--t);--anatomy-shade-3:var(--s3);--anatomy-shade-2:var(--s2);--anatomy-shade-1:var(--s1);--anatomy-shade-0:var(--s0);--anatomy-lit-top:var(--t);--anatomy-lit-shade:var(--s2)}
+.c-body{--f:var(--body);--t:var(--body-t);--s3:var(--body-3);--s2:var(--body);--s1:var(--body-1);--s0:var(--body-0)}
+.c-alt{--f:var(--alt);--t:var(--alt-t);--s3:var(--alt-3);--s2:var(--alt);--s1:var(--alt-1);--s0:var(--alt-0)}
+.iso[data-theme="light"]{--anatomy-page:#ece6d8;--anatomy-card:#f5f0e5;--anatomy-hi:#23263a;--anatomy-mid:#23263aa8;--anatomy-lo:#23263a70;--anatomy-faint:#23263a45;--anatomy-lit:#23263a;--anatomy-dot:#23263a;--anatomy-weight:1.15px;--anatomy-halo-opacity:0;--anatomy-text:#4a4c5e;--anatomy-strong:#23263a;--anatomy-muted:#8a8676}
+body.iso{background:var(--anatomy-page);margin:0}
+.iso-page{max-width:980px;margin:0 auto;padding:28px 20px 40px;font-family:ui-sans-serif,system-ui,"Segoe UI",sans-serif;color:var(--anatomy-text)}
+.card{background:var(--anatomy-card);border:1.4px solid #23263a;border-radius:6px;box-shadow:4px 4px 0 #23263a;display:grid;grid-template-columns:200px 1fr;overflow:hidden}
+.side{border-right:1.4px solid #23263a;padding:18px 16px;display:flex;flex-direction:column;gap:10px;background:#efe8d8}
+.fig{font:600 11px var(--anatomy-mono);letter-spacing:.08em;text-transform:uppercase;color:#6b6656}
+.title{font:700 21px/1.15 ui-sans-serif,system-ui,"Segoe UI",sans-serif;color:#23263a;margin:2px 0 6px}
+.steps{display:flex;flex-direction:column;gap:7px;margin-top:4px}
+.step{appearance:none;text-align:left;font:600 12.5px var(--anatomy-mono);color:#23263a;background:#fffaf0;border:1.3px solid #23263a;border-radius:999px;padding:7px 12px 7px 10px;cursor:pointer;display:flex;gap:8px;align-items:center;box-shadow:2px 2px 0 #23263a;transition:transform .12s,box-shadow .12s,background .2s,opacity .2s}
+.step b{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;background:#23263a;color:#fffaf0;font-size:10px;flex:none}
+.step:hover:not([disabled]){transform:translate(-1px,-1px);box-shadow:3px 3px 0 #23263a}
+.step:active:not([disabled]),.step[data-press]{transform:translate(2px,2px);box-shadow:0 0 0 #23263a}
+.step[disabled]{opacity:.38;cursor:default;box-shadow:none}
+.step[data-on]{background:var(--body);opacity:1;box-shadow:2px 2px 0 #23263a}
+.step[data-done]{opacity:.55;box-shadow:none}
+.main{position:relative;padding:14px 18px 12px}
+.hint{font:500 13.5px/1.45 ui-sans-serif,system-ui,"Segoe UI",sans-serif;color:#23263a;min-height:40px;max-width:600px}
+.lapse{display:inline-block;margin-left:8px;font:700 11px var(--anatomy-mono);background:#23263a;color:#fffaf0;border-radius:4px;padding:2px 6px;vertical-align:1px;opacity:0;transition:opacity .2s}
+.lapse[data-on]{opacity:1}
+.stage svg{display:block;width:100%;height:auto;overflow:visible}
+.chips{display:flex;flex-wrap:wrap;gap:6px 8px;margin-top:4px}
+.chip{font:600 11.5px var(--anatomy-mono);color:#23263a;background:#fffaf0;border:1.2px solid #23263a;border-radius:6px;padding:5px 8px;font-variant-numeric:tabular-nums;white-space:nowrap;transition:background .25s}
+.chip i{font-style:normal;color:#7b7666;font-weight:500;margin-right:5px;text-transform:uppercase;font-size:10px;letter-spacing:.06em}
+.chip[data-hot]{background:var(--body)}
+.foot{display:flex;align-items:center;gap:18px;flex-wrap:wrap;border-top:1.4px solid #23263a;padding:10px 18px;grid-column:1/-1;background:#efe8d8}
+.idea{font:500 13px/1.45 ui-sans-serif,system-ui,"Segoe UI",sans-serif;color:#23263a;flex:1 1 340px}
+.idea b{font-weight:700}
+.ctl{display:flex;align-items:center;gap:8px;font:600 10px var(--anatomy-mono);letter-spacing:.07em;text-transform:uppercase;color:#6b6656}
+.sw{width:18px;height:18px;border-radius:50%;border:1.3px solid #23263a;cursor:pointer;padding:0}
+.sw[data-on]{box-shadow:0 0 0 2px #f5f0e5,0 0 0 3.4px #23263a}
+.shadow{fill:#ddd4c3}
+.slot{fill:#23263a;opacity:.62}
+.plate{fill:#e3b866;stroke:#23263a;stroke-width:1px;vector-effect:non-scaling-stroke}
+.dial-face{fill:#fffdf6;stroke:#23263a;stroke-width:1px;vector-effect:non-scaling-stroke}
+.dial-red{fill:none;stroke:#e5583e;stroke-width:2.2px;stroke-linecap:round;vector-effect:non-scaling-stroke}
+.glint{fill:none;stroke:#fff;stroke-width:1.6px;stroke-linecap:round;opacity:.85;vector-effect:non-scaling-stroke}
+.needle{fill:none;stroke:#e5583e;stroke-width:1.6px;stroke-linecap:round;vector-effect:non-scaling-stroke}
+.lcd{fill:#cde7c3;stroke:#23263a;stroke-width:1px;vector-effect:non-scaling-stroke}
+.lcd-text{fill:#23263a;font-family:var(--anatomy-mono);font-weight:700;letter-spacing:.02em}
+.glass .iso-fill,.glass .iso-shade,.glass .iso-top{fill-opacity:.32}
+.ink{fill:none;stroke:#23263a;stroke-width:1.15px;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+.word{font:700 15px "Segoe Print","Bradley Hand","Comic Sans MS",cursive;fill:#23263a;paint-order:stroke;stroke:#f5f0e5;stroke-width:4px;stroke-linejoin:round}
+.cursor{position:fixed;left:0;top:0;z-index:10;pointer-events:none;transform-origin:3px 2px;filter:drop-shadow(1px 2px 0 #23263a55)}
+.render *{transition:none!important}
+.modes{display:flex;gap:2px;padding:2px;background:#fffaf0;border:1.3px solid #23263a;border-radius:999px;box-shadow:2px 2px 0 #23263a;margin:2px 0 6px}
+.mode{flex:1;appearance:none;border:0;background:none;border-radius:999px;padding:5px 6px;font:700 11.5px var(--anatomy-mono);color:#6b6656;cursor:pointer;white-space:nowrap;transition:background .15s,color .15s;display:flex;align-items:center;justify-content:center;gap:6px}
+.mode:hover:not([aria-checked="true"]){color:#23263a}
+.mode[aria-checked="true"]{background:#23263a;color:#fffaf0}
+.restart{appearance:none;background:none;border:0;padding:2px 0;margin-top:auto;align-self:flex-start;font:600 11px var(--anatomy-mono);color:#6b6656;cursor:pointer;text-decoration:underline;text-decoration-color:#6b665666;text-underline-offset:3px}
+.restart:hover{color:#23263a;text-decoration-color:#23263a}
+.render .modes,.render .restart{display:none}
+.manual .step:not([disabled]):not([data-on]){animation:nudge 1.5s ease-in-out infinite}
+@keyframes nudge{0%,100%{box-shadow:2px 2px 0 #23263a,0 0 0 0 #23263a55}60%{box-shadow:2px 2px 0 #23263a,0 0 0 6px #23263a00}}
+@media (prefers-reduced-motion:reduce){.manual .step{animation:none!important}}
+@media (max-width:760px){
+.iso-page{width:100%;margin:0 auto;padding:10px 10px 28px}
+.card{grid-template-columns:1fr;box-shadow:3px 3px 0 #23263a}
+.side{border-right:0;border-bottom:1.4px solid #23263a;padding:12px 12px 10px;gap:6px}
+.title{font-size:18px;margin:0 0 4px}
+.steps{flex-direction:row;flex-wrap:wrap;gap:6px}
+.step{padding:5px 10px 5px 6px;font-size:11.5px;gap:6px}
+.modes{max-width:280px;margin:0 0 4px}
+.restart{margin-top:2px}
+.main{padding:10px 10px 10px}
+.hint{min-height:57px;font-size:13px}
+.foot{padding:10px 12px;gap:10px 16px}
+.idea{flex-basis:100%}
+}
+
+.stage svg{overflow:hidden}
+.step[data-on],.chip[data-hot]{background:var(--alt)}
+.c-oak{--f:#e2b882;--t:#ecc996;--s3:#d9ab72;--s2:#cc9c63;--s1:#b98a54;--s0:#a87b48}
+.shadow-mat{mix-blend-mode:multiply}
+.grain{fill:none;stroke:#9a6a35;stroke-width:.6px;opacity:.22;vector-effect:non-scaling-stroke}
+.rug-b{fill:none;stroke:#23263a;stroke-width:1.6px;opacity:.28;vector-effect:non-scaling-stroke}
+.rug-b.thin{stroke-width:.7px;stroke-dasharray:3 3}
+.rug-z{fill:none;stroke:#23263a;stroke-width:1px;opacity:.3;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+.rug-z2{fill:none;stroke:#c4553a;stroke-width:2.2px;opacity:.6;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+.rv .axis{fill:none;stroke:#23263a;stroke-width:.9px;stroke-dasharray:4 3;vector-effect:non-scaling-stroke}
+.fringe{fill:none;stroke:#f3ead9;stroke-width:1.5px;stroke-linecap:round;vector-effect:non-scaling-stroke;filter:drop-shadow(0 0 .4px #23263a)}
+.rv path,.rv circle,.rv rect,.rv ellipse,.rv use{vector-effect:non-scaling-stroke;stroke-linejoin:round}
+.rv .f{stroke-width:.6px}
+.rv .ol{fill:none;stroke:#23263a;stroke-width:1.1px}
+.rv .ol-s{fill:none;stroke:#23263a;stroke-width:.75px}
+.rv .cr{fill:none;stroke:#23263a;stroke-width:.5px;opacity:.42}
+.rv .cr-l{fill:none;stroke:#fff;stroke-width:.5px;opacity:.16}
+.rv .seam{fill:none;stroke:#23263a;stroke-width:.55px;opacity:.5}
+.rv .gap{fill:none;stroke:#0d0e12;stroke-width:1.1px;opacity:.9}
+.rv .hair{fill:none;stroke:#23263a;stroke-width:.4px;opacity:.55}
+.rv .lite{fill:none;stroke:#fff;stroke-width:.8px;opacity:.55;stroke-linecap:round}
+.rv .gl1{fill:#fff;opacity:.07;stroke:none}
+.rv .gl2{fill:none;stroke:#fff;stroke-width:1.3px;opacity:.5;stroke-linecap:round}
+.rv .gl3{fill:none;stroke:#fff;stroke-width:.7px;opacity:.28;stroke-linecap:round}
+.rv .ink{fill:#23263a;stroke:none}
+.rv .logo{fill:#23263a;stroke:none}
+.rv .logo-lt{fill:#dfe2e8;stroke:none}
+.rv .logo-gr{fill:#9aa0a8;stroke:none}
+.rv text{font-family:ui-sans-serif,system-ui,"Segoe UI",sans-serif;font-weight:700}
+.rv .wm{fill:#e4e7ec;font-weight:700;letter-spacing:-.4px}
+.rv .silk{fill:#e9efe6;font-weight:600;opacity:.88}
+.rv .silk-l{fill:none;stroke:#e9efe6;stroke-width:.5px;opacity:.75}
+.rv .print{fill:#23263a;font-weight:700}
+.rv .print2{fill:#23263a;font-weight:500;opacity:.7}
+.rv .wprint{fill:#d9dce2;font-weight:600;opacity:.85}
+.rv .lens{fill:#0e1016;stroke:#23263a;stroke-width:.5px}
+.rv .lens2{fill:#1f2636;stroke:none}
+.rv .lens3{fill:#2d3a55;stroke:none}
+.rv .glint{fill:#fff;opacity:.85;stroke:none}
+.rv .glint2{fill:#9fc4e6;opacity:.5;stroke:none}
+.rv .ringl{fill:none;stroke:#8d93a3;stroke-width:.5px}
+.rv .ringd{fill:none;stroke:#23263a;stroke-width:.5px;opacity:.6}
+.rv .vent{fill:#15161c;opacity:.75;stroke:none}
+.rv .screw{fill:#c9d0d9;stroke:#23263a;stroke-width:.5px}
+.rv .slot{fill:none;stroke:#23263a;stroke-width:.6px;stroke-linecap:round}
+.rv .hi{fill:#fff;opacity:.7;stroke:none}
+.rv .chipb{fill:#2b2d37;stroke:#23263a;stroke-width:.4px}
+.rv .chipp{fill:#d8dae2;font-weight:600;opacity:.8}
+.rv .pad{fill:#e3b866;stroke:none}
+.rv .trace{fill:none;stroke:#7fc49a;stroke-width:.45px;opacity:.6}
+.rv .cap{fill:#b9946a;stroke:#23263a;stroke-width:.3px}
+.rv .res{fill:#2a2c37;stroke:none}
+.rv .conn{fill:#f2efe6;stroke:#23263a;stroke-width:.4px}
+.rv .connd{fill:#3a3c48;stroke:#23263a;stroke-width:.4px}
+.rv .led{fill:#f6f7f2;stroke:#23263a;stroke-width:.35px}
+.rv .led-on{fill:#7ee0a6;stroke:#23263a;stroke-width:.35px}
+.rv .label{fill:#f4f2ec;stroke:#23263a;stroke-width:.35px}
+.rv .warn{fill:#f2c14e;stroke:#23263a;stroke-width:.35px}
+.rv .grip{fill:none;stroke:#23263a;stroke-width:.6px;opacity:.45;stroke-linecap:round}
+.rv .rub{fill:#2a2c33;stroke:#23263a;stroke-width:.35px}
+.rv .btn{fill:#3a3d46;stroke:#14151a;stroke-width:.5px}
+.rv .icon{fill:none;stroke:#cfd3da;stroke-width:.7px;stroke-linecap:round;stroke-linejoin:round}
+.rv .filter{fill:#f2efe6;stroke:#23263a;stroke-width:.35px}
+.rv .pleat{fill:none;stroke:#23263a;stroke-width:.35px;opacity:.45}
+.rv .wire{fill:none;stroke-linecap:round}
+.rv .cable-o{fill:none;stroke:#23263a;stroke-linecap:round}
+.rv .bar{fill:#23263a;stroke:none}
+.rv .stripe{stroke:none}
+.rv .hl-glow{fill:none;stroke-linejoin:round}
+.rv .hl-rim{fill:none;stroke-linejoin:round}
+.rv .note{font:700 15px "Segoe Print","Bradley Hand","Comic Sans MS",cursive;fill:#23263a;paint-order:stroke;stroke:#f5f0e5;stroke-width:4px;stroke-linejoin:round;vector-effect:none}
+.rv .note.joint{fill:#c9601a}
+.rv .lead{fill:none;stroke:#23263a;stroke-width:.9px;stroke-dasharray:3 2.2}
+.rv .lead-dot{fill:#23263a;stroke:none}
+.rv .tag{fill:#fffaf0;stroke:#23263a;stroke-width:1.1px}
+.rv .tag.hot{fill:#ffe6c7;stroke:#c9601a}
+.rv .tag-t{fill:#23263a;font:700 11px ui-monospace,"Cascadia Mono",Consolas,monospace}
+.rv .tag-t.hot{fill:#a8480f}
+.rv .tag-s{fill:#6b6656;font:600 9px ui-monospace,"Cascadia Mono",Consolas,monospace}
+.rv .cut-e{fill:none;stroke:#f08a1c;stroke-width:1.3px;stroke-dasharray:4 2.5;stroke-linejoin:round}
+.rv .ray{fill:none;stroke:#e5583e;stroke-linecap:round}
+.rv .sweep{stroke:none}
+.rv .hit{fill:#e5583e;stroke:none}
+.rv .mapl{fill:none;stroke:#e5583e;stroke-linecap:round;stroke-linejoin:round}
+.rv .ai{fill:none;stroke:#18a3c9;stroke-linecap:round;stroke-linejoin:round}
+.rv .ai-f{fill:#18a3c9;stroke:none}
+.rv .ai-t{fill:#fff;font-family:ui-monospace,"Cascadia Mono",Consolas,monospace;font-weight:700}
+.rv .sight{fill:none;stroke:#18a3c9;stroke-linecap:round}
+.rv .lz{fill:#ff5a3c;stroke:none}
+</style>
+<div class="card">
+  <aside class="side">
+    <div class="fig">图40 · 机器人</div>
+    <div class="title">带机械臂的扫地机器人</div>
+    <div class="modes" role="radiogroup" aria-label="Mode"><button class="mode" data-mode="auto" role="radio" aria-checked="false"><svg viewBox="0 0 12 12" width="9" height="9" aria-hidden="true"><path d="M2 1.2v9.6L10.4 6z" fill="currentColor"/></svg>自动</button><button class="mode" data-mode="manual" role="radio" aria-checked="true"><svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M4 2.5l14.5 8.6-6.2 1.4 3.2 7-2.9 1.3-3.1-7-5.5 4.3z" fill="currentColor"/></svg>手动</button></div>
+    <div class="steps"><button class="step" data-step="set" ><b>1</b>启动</button><button class="step" data-step="grab" disabled><b>2</b>发现并抓住</button><button class="step" data-step="drop" disabled><b>3</b>进入篮筐</button><button class="step" data-step="vac" disabled><b>4</b>吸尘</button><button class="step" data-step="apart" disabled><b>5</b>拆开它</button><button class="step" data-step="grip" disabled><b>6</b>夹具</button><button class="step" data-step="home" disabled><b>↺</b>回到原位</button></div>
+    <button class="restart" data-restart>⟲ 重新开始</button>
+  </aside>
+  <section class="main">
+    <div class="hint"><span data-hint>扫地机器人是如何从地板上捡起袜子的？按下各个步骤，或者等待机器自行执行这些步骤。</span><span class="lapse" data-lapse>×3</span></div>
+    <div class="stage"><svg xmlns="http://www.w3.org/2000/svg" class="iso-svg" viewBox="0 0 700 500" role="img" aria-label="A round black robot vacuum with the roborock wordmark 开启 its glossy 顶部 shell, 开启 a patch of oak 楼层 with a striped sock lying ahead of it, a small wicker basket beside it 时松开， edge of a rug behind. A 激光 turret 开启 顶部 maps the 楼层, a hatch in the 顶部 shell opens 和 a 折叠臂 unfolds out of it, closes its gripper 开启 the sock 和 drops it in the basket. The 顶部 shell lifts to show the arm folded in its bay, the suction fan 和 电机, the 电池, the dust bin, the board 时松开， brush roll, 和 it all comes apart into layers 和 goes back together."><defs><clipPath id="matclip"><path d="M682.2 255.2L683.5 257.8L681.4 260.2L312.7 442L308.4 442.8L304.3 441.6L17.8 240.9L16.5 238.4L18.6 236L387.3 54.1L391.6 53.3L395.7 54.5Z"/></clipPath><clipPath id="slotclip" clipPathUnits="userSpaceOnUse"><path data-part="slotclip" d=""/></clipPath><clipPath id="liftclip" clipPathUnits="userSpaceOnUse"><path data-part="liftclip" d=""/></clipPath><clipPath id="brushclip" clipPathUnits="userSpaceOnUse"><path data-part="brushclip" d=""/></clipPath><filter id="rv-glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="3.2"/></filter><filter id="rv-soft" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="1.2"/></filter></defs><g class="art"><g class="c c-oak"><g class="iso-solid"><path class="iso-fill" d="M16.5 238.4L18.6 236L387.3 54.1L391.6 53.3L395.7 54.5L682.2 255.2L683.5 257.8L683.5 261.6L681.4 264L312.7 445.9L308.4 446.7L304.3 445.5L17.8 244.8L16.5 242.2Z"/><path class="iso-shade" data-shade="0" d="M683.5 261.6L681.4 264L681.4 260.2L683.5 257.8ZM681.4 264L312.7 445.9L312.7 442L681.4 260.2Z"/><path class="iso-shade" data-shade="1" d="M312.7 445.9L308.4 446.7L308.4 442.8L312.7 442Z"/><path class="iso-shade" data-shade="2" d="M308.4 446.7L304.3 445.5L304.3 441.6L308.4 442.8Z"/><path class="iso-shade" data-shade="3" d="M304.3 445.5L17.8 244.8L17.8 240.9L304.3 441.6ZM17.8 244.8L16.5 242.2L16.5 238.4L17.8 240.9Z"/><path class="iso-top" d="M682.2 255.2L683.5 257.8L681.4 260.2L312.7 442L308.4 442.8L304.3 441.6L17.8 240.9L16.5 238.4L18.6 236L387.3 54.1L391.6 53.3L395.7 54.5Z"/><path class="iso-line iso-crease" data-tone="faint" d="M683.5 257.8L681.4 260.2L312.7 442L308.4 442.8L304.3 441.6L17.8 240.9L16.5 238.4"/><path class="iso-line iso-bevel" data-tone="faint" d="M683.5 257.8L681.2 260L312.5 441.9L308.4 442.6L304.5 441.4L18.1 240.8L16.5 238.4"/><path class="iso-line" data-tone="faint" d="M683.5 260.6L681.4 263L312.7 444.8L308.4 445.6L304.3 444.4L17.8 243.7L16.5 241.2"/><path class="iso-line iso-edge" data-tone="hi" d="M16.5 238.4L18.6 236L387.3 54.1L391.6 53.3L395.7 54.5L682.2 255.2L683.5 257.8M683.5 261.6L681.4 264L312.7 445.9L308.4 446.7L304.3 445.5L17.8 244.8L16.5 242.2M683.5 257.8L683.5 261.6M16.5 238.4L16.5 242.2"/></g></g><path class="grain" d="M388.4 57.2L402.5 68.5L417 79.6L432.3 90.3L448.5 100.5L465 110.7L480.9 121L495.9 131.9L510.1 143.1L524.2 154.4L539.1 165.3L555 175.7L571.4 185.9L587.6 196.1L603.1 206.7L617.6 217.8L631.7 229.1L646.2 240.2L661.5 250.8M366.9 67.8L382.6 78.3L399 88.5L415.3 98.7L430.9 109.2L445.5 120.3L459.6 131.5L474 142.7L489.2 153.4L505.4 163.7L521.8 173.8L537.8 184.2L552.9 195L567.2 206.2L581.3 217.4L596.1 228.4L611.8 238.9L628.2 249L644.6 259.2M379 61.9L395.1 72.2L410.3 82.9L424.6 94.1L438.7 105.4L453.4 116.4L469 126.9L485.3 137.1L501.7 147.3L517.4 157.8L532.1 168.8L546.2 180L560.5 191.2L575.7 202L591.7 212.3L608.2 222.4L624.3 232.7L639.4 243.5L653.8 254.7M327.2 87.4L341.8 98.5L357.3 109L373.6 119.2L390 129.4L405.8 139.8L420.6 150.8L434.7 162.1L449 173.3L464 184.1L480 194.4L496.5 204.5L512.6 214.8L527.9 225.5L542.3 236.7L556.4 248L571 259L586.6 269.6L602.9 279.8M341 80.6L357.4 90.8L373.6 101L389 111.6L403.5 122.7L417.6 134L432.1 145.1L447.5 155.7L463.8 166L480.2 176.1L496.1 186.5L510.9 197.4L525.1 208.7L539.3 219.9L554.3 230.8L570.2 241.2L586.6 251.3L602.9 261.5L618.2 272.2M345.4 78.4L360.4 89.3L374.6 100.5L388.8 111.8L403.6 122.7L419.4 133.1L435.8 143.3L452.1 153.5L467.6 164.1L482.1 175.2L496.2 186.4L510.7 197.6L526 208.2L542.2 218.5L558.7 228.6L574.6 239L589.6 249.9L603.8 261.1L617.9 272.3M292.2 104.7L307.9 115.2L324.3 125.3L340.7 135.5L356.2 146L370.9 157.1L385 168.4L399.3 179.5L414.6 190.2L430.7 200.5L447.2 210.6L463.2 221L478.2 231.8L492.5 243L506.6 254.3L521.4 265.2L537.2 275.7L553.6 285.8L569.9 296M299.1 101.3L315.2 111.6L330.4 122.3L344.7 133.5L358.8 144.8L373.5 155.8L389.1 166.3L405.4 176.5L421.8 186.7L437.5 197.2L452.2 208.2L466.3 219.4L480.6 230.6L495.8 241.4L511.8 251.7L528.3 261.8L544.4 272.1L559.5 282.9L573.9 294.1M300.3 100.7L314.5 111.9L328.7 123.1L343.8 134L359.7 144.3L376.2 154.5L392.3 164.7L407.6 175.4L422 186.5L436.1 197.8L450.7 208.9L466.2 219.5L482.5 229.7L499 239.8L514.7 250.3L529.5 261.2L543.7 272.5L557.9 283.7L573 294.5M250 125.5L266.4 135.6L282.7 145.9L298 156.5L312.5 167.6L326.6 178.9L341.1 190L356.5 200.6L372.8 210.8L389.2 221L405.1 231.4L420 242.3L434.1 253.6L448.3 264.8L463.3 275.6L479.2 286L495.7 296.2L511.9 306.4L527.2 317.1M254.1 123.5L269.1 134.3L283.3 145.5L297.5 156.8L312.3 167.7L328.1 178.2L344.5 188.3L360.8 198.5L376.3 209.1L390.8 220.2L404.9 231.5L419.4 242.6L434.7 253.3L450.9 263.5L467.4 273.6L483.3 284L498.3 294.9L512.5 306.1L526.7 317.4M234.4 133.2L248.8 144.3L264 155.1L280.1 165.4L296.5 175.5L312.6 185.8L327.7 196.6L342 207.8L356.1 219.1L370.8 230L386.5 240.5L402.9 250.7L419.3 260.9L434.9 271.4L449.5 282.5L463.6 293.7L477.9 304.9L493.2 315.6L509.3 325.9M204.5 147.9L220.6 158.2L235.8 169L250.2 180.1L264.3 191.4L278.9 202.4L294.5 213L310.9 223.1L327.3 233.3L342.9 243.8L357.6 254.8L371.8 266.1L386.1 277.3L401.2 288L417.3 298.3L433.8 308.5L449.8 318.8L465 329.5L479.3 340.7M201.8 149.2L216 160.5L230.2 171.7L245.2 182.6L261.2 192.9L277.7 203L293.8 213.3L309.1 224L323.5 235.1L337.6 246.4L352.2 257.5L367.7 268.1L384 278.3L400.4 288.4L416.2 298.9L431 309.8L445.2 321.1L459.4 332.3L474.5 343.1M200.9 149.7L216.3 160.3L232.5 170.6L249 180.7L264.9 191.1L279.8 202L294 213.2L308.2 224.5L323.1 235.4L339 245.8L355.4 255.9L371.6 266.1L387 276.8L401.5 287.9L415.6 299.2L430.1 310.3L445.5 320.9L461.8 331.1L478.2 341.2M175.9 162L190.9 172.9L205.1 184.1L219.3 195.3L234.1 206.3L249.9 216.7L266.3 226.9L282.6 237.1L298.1 247.7L312.7 258.7L326.8 270L341.2 281.2L356.5 291.8L372.7 302.1L389.2 312.2L405.1 322.6L420.1 333.4L434.3 344.7L448.5 355.9M158.5 170.6L172.9 181.8L188.1 192.5L204.2 202.8L220.6 212.9L236.7 223.3L251.8 234L266.1 245.2L280.2 256.5L295 267.5L310.7 278L327 288.1L343.4 298.3L359 308.9L373.6 319.9L387.7 331.2L402.1 342.3L417.3 353.1L433.4 363.3M176.7 161.6L193.1 171.8L209.5 182L225.2 192.4L239.9 203.4L254.1 214.7L268.3 225.9L283.4 236.7L299.5 247L315.9 257.1L332 267.4L347.3 278.2L361.6 289.3L375.7 300.6L390.4 311.6L406 322.2L422.3 332.3L438.7 342.5L454.4 353M117.3 191L131.4 202.2L145.7 213.4L160.7 224.3L176.6 234.6L193.1 244.8L209.3 255L224.6 265.7L239 276.8L253.1 288.1L267.6 299.2L283.2 309.8L299.5 320L315.9 330.1L331.6 340.6L346.4 351.5L360.6 362.8L374.8 374L389.9 384.8M118.1 190.5L133.5 201.2L149.8 211.4L166.2 221.5L182.1 231.9L197 242.8L211.2 254.1L225.4 265.3L240.3 276.2L256.2 286.6L272.6 296.7L288.9 307L304.3 317.6L318.7 328.7L332.8 340L347.3 351.1L362.8 361.7L379 371.9L395.4 382.1M108.7 195.2L125 205.4L140.5 216L155.1 227L169.2 238.3L183.6 249.4L198.9 260.1L215 270.4L231.5 280.5L247.5 290.9L262.5 301.7L276.7 312.9L290.9 324.2L305.7 335.1L321.5 345.6L337.9 355.7L354.2 365.9L369.7 376.5L384.2 387.6M77.3 210.7L91.6 221.8L106.8 232.6L122.9 242.9L139.4 253L155.4 263.3L170.5 274.1L184.8 285.3L199 296.6L213.7 307.6L229.4 318L245.8 328.2L262.1 338.4L277.7 348.9L292.3 360L306.4 371.3L320.8 382.4L336 393.1L352.2 403.4M67.2 215.6L83.5 225.8L99.9 236L115.6 246.5L130.4 257.4L144.5 268.7L158.8 279.9L173.9 290.7L189.9 301L206.4 311.2L222.5 321.4L237.7 332.2L252.1 343.4L266.2 354.6L280.8 365.6L296.4 376.2L312.8 386.4L329.2 396.5L344.8 407M69.5 214.5L84.8 225.2L99.3 236.3L113.4 247.6L127.9 258.7L143.4 269.3L159.6 279.5L176.1 289.6L191.9 300.1L206.7 311L220.9 322.3L235.1 333.5L250.1 344.3L266.1 354.7L282.5 364.8L298.7 375.1L314 385.8L328.4 396.9L342.5 408.2M36.6 230.7L52 241.4L68.2 251.6L84.7 261.8L100.5 272.2L115.5 283L129.7 294.3L143.9 305.5L158.8 316.4L174.6 326.8L191.1 336.9L207.3 347.2L222.7 357.8L237.2 368.9L251.3 380.2L265.8 391.3L281.2 401.9L297.5 412.2L313.9 422.3M30.2 233.9L46.5 244.1L62.1 254.7L76.6 265.7L90.7 277L105.1 288.1L120.4 298.8L136.6 309.1L153 319.2L169 329.6L184 340.4L198.3 351.6L212.4 362.9L227.3 373.8L243 384.3L259.5 394.4L275.8 404.6L291.2 415.2L305.8 426.3M46.8 225.7L61.1 236.9L75.3 248.2L89.9 259.1L105.6 269.7L122 279.8L138.3 290L154 300.5L168.6 311.5L182.7 322.8L197.1 334L212.3 344.7L228.4 355L244.8 365.2L260.9 375.5L276 386.3L290.3 397.5L304.4 408.7L319.1 419.7"/><path class="iso-line" data-tone="lo" d="M350 72.5L644.1 278.6M308.1 93.2L602.2 299.2M266.2 113.8L560.4 319.9M224.3 134.5L518.5 340.5M182.4 155.2L476.6 361.2M140.6 175.8L434.7 381.9M98.7 196.5L392.8 402.5M56.8 217.1L350.9 423.2"/><path class="iso-line" data-tone="lo" d="M414.8 67.9L372.9 88.6M599 197L557.1 217.6M453.5 145L411.6 165.7M381.4 144.6L339.6 165.2M577.4 281.8L535.5 302.5M309.4 144.1L267.5 164.7M464.4 252.7L422.6 273.4M348.1 221.2L306.2 241.9M276 220.7L234.2 241.4M449.4 342.2L407.5 362.8M204 220.2L162.1 240.9M405.2 361.2L363.3 381.8M131.9 219.8L90 240.4M279.6 323.2L237.7 343.9M170.6 296.9L128.7 317.5M332.7 410.4L290.8 431"/><g class="c c-alt"><g class="iso-solid"><path class="iso-fill" d="M14 236.3L391.9 49.9L434.6 79.9L434.6 81.8L56.8 268.2L14 238.2Z"/><path class="iso-shade" data-shade="0" d="M434.6 81.8L56.8 268.2L56.8 266.3L434.6 79.9Z"/><path class="iso-shade" data-shade="3" d="M56.8 268.2L14 238.2L14 236.3L56.8 266.3Z"/><path class="iso-top" d="M434.6 79.9L56.8 266.3L14 236.3L391.9 49.9Z"/><path class="iso-line iso-crease" data-tone="faint" d="M434.6 79.9L56.8 266.3L14 236.3"/><path class="iso-line iso-bevel" data-tone="faint" d="M434.6 79.9L56.8 266.2L14 236.3"/><path class="iso-line iso-edge" data-tone="hi" d="M14 236.3L391.9 49.9L434.6 79.9M434.6 81.8L56.8 268.2L14 238.2M434.6 79.9L434.6 81.8M14 236.3L14 238.2"/></g></g><path class="rug-b" d="M421.2 79.2L58 258.4L27.4 237L390.7 57.8Z"/><path class="rug-b thin" d="M414.5 78.9L58.5 254.5L34.1 237.3L390.1 61.8Z"/><path class="rug-z" d="M391.3 68L389.3 75.4L376.7 75.2L374.8 82.5L362.1 82.4L360.2 89.7L347.6 89.6L345.6 96.9L333 96.8L331.1 104.1L318.4 103.9L316.5 111.3L303.9 111.1L301.9 118.5L289.3 118.3L287.4 125.7L274.7 125.5L272.8 132.8L260.2 132.7L258.2 140L245.6 139.9L243.7 147.2L231 147.1L229.1 154.4L216.5 154.2L214.5 161.6L201.9 161.4L200 168.8L187.3 168.6L185.4 176L172.8 175.8L170.8 183.1L158.2 183L156.3 190.3L143.6 190.2L141.7 197.5L129.1 197.4L127.1 204.7L114.5 204.5L112.5 211.9L99.9 211.7L98 219.1L85.3 218.9L83.4 226.2L70.8 226.1L68.8 233.4L56.2 233.3L54.3 240.6M400.4 74.4L398.5 81.8L385.9 81.6L383.9 89L371.3 88.8L369.4 96.2L356.7 96L354.8 103.3L342.2 103.2L340.2 110.5L327.6 110.4L325.7 117.7L313 117.6L311.1 124.9L298.5 124.7L296.5 132.1L283.9 131.9L282 139.3L269.3 139.1L267.4 146.4L254.8 146.3L252.8 153.6L240.2 153.5L238.3 160.8L225.6 160.7L223.7 168L211.1 167.8L209.1 175.2L196.5 175L194.6 182.4L181.9 182.2L180 189.6L167.4 189.4L165.4 196.7L152.8 196.6L150.9 203.9L138.2 203.8L136.3 211.1L123.7 211L121.7 218.3L109.1 218.1L107.1 225.5L94.5 225.3L92.6 232.7L79.9 232.5L78 239.9L65.4 239.7L63.4 247"/><path class="rug-z2" d="M395.1 70.7L394.7 79.1L380.5 77.9L380.1 86.3L366 85.1L365.6 93.5L351.4 92.3L351 100.7L336.8 99.4L336.4 107.8L322.3 106.6L321.9 115L307.7 113.8L307.3 122.2L293.1 121L292.7 129.4L278.6 128.2L278.1 136.6L264 135.4L263.6 143.8L249.4 142.5L249 151L234.8 149.7L234.4 158.1L220.3 156.9L219.9 165.3L205.7 164.1L205.3 172.5L191.1 171.3L190.7 179.7L176.6 178.5L176.2 186.9L162 185.7L161.6 194.1L147.4 192.8L147 201.3L132.9 200L132.5 208.4L118.3 207.2L117.9 215.6L103.7 214.4L103.3 222.8L89.2 221.6L88.8 230L74.6 228.8L74.2 237.2L60 236L59.6 244.4"/><path class="fringe" d="M431.9 82.7L435.4 86.3M428.7 84.3L432.6 88.1M425.5 85.9L429.8 90M422.4 87.4L425.9 91M419.2 89L423.1 92.8M416 90.6L420.3 94.7M412.8 92.1L416.3 95.7M409.6 93.7L413.5 97.5M406.4 95.3L410.7 99.4M403.2 96.9L406.7 100.4M400 98.4L403.9 102.3M396.9 100L401.1 104.1M393.7 101.6L397.2 105.1M390.5 103.1L394.4 107M387.3 104.7L391.6 108.8M384.1 106.3L387.6 109.9M380.9 107.9L384.8 111.7M377.7 109.4L382 113.5M374.5 111L378.1 114.6M371.4 112.6L375.3 116.4M368.2 114.1L372.5 118.2M365 115.7L368.5 119.3M361.8 117.3L365.7 121.1M358.6 118.9L362.9 123M355.4 120.4L358.9 124M352.2 122L356.1 125.8M349.1 123.6L353.3 127.7M345.9 125.1L349.4 128.7M342.7 126.7L346.6 130.6M339.5 128.3L343.8 132.4M336.3 129.9L339.8 133.4M333.1 131.4L337 135.3M329.9 133L334.2 137.1M326.7 134.6L330.3 138.1M323.6 136.1L327.5 140M320.4 137.7L324.7 141.8M317.2 139.3L320.7 142.9M314 140.9L317.9 144.7M310.8 142.4L315.1 146.5M307.6 144L311.1 147.6M304.4 145.6L308.3 149.4M301.3 147.2L305.5 151.3M298.1 148.7L301.6 152.3M294.9 150.3L298.8 154.1M291.7 151.9L296 156M288.5 153.4L292 157M285.3 155L289.2 158.8M282.1 156.6L286.4 160.7M278.9 158.2L282.5 161.7M275.8 159.7L279.7 163.6M272.6 161.3L276.9 165.4M269.4 162.9L272.9 166.4M266.2 164.4L270.1 168.3M263 166L267.3 170.1M259.8 167.6L263.3 171.2M256.6 169.2L260.5 173M253.5 170.7L257.7 174.8M250.3 172.3L253.8 175.9M247.1 173.9L251 177.7M243.9 175.4L248.2 179.5M240.7 177L244.2 180.6M237.5 178.6L241.4 182.4M234.3 180.2L238.6 184.3M231.1 181.7L235.8 186.1M228 183.3L233 187.9M224.8 184.9L229.1 189M221.6 186.4L226.3 190.8M218.4 188L223.4 192.7M215.2 189.6L219.5 193.7M212 191.2L216.7 195.5M208.8 192.7L213.9 197.4M205.7 194.3L209.9 198.4M202.5 195.9L207.1 200.2M199.3 197.4L204.3 202.1M196.1 199L200.4 203.1M192.9 200.6L197.6 205M189.7 202.2L194.8 206.8M186.5 203.7L190.8 207.8M183.3 205.3L188 209.7M180.2 206.9L185.2 211.5M177 208.4L181.3 212.6M173.8 210L178.4 214.4M170.6 211.6L175.6 216.2M167.4 213.2L171.7 217.3M164.2 214.7L168.9 219.1M161 216.3L166.1 220.9M157.9 217.9L162.1 222M154.7 219.5L159.3 223.8M151.5 221L156.5 225.7M148.3 222.6L152.6 226.7M145.1 224.2L149.8 228.5M141.9 225.7L147 230.4M138.7 227.3L143 231.4M135.5 228.9L140.2 233.3M132.4 230.5L137.4 235.1M129.2 232L133.5 236.1M126 233.6L130.6 238M122.8 235.2L127.8 239.8M119.6 236.7L123.9 240.8M116.4 238.3L121.1 242.7M113.2 239.9L118.3 244.5M110 241.5L114.3 245.6M106.9 243L111.5 247.4M103.7 244.6L108.7 249.2M100.5 246.2L104.8 250.3M97.3 247.7L102 252.1M94.1 249.3L99.2 254M90.9 250.9L95.2 255M87.7 252.5L92.4 256.8M84.6 254L89.6 258.7M81.4 255.6L85.7 259.7M78.2 257.2L82.8 261.5M75 258.7L80 263.4M71.8 260.3L76.1 264.4M68.6 261.9L73.3 266.3M65.4 263.5L70.5 268.1M62.2 265L66.5 269.1M59.1 266.6L63.7 271"/><g class="shadow-mat" clip-path="url(#matclip)"><path class="shadow" data-part="shadow-live" d=""/></g><g class="rv" data-part="scan" clip-path="url(#matclip)"></g><g class="rv" data-part="robot"></g><g class="rv" data-part="hud"></g><g class="rv" data-part="notes"></g><g data-part="sounds"></g></g></svg></div>
+    <div class="chips"><span class="chip" data-chipbox="arm"><i>手臂 · Roborock</i><span data-chip="arm">收起</span></span><span class="chip" data-chipbox="map"><i>地图与·典型</i><span data-chip="map">激光</span></span><span class="chip" data-chipbox="seen"><i>已检测</i><span data-chip="seen">–</span></span><span class="chip" data-chipbox="brush"><i>刷子</i><span data-chip="brush">关闭</span></span><span class="chip" data-chipbox="parts"><i>零件</i><span data-chip="parts">1 个机器人</span></span></div>
+  </section>
+  <footer class="foot">
+    <div class="idea"><b>核心原理：</b> 这种类型的Roborock扫地机器人保持 <b>折叠臂</b> 机身内部（数据来自石头科技）。顶部的激光传感器扫描房间（为示意）；当袜子挡在路上时，顶壳舱盖打开，机械臂展开，夹爪抓住袜子并丢进收纳篮，然后折叠回机身，继续吸尘。（内部零件按典型结构绘制。）</div>
+    <div class="ctl">配色 <button class="sw" data-swatch="#f2c14e" title="butter" style="background:#f2c14e" data-on></button><button class="sw" data-swatch="#e5583e" title="tomato" style="background:#e5583e" ></button><button class="sw" data-swatch="#86d3ad" title="mint" style="background:#86d3ad" ></button><button class="sw" data-swatch="#7fb9e9" title="sky" style="background:#7fb9e9" ></button><button class="sw" data-swatch="#f2a5bf" title="rose" style="background:#f2a5bf" ></button></div>
+  </footer>
+</div><p class="credit"><span class="keys">按空格或回车执行下一步 · ← → 切换机器<br></span>作者 <a target="_blank" rel="noopener" href="https://x.com/elvar_official">@elvar_official</a></p></main><script>
+if (/[?&]embed\b/.test(location.search)) document.body.classList.add("embed");
+addEventListener("keydown", (e) => {
+  if (e.key === "Escape") document.querySelector(".menu").open = false;
+  if (e.altKey || e.ctrlKey || e.metaKey || e.target.closest("input,textarea,select")) return;
+  const go = e.key === "ArrowLeft" ? "prev" : e.key === "ArrowRight" ? "next" : null;
+  if (go) location.href = document.querySelector('[data-go="' + go + '"]').href;
+});
+addEventListener("click", (e) => { const m = document.querySelector(".menu"); if (m.open && !m.contains(e.target)) m.open = false; });
+</script><script type="module">const AZIMUTH = 45;
+const ELEVATION = 30;
+const SHADES = 4;
+const RADIANS = Math.PI / 180;
+const UNIT = Math.sqrt(1.6);
+function cameraOf({ scale, azimuth = AZIMUTH, elevation = ELEVATION }) {
+    const a = azimuth * RADIANS;
+    const e = elevation * RADIANS;
+    return { sinA: Math.sin(a), cosA: Math.cos(a), sinE: Math.sin(e), cosE: Math.cos(e), k: scale * UNIT };
+}
+function iso([x, y, z], projection) {
+    const { origin } = projection;
+    const { sinA, cosA, sinE, cosE, k } = cameraOf(projection);
+    return [origin[0] + (x * sinA - y * cosA) * k, origin[1] + ((x * cosA + y * sinA) * sinE - z * cosE) * k];
+}
+function towardViewer(projection) {
+    const { sinA, cosA } = cameraOf(projection);
+    return [cosA, sinA];
+}
+function depthOf([x, y, z], projection) {
+    const { sinA, cosA, sinE, cosE } = cameraOf(projection);
+    return (x * cosA + y * sinA) * cosE + z * sinE;
+}
+const tenth = (value) => {
+    const text = (Math.round(value * 10) / 10).toFixed(1).replace(/\.0$/, "");
+    return text === "-0" ? "0" : text;
+};
+function pathOf(points, closed = false) {
+    if (!points.length)
+        return "";
+    return points.map(([x, y], at) => `${at ? "L" : "M"}${tenth(x)} ${tenth(y)}`).join("") + (closed ? "Z" : "");
+}
+const joinPaths = (paths) => paths.filter(Boolean).join("");
+function roundedPlan({ x, y, w, d, r }, steps = 8) {
+    const radius = Math.max(0, Math.min(r, w / 2, d / 2));
+    const corners = [
+        [x + w - radius, y + radius, -90],
+        [x + w - radius, y + d - radius, 0],
+        [x + radius, y + d - radius, 90],
+        [x + radius, y + radius, 180],
+    ];
+    const out = [];
+    for (const [cx, cy, start] of corners) {
+        const count = radius > 0 ? steps : 0;
+        for (let step = 0; step <= count; step++) {
+            const angle = (start + (count ? (90 * step) / count : 45)) * RADIANS;
+            out.push([cx + radius * Math.cos(angle), cy + radius * Math.sin(angle)]);
+        }
+    }
+    return out;
+}
+function signedArea(points) {
+    let area = 0;
+    for (let index = 0; index < points.length; index++) {
+        const [ax, ay] = points[index];
+        const [bx, by] = points[(index + 1) % points.length];
+        area += ax * by - bx * ay;
+    }
+    return area / 2;
+}
+const oriented = (points) => (signedArea(points) < 0 ? [...points].reverse() : points);
+function convexHull(points) {
+    const sorted = [...points].sort((a, b) => a[0] - b[0] || a[1] - b[1]);
+    if (sorted.length < 3)
+        return sorted;
+    const cross = (o, a, b) => (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0]);
+    const lower = [];
+    for (const point of sorted) {
+        while (lower.length >= 2 && cross(lower[lower.length - 2], lower[lower.length - 1], point) <= 0)
+            lower.pop();
+        lower.push(point);
+    }
+    const upper = [];
+    for (let index = sorted.length - 1; index >= 0; index--) {
+        const point = sorted[index];
+        while (upper.length >= 2 && cross(upper[upper.length - 2], upper[upper.length - 1], point) <= 0)
+            upper.pop();
+        upper.push(point);
+    }
+    return [...lower.slice(0, -1), ...upper.slice(0, -1)];
+}
+function runsOf(flags, want) {
+    const count = flags.length;
+    const runs = [];
+    const start = flags.findIndex((flag, index) => flag !== flags[(index + count - 1) % count]);
+    if (start < 0)
+        return flags[0] === want ? [Array.from({ length: count + 1 }, (_, index) => index % count)] : [];
+    let run = null;
+    for (let step = 0; step < count; step++) {
+        const index = (start + step) % count;
+        if (flags[index] === want) {
+            if (!run)
+                run = [index];
+            run.push((index + 1) % count);
+        }
+        else if (run) {
+            runs.push(run);
+            run = null;
+        }
+    }
+    if (run)
+        runs.push(run);
+    return runs;
+}
+function extrude(ring, z, height, projection, options = {}) {
+    const convex = options.convex ?? true;
+    const count = ring.length;
+    const counter = signedArea(ring) > 0;
+    const [vx, vy] = towardViewer(projection);
+    const { sinA, cosA } = cameraOf(projection);
+    const normals = ring.map(([ax, ay], index) => {
+        const [bx, by] = ring[(index + 1) % count];
+        const dx = bx - ax;
+        const dy = by - ay;
+        const length = Math.hypot(dx, dy) || 1;
+        return (counter ? [dy / length, -dx / length] : [-dy / length, dx / length]);
+    });
+    const facing = normals.map(([nx, ny]) => nx * vx + ny * vy > 1e-9);
+    const top = ring.map(([x, y]) => iso([x, y, z + height], projection));
+    const bottom = ring.map(([x, y]) => iso([x, y, z], projection));
+    const outline = [];
+    const crease = [];
+    for (const run of runsOf(facing, false))
+        outline.push(pathOf(run.map((index) => top[index])));
+    for (const run of runsOf(facing, true)) {
+        crease.push(pathOf(run.map((index) => top[index])));
+        if (height > 0)
+            outline.push(pathOf(run.map((index) => bottom[index])));
+    }
+    if (height > 0) {
+        for (let index = 0; index < count; index++) {
+            if (facing[(index + count - 1) % count] !== facing[index])
+                outline.push(pathOf([top[index], bottom[index]]));
+        }
+    }
+    let fill;
+    if (convex) {
+        fill = pathOf(convexHull([...top, ...bottom]), true);
+    }
+    else {
+        const parts = [pathOf(oriented(top), true), pathOf(oriented(bottom), true)];
+        for (let index = 0; index < count; index++) {
+            if (!facing[index])
+                continue;
+            const next = (index + 1) % count;
+            parts.push(pathOf(oriented([top[index], top[next], bottom[next], bottom[index]]), true));
+        }
+        fill = parts.join("");
+    }
+    const buckets = Array.from({ length: SHADES }, () => []);
+    if (height > 0) {
+        const [lx, ly] = [-sinA, cosA];
+        for (let index = 0; index < count; index++) {
+            if (!facing[index])
+                continue;
+            const [nx, ny] = normals[index];
+            const lit = (nx * lx + ny * ly + 1) / 2;
+            const shade = Math.min(SHADES - 1, Math.max(0, Math.floor(lit * SHADES)));
+            const next = (index + 1) % count;
+            buckets[shade].push(pathOf(oriented([top[index], top[next], bottom[next], bottom[index]]), true));
+        }
+    }
+    let bevel;
+    if (options.bevel && options.bevel > 0) {
+        const by = options.bevel;
+        const inset = ring.map(([x, y], index) => {
+            const [ax, ay] = normals[(index + count - 1) % count];
+            const [bx, by2] = normals[index];
+            const mx = ax + bx;
+            const my = ay + by2;
+            const length = Math.hypot(mx, my) || 1;
+            return [x - (mx / length) * by, y - (my / length) * by];
+        });
+        const insetTop = inset.map(([x, y]) => iso([x, y, z + height], projection));
+        bevel = runsOf(facing, true)
+            .map((run) => pathOf([top[run[0]], ...run.slice(1, -1).map((index) => insetTop[index]), top[run[run.length - 1]]]))
+            .join("");
+    }
+    return {
+        fill,
+        outline: outline.join(""),
+        crease: crease.join(""),
+        top: pathOf(oriented(top), true),
+        shades: buckets.map((paths) => paths.join("")),
+        bevel,
+    };
+}
+const ringOf = (plan, steps = 8) => roundedPlan(plan, steps);
+function slabOf(plan, z, height, projection, steps = 8, bevel = 0) {
+    return extrude(ringOf(plan, steps), z, height, projection, { convex: true, bevel });
+}
+function circleRing(cx, cy, radius, steps = 40) {
+    return Array.from({ length: steps }, (_, step) => {
+        const angle = (step / steps) * Math.PI * 2;
+        return [cx + radius * Math.cos(angle), cy + radius * Math.sin(angle)];
+    });
+}
+function cylinder(cx, cy, radius, z, height, projection, steps = 32, bevel = 0) {
+    return extrude(circleRing(cx, cy, radius, steps), z, height, projection, { convex: true, bevel });
+}
+const insetPlan = ({ x, y, w, d, r }, by) => ({ x: x + by, y: y + by, w: w - by * 2, d: d - by * 2, r: Math.max(0, r - by) });
+function onTop(points, z, projection, closed = false) {
+    return pathOf(points.map(([x, y]) => iso([x, y, z], projection)), closed);
+}
+const planOutline = (plan, z, projection, steps = 8) => onTop(ringOf(plan, steps), z, projection, true);
+const lineOnTop = (from, to, z, projection) => onTop([from, to], z, projection);
+const segment = (from, to, projection) => pathOf([iso(from, projection), iso(to, projection)]);
+const rise = (at, from, to, projection) => segment([at[0], at[1], from], [at[0], at[1], to], projection);
+const ring = (cx, cy, radius, z, projection, steps = 40) => onTop(circleRing(cx, cy, radius, steps), z, projection, true);
+const pointsAt = (points, projection) => points.map((point) => iso(point, projection));
+function dotGrid(x, y, columns, rows, gap, z, projection) {
+    const dots = [];
+    for (let row = 0; row < rows; row++) {
+        for (let column = 0; column < columns; column++)
+            dots.push(iso([x + column * gap, y + row * gap, z], projection));
+    }
+    return dots;
+}
+function corners({ x, y, w, d }, inset = 0) {
+    return [
+        [x + inset, y + inset],
+        [x + w - inset, y + inset],
+        [x + inset, y + d - inset],
+        [x + w - inset, y + d - inset],
+    ];
+}
+function boxCorners({ x, y, w, d }, z0, z1) {
+    const out = [];
+    for (const px of [x, x + w])
+        for (const py of [y, y + d])
+            for (const z of [z0, z1])
+                out.push([px, py, z]);
+    return out;
+}
+function knurl(cx, cy, radius, z0, z1, count, projection, inset = 0.4) {
+    const [vx, vy] = towardViewer(projection);
+    const lines = [];
+    for (let index = 0; index < count; index++) {
+        const angle = (index / count) * Math.PI * 2;
+        const nx = Math.cos(angle);
+        const ny = Math.sin(angle);
+        if (nx * vx + ny * vy < 0.15)
+            continue;
+        lines.push(segment([cx + radius * nx, cy + radius * ny, z0 + inset], [cx + radius * nx, cy + radius * ny, z1 - inset], projection));
+    }
+    return lines.join("");
+}
+function sideArc(cx, cy, radius, z, projection, steps = 24) {
+    const [vx, vy] = towardViewer(projection);
+    const facing = Math.atan2(vy, vx);
+    const points = [];
+    for (let step = 0; step <= steps; step++) {
+        const angle = facing - Math.PI / 2 + (step / steps) * Math.PI;
+        points.push(iso([cx + radius * Math.cos(angle), cy + radius * Math.sin(angle), z], projection));
+    }
+    return pathOf(points);
+}
+function ringSeam(ring, z, projection) {
+    const count = ring.length;
+    const counter = signedArea(ring) > 0;
+    const [vx, vy] = towardViewer(projection);
+    const facing = ring.map(([ax, ay], index) => {
+        const [bx, by] = ring[(index + 1) % count];
+        const dx = bx - ax;
+        const dy = by - ay;
+        const [nx, ny] = counter ? [dy, -dx] : [-dy, dx];
+        return nx * vx + ny * vy > 1e-9;
+    });
+    return runsOf(facing, true).map((run) => pathOf(run.map((index) => iso([ring[index][0], ring[index][1], z], projection)))).join("");
+}
+const sideSeam = (plan, z, projection, steps = 8) => ringSeam(ringOf(plan, steps), z, projection);
+function sideRing(center, radius, axis, projection, steps = 20) {
+    const [px, py, pz] = center;
+    const points = [];
+    for (let step = 0; step < steps; step++) {
+        const angle = (step / steps) * Math.PI * 2;
+        const u = radius * Math.cos(angle);
+        const v = radius * Math.sin(angle);
+        points.push(iso(axis === "x" ? [px, py + u, pz + v] : [px + u, py, pz + v], projection));
+    }
+    return pathOf(points, true);
+}
+function coil(from, to, center, radius, turns, axis, projection, perTurn = 16) {
+    const count = Math.max(1, Math.round(turns * perTurn));
+    const back = [];
+    const front = [];
+    let run = [];
+    let near = null;
+    for (let index = 0; index <= count; index++) {
+        const share = index / count;
+        const angle = share * turns * Math.PI * 2;
+        const u = radius * Math.cos(angle);
+        const v = radius * Math.sin(angle);
+        const along = from + (to - from) * share;
+        const point = axis === "x" ? [along, center[0] + u, center[1] + v] : [center[0] + u, along, center[1] + v];
+        const normal = axis === "x" ? [0, Math.cos(angle), Math.sin(angle)] : [Math.cos(angle), 0, Math.sin(angle)];
+        const facing = depthOf(normal, projection) > 0;
+        const flat = iso(point, projection);
+        if (near === null)
+            near = facing;
+        if (facing !== near) {
+            run.push(flat);
+            (near ? front : back).push(pathOf(run));
+            run = [flat];
+            near = facing;
+            continue;
+        }
+        run.push(flat);
+    }
+    if (run.length > 1)
+        (near ? front : back).push(pathOf(run));
+    return { back: back.join(""), front: front.join("") };
+}
+function topTicks(from, to, step, every, edge, z, lengths, projection, axis = "x") {
+    const minor = [];
+    const major = [];
+    const first = Math.ceil(from / step) * step;
+    for (let at = first, index = Math.round(first / step); at <= to + 1e-9; at += step, index++) {
+        const big = index % every === 0;
+        const length = big ? lengths[1] : lengths[0];
+        const a = axis === "x" ? [at, edge] : [edge, at];
+        const b = axis === "x" ? [at, edge + length] : [edge + length, at];
+        (big ? major : minor).push(lineOnTop(a, b, z, projection));
+    }
+    return { minor: minor.join(""), major: major.join("") };
+}
+function sideTicks(from, to, step, every, face, top, lengths, projection, axis = "x") {
+    const minor = [];
+    const major = [];
+    const first = Math.ceil(from / step) * step;
+    for (let at = first, index = Math.round(first / step); at <= to + 1e-9; at += step, index++) {
+        const big = index % every === 0;
+        const length = big ? lengths[1] : lengths[0];
+        const a = axis === "x" ? [at, face, top] : [face, at, top];
+        const b = axis === "x" ? [at, face, top - length] : [face, at, top - length];
+        (big ? major : minor).push(segment(a, b, projection));
+    }
+    return { minor: minor.join(""), major: major.join("") };
+}
+function radialTicks(cx, cy, radius, count, every, z, lengths, projection, from = 0, span = Math.PI * 2) {
+    const minor = [];
+    const major = [];
+    const closed = Math.abs(span - Math.PI * 2) < 1e-9;
+    const steps = closed ? count : count + 1;
+    for (let index = 0; index < steps; index++) {
+        const angle = from + (index / count) * span;
+        const big = index % every === 0;
+        const inner = radius - (big ? lengths[1] : lengths[0]);
+        const sx = Math.sin(angle);
+        const sy = -Math.cos(angle);
+        (big ? major : minor).push(lineOnTop([cx + sx * inner, cy + sy * inner], [cx + sx * radius, cy + sy * radius], z, projection));
+    }
+    return { minor: minor.join(""), major: major.join("") };
+}
+const haloOf = (plan, z, height, projection) => slabOf(plan, z, height, projection).fill;
+function axisVector(projection, [dx, dy, dz]) {
+    const origin = iso([0, 0, 0], projection);
+    const moved = iso([dx, dy, dz], projection);
+    return [moved[0] - origin[0], moved[1] - origin[1]];
+}
+const fine = (value) => Math.round(value * 100) / 100;
+function translateAlong(projection, by) {
+    const [x, y] = axisVector(projection, by);
+    return `translate(${fine(x)} ${fine(y)})`;
+}
+const thousandth = (value) => Math.round(value * 1000) / 1000;
+function axesAt(at, z, projection) {
+    const origin = iso([at[0], at[1], z], projection);
+    const along = (point) => {
+        const [px, py] = iso(point, projection);
+        return [px - origin[0], py - origin[1]];
+    };
+    return { origin, x: along([at[0] + 1, at[1], z]), y: along([at[0], at[1] + 1, z]), z: along([at[0], at[1], z + 1]) };
+}
+const matrixOf = (u, v, origin) => `matrix(${thousandth(u[0])} ${thousandth(u[1])} ${thousandth(v[0])} ${thousandth(v[1])} ${thousandth(origin[0])} ${thousandth(origin[1])})`;
+function holdStill(element, [dx, dy]) {
+    const text = dx || dy ? `translate(${-dx} ${-dy})` : "";
+    element.querySelectorAll("[data-hold]").forEach((node) => (text ? node.setAttribute("transform", text) : node.removeAttribute("transform")));
+}
+function topMatrix(at, z, projection, along = "x") {
+    const { origin, x, y } = axesAt(at, z, projection);
+    return along === "x" ? matrixOf(x, y, origin) : matrixOf([-y[0], -y[1]], x, origin);
+}
+function sideMatrix(at, z, projection, face) {
+    const { origin, x, y, z: up } = axesAt(at, z, projection);
+    const down = [-up[0], -up[1]];
+    return face === "left" ? matrixOf(x, down, origin) : matrixOf([-y[0], -y[1]], down, origin);
+}
+function screenRise(height, projection) {
+    const { cosE, k } = cameraOf(projection);
+    return height * cosE * k;
+}
+function fitProjection(points, width, height, { pad = 24, headroom = 0, azimuth = AZIMUTH, elevation = ELEVATION } = {}) {
+    const unit = { origin: [0, 0], scale: 1, azimuth, elevation };
+    const flat = points.map((point) => iso(point, unit));
+    const xs = flat.map(([x]) => x);
+    const ys = flat.map(([, y]) => y);
+    const left = Math.min(...xs);
+    const right = Math.max(...xs);
+    const up = Math.min(...ys);
+    const down = Math.max(...ys);
+    const scale = Math.min((width - pad * 2) / (right - left), (height - pad * 2 - headroom) / (down - up));
+    return {
+        origin: [width / 2 - ((left + right) / 2) * scale, headroom + (height - headroom) / 2 - ((up + down) / 2) * scale],
+        scale,
+        azimuth,
+        elevation,
+    };
+}
+const escape = (text) => text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+const attrs = (pairs) => Object.entries(pairs)
+    .filter(([, value]) => value !== undefined && value !== false)
+    .map(([key, value]) => ` ${key}="${escape(String(value))}"`)
+    .join("");
+function solidSvg(paths, { tone = "hi", crease = "faint", halo = false, lit = false, flat = false, className, inner = "" } = {}) {
+    const parts = [];
+    if (halo)
+        parts.push(`<path class="iso-halo" d="${paths.fill}"/>`);
+    parts.push(`<path class="iso-fill" d="${paths.fill}"/>`);
+    if (!flat) {
+        paths.shades.forEach((d, shade) => {
+            if (d)
+                parts.push(`<path class="iso-shade" data-shade="${shade}" d="${d}"/>`);
+        });
+        parts.push(`<path class="iso-top" d="${paths.top}"/>`);
+    }
+    if (crease !== "none" && paths.crease)
+        parts.push(`<path class="iso-line iso-crease" data-tone="${crease}" d="${paths.crease}"/>`);
+    if (crease !== "none" && paths.bevel)
+        parts.push(`<path class="iso-line iso-bevel" data-tone="${crease}" d="${paths.bevel}"/>`);
+    if (inner)
+        parts.push(inner);
+    parts.push(`<path class="iso-line iso-edge" data-tone="${tone}" d="${paths.outline}"/>`);
+    return `<g${attrs({ class: className ? `iso-solid ${className}` : "iso-solid", "data-lit": lit ? "" : undefined, "data-seamless": paths.seamless ? "" : undefined })}>${parts.join("")}</g>`;
+}
+function lineSvg(d, { tone = "lo", dotted = false, dashed = false, flow = false, className, free } = {}) {
+    if (!d)
+        return "";
+    return `<path${attrs({
+        class: className ? `iso-line ${className}` : "iso-line",
+        "data-tone": tone,
+        "data-free": free === true ? "" : free || undefined,
+        "data-dotted": dotted ? "" : undefined,
+        "data-dashed": dashed ? "" : undefined,
+        "data-flow": flow ? "" : undefined,
+        d,
+    })}/>`;
+}
+function dotsSvg(points, { size = 0.5, tone = "mid", pulse = false } = {}) {
+    const dots = points
+        .map(([x, y, alpha], index) => `<circle cx="${tenth(x)}" cy="${tenth(y)}" r="${size}"${alpha !== undefined && alpha < 1 ? ` fill-opacity="${Math.max(0, alpha).toFixed(2)}"` : ""}${pulse ? ` data-pulse="" style="--pulse-at:${(index * 137) % 1600}ms"` : ""}/>`)
+        .join("");
+    return `<g class="iso-dots" data-tone="${tone}">${dots}</g>`;
+}
+function fadedSvg(list, style = {}) {
+    const groups = new Map();
+    for (const entry of list) {
+        const [d, alpha] = Array.isArray(entry) ? entry : [entry.d, entry.alpha];
+        if (!d || !(alpha > 0.02))
+            continue;
+        const level = Math.min(1, Math.round(alpha * 20) / 20);
+        groups.set(level, (groups.get(level) ?? "") + d);
+    }
+    return [...groups].map(([alpha, d]) => (alpha >= 1 ? lineSvg(d, style) : `<g opacity="${alpha.toFixed(2)}">${lineSvg(d, style)}</g>`)).join("");
+}
+function fadeLineSvg(points, { fade = [0, 0], tone = "lo", className, stops = 6 } = {}) {
+    if (points.length < 2)
+        return "";
+    const ease = (t) => t * t * (3 - 2 * t);
+    const hashOf = (text) => {
+        let hash = 2166136261;
+        for (let index = 0; index < text.length; index++)
+            hash = Math.imul(hash ^ text.charCodeAt(index), 16777619);
+        return (hash >>> 0).toString(36);
+    };
+    const lengths = [0];
+    for (let index = 1; index < points.length; index++)
+        lengths.push(lengths[index - 1] + Math.hypot(points[index][0] - points[index - 1][0], points[index][1] - points[index - 1][1]));
+    const at = (length) => {
+        let index = 1;
+        while (index < points.length - 1 && lengths[index] < length)
+            index++;
+        const span = lengths[index] - lengths[index - 1] || 1;
+        const t = Math.max(0, Math.min(1, (length - lengths[index - 1]) / span));
+        return [points[index - 1][0] + (points[index][0] - points[index - 1][0]) * t, points[index - 1][1] + (points[index][1] - points[index - 1][1]) * t];
+    };
+    const pieceOf = (from, to) => [at(from), ...points.filter((_, index) => lengths[index] > from + 1e-6 && lengths[index] < to - 1e-6), at(to)];
+    const total = lengths[lengths.length - 1];
+    if (total < 1e-6)
+        return "";
+    let [start, end] = Array.isArray(fade) ? fade : [fade, fade];
+    if (start + end > total) {
+        const share = total / (start + end);
+        start *= share;
+        end *= share;
+    }
+    const paint = `var(--anatomy-${tone})`;
+    const ramp = (piece, rising) => {
+        const d = pathOf(piece);
+        const [x1, y1] = piece[0];
+        const [x2, y2] = piece[piece.length - 1];
+        const id = `iso-fade-${hashOf(`${d}|${tone}|${rising}`)}`;
+        const marks = Array.from({ length: stops + 1 }, (_, index) => {
+            const t = index / stops;
+            const alpha = ease(rising ? t : 1 - t);
+            return `<stop offset="${t.toFixed(3)}" stop-opacity="${alpha.toFixed(3)}" style="stop-color:${paint}"/>`;
+        }).join("");
+        const gradient = `<linearGradient id="${id}" gradientUnits="userSpaceOnUse" x1="${tenth(x1)}" y1="${tenth(y1)}" x2="${tenth(x2)}" y2="${tenth(y2)}">${marks}</linearGradient>`;
+        return `<defs>${gradient}</defs><path${attrs({ class: className ? `iso-line ${className}` : "iso-line", "data-tone": tone, "data-free": rising ? "start" : "end", d, style: `stroke:url(#${id})` })}/>`;
+    };
+    const parts = [];
+    if (start > 0.05)
+        parts.push(ramp(pieceOf(0, start), true));
+    if (total - end - start > 0.05)
+        parts.push(lineSvg(pathOf(pieceOf(start, total - end)), { tone, className }));
+    if (end > 0.05)
+        parts.push(ramp(pieceOf(total - end, total), false));
+    return `<g class="iso-fade">${parts.join("")}</g>`;
+}
+function wireSvg(from, to, { via = [], tone = "lo", dotted = false, dashed = false, flow = false, ends = "both", size = 1.2 } = {}) {
+    const d = pathOf([from, ...via, to]);
+    const end = ([x, y]) => `<circle class="iso-wire-end" cx="${tenth(x)}" cy="${tenth(y)}" r="${size}"/>`;
+    return `<g class="iso-wire" data-tone="${tone}">${lineSvg(d, { tone, dotted, dashed, flow })}${ends === "both" || ends === "from" ? end(from) : ""}${ends === "both" || ends === "to" ? end(to) : ""}</g>`;
+}
+function faceTextSvg(transform, text, { size = 3, tone = "mid", anchor = "start" } = {}) {
+    return `<text class="iso-face-text" data-tone="${tone}" transform="${transform}" font-size="${size}" text-anchor="${anchor}">${escape(text)}</text>`;
+}
+function groupSvg(children, extra = {}) {
+    return `<g${attrs(extra)}>${Array.isArray(children) ? children.join("") : children}</g>`;
+}
+function figureSvg({ width, height, label, body, standalone = false, className }) {
+    const style = standalone ? `<style>${ISO_CSS}</style>` : "";
+    return `<svg${attrs({
+        xmlns: "http://www.w3.org/2000/svg",
+        class: `iso-svg${standalone ? " iso" : ""}${className ? ` ${className}` : ""}`,
+        "data-theme": standalone || undefined,
+        viewBox: `0 0 ${width} ${height}`,
+        role: "img",
+        "aria-label": label,
+    })}>${style}${Array.isArray(body) ? body.join("") : body}</svg>`;
+}
+function swatchSvg(mark) {
+    if (mark === "raised" || mark === "flat" || mark === "lit") {
+        const body = mark === "flat" ? "M2 6.5 8 3.5 14 6.5 8 9.5Z" : "M2 4.5 8 1.5 14 4.5 14 6 8 9 2 6Z";
+        const crease = mark === "flat" ? "" : `<path class="iso-swatch-crease" d="M2 4.5 8 7.5 14 4.5"/>`;
+        return `<svg class="iso-swatch" data-mark="${mark}" viewBox="0 0 16 10" aria-hidden="true"><path d="${body}"/>${crease}</svg>`;
+    }
+    return `<svg class="iso-swatch" data-mark="${mark}" viewBox="0 0 16 10" aria-hidden="true"><path d="M1.5 5h13"/></svg>`;
+}
+function plateHtml({ fig, title, hint, readout = "", keys = [], caption, body }) {
+    const corner = (name, text, extra = "") => `<span class="iso-plate-corner" data-corner="${name}"${extra}>${escape(text)}</span>`;
+    const legend = keys.length || caption
+        ? `<figcaption class="iso-legend">${keys.length ? `<span class="iso-keys">${keys.map((key) => `<span class="iso-key">${swatchSvg(key.mark)}${escape(key.label)}</span>`).join("")}</span>` : ""}${caption ? `<span class="iso-caption">${escape(caption)}</span>` : ""}</figcaption>`
+        : "";
+    return `<figure class="iso-figure"><div class="iso-plate"><div class="iso-plate-corners" aria-hidden="true">${corner("fig", fig)}${title ? corner("title", title) : ""}${hint ? corner("hint", hint) : ""}${corner("readout", readout, " data-readout")}</div>${body}</div>${legend}</figure>`;
+}
+function pageHtml({ title, theme = "dark", body, script = "", width = 650 }) {
+    return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>${escape(title)}</title><style>${ISO_CSS}${PAGE_CSS.replace("__WIDTH__", String(width))}</style></head><body class="iso" data-theme="${theme}"><main class="iso-page">${body}</main>${script ? `<script type="module">${script.replace(/<\/(script)/gi, "<\\/$1")}<\/script>` : ""}</body></html>`;
+}
+const PAGE_CSS = `
+*{box-sizing:border-box}
+html{color-scheme:dark}
+body[data-theme="light"]{color-scheme:light}
+body{margin:0;background:var(--anatomy-page);color:var(--anatomy-text);font:14px/1.6 ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+.iso-page{width:min(__WIDTH__px,100% - 32px);margin:64px auto 96px}
+`;
+const ISO_CSS = `
+.iso{
+  --anatomy-page:#0b0b0b;--anatomy-card:#131313;--anatomy-text:#a3a3a3;--anatomy-strong:#e6e6e6;--anatomy-muted:#6e6e6e;
+  --anatomy-paper:#131313;--anatomy-face:#1b1b1b;--anatomy-top:#1c1c1c;
+  --anatomy-shade-0:#0f0f0f;--anatomy-shade-1:#121212;--anatomy-shade-2:#151515;--anatomy-shade-3:#181818;
+  --anatomy-lit-top:#262626;--anatomy-lit-shade:#1d1d1d;
+  --anatomy-hi:#d4d4d4;--anatomy-mid:#6a6a6a;--anatomy-lo:#3e3e3e;--anatomy-faint:#2a2a2a;--anatomy-lit:#ffffff;
+  --anatomy-halo:#050505;--anatomy-halo-opacity:.9;--anatomy-dot:#e6e6e6;
+  --anatomy-red:#ff6b6b;--anatomy-green:#6be0a0;--anatomy-blue:#6b9bff;
+  --anatomy-weight:.6px;--anatomy-ease:cubic-bezier(.32,.72,0,1);
+  --anatomy-mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --anatomy-lift:inset 0 1px 0 0 #ffffff0a,inset 0 0 0 1px #ffffff06,0 0 0 1px #00000026,0 1px 1px -.5px #00000014,0 3px 3px -1.5px #00000014,0 6px 6px -3px #00000014,0 12px 12px -6px #00000014;
+}
+.iso[data-theme="light"]{
+  --anatomy-page:#f2f2ef;--anatomy-card:#fbfbfa;--anatomy-text:#57575a;--anatomy-strong:#18181a;--anatomy-muted:#8c8c90;
+  --anatomy-paper:#fbfbfa;--anatomy-face:#ffffff;--anatomy-top:#ffffff;
+  --anatomy-shade-0:#dcdcd9;--anatomy-shade-1:#e5e5e2;--anatomy-shade-2:#ededea;--anatomy-shade-3:#f4f4f1;
+  --anatomy-lit-top:#ffffff;--anatomy-lit-shade:#eeeeeb;
+  --anatomy-hi:#26262a;--anatomy-mid:#8a8a8f;--anatomy-lo:#b4b4b8;--anatomy-faint:#d4d4d6;--anatomy-lit:#000000;
+  --anatomy-halo:#8a8a80;--anatomy-halo-opacity:.32;--anatomy-dot:#3a3a3e;
+  --anatomy-red:#e5484d;--anatomy-green:#30a46c;--anatomy-blue:#3e63dd;
+  --anatomy-lift:inset 0 1px 0 0 #ffffff,0 0 0 1px #0000000f,0 1px 1px -.5px #0000000a,0 3px 3px -1.5px #0000000a,0 6px 6px -3px #0000000a,0 12px 12px -6px #0000000a;
+}
+.iso-svg{display:block;width:100%;height:auto;overflow:visible}
+.iso-svg path,.iso-svg circle{vector-effect:non-scaling-stroke}
+.iso-fill{fill:var(--anatomy-paper);stroke:none}
+.iso-solid[data-lit]>.iso-fill{fill:var(--anatomy-face)}
+.iso-shade,.iso-top{stroke:none}
+.iso-shade[data-shade="0"]{fill:var(--anatomy-shade-0)}
+.iso-shade[data-shade="1"]{fill:var(--anatomy-shade-1)}
+.iso-shade[data-shade="2"]{fill:var(--anatomy-shade-2)}
+.iso-shade[data-shade="3"]{fill:var(--anatomy-shade-3)}
+.iso-top{fill:var(--anatomy-top)}
+.iso-solid[data-lit]>.iso-top{fill:var(--anatomy-lit-top)}
+.iso-solid[data-lit]>.iso-shade{fill:var(--anatomy-lit-shade)}
+.iso-solid[data-seamless]>.iso-shade,.iso-solid[data-seamless]>.iso-top{stroke-width:.4;stroke-linejoin:round}
+.iso-solid[data-seamless]>.iso-shade[data-shade="0"]{stroke:var(--anatomy-shade-0)}
+.iso-solid[data-seamless]>.iso-shade[data-shade="1"]{stroke:var(--anatomy-shade-1)}
+.iso-solid[data-seamless]>.iso-shade[data-shade="2"]{stroke:var(--anatomy-shade-2)}
+.iso-solid[data-seamless]>.iso-shade[data-shade="3"]{stroke:var(--anatomy-shade-3)}
+.iso-solid[data-seamless]>.iso-top{stroke:var(--anatomy-top)}
+.iso-solid[data-seamless][data-lit]>.iso-top{stroke:var(--anatomy-lit-top)}
+.iso-solid[data-seamless][data-lit]>.iso-shade{stroke:var(--anatomy-lit-shade)}
+.iso-solid[data-lit]>.iso-edge{stroke:var(--anatomy-lit)}
+.iso-halo{fill:var(--anatomy-halo);stroke:none;filter:blur(9px);opacity:var(--anatomy-halo-opacity);transform:translateY(3px)}
+.iso-line{fill:none;stroke:var(--anatomy-lo);stroke-width:var(--anatomy-weight);stroke-linecap:round;stroke-linejoin:round}
+.iso-line[data-tone="hi"]{stroke:var(--anatomy-hi)}
+.iso-line[data-tone="mid"]{stroke:var(--anatomy-mid)}
+.iso-line[data-tone="lo"]{stroke:var(--anatomy-lo)}
+.iso-line[data-tone="faint"]{stroke:var(--anatomy-faint)}
+.iso-line[data-tone="lit"]{stroke:var(--anatomy-lit)}
+.iso-line[data-tone="red"]{stroke:var(--anatomy-red)}
+.iso-line[data-tone="green"]{stroke:var(--anatomy-green)}
+.iso-line[data-tone="blue"]{stroke:var(--anatomy-blue)}
+.iso-line[data-dotted]{stroke-dasharray:.01 3.5;stroke-width:1}
+.iso-line[data-dashed]{stroke-dasharray:3 3}
+.iso-line[data-flow]{stroke-dasharray:2 6}
+.iso-wire-end{fill:var(--anatomy-paper);stroke:var(--anatomy-lo);stroke-width:var(--anatomy-weight)}
+.iso-wire[data-tone="hi"] .iso-wire-end{stroke:var(--anatomy-hi)}
+.iso-wire[data-tone="mid"] .iso-wire-end{stroke:var(--anatomy-mid)}
+.iso-wire[data-tone="faint"] .iso-wire-end{stroke:var(--anatomy-faint)}
+.iso-wire[data-tone="lit"] .iso-wire-end{stroke:var(--anatomy-lit)}
+.iso-dots circle{fill:var(--anatomy-dot);stroke:none;opacity:.32}
+.iso-dots[data-tone="hi"] circle{opacity:.85}
+.iso-dots[data-tone="mid"] circle{opacity:.45}
+.iso-dots[data-tone="lo"] circle{opacity:.22}
+.iso-dots[data-tone="faint"] circle{opacity:.12}
+.iso-face-text{fill:var(--anatomy-mid);font-family:var(--anatomy-mono);letter-spacing:.04em}
+.iso-face-text[data-tone="hi"]{fill:var(--anatomy-hi)}
+.iso-face-text[data-tone="lo"]{fill:var(--anatomy-lo)}
+.iso-face-text[data-tone="faint"]{fill:var(--anatomy-faint)}
+.tb-body{fill:var(--anatomy-shade-2);stroke:none}
+.tb-shine{fill:var(--anatomy-top);stroke:none}
+.tb-shade{fill:var(--anatomy-shade-0);stroke:none}
+.tb-ring{fill:none;stroke:var(--anatomy-lo);stroke-width:.45;stroke-linecap:butt;stroke-linejoin:round}
+.tb-ring[data-tone="mid"]{stroke:var(--anatomy-mid)}
+.tb-ring[data-tone="faint"]{stroke:var(--anatomy-faint)}
+.tb-ring[data-tone="hi"]{stroke:var(--anatomy-hi)}
+@keyframes iso-flow{to{stroke-dashoffset:-32}}
+@keyframes iso-pulse{0%,100%{opacity:.18}12%{opacity:1}40%{opacity:.18}}
+.iso-line[data-flow]{animation:iso-flow 1600ms linear infinite}
+.iso-dots circle[data-pulse]{animation:iso-pulse 1600ms steps(1,end) infinite;animation-delay:var(--pulse-at,0ms)}
+.iso-figure{margin:32px 0 36px}
+.iso-plate{position:relative;padding:52px 24px;border-radius:0;background:var(--anatomy-card);box-shadow:0 0 0 1px var(--anatomy-mid);--anatomy-paper:var(--anatomy-card)}
+.iso-plate-corners{position:absolute;inset:18px 20px;pointer-events:none}
+.iso-plate-corner{position:absolute;color:var(--anatomy-muted);font-family:var(--anatomy-mono);font-size:10.5px;line-height:1;letter-spacing:.04em;white-space:nowrap}
+.iso-plate-corner[data-corner="fig"]{top:0;left:0;color:var(--anatomy-text)}
+.iso-plate-corner[data-corner="title"]{top:0;right:0;text-transform:uppercase;letter-spacing:.1em}
+.iso-plate-corner[data-corner="hint"]{bottom:0;left:0;text-transform:uppercase;letter-spacing:.1em}
+.iso-plate-corner[data-corner="readout"]{right:0;bottom:0;color:var(--anatomy-text);font-variant-numeric:tabular-nums}
+.iso-plate .iso-svg{margin:0 auto}
+.iso-legend{display:grid;gap:8px;margin-top:12px;color:var(--anatomy-muted);font-size:13px;line-height:1.55}
+.iso-keys{display:flex;flex-wrap:wrap;gap:6px 18px}
+.iso-key{display:inline-flex;align-items:center;gap:7px}
+.iso-swatch{width:16px;height:10px;flex:none;overflow:visible}
+.iso-swatch path{fill:none;stroke:var(--anatomy-hi);stroke-width:1;vector-effect:non-scaling-stroke;stroke-linejoin:round;stroke-linecap:round}
+.iso-swatch[data-mark="raised"] path,.iso-swatch[data-mark="flat"] path{stroke:var(--anatomy-mid)}
+.iso-swatch[data-mark="lit"] path{stroke:var(--anatomy-lit)}
+.iso-swatch[data-mark="dim"] path{stroke:var(--anatomy-lo)}
+.iso-swatch[data-mark="dotted"] path{stroke-dasharray:.01 3;stroke-width:1.4}
+.iso-swatch[data-mark="dashed"] path{stroke-dasharray:3 2.5}
+.iso-swatch[data-mark="red"] path{stroke:var(--anatomy-red)}
+.iso-swatch[data-mark="green"] path{stroke:var(--anatomy-green)}
+.iso-swatch[data-mark="blue"] path{stroke:var(--anatomy-blue)}
+.iso-swatch-crease{stroke:var(--anatomy-lo)!important}
+@media (max-width:560px){.iso-plate{padding:48px 12px 70px}.iso-plate-corner[data-corner="hint"]{bottom:18px}}
+@media (prefers-reduced-motion:reduce){.iso-line[data-flow],.iso-dots circle[data-pulse]{animation:none}}
+`;
+
+{ // the figure's own scope, so nothing collides with the inlined kit
+const D = {"P":{"origin":[317.60862758102814,242.8190689709477],"scale":0.4698265540721128,"azimuth":40,"elevation":36},"KS":0.5942888064384534,"W":700,"H":500,"MODEL":{"arm":"folds inside","map":"laser"},"BRAND":{"name":"Roborock","heading":"带机械臂的扫地机器人","maker":"Roborock","wordmark":"roborock","logo":"M97 50A47 47 0 1 1 3 50A47 47 0 1 1 97 50ZM88 50A38 38 0 1 0 12 50A38 38 0 1 0 88 50ZM32 38A7 7 0 0 1 46 38L46 72L32 72ZM46 49C46 37 54 29 66 29L71 29L71 42L66 42C57 42 46 45 46 56Z"},"SHADOW":[-0.06,0.17],"FLOOR_T":8,"AZ":40,"EL":36,"MAT":{"x":-330,"y":-440,"w":770,"d":830,"r":10},"RUG":{"x":-330,"y":-440,"w":112,"d":830,"r":0},"RUG_T":4,"BASKET":{"c":[304,-112],"r":90,"h":90},"HOME":{"c":[0,0],"yaw":110}};
+// Shared runtime for the figures, inlined after the kit (iso, ring, lineOnTop, translateAlong exist).
+// A figure's live.js defines its state, UPDATE and draw, then calls tour({...}).
+
+const P = D.P;
+const svg = document.querySelector(".stage svg");
+const part = (name) => svg.querySelector(`[data-part="${name}"]`);
+const slot = (name) => svg.querySelector(`[data-slot="${name}"]`);
+const chip = (name) => document.querySelector(`[data-chip="${name}"]`);
+const chipHot = (name, on) => document.querySelector(`[data-chipbox="${name}"]`)?.toggleAttribute("data-hot", !!on);
+const still = matchMedia("(prefers-reduced-motion: reduce)");
+const f1 = (n) => Math.round(n * 10) / 10;
+const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+const ease = (x) => { const t = clamp(x); return t * t * (3 - 2 * t); };
+const seg = (u, a, b) => clamp((u - a) / (b - a));
+const lerp = (a, b, t) => a + (b - a) * t;
+const lerp3 = (a, b, t) => a.map((v, i) => lerp(v, b[i], t));
+const pathOf = (pts, close = true) => (pts.length ? "M" + pts.map((p) => f1(p[0]) + " " + f1(p[1])).join("L") + (close ? "Z" : "") : "");
+const at = (p) => iso(p, P);
+const toward = towardViewer(P);
+function hull(points) {
+  const pts = [...points].sort((a, b) => a[0] - b[0] || a[1] - b[1]);
+  if (pts.length < 3) return pts;
+  const cross = (o, a, b) => (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0]);
+  const lo = [];
+  for (const p of pts) { while (lo.length >= 2 && cross(lo[lo.length - 2], lo[lo.length - 1], p) <= 0) lo.pop(); lo.push(p); }
+  const hi = [];
+  for (const p of pts.reverse()) { while (hi.length >= 2 && cross(hi[hi.length - 2], hi[hi.length - 1], p) <= 0) hi.pop(); hi.push(p); }
+  return lo.slice(0, -1).concat(hi.slice(0, -1));
+}
+const circle3 = (cx, cy, r, z, n = 36) => Array.from({ length: n }, (_, i) => { const a = (i / n) * Math.PI * 2; return [cx + r * Math.cos(a), cy + r * Math.sin(a), z]; });
+const cylPath = (cx, cy, r, z0, z1, n = 36) => pathOf(hull([...circle3(cx, cy, r, z0, n), ...circle3(cx, cy, r, z1, n)].map(at)));
+const discPath = (cx, cy, r, z, n = 44) => pathOf(circle3(cx, cy, r, z, n).map(at));
+// a circle in a vertical plane: axis "x" means the circle lies in the plane x = c[0]
+const vcircle = (c, r, axis = "x", n = 36) => Array.from({ length: n }, (_, i) => { const a = (i / n) * Math.PI * 2; return axis === "x" ? [c[0], c[1] + r * Math.cos(a), c[2] + r * Math.sin(a)] : [c[0] + r * Math.cos(a), c[1], c[2] + r * Math.sin(a)]; });
+// a straight rod between two world points, as a screen quad with round ends; r in world units
+function rodPath(a, b, r) {
+  const A = at(a), B = at(b), KS = D.KS;
+  const dx = B[0] - A[0], dy = B[1] - A[1], len = Math.hypot(dx, dy) || 1;
+  const nx = (-dy / len) * r * KS, ny = (dx / len) * r * KS, R = r * KS;
+  return `M${f1(A[0] + nx)} ${f1(A[1] + ny)}L${f1(B[0] + nx)} ${f1(B[1] + ny)}A${f1(R)} ${f1(R)} 0 0 1 ${f1(B[0] - nx)} ${f1(B[1] - ny)}L${f1(A[0] - nx)} ${f1(A[1] - ny)}A${f1(R)} ${f1(R)} 0 0 1 ${f1(A[0] + nx)} ${f1(A[1] + ny)}Z`;
+}
+const mixHex = (a, b, t) => {
+  const h = (x) => [1, 3, 5].map((i) => parseInt(x.slice(i, i + 2), 16));
+  const A = h(a), B = h(b);
+  return "#" + A.map((v, i) => Math.round(v + (B[i] - v) * t).toString(16).padStart(2, "0")).join("");
+};
+const along = (pts, u) => {
+  const n = pts.length - 1;
+  const x = clamp(u) * n;
+  const i = Math.min(n - 1, Math.floor(x));
+  return lerp3(pts[i], pts[i + 1], ease(x - i));
+};
+const lapseEl = document.querySelector("[data-lapse]");
+function setLapse(text) {
+  if (text) { if (lapseEl.textContent !== text) lapseEl.textContent = text; lapseEl.setAttribute("data-on", ""); } else lapseEl.removeAttribute("data-on");
+}
+const soundsG = part("sounds");
+function setWord(w) {
+  if (!w) { if (soundsG.firstChild) soundsG.textContent = ""; return; }
+  const [x, y] = at(w.p);
+  let t = soundsG.querySelector("text");
+  if (!t) { t = document.createElementNS("http://www.w3.org/2000/svg", "text"); t.setAttribute("class", "word"); soundsG.appendChild(t); }
+  if (t.textContent !== w.text) t.textContent = w.text;
+  t.setAttribute("x", f1(x)); t.setAttribute("y", f1(y));
+  t.setAttribute("font-size", w.size || 15);
+}
+const setText = (el, text) => { if (el && el.textContent !== text) el.textContent = text; };
+
+// Steps, buttons, the idle tour, the drawn cursor and window.seek(t) for frame-exact recording.
+function tour({ STEPS, ORDER, update, reset, onBegin = () => {}, onFinish = () => {}, draw, paint, probe = () => null, gap = 0.7, lead = 0.2, tail = 1.0 }) {
+  const buttons = [...document.querySelectorAll("[data-step]")];
+  const hintEl = document.querySelector("[data-hint]");
+  const INTRO = hintEl.textContent;
+  let next = 0, run = null, idle = 0, last = 0, auto = true;
+  const setButtons = () => buttons.forEach((b, i) => {
+    b.disabled = !!run || i !== next;
+    b.toggleAttribute("data-on", !!run && ORDER[i] === run.id);
+    b.toggleAttribute("data-done", !run && i < next && next !== 0);
+  });
+  const begin = (id) => { run = { id, t: 0 }; onBegin(id); hintEl.textContent = STEPS[id].hint; };
+  const finish = () => { const id = run.id; update(id, 1); onFinish(id); run = null; next = (next + 1) % ORDER.length; idle = 0; setButtons(); };
+  const start = (id) => { if (run || ORDER[next] !== id) return; begin(id); setButtons(); if (still.matches) finish(); };
+  // two modes: Auto runs the steps on a loop, Manual waits for the visitor to press each one in order
+  const modeEls = [...document.querySelectorAll("[data-mode]")];
+  const INTRO_MANUAL = INTRO.split(/(?<=[.?!])\s+/)[0] + " 按顺序点击步骤。";
+  const setAuto = (on, save = true) => {
+    auto = on;
+    idle = 0;
+    document.body.classList.toggle("manual", !on);
+    modeEls.forEach((m) => m.setAttribute("aria-checked", String((m.dataset.mode === "auto") === on)));
+    if (save) try { localStorage.setItem("fig-mode2", on ? "auto" : "manual"); } catch {}
+  };
+  const restart = () => { reset(); run = null; next = 0; hintEl.textContent = auto ? INTRO : INTRO_MANUAL; idle = 0; setButtons(); };
+  modeEls.forEach((m) => m.addEventListener("click", () => {
+    const on = m.dataset.mode === "auto";
+    if (on === auto) return;
+    setAuto(on);
+    // Manual starts the visitor from step 1; Auto picks up from wherever the machine stands
+    if (!on) restart(); else idle = gap;
+  }));
+  buttons.forEach((b) => b.addEventListener("click", () => { if (auto) setAuto(false); start(b.dataset.step); }));
+  // a press on a step that is still greyed out also switches to Manual once the running step ends
+  document.querySelector(".steps")?.addEventListener("pointerdown", () => { if (auto) setAuto(false); });
+  document.querySelector("[data-restart]")?.addEventListener("click", restart);
+  document.addEventListener("keydown", (e) => {
+    if (e.target.closest?.("button,input,a,select,textarea")) return;
+    if (e.key === " " || e.key === "Enter") { e.preventDefault(); setAuto(false); start(ORDER[next]); }
+  });
+  function tick(now) {
+    const dt = last ? Math.min((now - last) / 1000, 1 / 20) : 1 / 60;
+    last = now;
+    if (run) { run.t += dt; const u = run.t / STEPS[run.id].dur; update(run.id, Math.min(1, u)); if (u >= 1) finish(); }
+    else if (auto && !still.matches) { idle += dt; if (idle > gap) start(ORDER[next]); }
+    draw(now / 1000);
+    requestAnimationFrame(tick);
+  }
+  const PLAN = [];
+  { let t = lead; for (const id of ORDER) { t += gap; PLAN.push({ id, t0: t, t1: t + STEPS[id].dur }); t += STEPS[id].dur; } }
+  const TOTAL = PLAN[PLAN.length - 1].t1 + tail;
+  const cursor = document.createElement("div");
+  cursor.className = "cursor";
+  cursor.innerHTML = '<svg viewBox="0 0 24 24" width="28" height="28"><path d="M3 2l15.5 9.2-6.6 1.5 3.4 7.4-3.1 1.4-3.3-7.4L3 18.6z" fill="#fff" stroke="#23263a" stroke-width="1.6" stroke-linejoin="round"/></svg>';
+  const aim = (i) => { const r = buttons[i].getBoundingClientRect(); return [r.left + r.width * 0.62, r.top + r.height * 0.55]; };
+  const restPoint = () => { const r = document.querySelector(".stage").getBoundingClientRect(); return [r.left + r.width * 0.55, r.top + r.height * 0.62]; };
+  function placeCursor(time) {
+    let from = restPoint(), to = from, u = 0, press = -1;
+    for (let i = 0; i < PLAN.length; i++) {
+      const p = PLAN[i];
+      const leave = i ? PLAN[i - 1].t1 - 0.35 : 0.05, arrive = p.t0 - 0.16;
+      if (time < leave) break;
+      from = i ? aim(i - 1) : restPoint();
+      to = aim(i);
+      u = ease((time - leave) / (arrive - leave));
+      if (time > p.t0 - 0.12 && time < p.t0 + 0.08) press = i;
+    }
+    const x = lerp(from[0], to[0], u) + Math.sin(u * Math.PI) * 18, y = lerp(from[1], to[1], u) - Math.sin(u * Math.PI) * 10;
+    cursor.style.transform = `translate(${f1(x - 3.3)}px, ${f1(y - 2.2)}px) scale(${press >= 0 ? 0.86 : 1})`;
+    buttons.forEach((b, i) => b.toggleAttribute("data-press", i === press));
+  }
+  function seekTo(time) {
+    reset();
+    run = null;
+    next = 0;
+    hintEl.textContent = INTRO;
+    for (const p of PLAN) {
+      if (time < p.t0) break;
+      begin(p.id);
+      if (time >= p.t1) { run.t = STEPS[p.id].dur; finish(); continue; }
+      run.t = time - p.t0;
+      update(p.id, run.t / STEPS[p.id].dur);
+      break;
+    }
+    setButtons();
+    draw(time);
+    placeCursor(time);
+  }
+  // colour swatches
+  document.querySelectorAll("[data-swatch]").forEach((sw) => sw.addEventListener("click", () => {
+    document.querySelectorAll("[data-swatch]").forEach((o) => o.toggleAttribute("data-on", o === sw));
+    paintBody(sw.dataset.swatch);
+  }));
+  function paintBody(c) {
+    const t = (x) => ({ f: x, t: mixHex(x, "#ffffff", 0.42), s3: mixHex(x, "#ffffff", 0.18), s1: mixHex(x, "#1b1d2c", 0.13), s0: mixHex(x, "#1b1d2c", 0.26) });
+    const set = (name, x) => { const v = t(x); const s = document.body.style; s.setProperty(`--${name}`, v.f); s.setProperty(`--${name}-t`, v.t); s.setProperty(`--${name}-3`, v.s3); s.setProperty(`--${name}-1`, v.s1); s.setProperty(`--${name}-0`, v.s0); };
+    set("body", c);
+    set("alt", paint ? paint(c) : c);
+  }
+  paintBody(document.querySelector("[data-swatch]").dataset.swatch);
+  reset();
+  setButtons();
+  draw(0);
+  // probe() hands the figure state to tools outside the page (videos/_kit/timeline.mjs samples it for the score)
+  window.__fig = { start, seek: seekTo, total: TOTAL, plan: PLAN, get state() { return probe(); } };
+  if (location.search.includes("render")) {
+    document.body.classList.add("render");
+    document.body.appendChild(cursor);
+    window.DURATION = TOTAL;
+    window.seek = seekTo;
+    seekTo(0);
+  } else {
+    // Manual is the default; Auto only when the visitor picked it on an earlier page
+    let saved = null;
+    try { saved = localStorage.getItem("fig-mode2"); } catch {}
+    // ?auto in the address starts the tour by itself (pages shown side by side), without touching the saved choice
+    setAuto(/[?&]auto\b/.test(location.search) || saved === "auto", false);
+    hintEl.textContent = auto ? INTRO : INTRO_MANUAL;
+    requestAnimationFrame(tick);
+  }
+}
+
+// Live code for the robot vacuum. Runs inside the figure scope after _kit/runtime.js.
+// The tour: set off and map, spot and grab the sock, drop it in the basket, vacuum, take it apart, the gripper up
+// close, back to its spot (ending exactly on the first frame).
+// The robot is real 3D: every part is a solid built once in its own frame (the body in the robot's frame: x toward
+// the bumper, y to its left, z up from the floor; an arm segment in its joint's frame), placed every frame by its chain
+// of poses (the robot on the floor, the hatch doors, the arm's joints, the explode), culled, shaded by facing and
+// painted back to front. Flat print (the wordmark, the labels, the board) lives on a part's face and is placed every
+// frame by that plane's 2 × 2 screen matrix. Every frame is a pure function of (S.step, S.u), so window.seek(t) lands on
+// the same picture.
+const M = D.MODEL;
+const BRAND = D.BRAND;
+const FT = D.FLOOR_T;
+const DEG = Math.PI / 180;
+const TAU = Math.PI * 2;
+
+// ---------------------------------------------------------------- vectors, matrices and the camera
+const add3 = (a, b) => [a[0] + b[0], a[1] + b[1], a[2] + b[2]];
+const sub3 = (a, b) => [a[0] - b[0], a[1] - b[1], a[2] - b[2]];
+const mul3 = (a, s) => [a[0] * s, a[1] * s, a[2] * s];
+const dot3 = (a, b) => a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
+const cross3 = (a, b) => [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]];
+const unit3 = (a) => { const l = Math.hypot(a[0], a[1], a[2]) || 1; return [a[0] / l, a[1] / l, a[2] / l]; };
+const I3 = [1, 0, 0, 0, 1, 0, 0, 0, 1];
+const mm = (a, b) => [0, 1, 2].flatMap((r) => [0, 1, 2].map((c) => a[r * 3] * b[c] + a[r * 3 + 1] * b[3 + c] + a[r * 3 + 2] * b[6 + c]));
+const mv = (a, v) => [a[0] * v[0] + a[1] * v[1] + a[2] * v[2], a[3] * v[0] + a[4] * v[1] + a[5] * v[2], a[6] * v[0] + a[7] * v[1] + a[8] * v[2]];
+function rotAxis(n, th) {
+  const c = Math.cos(th), s = Math.sin(th), t = 1 - c, [x, y, z] = n;
+  return [t * x * x + c, t * x * y - s * z, t * x * z + s * y, t * x * y + s * z, t * y * y + c, t * y * z - s * x, t * x * z - s * y, t * y * z + s * x, t * z * z + c];
+}
+const Rz = (deg) => rotAxis([0, 0, 1], deg * DEG);
+const Rx = (deg) => rotAxis([1, 0, 0], deg * DEG);
+// Ry(-a) turns +x up toward +z by a degrees
+const Ry = (deg) => rotAxis([0, 1, 0], deg * DEG);
+const TF = (M = I3, t = [0, 0, 0]) => ({ M, t });
+const cmp = (a, b) => ({ M: mm(a.M, b.M), t: add3(mv(a.M, b.t), a.t) });
+const tr = (x, y, z) => TF(I3, [x, y, z]);
+const ap = (tf, p) => add3(mv(tf.M, p), tf.t);
+const about = (c, R) => cmp(tr(c[0], c[1], c[2]), cmp(TF(R), tr(-c[0], -c[1], -c[2])));
+
+const CAM = cameraOf(P);
+const SA = CAM.sinA, CA = CAM.cosA, SE = CAM.sinE, CE = CAM.cosE, KK = CAM.k, OX = P.origin[0], OY = P.origin[1];
+const pr = (p) => [OX + (p[0] * SA - p[1] * CA) * KK, OY + ((p[0] * CA + p[1] * SA) * SE - p[2] * CE) * KK];
+const prv = (v) => [(v[0] * SA - v[1] * CA) * KK, ((v[0] * CA + v[1] * SA) * SE - v[2] * CE) * KK];
+const VIEW = [CA * CE, SA * CE, SE];
+const LIGHT = unit3([-SA, CA, 1.2]);
+const depth = (p) => dot3(p, VIEW);
+const r2 = (n) => Math.round(n * 100) / 100;
+const r3 = (n) => Math.round(n * 1000) / 1000;
+const P2 = (p) => r2(p[0]) + " " + r2(p[1]);
+const dPath = (pts) => { let s = "M" + P2(pts[0]); for (let i = 1; i < pts.length; i++) s += "L" + P2(pts[i]); return s + "Z"; };
+const dOpen = (pts) => { let s = "M" + P2(pts[0]); for (let i = 1; i < pts.length; i++) s += "L" + P2(pts[i]); return s; };
+const loc = (pts, close = true) => "M" + pts.map((p) => r3(p[0]) + " " + r3(p[1])).join("L") + (close ? "Z" : "");
+const smoother = (x) => { const t = clamp(x); return t * t * t * (t * (t * 6 - 15) + 10); };
+const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
+// ---------------------------------------------------------------- colours, shaded by facing, dimmed toward the paper
+const rgbOf = (h) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16));
+const hexOf = (c) => "#" + c.map((v) => Math.round(Math.max(0, Math.min(255, v))).toString(16).padStart(2, "0")).join("");
+const WHITE = [255, 255, 255], DARKC = [27, 29, 44], PAPER = rgbOf("#f5f0e5");
+const MATS = {
+  shell: { c: "#30333c", hi: 0.36, lo: 0.32 }, // the black shell's sides
+  gloss: { c: "#24272e", hi: 0.13, lo: 0.2 }, // its glossy top, nearly black; the shine is drawn on
+  bumper: { c: "#3b3f49", hi: 0.3, lo: 0.32 },
+  trim: { c: "#a4aab4", hi: 0.55, lo: 0.3 },
+  base: { c: "#2c2f37", hi: 0.28, lo: 0.32 },
+  inner: { c: "#5c616c", hi: 0.24, lo: 0.36 }, // the tray's inside, lighter so the parts read against it
+  floorIn: { c: "#6e7380", hi: 0.22, lo: 0.3 },
+  liner: { c: "#1a1b21", hi: 0.14, lo: 0.3 },
+  glass: { c: "#15171d", hi: 0.5, lo: 0.2 },
+  alu: { c: "#cdd2d9", hi: 0.5, lo: 0.34 }, // the arm
+  joint: { c: "#3d404a", hi: 0.4, lo: 0.3 },
+  rubber: { c: "#2a2c33", hi: 0.22, lo: 0.3 },
+  steel: { c: "#c3cad3", hi: 0.5, lo: 0.32 },
+  copper: { c: "#c8743f", hi: 0.42, lo: 0.3 },
+  pcb: { c: "#2e6a51", hi: 0.3, lo: 0.3 },
+  chip: { c: "#30323c", hi: 0.3, lo: 0.3 },
+  white: { c: "#efece4", hi: 0.5, lo: 0.24 },
+  battery: { c: "#4d6a8f", hi: 0.36, lo: 0.32 },
+  bin: { c: "#a7aeb8", hi: 0.42, lo: 0.32 },
+  fan: { c: "#585c67", hi: 0.34, lo: 0.32 },
+  cradle: { c: "#3f434d", hi: 0.28, lo: 0.32 },
+  hood: { c: "#535864", hi: 0.3, lo: 0.32 },
+  roll: { c: "#d6d9df", hi: 0.45, lo: 0.3 },
+  fin: { c: "#e0873a", hi: 0.36, lo: 0.3 },
+  tyre: { c: "#2b2d34", hi: 0.26, lo: 0.3 },
+  tyre2: { c: "#363942", hi: 0.26, lo: 0.3 },
+  bristle: { c: "#e9e3d3", hi: 0.4, lo: 0.26 },
+  wicker: { c: "#cf9f5f", hi: 0.36, lo: 0.32 },
+  wicker2: { c: "#b98848", hi: 0.34, lo: 0.32 },
+  wickerIn: { c: "#a87b44", hi: 0.22, lo: 0.36 },
+  braid: { c: "#e2bd86", hi: 0.36, lo: 0.3 },
+  sock: { c: "#f3ecdf", hi: 0.3, lo: 0.24 },
+};
+for (const m of Object.values(MATS)) m.rgb = rgbOf(m.c);
+const shadeCache = new Map();
+function shade(mat, n, dim = 0) {
+  const m = MATS[mat];
+  const q = Math.round((dot3(n, LIGHT) + 1) * 150) / 150 - 1;
+  const dq = Math.round(dim * 20) / 20;
+  const key = mat + q + "|" + dq;
+  let v = shadeCache.get(key);
+  if (v) return v;
+  const w = q >= 0 ? m.hi * Math.min(1, q / 0.8) ** 1.4 : 0;
+  const k = q < 0 ? m.lo * Math.min(1, -q) ** 0.8 : 0;
+  let c = m.rgb.map((x, i) => x + (WHITE[i] - x) * w + (DARKC[i] - x) * k);
+  if (dq) c = c.map((x, i) => x + (PAPER[i] - x) * 0.58 * dq);
+  v = hexOf(c);
+  shadeCache.set(key, v);
+  return v;
+}
+
+// ---------------------------------------------------------------- solids, built once in their own frame
+function finish(v, f, mat, matOf = null) {
+  const c = mul3(v.reduce(add3, [0, 0, 0]), 1 / v.length);
+  const fc = f.map((ix) => mul3(ix.reduce((s, i) => add3(s, v[i]), [0, 0, 0]), 1 / ix.length));
+  const n = f.map((ix, k) => {
+    let nn = [0, 0, 0];
+    for (let i = 0; i < ix.length; i++) { const a = v[ix[i]], b = v[ix[(i + 1) % ix.length]]; nn = add3(nn, [(a[1] - b[1]) * (a[2] + b[2]), (a[2] - b[2]) * (a[0] + b[0]), (a[0] - b[0]) * (a[1] + b[1])]); }
+    nn = unit3(nn);
+    return dot3(nn, sub3(fc[k], c)) < 0 ? mul3(nn, -1) : nn;
+  });
+  const fm = matOf ? n.map((nn, k) => matOf(nn, fc[k], k) || mat) : null;
+  const em = new Map();
+  f.forEach((ix, k) => ix.forEach((a, i) => { const b = ix[(i + 1) % ix.length]; const key = a < b ? a + "_" + b : b + "_" + a; const e = em.get(key); if (e) e.push(k); else em.set(key, [k]); }));
+  const creases = [];
+  for (const [key, fs] of em) if (fs.length === 2 && dot3(n[fs[0]], n[fs[1]]) < Math.cos(38 * DEG)) { const [a, b] = key.split("_").map(Number); creases.push([a, b, fs[0], fs[1]]); }
+  return { v, f, n, fc, fm, mat, c, creases };
+}
+const perpOf = (a) => { const h = Math.abs(a[2]) > 0.9 ? [1, 0, 0] : [0, 0, 1]; const u = unit3(cross3(h, a)); return [u, cross3(a, u)]; };
+function prism(o, a, u, w, poly, s0, s1, mat, matOf) {
+  const v = [];
+  for (const s of [s0, s1]) for (const [x, y] of poly) v.push(add3(o, add3(mul3(a, s), add3(mul3(u, x), mul3(w, y)))));
+  const n = poly.length, f = [];
+  f.push([...Array(n).keys()]);
+  f.push([...Array(n).keys()].map((i) => n + i));
+  for (let i = 0; i < n; i++) f.push([i, (i + 1) % n, n + ((i + 1) % n), n + i]);
+  return finish(v, f, mat, matOf);
+}
+const circlePoly = (r, n) => Array.from({ length: n }, (_, i) => [r * Math.cos((i / n) * TAU + Math.PI / n), r * Math.sin((i / n) * TAU + Math.PI / n)]);
+function rrPoly(w, h, r, per = 4) {
+  r = Math.min(r, w / 2, h / 2);
+  const out = [];
+  for (const [cx, cy, a0] of [[w / 2 - r, h / 2 - r, 0], [-(w / 2 - r), h / 2 - r, 90], [-(w / 2 - r), -(h / 2 - r), 180], [w / 2 - r, -(h / 2 - r), 270]])
+    for (let i = 0; i <= per; i++) { const a = (a0 + (90 * i) / per) * DEG; out.push([cx + r * Math.cos(a), cy + r * Math.sin(a)]); }
+  return out;
+}
+const cyl = (c, a, r, s0, s1, mat, n = 28, matOf) => { const [u, w] = perpOf(a); return prism(c, a, u, w, circlePoly(r, n), s0, s1, mat, matOf); };
+function loft(rings, mat, matOf, caps = true) {
+  const v = [], f = [], m = rings[0].length;
+  rings.forEach((r) => v.push(...r));
+  for (let i = 0; i + 1 < rings.length; i++) for (let j = 0; j < m; j++) { const a = i * m + j, b = i * m + ((j + 1) % m); f.push([a, b, b + m, a + m]); }
+  if (caps) {
+    f.push([...Array(m).keys()]);
+    f.push([...Array(m).keys()].map((j) => (rings.length - 1) * m + j));
+  }
+  return finish(v, f, mat, matOf);
+}
+function lathe(c, a, prof, mat, n = 28, matOf, caps = true) {
+  const [u, w] = perpOf(a);
+  const rings = prof.map(([s, r]) => circlePoly(r, n).map(([x, y]) => add3(c, add3(mul3(a, s), add3(mul3(u, x), mul3(w, y))))));
+  return loft(rings, mat, matOf, caps);
+}
+function chamferBox(cen, ax, h, b, mat, matOf) {
+  const v = [], id = new Map();
+  const vid = (i, si, sj, sk) => id.get(`${i}${si}${sj}${sk}`);
+  for (let i = 0; i < 3; i++) {
+    const j = (i + 1) % 3, kx = (i + 2) % 3;
+    for (const si of [-1, 1]) for (const sj of [-1, 1]) for (const sk of [-1, 1]) {
+      id.set(`${i}${si}${sj}${sk}`, v.length);
+      v.push(add3(cen, add3(mul3(ax[i], si * h[i]), add3(mul3(ax[j], sj * (h[j] - b)), mul3(ax[kx], sk * (h[kx] - b))))));
+    }
+  }
+  const f = [];
+  for (let i = 0; i < 3; i++) for (const si of [-1, 1]) f.push([vid(i, si, -1, -1), vid(i, si, 1, -1), vid(i, si, 1, 1), vid(i, si, -1, 1)]);
+  for (let i = 0; i < 3; i++) {
+    const j = (i + 1) % 3;
+    for (const si of [-1, 1]) for (const sj of [-1, 1]) f.push([vid(i, si, sj, -1), vid(i, si, sj, 1), vid(j, sj, 1, si), vid(j, sj, -1, si)]);
+  }
+  for (const s0 of [-1, 1]) for (const s1 of [-1, 1]) for (const s2 of [-1, 1]) { const s = [s0, s1, s2]; f.push([0, 1, 2].map((i) => vid(i, s[i], s[(i + 1) % 3], s[(i + 2) % 3]))); }
+  return finish(v, f, mat, matOf);
+}
+const AXES = [[1, 0, 0], [0, 1, 0], [0, 0, 1]];
+const box = (cen, h, b, mat, matOf) => chamferBox(cen, AXES, h, b, mat, matOf);
+const posed = (sol, tf) => finish(sol.v.map((p) => ap(tf, p)), sol.f, sol.mat);
+
+// ---------------------------------------------------------------- flat print, drawn in a plane (mm, y up)
+const circPts = (cx, cy, r, n = 32) => Array.from({ length: n }, (_, i) => { const a = (i / n) * TAU; return [cx + r * Math.cos(a), cy + r * Math.sin(a)]; });
+const rrD = (cx, cy, w, h, r, per = 4) => loc(rrPoly(w, h, r, per).map(([x, y]) => [x + cx, y + cy]));
+const circD = (cx, cy, r, n = 32) => loc(circPts(cx, cy, r, n));
+const lineD = (pts) => loc(pts, false);
+const arcD = (cx, cy, r, a0, a1, n = 24) => lineD(Array.from({ length: n + 1 }, (_, i) => { const a = (a0 + ((a1 - a0) * i) / n) * DEG; return [cx + r * Math.cos(a), cy + r * Math.sin(a)]; }));
+const txt = (x, y, s, size, cls = "print", anchor = "middle", extra = "") => `<text class="${cls}" x="${r3(x)}" y="${r3(-y)}" font-size="${size}" text-anchor="${anchor}" transform="scale(1 -1)"${extra}>${esc(s)}</text>`;
+const rect = (x, y, w, h, cls, extra = "") => `<rect class="${cls}" x="${r3(x - w / 2)}" y="${r3(y - h / 2)}" width="${r3(w)}" height="${r3(h)}"${extra}/>`;
+const circle = (x, y, r, cls, extra = "") => `<circle class="${cls}" cx="${r3(x)}" cy="${r3(y)}" r="${r3(r)}"${extra}/>`;
+const logoAt = (cx, cy, h, cls) => { const k = h / 100; return `<g transform="matrix(${r3(k)} 0 0 ${r3(-k)} ${r3(cx - 50 * k)} ${r3(cy + 50 * k)})"><path d="${BRAND.logo}" class="${cls}"/></g>`; };
+let screwN = 0;
+function screwSvg(x, y, r = 0.9) {
+  const a = (31 + screwN++ * 67) * DEG, c = Math.cos(a) * r * 0.62, s = Math.sin(a) * r * 0.62;
+  return `<circle class="screw" cx="${r3(x)}" cy="${r3(y)}" r="${r}"/><path class="slot" d="M${r3(x - c)} ${r3(y - s)}L${r3(x + c)} ${r3(y + s)}M${r3(x + s)} ${r3(y - c)}L${r3(x - s)} ${r3(y + c)}"/>`;
+}
+function rng(seed) { let a = seed >>> 0; return () => { a = (a + 0x6d2b79f5) >>> 0; let t = a; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
+const plane = (o, u, v, n, svg, keep = false) => ({ o, u, v, n, svg, keep });
+const UPN = [0, 0, 1];
+
+// ---------------------------------------------------------------- painting one part
+function partSvg(pt, tf, dim, hl) {
+  let s = "";
+  const all = [];
+  for (const m of pt.meshes) {
+    const sc = m.v.map((p) => pr(ap(tf, p)));
+    all.push(...sc);
+    const vis = m.f.map((_, i) => dot3(mv(tf.M, m.n[i]), VIEW) > 1e-4);
+    const order = [];
+    for (let i = 0; i < m.f.length; i++) if (vis[i]) order.push([depth(ap(tf, m.fc[i])), i]);
+    order.sort((a, b) => a[0] - b[0]);
+    for (const [, i] of order) {
+      const col = shade(m.fm ? m.fm[i] : m.mat, mv(tf.M, m.n[i]), dim);
+      s += `<path class="f" d="${dPath(m.f[i].map((j) => sc[j]))}" fill="${col}" stroke="${col}"/>`;
+    }
+    if (pt.crease !== false) {
+      let d = "";
+      for (const [a, b, f1, f2] of m.creases) if (vis[f1] && vis[f2]) d += `M${P2(sc[a])}L${P2(sc[b])}`;
+      if (d) s += `<path class="${pt.dark ? "cr-l" : "cr"}" d="${d}"/>`;
+    }
+  }
+  const hullD = dPath(hull(all));
+  let deco = "", keep = "";
+  if (pt.decals) for (const dc of pt.decals) {
+    const nw = mv(tf.M, dc.n);
+    if (dot3(nw, VIEW) <= 0.02) continue;
+    const U = prv(mv(tf.M, dc.u)), V = prv(mv(tf.M, dc.v)), O = pr(ap(tf, dc.o));
+    const g = `<g transform="matrix(${r3(U[0])} ${r3(U[1])} ${r3(V[0])} ${r3(V[1])} ${r2(O[0])} ${r2(O[1])})">${typeof dc.svg === "function" ? dc.svg(tf, dim) : dc.svg}</g>`;
+    if (dc.keep) keep += g; else deco += g;
+  }
+  const glow = hl > 0.01 ? `<path class="hl-glow" d="${hullD}" stroke="#ffb648" stroke-width="12" filter="url(#rv-glow)" style="opacity:${r3(hl * 0.95)}"/>` : "";
+  const ol = pt.outline === false ? "" : `<path class="${pt.outline || "ol"}" d="${hullD}"/>`;
+  const rim = hl > 0.01 ? `<path class="hl-rim" d="${hullD}" stroke="#f08a1c" stroke-width="2.4" style="opacity:${r3(hl)}"/>` : "";
+  const after = deco + ol;
+  return { s: glow + s + (dim > 0.01 ? `<g style="opacity:${r3(1 - 0.6 * dim)}">${after}</g>` : after) + keep + rim, pts: all };
+}
+
+// a round tray: an outer wall (chamfered at the foot), an inner wall, a floor and a rim; faces know whether they are
+// inside (painted before whatever sits in the tray) or outside (after it)
+function roundTray(o) {
+  const { rO, rI, zb, zf, zt, ch = 0, n = 72, bands = 1, mO, mI, mF, mR, matOf } = o;
+  const quads = [];
+  const prof = ch ? [[rO - ch, zb], [rO, zb + ch]] : [[rO, zb]];
+  const zw0 = ch ? zb + ch : zb;
+  for (let b = 1; b <= bands; b++) prof.push([rO, zw0 + ((zt - zw0) * b) / bands]);
+  const pt = (r, a, z) => [r * Math.cos(a), r * Math.sin(a), z];
+  for (let i = 0; i < n; i++) {
+    const a0 = (i / n) * TAU, a1 = ((i + 1) / n) * TAU, am = (a0 + a1) / 2, ca = Math.cos(am), sa = Math.sin(am);
+    for (let k = 0; k + 1 < prof.length; k++) {
+      const [r0, z0] = prof[k], [r1, z1] = prof[k + 1];
+      const nr = z1 - z0, nz = -(r1 - r0), l = Math.hypot(nr, nz);
+      quads.push({ q: [pt(r0, a0, z0), pt(r0, a1, z0), pt(r1, a1, z1), pt(r1, a0, z1)], n: [(ca * nr) / l, (sa * nr) / l, nz / l], mat: (matOf && matOf("out", am, (z0 + z1) / 2, i, k)) || mO });
+    }
+    for (let b = 0; b < bands; b++) {
+      const z0 = zf + ((zt - zf) * b) / bands, z1 = zf + ((zt - zf) * (b + 1)) / bands;
+      quads.push({ q: [pt(rI, a0, z0), pt(rI, a1, z0), pt(rI, a1, z1), pt(rI, a0, z1)], n: [-ca, -sa, 0], inner: true, mat: (matOf && matOf("in", am, (z0 + z1) / 2, i, b)) || mI });
+    }
+    quads.push({ q: [pt(rO, a0, zt), pt(rO, a1, zt), pt(rI, a1, zt), pt(rI, a0, zt)], n: [0, 0, 1], rim: true, out: [ca, sa, 0], mat: mR || mO });
+  }
+  const floor = { q: Array.from({ length: n }, (_, i) => pt(rI, (i / n) * TAU, zf)), n: [0, 0, 1], mat: mF };
+  const outerPts = [];
+  for (let i = 0; i < n; i++) { const a = (i / n) * TAU; outerPts.push(pt(prof[0][0], a, prof[0][1]), pt(rO, a, zt)); if (ch) outerPts.push(pt(rO, a, zb + ch)); }
+  return { ...o, quads, floor, outerPts, rimIn: Array.from({ length: n }, (_, i) => pt(rI, (i / n) * TAU, zt)) };
+}
+function trayDraw(T, tf, dim, floorDeco = [], frontDeco = []) {
+  const back = [], front = [];
+  let floorS = "";
+  const nf = mv(tf.M, T.floor.n);
+  if (dot3(nf, VIEW) > 1e-4) {
+    const col = shade(T.floor.mat, nf, dim);
+    floorS = `<path class="f" d="${dPath(T.floor.q.map((p) => pr(ap(tf, p))))}" fill="${col}" stroke="${col}"/>`;
+    for (const dc of floorDeco) {
+      const U = prv(mv(tf.M, dc.u)), V = prv(mv(tf.M, dc.v)), O = pr(ap(tf, dc.o));
+      floorS += `<g transform="matrix(${r3(U[0])} ${r3(U[1])} ${r3(V[0])} ${r3(V[1])} ${r2(O[0])} ${r2(O[1])})">${dc.svg}</g>`;
+    }
+  }
+  for (const qd of T.quads) {
+    const nw = mv(tf.M, qd.n);
+    if (dot3(nw, VIEW) <= 1e-4) continue;
+    const pts = qd.q.map((p) => ap(tf, p));
+    const k = depth(mul3(pts.reduce(add3, [0, 0, 0]), 0.25));
+    const col = shade(qd.mat, nw, dim);
+    const far = qd.inner || (qd.rim && dot3(mv(tf.M, qd.out), VIEW) < 0);
+    (far ? back : front).push([k, `<path class="f" d="${dPath(pts.map(pr))}" fill="${col}" stroke="${col}"/>`]);
+  }
+  back.sort((a, b) => a[0] - b[0]);
+  front.sort((a, b) => a[0] - b[0]);
+  const cen = depth(ap(tf, [0, 0, T.zt]));
+  const hp = hull(T.outerPts.map((p) => { const w = ap(tf, p), q = pr(w); q.far = Math.abs(p[2] - T.zt) < 0.01 && depth(w) < cen; return q; }));
+  const hullD = dPath(hp);
+  let nearD = "";
+  for (let i = 0; i < hp.length; i++) { const a = hp[i], b = hp[(i + 1) % hp.length]; if (!(a.far && b.far)) nearD += `M${P2(a)}L${P2(b)}`; }
+  const rimPts = T.rimIn.map((p) => pr(ap(tf, p)));
+  let deco = "";
+  for (const dc of frontDeco) {
+    if (dot3(mv(tf.M, dc.n), VIEW) <= 0.02) continue;
+    const U = prv(mv(tf.M, dc.u)), V = prv(mv(tf.M, dc.v)), O = pr(ap(tf, dc.o));
+    deco += `<g transform="matrix(${r3(U[0])} ${r3(U[1])} ${r3(V[0])} ${r3(V[1])} ${r2(O[0])} ${r2(O[1])})">${typeof dc.svg === "function" ? dc.svg() : dc.svg}</g>`;
+  }
+  const op = dim > 0.01 ? ` style="opacity:${r3(1 - 0.6 * dim)}"` : "";
+  return {
+    back: floorS + back.map((x) => x[1]).join("") + `<g${op}><path class="seam" d="${dPath(rimPts)}"/><path class="ol" d="${hullD}"/></g>`,
+    front: front.map((x) => x[1]).join("") + `<g${op}>${deco}<path class="ol" d="${nearD}"/></g>`,
+    closedFront: front.map((x) => x[1]).join("") + `<g${op}>${deco}<path class="ol" d="${hullD}"/></g>`,
+    pts: T.outerPts.map((p) => pr(ap(tf, p))),
+  };
+}
+
+// ================================================================= THE ROBOT
+// sizes (drawing only): the base tray from the floor gap up to the seam, the top shell over it, the hatch along the
+// middle of the top, the arm's bay under it
+const RO = 172, RI = 166, ZB = 8, ZF = 16, ZS = 44, ZT = 80;
+const HATCH = { x0: -84, x1: 110, hw: 29, r: 14 };
+const HCX = (HATCH.x0 + HATCH.x1) / 2, HL = HATCH.x1 - HATCH.x0;
+const CR_TOP = 36; // the top of the arm's cradle inside
+const ARM = { x: 60, L1: 124, L2: 100, OFF: 20, LIFT: 46, SH: 12, GRIP_OPEN: 21, GRIP_SHUT: 9.5 };
+const TUR = { x: -122, r: 24 };
+const angOf = (p) => Math.atan2(p[1], p[0]);
+const isBumper = (a) => Math.abs(((a / DEG + 540) % 360) - 180) < 100;
+
+const PARTS = [];
+const mk = (o) => { const p = { bias: 0, ...o }; p.c = p.c || mul3(p.meshes.reduce((s, m) => add3(s, m.c), [0, 0, 0]), 1 / p.meshes.length); PARTS.push(p); return p; };
+
+// ---- the base: a round tray, the bumper the front half of its wall
+const BASE = roundTray({ rO: RO, rI: RI, zb: ZB, zf: ZF, zt: ZS, ch: 6, n: 96, mO: "base", mI: "inner", mF: "floorIn", mR: "base",
+  matOf: (side, am, z) => (side === "out" && isBumper(am) && z > ZB + 5 ? "bumper" : null) });
+// the inside floor: the opening the brush roll turns in, screw bosses, ribs (typical)
+const BR = { x: 126, r: 12, hy: 72 };
+const baseFloorDeco = [plane([0, 0, ZF + 0.03], [1, 0, 0], [0, 1, 0], UPN, (() => {
+  let s = `<path class="vent" d="${rrD(BR.x, 0, 30, BR.hy * 2 + 6, 4)}"/><path class="seam" d="${rrD(BR.x, 0, 36, BR.hy * 2 + 12, 6)}"/>`;
+  for (const [x, y] of [[90, 120], [90, -120], [-140, 60], [-140, -60], [40, 140], [40, -140]]) s += circle(x, y, 4.2, "ringd") + screwSvg(x, y, 1.8);
+  s += `<path class="seam" d="${lineD([[-150, -20], [150, -20]])}${lineD([[-150, 20], [150, 20]])}"/>`;
+  for (const y of [1, -1]) s += `<path class="vent" d="${rrD(-5, y * 128, 80, 30, 6)}"/><path class="seam" d="${rrD(-5, y * 128, 88, 38, 8)}"/>`;
+  s += circle(152, 0, 9, "vent") + circle(152, 0, 12, "ringd");
+  for (const a of [-50, -25, 25, 50]) s += `<path class="lens2" d="${rrD(150 * Math.cos(a * DEG), 150 * Math.sin(a * DEG), 8, 5, 1.5)}"/>`;
+  s += rect(-150, 22, 10, 7, "pad") + rect(-150, -22, 10, 7, "pad");
+  return s;
+})())];
+// bumper seams and the sensor window on its face
+const bumperDeco = [-100, 100].map((a) => { const c = Math.cos(a * DEG), s = Math.sin(a * DEG); return plane([RO * c * 1.002, RO * s * 1.002, 0], [-s, c, 0], [0, 0, 1], [c, s, 0], `<path class="gap" d="${lineD([[0, ZB + 6], [0, ZS]])}"/>`); });
+
+// the front sensor window: a curved dark band proud of the bumper, with the camera and its two lights (typical)
+const SENSOR = (() => {
+  const rings = [];
+  for (let i = 0; i <= 12; i++) {
+    const a = (-17 + (34 * i) / 12) * DEG, c = Math.cos(a), s = Math.sin(a);
+    rings.push([[RO - 0.5, 23], [RO + 1.4, 23.6], [RO + 1.4, 36.4], [RO - 0.5, 37]].map(([r, z]) => [r * c, r * s, z]));
+  }
+  return loft(rings, "glass");
+})();
+const sensorPrint = (() => {
+  let s = circle(0, 0, 4.4, "lens") + circle(0, 0, 3.2, "lens2") + circle(0, 0, 1.8, "lens3") + circle(-1.2, 1.2, 0.7, "glint") + `<circle class="ringl" cx="0" cy="0" r="3.8"/>`;
+  for (const x of [-22, 22]) s += `<path class="lens2" d="${rrD(x, 0, 9, 4, 1.6)}"/>` + circle(x - 2.2, 0.8, 0.5, "glint2");
+  s += `<path class="lens2" d="${rrD(0, 5.1, 30, 1.2, 0.5)}"/>`;
+  return s;
+})();
+const SENS = mk({ id: "sensor", grp: "base", node: "body", meshes: [SENSOR], outline: "ol-s", dark: true,
+  decals: [plane([RO + 1.5, 0, 30], [0, 1, 0], [0, 0, 1], [1, 0, 0], sensorPrint)] });
+
+// ---- the top shell: its side band and round-over; the top itself is drawn as one face with the hatch cut out of it
+const SHELL_PROF = [[ZS, 172.4], [ZS + 2.6, 172.4], [ZS + 2.6, 172], [70, 172], [74, 171], [77.3, 168.6], [79.3, 164.6], [ZT, 159]];
+const SHELL_MESH = lathe([0, 0, 0], [0, 0, 1], SHELL_PROF, "shell", 96, (n, fc) => (fc[2] < ZS + 2.7 ? "trim" : isBumper(angOf(fc)) && fc[2] < 72 ? "bumper" : null), false);
+const hatchPts = rrPoly(HL, HATCH.hw * 2, HATCH.r, 5).map(([x, y]) => [x + HCX, y]);
+let HATCH_OPEN = 0, TOP_COL = "#30333c";
+const topRing = circPts(0, 0, 159, 96);
+const topFace = () => {
+  // the top: one face, the hatch's opening cut out of it while the doors are up
+  const d = loc(topRing) + (HATCH_OPEN > 0.01 ? loc([...hatchPts].reverse()) : "");
+  return `<path d="${d}" fill="${TOP_COL}" stroke="${TOP_COL}" stroke-width=".4" fill-rule="evenodd"/>`;
+};
+const topGloss = (() => {
+  // the shine: a broad soft reflection over the lit side and two bright streaks along the rim
+  // the lit side faces the bumper and the robot's left; a crescent of sheen along that rim
+  const outer = Array.from({ length: 25 }, (_, i) => { const a = (-40 + (170 * i) / 24) * DEG; return [151 * Math.cos(a), 151 * Math.sin(a)]; });
+  const inner = Array.from({ length: 25 }, (_, i) => { const a = (130 - (170 * i) / 24) * DEG, r = 151 - 34 * Math.sin(((i / 24) * Math.PI)); return [r * Math.cos(a), r * Math.sin(a)]; });
+  let s = `<path class="gl1" d="${loc([...outer, ...inner])}"/>`;
+  s += `<path class="gl2" d="${arcD(0, 0, 154, 6, 84, 24)}"/><path class="gl3" d="${arcD(0, 0, 147, 14, 70, 20)}"/>`;
+  s += `<path class="gl3" d="${arcD(0, 0, 153, 196, 214, 10)}"/>`;
+  return s;
+})();
+const hatchSeams = () => (HATCH_OPEN > 0.01 ? `<path class="gl2" d="${loc(hatchPts)}" style="opacity:.32"/>` : `<path class="gap" d="${loc(hatchPts)}"/><path class="gap" d="${lineD([[HATCH.x0 + 1, 0], [HATCH.x1 - 1, 0]])}"/>`);
+// the two buttons ahead of the hatch and the status light (typical)
+const buttonsPrint = (() => {
+  let s = "";
+  for (const [y, icon] of [[16, "power"], [-16, "home"]]) {
+    s += circle(134, y, 7.4, "btn") + `<path class="gl3" d="${arcD(134, y, 6.2, 110, 200, 8)}"/>`;
+    if (icon === "power") s += `<path class="icon" d="${arcD(134, y, 3, 40, 320, 16)}${lineD([[134, y], [137.8, y]])}"/>`;
+    else s += `<path class="icon" d="${lineD([[131.4, y - 3], [134.6, y - 3], [137.4, y], [134.6, y + 3], [131.4, y + 3], [131.4, y - 3]])}"/>`;
+  }
+  s += `<path class="led-on" d="${rrD(147, 0, 2.2, 14, 1)}"/>`;
+  return s;
+})();
+// the wordmark across the near half of the top, reading from the bumper toward the tail
+const WM_SIZE = 33;
+const wordmark = txt(0, -11.5, BRAND.wordmark, WM_SIZE, "wm");
+const SHELL = mk({
+  id: "shell", grp: "shell", node: "shell", meshes: [SHELL_MESH], dark: true, dimScale: 0.5,
+  decals: [
+    plane([0, 0, ZT + 0.01], [1, 0, 0], [0, 1, 0], UPN, () => topFace()),
+    plane([0, 0, ZT + 0.02], [1, 0, 0], [0, 1, 0], UPN, () => topGloss + hatchSeams() + buttonsPrint),
+    plane([-6, -88, ZT + 0.03], [-1, 0, 0], [0, 1, 0], UPN, wordmark),
+    ...[-100, 100].map((a) => { const c = Math.cos(a * DEG), s = Math.sin(a * DEG); return plane([172.2 * c, 172.2 * s, 0], [-s, c, 0], [0, 0, 1], [c, s, 0], `<path class="gap" d="${lineD([[0, ZS], [0, 70]])}"/>`); }),
+  ],
+});
+// the laser turret on the shell's tail: a collar, a dark window band the laser looks out of, a cap with our mark
+const TURRET = mk({
+  id: "turret", grp: "shell", node: "shell", bias: 30, dark: true,
+  meshes: [lathe([TUR.x, 0, 0], [0, 0, 1], [[ZT - 1, 27], [ZT + 1.6, 27], [ZT + 1.6, 24.4], [ZT + 4, 24.4], [ZT + 9.5, 24.4], [ZT + 11.6, 23.4], [ZT + 12.6, 21.6]], "shell", 48, (n, fc) => (fc[2] > ZT + 4.2 && fc[2] < ZT + 9.4 && Math.abs(n[2]) < 0.3 ? "glass" : null))],
+  decals: [plane([TUR.x, 0, ZT + 12.62], [-1, 0, 0], [0, 1, 0], UPN, () => logoAt(0, 0, 26, "logo-lt") + `<path class="gl3" d="${arcD(0, 0, 19.5, 100, 170, 10)}"/>`)],
+});
+
+// the hatch doors: two halves of the opening that slide apart under the top; drawn inside the opening only
+const doorPoly = (side) => {
+  const half = rrPoly(HL, HATCH.hw * 2, HATCH.r, 5).map(([x, y]) => [x + HCX, y]).filter(([, y]) => side * y > 0.01);
+  half.sort((a, b) => Math.atan2(side * a[1], a[0] - HCX) - Math.atan2(side * b[1], b[0] - HCX));
+  return [[HATCH.x1, side * 0.6], ...half, [HATCH.x0, side * 0.6]];
+};
+const DOORS = [1, -1].map((side) => {
+  const poly = doorPoly(side);
+  const ccw = side > 0 ? poly : [...poly].reverse();
+  return mk({ id: "door" + side, grp: "shell", node: side > 0 ? "doorL" : "doorR", dark: true, bias: 40,
+    meshes: [prism([0, 0, 0], [0, 0, 1], [1, 0, 0], [0, 1, 0], ccw, ZT - 3, ZT, "gloss")],
+    decals: [plane([0, 0, ZT + 0.02], [1, 0, 0], [0, 1, 0], UPN, `<path class="gl3" d="${lineD([[HATCH.x0 + 16, side * 22], [HATCH.x1 - 20, side * 22]])}"/>`)] });
+});
+
+// ================================================================= INSIDE (typical layout)
+// the arm's cradle along the middle, the battery on the right, the board on the left, the dust bin and the suction
+// fan behind, the brush roll across the front; the wheel modules either side
+const CRADLE = mk({ id: "cradle", grp: "int", node: "cradle", layer: "in", meshes: [box([12, 0, 26], [94, 28, 10], 3, "cradle")],
+  decals: [plane([12, 0, CR_TOP + 0.03], [1, 0, 0], [0, 1, 0], UPN, (() => {
+    let s = `<path class="seam" d="${rrD(0, 0, 180, 48, 4)}"/>` + circle(ARM.x - 12, 0, 20.5, "ringd") + circle(ARM.x - 12, 0, 22.5, "seam");
+    s += screwSvg(-86, 21, 1.6) + screwSvg(-86, -21, 1.6) + screwSvg(86, 21, 1.6) + screwSvg(86, -21, 1.6);
+    return s;
+  })())] });
+// rubber saddles the folded arm rests on
+for (const x of [-40, 20]) mk({ id: "saddle", grp: "int", node: "cradle", layer: "in", bias: 2, meshes: [box([x, 0, CR_TOP + 1.8], [5, 13, 1.8], 1, "rubber")], outline: "ol-s", dark: true });
+
+const BAT = { c: [-4, -64, 29], h: [54, 25, 13] };
+const batTop = (() => {
+  // read from the near side: x toward the tail, y away from the viewer
+  let s = `<path class="label" d="${rrD(-14, 0, 62, 34, 2.4)}"/>` + logoAt(-34, 4, 17, "logo");
+  s += txt(-23, 6.4, "Li-ion", 5, "print", "start") + txt(-23, 0.6, "BATTERY", 4.2, "print", "start") + `<path class="hair" d="${lineD([[-23, -2.6], [12, -2.6]])}"/>`;
+  for (let i = 0; i < 4; i++) s += `<path class="warn" d="${loc([[-23 + i * 7, -12], [-17 + i * 7, -12], [-20 + i * 7, -7]])}"/>`;
+  for (let i = 0; i < 4; i++) s += `<path class="grip" d="${lineD([[24 + i * 6, -16], [24 + i * 6, 16]])}" style="opacity:.3"/>`;
+  return s;
+})();
+const BATTERY = mk({ id: "battery", grp: "int", node: "battery", layer: "in", meshes: [box(BAT.c, BAT.h, 2.6, "battery")],
+  decals: [plane([BAT.c[0], BAT.c[1], BAT.c[2] + BAT.h[2] + 0.03], [-1, 0, 0], [0, 1, 0], UPN, batTop)] });
+mk({ id: "bat-plug", grp: "int", node: "battery", layer: "in", bias: 3, meshes: [box([BAT.c[0] - 8, BAT.c[1] + BAT.h[1] + 3, 30], [7, 3, 5], 1, "white")], outline: "ol-s" });
+
+// the main board on four posts, its processor under a can with our mark, chips and plugs
+const BD = { x0: -58, x1: 54, y: 66, hw: 26, z: 44 };
+const BDX = (BD.x0 + BD.x1) / 2;
+const boardPrint = (() => {
+  const R = rng(40);
+  const hw = (BD.x1 - BD.x0) / 2;
+  let s = "", tr0 = "";
+  for (let i = 0; i < 30; i++) {
+    let x = (R() - 0.5) * 2 * (hw - 3), y = (R() - 0.5) * 2 * (BD.hw - 3);
+    const pts = [[x, y]];
+    for (let k = 0; k < 3; k++) { if (k % 2 === 0) x += (R() - 0.5) * 30; else y += (R() - 0.5) * 18; pts.push([Math.max(-hw + 2, Math.min(hw - 2, x)), Math.max(-BD.hw + 2, Math.min(BD.hw - 2, y))]); }
+    tr0 += lineD(pts);
+  }
+  s += `<path class="trace" d="${tr0}"/>`;
+  for (const sx of [-1, 1]) for (const sy of [-1, 1]) s += circle(sx * (hw - 4), sy * (BD.hw - 4), 2.6, "pad") + screwSvg(sx * (hw - 4), sy * (BD.hw - 4), 1.6);
+  for (let i = 0; i < 40; i++) { const x = (R() - 0.5) * 90, y = (R() - 0.5) * 44; if (Math.abs(x - 6) < 16 && Math.abs(y) < 14) continue; s += R() < 0.5 ? rect(x, y, 2, 1.1, "cap") : rect(x, y, 1.4, 0.9, "res"); }
+  s += txt(-40, -21, "MAIN BOARD", 3, "silk", "start") + logoAt(40, -18, 9, "silk");
+  s += `<path class="silk-l" d="${rrD(-26, 10, 12, 9, 1)}"/>` + txt(-26, 1.6, "IMU", 2.6, "silk");
+  return s;
+})();
+const BOARD = mk({ id: "board", grp: "int", node: "board", layer: "in", crease: false, meshes: [prism([BDX, BD.y, BD.z], [0, 0, 1], [1, 0, 0], [0, 1, 0], rrPoly(BD.x1 - BD.x0, BD.hw * 2, 3), 0, 1.6, "pcb")],
+  decals: [plane([BDX, BD.y, BD.z + 1.64], [1, 0, 0], [0, 1, 0], UPN, boardPrint)] });
+const BZ = BD.z + 1.6;
+mk({ id: "board-can", grp: "int", node: "board", layer: "in", bias: 3, meshes: [box([BDX + 6, BD.y, BZ + 1.4], [14, 12, 1.4], 0.6, "steel")], outline: "ol-s",
+  decals: [plane([BDX + 6, BD.y, BZ + 2.83], [1, 0, 0], [0, 1, 0], UPN, logoAt(-6, 0, 10, "logo-gr") + txt(4, -1.4, "SoC", 4, "print2", "start"))] });
+for (const [x, y, w, h] of [[BD.x1 - 6, BD.y + 14, 4, 9], [BD.x1 - 6, BD.y - 12, 4, 9], [BD.x0 + 10, BD.y + 20, 9, 4], [BD.x0 + 26, BD.y - 21, 12, 4]])
+  mk({ id: "board-plug", grp: "int", node: "board", layer: "in", bias: 3, meshes: [box([x, y, BZ + 1.6], [w / 2, h / 2, 1.6], 0.4, "white")], outline: "ol-s" });
+mk({ id: "board-chip", grp: "int", node: "board", layer: "in", bias: 3, meshes: [box([BDX - 22, BD.y - 6, BZ + 0.7], [6, 6, 0.7], 0.3, "chip")], outline: "ol-s" });
+for (const [x, y] of [[BD.x0 + 4, BD.y + BD.hw - 4], [BD.x0 + 4, BD.y - BD.hw + 4], [BD.x1 - 4, BD.y + BD.hw - 4], [BD.x1 - 4, BD.y - BD.hw + 4]])
+  mk({ id: "board-post", grp: "int", node: "boardPost", layer: "in", bias: -8, meshes: [cyl([x, y, 0], [0, 0, 1], 2, ZF, BD.z, "steel", 12)], outline: "ol-s" });
+
+// the dust bin behind the cradle, a pleated filter in its lid; the suction fan beside it, its motor on top
+const BIN = { c: [-110, 42, 32], h: [30, 40, 16] };
+const binTop = (() => {
+  let s = `<path class="filter" d="${rrD(-6, 2, 40, 54, 3)}"/>`;
+  for (let y = -22; y <= 26; y += 3) s += `<path class="pleat" d="${lineD([[-24, y], [12, y]])}"/>`;
+  s += `<path class="connd" d="${rrD(20, 2, 8, 30, 3)}"/>` + `<path class="grip" d="${lineD([[20, -8], [20, 12]])}"/>`;
+  s += `<path class="seam" d="${rrD(0, 0, 56, 76, 6)}"/>`;
+  return s;
+})();
+const BINP = mk({ id: "bin", grp: "int", node: "bin", layer: "in", meshes: [box(BIN.c, BIN.h, 5, "bin")],
+  decals: [plane([BIN.c[0], BIN.c[1], BIN.c[2] + BIN.h[2] + 0.03], [1, 0, 0], [0, 1, 0], UPN, binTop)] });
+const FAN = { c: [-104, -56], r: 28 };
+const fanTop = (() => {
+  let s = `<path class="seam" d="${arcD(0, 0, 25, 0, 330, 30)}"/><path class="seam" d="${arcD(0, 0, 21, 20, 340, 30)}"/>`;
+  s += screwSvg(20, 14, 1.4) + screwSvg(-20, -14, 1.4) + screwSvg(-14, 21, 1.4);
+  return s;
+})();
+mk({ id: "fan", grp: "int", node: "fan", layer: "in", meshes: [cyl([FAN.c[0], FAN.c[1], 0], [0, 0, 1], FAN.r, ZF, 40, "fan", 36)],
+  decals: [plane([FAN.c[0], FAN.c[1], 40.03], [1, 0, 0], [0, 1, 0], UPN, fanTop)] });
+mk({ id: "duct", grp: "int", node: "fan", layer: "in", bias: -4, meshes: [box([FAN.c[0], -14, 28], [13, 14, 9], 3, "fan")] });
+let FAN_SPIN = 0;
+const motorTop = () => {
+  // the motor's cap: vents you see the copper windings through, turning with the rotor
+  let s = circle(0, 0, 14, "ringd");
+  for (let i = 0; i < 8; i++) { const a = i * 45 + FAN_SPIN; s += `<path class="vent" d="${arcD(0, 0, 12, a + 6, a + 34, 5)}${arcD(0, 0, 7.5, a + 34, a + 6, 5).replace("M", "L")}Z"/>`; }
+  for (let i = 0; i < 8; i++) { const a = i * 45 + FAN_SPIN + 20; s += `<path class="wire" stroke="#c8743f" stroke-width=".9" d="${arcD(0, 0, 9.8, a - 6, a + 6, 3)}"/>`; }
+  return s + circle(0, 0, 4.4, "screw") + circle(0, 0, 1.6, "chipb");
+};
+mk({ id: "motor", grp: "int", node: "fan", layer: "in", bias: 6, meshes: [cyl([FAN.c[0], FAN.c[1], 0], [0, 0, 1], 15, 40, 57, "steel", 30)],
+  decals: [plane([FAN.c[0], FAN.c[1], 57.03], [1, 0, 0], [0, 1, 0], UPN, () => motorTop())], focusRoot: true });
+
+// the wheel modules: a hood over each drive wheel, the wheel turning under it
+const WH = { x: -5, y: 128, r: 26, w: 11 };
+const tyreMat = (n, fc, k) => (k > 1 && k % 2 ? "tyre2" : null);
+for (const side of [1, -1]) {
+  const node = side > 0 ? "wheelL" : "wheelR";
+  mk({ id: "hood" + side, grp: "wheel", node, layer: "in", meshes: [box([WH.x, side * WH.y, 35], [31, 15, 19], 7, "hood")],
+    decals: [plane([WH.x, side * WH.y, 54.03], [1, 0, 0], [0, 1, 0], UPN, `<path class="seam" d="${rrD(0, 0, 44, 18, 3)}"/>` + screwSvg(-20, 0, 1.6) + screwSvg(20, 0, 1.6))] });
+  const hubPrint = circle(0, 0, 19, "ringd") + circle(0, 0, 18, "screw") + [0, 72, 144, 216, 288].map((a) => `<path class="slot" d="${lineD([[6 * Math.cos(a * DEG), 6 * Math.sin(a * DEG)], [16 * Math.cos(a * DEG), 16 * Math.sin(a * DEG)]])}"/>`).join("") + circle(0, 0, 6, "chipb") + circle(0, 0, 2.2, "screw");
+  mk({ id: "wheel" + side, grp: "wheel", node: node + "Spin", tyre: true, dark: true,
+    meshes: [cyl([0, 0, 0], [0, 1, 0], WH.r, -WH.w, WH.w, "tyre", 30, tyreMat)],
+    decals: [plane([0, side * (WH.w + 0.05), 0], side > 0 ? [-1, 0, 0] : [1, 0, 0], [0, 0, 1], [0, side, 0], hubPrint)] });
+}
+
+// the brush roll across the front: a light core with orange rubber fins in chevrons, bearings at both ends
+let ROLL_PHASE = 0;
+const ROLL = (() => {
+  const rings = [], n = 24, ns = 16;
+  for (let i = 0; i <= ns; i++) { const y = -BR.hy + (2 * BR.hy * i) / ns; rings.push(circlePoly(BR.r, n).map(([a, b]) => [BR.x + a, y, 14 + b])); }
+  // the chevron: a face is fin when its angle step and its distance from the middle line up
+  const matOf = (nn, fc) => {
+    const a = Math.atan2(fc[2] - 14, fc[0] - BR.x) / DEG;
+    const k = Math.round(((a + 360 + Math.abs(fc[1]) * 2.2) % 120) / 15);
+    return k === 0 || k === 8 ? "fin" : null;
+  };
+  return loft(rings, "roll", matOf);
+})();
+const ROLLP = mk({ id: "roll", grp: "roll", node: "roll", meshes: [ROLL] });
+for (const s of [1, -1]) mk({ id: "roll-end", grp: "roll", node: "rollEnd", bias: 4, meshes: [cyl([BR.x, s * (BR.hy + 3), 14], [0, 1, 0], 9, -3, 3, "joint", 18)], outline: "ol-s", dark: true });
+
+// the side brush under the front right: a hub and three tufts of bristles
+const SB = { x: 128, y: -104 };
+const SIDE = [mk({ id: "sb-hub", grp: "side", node: "side", meshes: [cyl([0, 0, 0], [0, 0, 1], 9, 2.5, 7, "joint", 20)], dark: true, bias: 3, outline: "ol-s" })];
+for (let i = 0; i < 3; i++) {
+  const a = i * 120 * DEG, u = [Math.cos(a), Math.sin(a), 0], w = [-Math.sin(a), Math.cos(a), 0];
+  const rings = [];
+  for (const [s, hw, z] of [[7, 2.6, 4.6], [30, 3.4, 3.4], [56, 5.6, 1.6], [66, 6.6, 1.1]]) rings.push([[-hw, -0.7], [hw, -0.7], [hw, 0.7], [-hw, 0.7]].map(([q, h]) => add3(add3(mul3(u, s), mul3(w, q)), [0, 0, z + h])));
+  SIDE.push(mk({ id: "sb-arm", grp: "side", node: "side", meshes: [loft(rings, "bristle")], outline: "ol-s" }));
+}
+
+// ================================================================= THE ARM
+// A turret that rises out of the bay, a shoulder, an upper arm, an elbow of two knuckles, a forearm, a wrist and a
+// gripper of two fingers. Each piece lives in its joint's frame (x along the segment, z its top side when folded).
+const oct = (hw, hh) => { const c = Math.min(hw, hh) * 0.42; return [[hw, hh - c], [hw - c, hh], [-hw + c, hh], [-hw, hh - c], [-hw, -hh + c], [-hw + c, -hh], [hw - c, -hh], [hw, -hh + c]]; };
+const beam = (s0, s1, hw, hh, z = 0) => loft([s0, s1].map((s) => oct(hw, hh).map(([y, zz]) => [s, y, z + zz])), "alu");
+const capPrint = (r) => circle(0, 0, r * 0.78, "ringl") + circle(0, 0, r * 0.38, "screw") + circle(0, 0, r * 0.12, "chipb");
+const sideCaps = (c, r, hw) => [1, -1].map((s) => plane([c[0], c[1] + s * (hw + 0.05), c[2]], [s, 0, 0], [0, 0, 1], [0, s, 0], capPrint(r)));
+const beamSide = (s0, s1, hw, z = 0) => [1, -1].map((s) => plane([(s0 + s1) / 2, s * (hw + 0.05), z], [s, 0, 0], [0, 0, 1], [0, s, 0],
+  `<path class="seam" d="${lineD([[-(s1 - s0) / 2 + 8, 0], [(s1 - s0) / 2 - 8, 0]])}"/>` + screwSvg(-(s1 - s0) / 2 + 6, 0, 1.2) + screwSvg((s1 - s0) / 2 - 6, 0, 1.2)));
+const ARMP = {
+  turret: mk({ id: "a-turret", grp: "arm", node: "aBase", joint: true, dark: true, meshes: [cyl([0, 0, 0], [0, 0, 1], 19, 0, 9, "joint", 32)], outline: "ol-s",
+    decals: [plane([0, 0, 9.03], [1, 0, 0], [0, 1, 0], UPN, circle(0, 0, 16.4, "ringl") + `<path class="gl3" d="${arcD(0, 0, 17.6, 100, 170, 8)}"/>`)] }),
+  cheekL: mk({ id: "a-cheek", grp: "arm", node: "aBase", bias: 18, meshes: [box([0, 18.2, 14], [10, 2.6, 12], 1.6, "alu")], outline: "ol-s" }),
+  cheekR: mk({ id: "a-cheek", grp: "arm", node: "aBase", bias: 18, meshes: [box([0, -18.2, 14], [10, 2.6, 12], 1.6, "alu")], outline: "ol-s" }),
+  shoulder: mk({ id: "a-shoulder", grp: "arm", node: "aSh", joint: true, dark: true, bias: 18, meshes: [cyl([0, 0, 0], [0, 1, 0], 12.5, -15.4, 15.4, "joint", 28)], outline: "ol-s", decals: sideCaps([0, 0, 0], 12.5, 15.4) }),
+  upper: mk({ id: "a-upper", grp: "arm", node: "aSh", meshes: [beam(5, ARM.L1 - 5, 12, 8.5)], outline: "ol-s", decals: beamSide(5, ARM.L1 - 5, 12) }),
+  elbow: mk({ id: "a-elbow", grp: "arm", node: "aEl", joint: true, dark: true, bias: 18, meshes: [cyl([0, 0, 0], [0, 1, 0], 13, -14, 14, "joint", 28)], outline: "ol-s", decals: sideCaps([0, 0, 0], 13, 14) }),
+  plateL: mk({ id: "a-plate", grp: "arm", node: "aEl", bias: 18, meshes: [prism([0, 14, 0], [0, 1, 0], [1, 0, 0], [0, 0, 1], rrPoly(20, ARM.OFF + 20, 10, 5).map(([x, y]) => [x, y + ARM.OFF / 2]), 0, 2.4, "alu")], outline: "ol-s" }),
+  plateR: mk({ id: "a-plate", grp: "arm", node: "aEl", bias: 18, meshes: [prism([0, -14, 0], [0, 1, 0], [1, 0, 0], [0, 0, 1], rrPoly(20, ARM.OFF + 20, 10, 5).map(([x, y]) => [x, y + ARM.OFF / 2]), -2.4, 0, "alu")], outline: "ol-s" }),
+  knuckle: mk({ id: "a-knuckle", grp: "arm", node: "aEl", joint: true, dark: true, bias: 20, meshes: [cyl([0, 0, ARM.OFF], [0, 1, 0], 10, -14, 14, "joint", 24)], outline: "ol-s", decals: sideCaps([0, 0, ARM.OFF], 10, 14) }),
+  fore: mk({ id: "a-fore", grp: "arm", node: "aEl", meshes: [beam(8, ARM.L2 - 4, 10.5, 7.5, ARM.OFF)], outline: "ol-s", decals: beamSide(8, ARM.L2 - 4, 10.5, ARM.OFF) }),
+  wrist: mk({ id: "a-wrist", grp: "arm", node: "aWr", joint: true, dark: true, bias: 18, meshes: [cyl([0, 0, 0], [0, 1, 0], 9.5, -12, 12, "joint", 24)], outline: "ol-s", decals: sideCaps([0, 0, 0], 9.5, 12) }),
+  collar: mk({ id: "a-collar", grp: "grip", node: "aWrR", joint: true, dark: true, bias: 6, meshes: [cyl([0, 0, 0], [1, 0, 0], 9.6, 6, 13.5, "joint", 24)], outline: "ol-s" }),
+  palm: mk({ id: "a-palm", grp: "grip", node: "aWrR", bias: 4, meshes: [box([22.5, 0, 0], [9, 17.5, 7], 2.2, "alu")], outline: "ol-s",
+    decals: [1, -1].map((s) => plane([22.5, 0, s * 7.05], [1, 0, 0], [0, s, 0], [0, 0, s], `<path class="seam" d="${rrD(0, 0, 14, 29, 2.4)}"/>` + screwSvg(-3.6, 9.5, 1.1) + screwSvg(-3.6, -9.5, 1.1))) }),
+};
+// the fingers: tapered, hooked in at the tip, a rubber pad on the inside
+const fingerMesh = (side) => {
+  const st = [[30, 3.6, 7, 0], [45, 3.4, 6.4, 0], [58, 2.6, 5, -2], [66, 2, 3.8, -5]];
+  return loft(st.map(([s, hw, hh, dy]) => [[-hw, -hh], [hw, -hh], [hw, hh], [-hw, hh]].map(([y, z]) => [s, y + side * dy, z])), "joint");
+};
+const FINGERS = [1, -1].map((side) => mk({ id: "a-finger", grp: "grip", node: side > 0 ? "aFL" : "aFR", joint: true, dark: true, bias: 8, meshes: [fingerMesh(side)], outline: "ol-s",
+  decals: [plane([33, side * 3.65, 0], [1, 0, 0], [0, 0, 1], [0, side, 0], circle(0, 0, 2.6, "ringl") + circle(0, 0, 1, "screw") + `<path class="grip" d="${lineD([[10, -3], [26, -2]])}${lineD([[10, 3], [26, 2]])}"/>`)] }));
+// the column under the turret, as long as the turret has risen (built every frame)
+const COLUMN = { id: "a-column", grp: "arm", node: "aBase", column: true, bias: -10, meshes: [], outline: "ol-s", c: [0, 0, -10] };
+
+// ================================================================= THE SOCK, THE BASKET
+// The sock lies flat: a leg, a heel and a foot, two layers of knit with stripes at the cuff and a coloured heel and toe.
+const SOCK_K = 0.82;
+const SOCK_OUT = [[-34, 0], [34, 0], [34, -76], [42, -88], [62, -96], [148, -99], [166, -106], [173, -122], [168, -139], [150, -147], [38, -147], [0, -145], [-24, -135], [-36, -115], [-35, -86]].map(([x, y]) => [x * SOCK_K, y * SOCK_K]);
+const SOCK_C = mul3(SOCK_OUT.reduce((s, p) => [s[0] + p[0], s[1] + p[1], 0], [0, 0, 0]), 1 / SOCK_OUT.length);
+const sockRing = (k, z) => SOCK_OUT.map(([x, y]) => [SOCK_C[0] + (x - SOCK_C[0]) * k, SOCK_C[1] + (y - SOCK_C[1]) * k, z]);
+const SOCK_T = 7;
+const SOCK_MESH = loft([sockRing(0.975, 0), sockRing(1, 2), sockRing(1, SOCK_T - 1.5), sockRing(0.98, SOCK_T)], "sock");
+const sockPrint = (() => {
+  const K = SOCK_K;
+  let s = `<clipPath id="sock-clip"><path d="${loc(SOCK_OUT.map(([x, y]) => [SOCK_C[0] + (x - SOCK_C[0]) * 0.98, SOCK_C[1] + (y - SOCK_C[1]) * 0.98]))}"/></clipPath><g clip-path="url(#sock-clip)"><g transform="scale(${K})">`;
+  // the ribbed cuff, three coral stripes and a navy one, a coral heel and toe
+  for (let x = -32; x <= 32; x += 3.2) s += `<path class="hair" d="${lineD([[x, -1], [x, -14]])}" opacity=".5"/>`;
+  for (const [y, c] of [[-22, "#e5583e"], [-31, "#e5583e"], [-40, "#2f4a7a"], [-49, "#e5583e"]]) s += rect(0, y, 80, 5, "stripe", ` fill="${c}"`);
+  s += `<path class="stripe" fill="#e5583e" d="${loc([[-40, -118], [-10, -112], [12, -126], [20, -152], [-40, -152]])}"/>`;
+  s += `<path class="stripe" fill="#e5583e" d="${loc([[140, -90], [146, -110], [140, -150], [180, -150], [180, -90]])}"/>`;
+  s += `<path class="seam" d="${lineD([[-34, -14], [34, -14]])}"/><path class="hair" d="${lineD([[60, -101], [150, -104]])}" opacity=".4"/>`;
+  return s + `</g></g><path class="ol-s" d="${loc(SOCK_OUT)}"/>`;
+})();
+const SOCK = mk({ id: "sock", grp: "sock", node: "sock", meshes: [SOCK_MESH], crease: false, outline: false, decals: [plane([0, 0, SOCK_T + 0.03], [1, 0, 0], [0, 1, 0], UPN, sockPrint)] });
+const SOCK_GRAB = [0, -40 * SOCK_K]; // where the gripper takes it, in the sock's own frame (the middle of the leg)
+
+const BK = D.BASKET;
+const BASKET = roundTray({ rO: BK.r, rI: BK.r - 6, zb: 0, zf: 5, zt: BK.h, ch: 3, n: 48, bands: 8, mO: "wicker", mI: "wickerIn", mF: "wickerIn", mR: "braid",
+  matOf: (side, am, z, i, b) => {
+    if (z > BK.h - 10) return side === "in" ? "wicker2" : (i % 2 ? "braid" : "wicker2");
+    if (side === "in") return (i + b) % 2 ? "wickerIn" : null;
+    return (i + b) % 2 ? "wicker2" : null;
+  } });
+const basketFloor = [plane([0, 0, 5.03], [1, 0, 0], [0, 1, 0], UPN, (() => { let s = ""; for (let r = 10; r < BK.r - 6; r += 9) s += `<path class="seam" d="${circD(0, 0, r, 40)}"/>`; for (let i = 0; i < 12; i++) { const a = i * 30 * DEG; s += `<path class="hair" d="${lineD([[6 * Math.cos(a), 6 * Math.sin(a)], [(BK.r - 6) * Math.cos(a), (BK.r - 6) * Math.sin(a)]])}"/>`; } return s; })())];
+
+// ================================================================= THE POSES
+// The arm's planar chain: given a wrist point in the arm's plane (forward along its heading, up), the shoulder and the
+// elbow angles that reach it with the elbow up, and the wrist angle that points the gripper where it is told.
+const L2E = Math.hypot(ARM.L2, ARM.OFF), DL = Math.atan2(ARM.OFF, ARM.L2) / DEG;
+function reach(sx, sz, wx, wz, gripAbs) {
+  const dx = wx - sx, dz = wz - sz;
+  const d = Math.min(Math.hypot(dx, dz), ARM.L1 + L2E - 0.5);
+  const phi = Math.atan2(dz, dx) / DEG;
+  const a = Math.acos(clamp((ARM.L1 ** 2 + d * d - L2E ** 2) / (2 * ARM.L1 * d), -1, 1)) / DEG;
+  const a1 = phi + a;
+  const ex = sx + ARM.L1 * Math.cos(a1 * DEG), ez = sz + ARM.L1 * Math.sin(a1 * DEG);
+  const a2 = Math.atan2(wz - ez, wx - ex) / DEG - DL;
+  return { a1, b: a2 - a1, g: gripAbs - a2 };
+}
+const lerpPose = (a, b, t) => ({ a1: lerp(a.a1, b.a1, t), b: lerp(a.b, b.b, t), g: lerp(a.g, b.g, t) });
+const STOWED = { a1: 180, b: -180, g: 0 };
+const SH_Z = CR_TOP + ARM.LIFT + ARM.SH;
+const GRIP_LEN = 66; // wrist axis to fingertips
+// the sock lies ahead of the bumper at the grab stop, turned so the arm comes down across its leg
+const SOCK_AT = (() => {
+  const yaw = 74;
+  const grab = [236, 0];
+  const R = [Math.cos(yaw * DEG) * SOCK_GRAB[0] - Math.sin(yaw * DEG) * SOCK_GRAB[1], Math.sin(yaw * DEG) * SOCK_GRAB[0] + Math.cos(yaw * DEG) * SOCK_GRAB[1]];
+  return { c: [grab[0] - R[0], grab[1] - R[1]], yaw, grab };
+})();
+const ON_SOCK = reach(ARM.x, SH_Z, SOCK_AT.grab[0], SOCK_T * 0.5 + GRIP_LEN, -90);
+const ABOVE_SOCK = reach(ARM.x, SH_Z, SOCK_AT.grab[0] - 6, SOCK_T + GRIP_LEN + 44, -90);
+// carried: high over the front, the sock hanging under the fingers
+const CARRY = reach(ARM.x, SH_Z, 196, 150 + GRIP_LEN, -90);
+const HANG = 45; // how far the held sock swings down from flat (deg)
+
+// the robot's stops on the floor: its spot, the grab stop (the spot the stills were drawn at), the basket stop
+const GRAB = { c: D.HOME.c, yaw: D.HOME.yaw };
+const START = { c: [GRAB.c[0] - 70 * Math.cos(GRAB.yaw * DEG), GRAB.c[1] - 70 * Math.sin(GRAB.yaw * DEG)], yaw: GRAB.yaw };
+const DROP = (() => {
+  const v = [BK.c[0] - GRAB.c[0], BK.c[1] - GRAB.c[1]], d = Math.hypot(v[0], v[1]), a = Math.atan2(v[1], v[0]);
+  const stand = RO + 10 + BK.r; // the bumper stops 10 mm short of the rim
+  return { c: [GRAB.c[0] + (d - stand) * Math.cos(a), GRAB.c[1] + (d - stand) * Math.sin(a)], yaw: a / DEG, stand };
+})();
+// over the basket: the fingertips above its near half, high enough that the hanging sock clears the rim
+const OVER = reach(ARM.x, SH_Z, DROP.stand - BK.r + 48, BK.h + 66 + GRIP_LEN, -90);
+// the vacuum run: from the basket stop out along one lane, a tight U-turn, back along the next lane to the grab stop
+const VAC = (() => {
+  const h = 75 * DEG, u = [Math.cos(h), Math.sin(h)], nl = [-Math.sin(h), Math.cos(h)];
+  const rel = [DROP.c[0] - GRAB.c[0], DROP.c[1] - GRAB.c[1]];
+  const off = -(rel[0] * nl[0] + rel[1] * nl[1]); // lane B (through the grab stop) lies this far to the left of lane A
+  const a0 = rel[0] * u[0] + rel[1] * u[1];
+  const L = 190, r = off / 2, a1 = a0 + L;
+  return { h: 75, u, nl, L, r, a0, a1, C: [DROP.c[0] + L * u[0] + r * nl[0], DROP.c[1] + L * u[1] + r * nl[1]] };
+})();
+function vacPose(u) {
+  // rotate at the basket, out, U-turn, back, rotate to face the sock's old spot
+  const P = (x, y) => [x, y];
+  if (u < 0.12) return { c: DROP.c, yaw: lerpAng(DROP.yaw, VAC.h, smoother(seg(u, 0, 0.12))), lane: 0 };
+  if (u < 0.42) { const s = VAC.L * smoother(seg(u, 0.12, 0.42)); return { c: P(DROP.c[0] + s * VAC.u[0], DROP.c[1] + s * VAC.u[1]), yaw: VAC.h, lane: s / VAC.L }; }
+  if (u < 0.55) {
+    const f = smoother(seg(u, 0.42, 0.55)) * Math.PI;
+    const c = [VAC.C[0] - VAC.r * (VAC.nl[0] * Math.cos(f)) + VAC.r * VAC.u[0] * Math.sin(f), VAC.C[1] - VAC.r * (VAC.nl[1] * Math.cos(f)) + VAC.r * VAC.u[1] * Math.sin(f)];
+    return { c, yaw: VAC.h + f / DEG, lane: 1 };
+  }
+  if (u < 0.85) { const a = VAC.a1 * (1 - smoother(seg(u, 0.55, 0.85))); return { c: P(GRAB.c[0] + a * VAC.u[0], GRAB.c[1] + a * VAC.u[1]), yaw: VAC.h + 180, lane: 1 + (1 - a / VAC.a1) }; }
+  return { c: GRAB.c, yaw: lerp(VAC.h + 180, GRAB.yaw, smoother(seg(u, 0.85, 1))), lane: 2 };
+}
+const lerpAng = (a, b, t) => { const d = ((((b - a) % 360) + 540) % 360) - 180; return a + d * t; };
+
+const SOCK_IN = (() => {
+  // in the basket: standing on its foot, leaning on the far wall, the striped cuff over the rim
+  const n = unit3([CA, SA, 0.42]);
+  const y = unit3(sub3([0, 0, 1], mul3(n, dot3([0, 0, 1], n))));
+  const x = cross3(y, n);
+  const Mx = [x[0], y[0], n[0], x[1], y[1], n[1], x[2], y[2], n[2]];
+  const xs = SOCK_OUT.map((p) => p[0]), ys = SOCK_OUT.map((p) => p[1]);
+  const mid = [(Math.min(...xs) + Math.max(...xs)) / 2, Math.min(...ys), 0];
+  return TF(Mx, sub3([BK.c[0] - 14 * CA, BK.c[1] - 14 * SA, FT + 12], mv(Mx, mid)));
+})();
+const rootOf = (c, yaw) => TF(Rz(yaw), [c[0], c[1], FT]);
+const SOCK_FLOOR = TF(Rz(GRAB.yaw + SOCK_AT.yaw), ap(rootOf(GRAB.c, GRAB.yaw), [SOCK_AT.c[0], SOCK_AT.c[1], 0]));
+// held: hung from the fingertips, swung down about its own x axis by `hang`
+const heldSock = (N, yaw, hang) => cmp(TF(Rz(yaw + SOCK_AT.yaw), ap(N.aWrR, [GRIP_LEN, 0, 0])), cmp(TF(Rx(hang)), tr(-SOCK_GRAB[0], -SOCK_GRAB[1], -SOCK_T / 2)));
+// a pose between two: positions straight, the frames blended and squared up again
+function blendTF(A, B, t) {
+  const M = A.M.map((v, i) => lerp(v, B.M[i], t));
+  const c0 = unit3([M[0], M[3], M[6]]);
+  let c1 = [M[1], M[4], M[7]];
+  c1 = unit3(sub3(c1, mul3(c0, dot3(c1, c0))));
+  const c2 = cross3(c0, c1);
+  return TF([c0[0], c1[0], c2[0], c0[1], c1[1], c2[1], c0[2], c1[2], c2[2]], lerp3(A.t, B.t, t));
+}
+
+const OPEN_AT = [-330, 112]; // the shell lifted off: back along the robot and up
+const EX = {
+  shell: [-40, 0, 156], arm: [80, 40, 262], int: [0, 0, 150], wheel: 96, roll: [96, 0, -2], side: [76, -30, 0],
+  bat: [0, -46, 0], board: [0, 46, 0], bin: [-46, 30, 0], fan: [-46, -40, 0],
+};
+function nodes(Z) {
+  const N = {};
+  const root = rootOf(Z.pos, Z.yaw);
+  const at = (t) => cmp(root, TF(I3, t));
+  const e = Z.e;
+  N.body = root;
+  N.shell = at(add3([Z.shellX, 0, Z.shellZ], mul3(EX.shell, e.shell)));
+  N.doorL = cmp(N.shell, tr(0, (HATCH.hw + 2) * Z.hatch, 0));
+  N.doorR = cmp(N.shell, tr(0, -(HATCH.hw + 2) * Z.hatch, 0));
+  const up = mul3(EX.int, e.int);
+  N.cradle = at(up);
+  N.battery = at(add3(up, mul3(EX.bat, e.int)));
+  N.board = at(add3(up, mul3(EX.board, e.int)));
+  N.boardPost = N.board;
+  N.bin = at(add3(up, mul3(EX.bin, e.int)));
+  N.fan = at(add3(up, mul3(EX.fan, e.int)));
+  for (const [nm, s] of [["wheelL", 1], ["wheelR", -1]]) {
+    N[nm] = at([0, s * EX.wheel * e.wheel, 0]);
+    N[nm + "Spin"] = cmp(N[nm], tr(WH.x, s * WH.y, WH.r));
+  }
+  N.roll = cmp(at(mul3(EX.roll, e.roll)), about([BR.x, 0, 14], Ry(-Z.rollTurn)));
+  N.rollEnd = at(mul3(EX.roll, e.roll));
+  N.side = cmp(at(add3([SB.x, SB.y, 0], mul3(EX.side, e.roll))), TF(Rz(-Z.sideTurn)));
+  // the arm: rides on the cradle (and out of it when exploded), its segments and the gripper spread apart
+  const A = Z.arm;
+  const aRoot = cmp(N.cradle, tr(...mul3(EX.arm, e.arm)));
+  N.aBase = cmp(aRoot, cmp(tr(ARM.x, 0, CR_TOP + ARM.LIFT * A.lift), TF(Rz(A.psi))));
+  N.aSh = cmp(N.aBase, cmp(tr(0, 0, ARM.SH), TF(Ry(-A.a1))));
+  const sp = e.seg, gp = e.grip;
+  N.aEl = cmp(N.aSh, cmp(tr(ARM.L1 + 26 * sp, 0, -34 * sp), TF(Ry(-A.b))));
+  N.aWr = cmp(N.aEl, cmp(tr(ARM.L2 + 34 * sp, 0, ARM.OFF + 10 * sp), TF(Ry(-A.g))));
+  N.aWrR = cmp(N.aWr, TF(Rx(A.roll || 0)));
+  N.aFL = cmp(N.aWrR, tr(14 * gp, A.grip + 6 * gp, 0));
+  N.aFR = cmp(N.aWrR, tr(14 * gp, -A.grip - 6 * gp, 0));
+  // the sock: on the floor, held, falling into the basket, or in it
+  if (Z.sock === "held") N.sock = heldSock(N, Z.yaw, Z.hang);
+  else if (Z.sock === "fall") N.sock = blendTF(releasePose(), SOCK_IN, Z.fall);
+  else if (Z.sock === "in") N.sock = SOCK_IN;
+  else N.sock = SOCK_FLOOR;
+  N.sockFloor = SOCK_FLOOR;
+  N.sockIn = SOCK_IN;
+  N.basket = TF(I3, [BK.c[0], BK.c[1], FT]);
+  return N;
+}
+let RELEASE = null;
+function releasePose() {
+  // where the sock hangs at the moment the fingers open over the basket
+  if (!RELEASE) { const Z = base(); Object.assign(Z, { pos: DROP.c, yaw: DROP.yaw, hatch: 1, arm: armPose(OVER, 1, ARM.GRIP_SHUT) }); Z.sock = "floor"; RELEASE = heldSock(nodes(Z), DROP.yaw, HANG); }
+  return RELEASE;
+}
+
+// ---------------------------------------------------------------- the steps
+const ORDER = ["set", "grab", "drop", "vac", "apart", "grip", "home"];
+const DUR = { set: 3.6, grab: 5.4, drop: 4.6, vac: 4.2, apart: 5.0, grip: 4.0, home: 4.2 };
+const N_ = BRAND.name;
+const STEPS = {
+  set: { dur: DUR.set, hint: `It spins on the spot and rolls off. The laser on top sweeps the room and the floor's edges come back as a map (typical).` },
+  grab: { dur: DUR.grab, hint: `A sock lies in its path. A hatch in the top shell opens, the folding arm rises out of its bay and unfolds, and the gripper closes on the sock (${BRAND.maker}).` },
+  drop: { dur: DUR.drop, hint: `It turns to the basket with the sock hanging from the gripper, reaches over the rim and lets go. The arm folds back into its bay and the hatch shuts.` },
+  vac: { dur: DUR.vac, hint: `Then it vacuums: out along one lane, a tight U-turn, back along the next. The side brush sweeps dust in and the brush roll underneath lifts it.` },
+  apart: { dur: DUR.apart, hint: `Lift the top shell: the arm folded in its bay, the suction fan and motor, the battery, the dust bin, the board and the brush roll (layout typical). Then it all comes apart.` },
+  grip: { dur: DUR.grip, hint: `Up close, the gripper: two fingers that open and close and a wrist that rolls, so it can pinch a sock from any side (drawn).` },
+  home: { dur: DUR.home, hint: `Back together, the arm folded away under the hatch, and it backs onto its spot.` },
+};
+const sine = (x) => (1 - Math.cos(Math.PI * clamp(x))) / 2;
+const bump = (u, a, b, w = 0.25) => ease(seg(u, a, a + (b - a) * w)) * (1 - ease(seg(u, b - (b - a) * w, b)));
+// the laser's sweep, continuous across the steps it runs in (deg, relative to the robot's heading)
+const SWEEP_RATE = 150;
+const sweepOf = (st, u) => SWEEP_RATE * (st === "set" ? DUR.set * u : st === "grab" ? DUR.set + DUR.grab * u : st === "drop" ? DUR.set + DUR.grab + DUR.drop * u : DUR.set + DUR.grab + DUR.drop + DUR.vac * u) - 40;
+
+const fresh = () => ({ step: null, u: 0 });
+let S = fresh();
+const NONE = () => 0;
+const E0 = () => ({ shell: 0, arm: 0, seg: 0, grip: 0, int: 0, wheel: 0, roll: 0 });
+const armPose = (p, lift, grip, roll = 0) => ({ lift, psi: 0, a1: p.a1, b: p.b, g: p.g, grip, roll });
+function base() {
+  return {
+    st: null, u: 0, pos: START.c, yaw: START.yaw, e: E0(), shellZ: 0, shellX: 0, hatch: 0,
+    arm: armPose(STOWED, 0, ARM.GRIP_SHUT), sock: "floor", hang: 0, fall: 0, sockFloorOp: 0, sockInOp: 0,
+    sideTurn: 0, rollTurn: 0, laser: 0, scan: 0, sweep: -40, ai: 0, sight: 0, cut: 0, dust: 0, lane: 0,
+    dim: 0, keep: () => true, hl: NONE, tags: [], word: null, cam: ["rest", "rest", 0], hot: [], seen: "–", brush: "off",
+  };
+}
+function scene() {
+  const st = S.step, u = S.u;
+  const Z = base();
+  Z.st = st; Z.u = u;
+  if (!st) return Z;
+  if (st === "set") {
+    // a spin on the spot, then it rolls up to the sock's stop; the laser maps the floor
+    Z.yaw = START.yaw + 360 * smoother(seg(u, 0.03, 0.5));
+    const k = smoother(seg(u, 0.52, 0.82));
+    Z.pos = [lerp(START.c[0], GRAB.c[0], k), lerp(START.c[1], GRAB.c[1], k)];
+    Z.sideTurn = 120 * 5 * smoother(seg(u, 0.02, 0.86));
+    Z.laser = ease(seg(u, 0, 0.05));
+    Z.scan = ease(seg(u, 0.02, 0.1));
+    Z.sweep = sweepOf(st, u);
+    Z.tags.push({ id: "fMap", op: ease(seg(u, 0.12, 0.2)) * (1 - ease(seg(u, 0.88, 0.97))) });
+    Z.cam = u < 0.5 ? ["rest", "map", sine(seg(u, 0.02, 0.5))] : ["map", "spot", sine(seg(u, 0.5, 1))];
+    Z.hot = ["map"];
+    Z.brush = "spinning";
+    return Z;
+  }
+  Z.pos = GRAB.c;
+  Z.yaw = GRAB.yaw;
+  Z.laser = 1;
+  if (st === "grab") {
+    Z.scan = 1;
+    Z.sweep = sweepOf(st, u);
+    Z.ai = ease(seg(u, 0.02, 0.1)) * (1 - ease(seg(u, 0.88, 0.97)));
+    Z.sight = ease(seg(u, 0.02, 0.08)) * (1 - ease(seg(u, 0.3, 0.42)));
+    Z.seen = u > 0.05 ? "sock" : "–";
+    Z.hatch = smoother(seg(u, 0.1, 0.22));
+    const lift = smoother(seg(u, 0.22, 0.34));
+    let p;
+    if (u < 0.6) p = lerpPose(STOWED, ABOVE_SOCK, smoother(seg(u, 0.34, 0.6)));
+    else if (u < 0.82) p = lerpPose(ABOVE_SOCK, ON_SOCK, smoother(seg(u, 0.6, 0.7)));
+    else p = lerpPose(ON_SOCK, CARRY, smoother(seg(u, 0.82, 1)));
+    const grip = u < 0.7 ? lerp(ARM.GRIP_SHUT, ARM.GRIP_OPEN, smoother(seg(u, 0.4, 0.58))) : lerp(ARM.GRIP_OPEN, ARM.GRIP_SHUT, smoother(seg(u, 0.72, 0.8)));
+    Z.arm = armPose(p, lift, grip);
+    if (u >= 0.82) { Z.sock = "held"; Z.hang = HANG * smoother(seg(u, 0.82, 1)); }
+    if (u > 0.74 && u < 0.88) Z.word = { text: "pinch", at: "tip", op: ease(seg(u, 0.74, 0.77)) * (1 - ease(seg(u, 0.84, 0.88))) };
+    const g = bump(u, 0.7, 0.86, 0.3);
+    Z.hl = (p2) => (p2.grp === "grip" && p2.id === "a-finger" ? g : 0);
+    Z.tags.push({ id: "fArm", op: ease(seg(u, 0.28, 0.36)) * (1 - ease(seg(u, 0.9, 0.98))) });
+    Z.cam = ["spot", "grab", sine(seg(u, 0.02, 0.92))];
+    Z.hot = u < 0.3 ? ["seen"] : ["arm"];
+    Z.brush = "off";
+    return Z;
+  }
+  if (st === "drop") {
+    // turn to the basket, roll up to it, reach over the rim, let go, fold away, shut the hatch
+    const turn = smoother(seg(u, 0, 0.3)), go = smoother(seg(u, 0.3, 0.42));
+    Z.yaw = lerpAng(GRAB.yaw, DROP.yaw, turn);
+    Z.pos = [lerp(GRAB.c[0], DROP.c[0], go), lerp(GRAB.c[1], DROP.c[1], go)];
+    Z.sideTurn = 120 * 2 * smoother(seg(u, 0, 0.42));
+    Z.scan = 1 - ease(seg(u, 0, 0.12));
+    Z.sweep = sweepOf(st, u);
+    Z.hatch = 1 - smoother(seg(u, 0.93, 1));
+    let p, lift = 1;
+    if (u < 0.42) p = CARRY;
+    else if (u < 0.68) p = lerpPose(CARRY, OVER, smoother(seg(u, 0.42, 0.58)));
+    else p = lerpPose(OVER, STOWED, smoother(seg(u, 0.68, 0.86)));
+    if (u > 0.86) lift = 1 - smoother(seg(u, 0.86, 0.93));
+    const grip = u < 0.68 ? lerp(ARM.GRIP_SHUT, ARM.GRIP_OPEN, smoother(seg(u, 0.58, 0.64))) : lerp(ARM.GRIP_OPEN, ARM.GRIP_SHUT, smoother(seg(u, 0.7, 0.8)));
+    Z.arm = armPose(p, lift, grip);
+    // the sock swings a little as it turns, then drops into the basket
+    if (u < 0.61) { Z.sock = "held"; Z.hang = HANG + 9 * Math.sin(Math.PI * 2 * seg(u, 0.04, 0.5)) * (1 - seg(u, 0.4, 0.55)); }
+    else if (u < 0.72) { Z.sock = "fall"; Z.fall = seg(u, 0.61, 0.72) ** 2; }
+    else Z.sock = "in";
+    Z.sockInOp = 1; Z.sockFloorOp = 0;
+    if (u > 0.7 && u < 0.86) Z.word = { text: "plop", at: "basket", op: ease(seg(u, 0.7, 0.73)) * (1 - ease(seg(u, 0.82, 0.86))) };
+    Z.tags.push({ id: "fDrop", op: ease(seg(u, 0.08, 0.16)) * (1 - ease(seg(u, 0.86, 0.94))) });
+    Z.cam = ["grab", "carry", sine(seg(u, 0.02, 1))];
+    Z.hot = ["arm"];
+    return Z;
+  }
+  Z.sock = "in"; Z.sockInOp = 1; Z.sockFloorOp = 0;
+  if (st === "vac") {
+    const P = vacPose(u);
+    Z.pos = P.c; Z.yaw = P.yaw; Z.lane = P.lane;
+    Z.sideTurn = 120 * 9 * smoother(seg(u, 0.02, 0.98));
+    Z.rollTurn = 120 * 12 * smoother(seg(u, 0.02, 0.98));
+    Z.cut = ease(seg(u, 0.04, 0.14)) * (1 - ease(seg(u, 0.86, 0.96)));
+    Z.dust = ease(seg(u, 0, 0.1)) * (1 - ease(seg(u, 0.9, 1)));
+    Z.laser = 1 - ease(seg(u, 0.88, 1));
+    Z.sweep = sweepOf(st, u);
+    if (u > 0.18 && u < 0.4) Z.word = { text: "whirr", at: "side", op: ease(seg(u, 0.18, 0.22)) * (1 - ease(seg(u, 0.36, 0.4))) };
+    Z.tags.push({ id: "fVac", op: ease(seg(u, 0.06, 0.14)) * (1 - ease(seg(u, 0.88, 0.96))) });
+    Z.cam = ["carry", "vac", sine(seg(u, 0.02, 1))];
+    Z.follow = true;
+    Z.hot = ["brush"];
+    Z.brush = u > 0.03 && u < 0.97 ? "spinning" : "off";
+    return Z;
+  }
+  Z.laser = 0;
+  const ALL = { shell: 1, arm: 1, seg: 1, grip: 1, int: 1, wheel: 1, roll: 1 };
+  if (st === "apart") {
+    const k = smoother(seg(u, 0, 0.26));
+    Z.shellZ = OPEN_AT[1] * k;
+    Z.shellX = OPEN_AT[0] * k;
+    const out = (a, b) => smoother(seg(u, a, b));
+    Z.e = { shell: out(0.52, 0.82), arm: out(0.56, 0.86), seg: out(0.68, 0.92), grip: out(0.68, 0.92), int: out(0.6, 0.88), wheel: out(0.64, 0.92), roll: out(0.64, 0.92) };
+    const j = ease(seg(u, 0.24, 0.34)) * (1 - ease(seg(u, 0.5, 0.56)));
+    Z.hl = (p) => (p.joint && p.grp !== "grip" ? j : 0);
+    if (j > 0.001) for (const id of ["armFold", "joints", "fan", "battery", "bin", "board", "roll"]) Z.tags.push({ id, op: j });
+    const nm = ease(seg(u, 0.88, 0.96));
+    if (nm > 0.001) for (const id of X_TAGS) Z.tags.push({ id, op: nm });
+    Z.cam = u < 0.45 ? ["vac", "open", sine(seg(u, 0, 0.38))] : ["open", "apart", sine(seg(u, 0.45, 1))];
+    Z.hot = ["parts"];
+    return Z;
+  }
+  Z.shellZ = OPEN_AT[1]; Z.shellX = OPEN_AT[0];
+  if (st === "grip") {
+    // up close: the gripper's pieces come together, the fingers open and close twice, the wrist rolls
+    Z.e = { ...ALL, grip: 1 - smoother(seg(u, 0.06, 0.28)) };
+    const flex = bump(u, 0.3, 0.5, 0.3) + bump(u, 0.54, 0.74, 0.3);
+    Z.arm = armPose(STOWED, 0, lerp(ARM.GRIP_SHUT, ARM.GRIP_OPEN + 4, flex), 150 * Math.sin(Math.PI * seg(u, 0.3, 0.78)) * 0.6);
+    const g = ease(seg(u, 0.26, 0.34)) * (1 - ease(seg(u, 0.74, 0.82)));
+    Z.hl = (p) => (p.grp === "grip" ? g : 0);
+    const nm = 1 - ease(seg(u, 0, 0.08));
+    if (nm > 0.001) for (const id of X_TAGS) Z.tags.push({ id, op: nm });
+    Z.tags.push({ id: "mFingers", op: g }, { id: "mWrist", op: g });
+    Z.cam = u < 0.32 ? ["apart", "grip", sine(seg(u, 0.02, 0.32))] : u < 0.7 ? ["grip", "grip2", sine(seg(u, 0.32, 0.7))] : ["grip2", "apart", sine(seg(u, 0.7, 1))];
+    Z.hot = ["arm"];
+    return Z;
+  }
+  if (st === "home") {
+    // back together from the outside in, the shell seats, the sock is back on its spot, and it backs onto its own
+    const back = (a, b) => 1 - smoother(seg(u, a, b));
+    Z.e = { shell: back(0.26, 0.48), arm: back(0.16, 0.42), seg: back(0.04, 0.3), grip: 0, int: back(0.12, 0.38), wheel: back(0.04, 0.28), roll: back(0.04, 0.28) };
+    const seat = back(0.48, 0.62);
+    Z.shellZ = OPEN_AT[1] * seat; Z.shellX = OPEN_AT[0] * seat;
+    Z.sockInOp = 1 - ease(seg(u, 0.4, 0.58));
+    Z.sockFloorOp = ease(seg(u, 0.5, 0.68));
+    Z.sock = "in";
+    const k = smoother(seg(u, 0.66, 0.95));
+    Z.pos = [lerp(GRAB.c[0], START.c[0], k), lerp(GRAB.c[1], START.c[1], k)];
+    Z.sideTurn = -120 * 2 * k;
+    Z.cam = ["apart", "rest", sine(seg(u, 0.04, 1))];
+    Z.hot = ["parts"];
+    return Z;
+  }
+  return Z;
+}
+
+// ---------------------------------------------------------------- the floor scan: rays, the swept wedge, the map
+const MAT = D.MAT;
+function rayHit(o, dir) {
+  // the patch's edge stands in for the room's walls; the basket is in the way too
+  let t = 1e9;
+  const [dx, dy] = dir;
+  if (dx > 1e-9) t = Math.min(t, (MAT.x + MAT.w - o[0]) / dx); else if (dx < -1e-9) t = Math.min(t, (MAT.x - o[0]) / dx);
+  if (dy > 1e-9) t = Math.min(t, (MAT.y + MAT.d - o[1]) / dy); else if (dy < -1e-9) t = Math.min(t, (MAT.y - o[1]) / dy);
+  const cx = BK.c[0] - o[0], cy = BK.c[1] - o[1], b = cx * dx + cy * dy, c = cx * cx + cy * cy - (BK.r + 1) ** 2, disc = b * b - c;
+  if (disc > 0) { const t1 = b - Math.sqrt(disc); if (t1 > 0) t = Math.min(t, t1); }
+  return [o[0] + dx * t, o[1] + dy * t];
+}
+const scanG = part("scan");
+function scanSvg(Z, N, cs) {
+  let s = "";
+  if (Z.dust > 0.01) s += dustSvg(Z, cs);
+  if (Z.scan < 0.01) return s;
+  const o = ap(N.shell, [TUR.x, 0, 0]);
+  const c0 = ap(N.body, [0, 0, 0]);
+  const z = FT + 0.4;
+  let m = "";
+  // the map: hit points every 2° seen from the robot's middle, as far round as the laser has swept so far
+  const a1 = Math.min(Z.sweep + 40, 360);
+  const hits = [];
+  for (let a = 0; a <= a1; a += 2) { const d = (a + 20) * DEG; hits.push(rayHit(c0, [Math.cos(d), Math.sin(d)])); }
+  if (hits.length > 1) {
+    const runs = [[hits[0]]];
+    for (let i = 1; i < hits.length; i++) { const p = hits[i], q = hits[i - 1]; if (Math.hypot(p[0] - q[0], p[1] - q[1]) > 40) runs.push([p]); else runs[runs.length - 1].push(p); }
+    for (const r of runs) if (r.length > 1) m += `<path class="mapl" d="${dOpen(r.map(([x, y]) => pr([x, y, z])))}" stroke-width="${r2(3 / cs)}" stroke-dasharray="${r2(0.1 / cs)} ${r2(5 / cs)}"/>`;
+  }
+  // the wedge just swept and its rays, brightest at the leading edge
+  const lead = Z.sweep, ang0 = Z.yaw;
+  const o2 = pr([o[0], o[1], z]);
+  m += `<defs><radialGradient id="rv-sweep" gradientUnits="userSpaceOnUse" cx="${r2(o2[0])}" cy="${r2(o2[1])}" r="${r2(560)}"><stop offset="0" stop-color="#e5583e" stop-opacity=".24"/><stop offset=".5" stop-color="#e5583e" stop-opacity=".09"/><stop offset="1" stop-color="#e5583e" stop-opacity="0"/></radialGradient></defs>`;
+  const wedge = [o2];
+  for (let a = lead - 30; a <= lead + 0.01; a += 2) { const d = (ang0 + a) * DEG; wedge.push(pr([...rayHit(o, [Math.cos(d), Math.sin(d)]), z])); }
+  m += `<path class="sweep" d="${dPath(wedge)}" fill="url(#rv-sweep)"/>`;
+  for (let i = 0; i < 10; i++) {
+    const a = lead - i * 3.2, d = (ang0 + a) * DEG, h = rayHit(o, [Math.cos(d), Math.sin(d)]);
+    const op = (1 - i / 10) ** 1.5;
+    const hp = pr([h[0], h[1], z]);
+    m += `<path class="ray" d="${dOpen([o2, hp])}" stroke-width="${r2((i ? 1.1 : 2.2) / cs)}" style="opacity:${r3(op * 0.9)}"/>`;
+    m += `<circle class="hit" cx="${r2(hp[0])}" cy="${r2(hp[1])}" r="${r2((i ? 2.2 : 3.8) / cs)}" style="opacity:${r3(op)}"/>`;
+  }
+  return s + `<g style="opacity:${r3(Z.scan)}">${m}</g>`;
+}
+// the dust on the lanes: specks the robot's front passes over get pulled in and are gone
+const DUST = (() => {
+  const R = rng(77), out = [];
+  for (let i = 0; i < 46; i++) {
+    const lane = i % 2, along = 60 + R() * 230, side = (R() - 0.5) * 230;
+    const base0 = lane === 0 ? [DROP.c[0], DROP.c[1]] : [GRAB.c[0] + VAC.a1 * VAC.u[0], GRAB.c[1] + VAC.a1 * VAC.u[1]];
+    const dir = lane === 0 ? VAC.u : [-VAC.u[0], -VAC.u[1]];
+    const p = [base0[0] + dir[0] * along + VAC.nl[0] * side, base0[1] + dir[1] * along + VAC.nl[1] * side];
+    if (p[0] < MAT.x + 20 || p[0] > MAT.x + MAT.w - 20 || p[1] < MAT.y + 20 || p[1] > MAT.y + MAT.d - 20) continue;
+    if (Math.hypot(p[0] - BK.c[0], p[1] - BK.c[1]) < BK.r + 14) continue;
+    out.push({ p, r: 1.4 + R() * 2.2, lane, at: (along - 150) / (lane === 0 ? VAC.L : VAC.a1), tone: R() });
+  }
+  return out;
+})();
+function dustSvg(Z, cs) {
+  let s = "";
+  for (const d of DUST) {
+    // gone once the robot's front has passed it on its lane
+    const prog = d.lane === 0 ? Z.lane : Z.lane - 1;
+    const left = clamp((prog - d.at) / 0.06);
+    if (left >= 1) continue;
+    const c = pr([d.p[0], d.p[1], FT + 0.5]);
+    s += `<ellipse cx="${r2(c[0])}" cy="${r2(c[1])}" rx="${r2(d.r * KK * 1.1)}" ry="${r2(d.r * KK * 0.62)}" fill="${d.tone < 0.5 ? "#8c7f6c" : "#a69a86"}" style="opacity:${r3(Z.dust * (1 - left) * 0.85)}"/>`;
+  }
+  return s;
+}
+// the turret's window glows while the laser runs
+function laserRing(Z, N, cs) {
+  if (Z.laser < 0.01) return "";
+  const ringAt = (r, zz) => dPath(Array.from({ length: 40 }, (_, i) => { const a = (i / 40) * TAU; return pr(ap(N.shell, [TUR.x + r * Math.cos(a), r * Math.sin(a), zz])); }));
+  const a0 = Z.sweep - 70;
+  const near = Array.from({ length: 21 }, (_, i) => { const a = (a0 + i * 7) * DEG; return pr(ap(N.shell, [TUR.x + 24.8 * Math.cos(a), 24.8 * Math.sin(a), ZT + 6.8])); });
+  return `<g style="opacity:${r3(Z.laser)}"><path d="${ringAt(26, ZT + 6.8)}" fill="none" stroke="#ff5a3c" stroke-width="${r2(6 / cs)}" filter="url(#rv-glow)" opacity=".55"/>` +
+    `<path d="${dOpen(near)}" fill="none" stroke="#ff8a6a" stroke-width="${r2(2 / cs)}" stroke-linecap="round"/></g>`;
+}
+// the recognition box round the sock, the camera's sight lines to it and the tag
+const hudG = part("hud");
+function hudSvg(Z, N, cs) {
+  let out = laserRing(Z, N, cs);
+  if (Z.ai < 0.01) return out;
+  const xs = SOCK_OUT.map((p) => p[0]), ys = SOCK_OUT.map((p) => p[1]);
+  const b = [Math.min(...xs) - 8, Math.min(...ys) - 8, Math.max(...xs) + 8, Math.max(...ys) + 8];
+  const H = 30;
+  const C = [];
+  for (const z of [0, H]) for (const [x, y] of [[b[0], b[1]], [b[2], b[1]], [b[2], b[3]], [b[0], b[3]]]) C.push(ap(N.sock, [x, y, z]));
+  const S2 = C.map(pr);
+  const sw = r2(1.7 / cs);
+  let s = "";
+  const edges = [[0, 1], [1, 2], [2, 3], [3, 0], [4, 5], [5, 6], [6, 7], [7, 4], [0, 4], [1, 5], [2, 6], [3, 7]];
+  s += `<path class="ai" d="${edges.map(([i, j]) => `M${P2(S2[i])}L${P2(S2[j])}`).join("")}" stroke-width="${r2(0.8 / cs)}" stroke-dasharray="${r2(3 / cs)} ${r2(2.5 / cs)}" style="opacity:.75"/>`;
+  let br = "";
+  for (const [i, j] of edges) {
+    const A = S2[i], B = S2[j];
+    br += `M${P2(A)}L${P2([A[0] + (B[0] - A[0]) * 0.22, A[1] + (B[1] - A[1]) * 0.22])}M${P2(B)}L${P2([B[0] + (A[0] - B[0]) * 0.22, B[1] + (A[1] - B[1]) * 0.22])}`;
+  }
+  s += `<path class="ai" d="${br}" stroke-width="${sw}"/>`;
+  const top = S2.slice(4).reduce((a, p) => (p[1] < a[1] ? p : a));
+  const fs = 13 / cs, pw = 50 / cs, ph = 19 / cs;
+  s += `<path class="ai-f" d="M${r2(top[0])} ${r2(top[1])}L${r2(top[0])} ${r2(top[1] - ph)}L${r2(top[0] + pw)} ${r2(top[1] - ph)}L${r2(top[0] + pw)} ${r2(top[1])}Z"/>`;
+  s += `<text class="ai-t" x="${r2(top[0] + 8 / cs)}" y="${r2(top[1] - 5.2 / cs)}" font-size="${r2(fs)}">sock</text>`;
+  if (Z.sight > 0.01) {
+    const lens = pr(ap(N.body, [RO + 2, 0, 30]));
+    const angs = S2.slice(0, 4).map((p) => [Math.atan2(p[1] - lens[1], p[0] - lens[0]), p]).sort((a, b2) => a[0] - b2[0]);
+    s += `<g style="opacity:${r3(Z.sight * 0.8)}">` + [angs[0][1], angs[3][1]].map((p) => `<path class="sight" d="M${P2(lens)}L${P2(p)}" stroke-width="${r2(0.9 / cs)}" stroke-dasharray="${r2(2 / cs)} ${r2(2.4 / cs)}"/>`).join("") + `</g>`;
+  }
+  return out + `<g style="opacity:${r3(Z.ai)}">${s}</g>`;
+}
+
+// ---------------------------------------------------------------- the labels: cream boxes, ink border, a leader
+// each knows the point it names and where its box sits: next to that point (dx, dy in stage px from the point to the
+// box's anchor) or pinned to the stage (stage: [x, y], top left)
+const X_TAGS = ["xShell", "xArm", "xGrip", "xFan", "xBat", "xBin", "xBoard", "xRoll", "xWheel", "xBase"];
+const TAG = {
+  fMap: () => ({ text: "maps the room with a laser", sub: "typical", stage: [14, 14] }),
+  fArm: () => ({ text: "folding arm · stows inside", sub: BRAND.maker, stage: [14, 14] }),
+  fDrop: () => ({ text: "picks up small items like socks", sub: BRAND.maker, stage: [14, 14] }),
+  fVac: () => ({ text: "side brush + brush roll", sub: "typical", stage: [14, 14] }),
+  sideBrush: (N) => ({ p: ap(N.side, [0, 0, 6]), text: "side brush", dx: -56, dy: -6, anchor: "end" }),
+  armFold: (N) => ({ p: ap(N.aEl, [40, 0, ARM.OFF + 7.5]), text: "arm, folded", dx: -6, dy: -92, anchor: "middle" }),
+  joints: (N) => ({ p: ap(N.aEl, [0, 0, ARM.OFF + 10]), text: "joints", dx: 24, dy: -56, cls: "hot" }),
+  fan: (N) => ({ p: ap(N.fan, [FAN.c[0], FAN.c[1] - 10, 57]), text: "fan + motor", dx: 40, dy: -22 }),
+  battery: (N) => ({ p: ap(N.battery, [BAT.c[0] + 20, BAT.c[1] - BAT.h[1], BAT.c[2] + BAT.h[2]]), text: "battery", dx: 34, dy: 44 }),
+  bin: (N) => ({ p: ap(N.bin, [BIN.c[0] - 10, BIN.c[1] + 10, BIN.c[2] + BIN.h[2]]), text: "dust bin", dx: 46, dy: -30 }),
+  board: (N) => ({ p: ap(N.board, [BDX - 20, BD.y + 10, BD.z + 2]), text: "board", dx: -60, dy: -26, anchor: "end" }),
+  roll: (N) => ({ p: ap(N.roll, [BR.x, -56, 22]), text: "brush roll", dx: -20, dy: 46, anchor: "end" }),
+  xShell: (N) => ({ p: ap(N.shell, [20, 172, 60]), text: "top shell", dx: -18, dy: -10, anchor: "end" }),
+  xArm: (N) => ({ p: ap(N.aSh, [70, 12, 10]), text: "arm", dx: 0, dy: -30, anchor: "middle" }),
+  xGrip: (N) => ({ p: ap(N.aFL, [60, 0, 8]), text: "gripper", dx: -18, dy: -6, anchor: "end" }),
+  xFan: (N) => ({ p: ap(N.fan, [FAN.c[0], FAN.c[1] - 15, 50]), text: "fan + motor", dx: 22, dy: 8 }),
+  xBat: (N) => ({ p: ap(N.battery, [BAT.c[0] - 40, BAT.c[1] - BAT.h[1], BAT.c[2]]), text: "battery", dx: 22, dy: 16 }),
+  xBin: (N) => ({ p: ap(N.bin, [BIN.c[0] - 30, BIN.c[1] + 20, BIN.c[2] + BIN.h[2]]), text: "dust bin", dx: 18, dy: -16 }),
+  xBoard: (N) => ({ p: ap(N.board, [BDX + 20, BD.y + BD.hw, BD.z]), text: "board", dx: -18, dy: -14, anchor: "end" }),
+  xRoll: (N) => ({ p: ap(N.roll, [BR.x, BR.hy, 14]), text: "brush roll", dx: -14, dy: -16, anchor: "end" }),
+  xWheel: (N) => ({ p: ap(N.wheelRSpin, [0, -WH.w, 0]), text: "wheel", dx: 26, dy: 12 }),
+  xBase: (N) => ({ p: ap(N.body, [-10, -40, ZF]), text: "base", dx: 0, dy: 0, anchor: "middle", bare: true }),
+  mFingers: (N) => ({ p: ap(N.aFL, [50, 3.6, 0]), text: "two fingers", sub: "they pinch · drawn", dx: -30, dy: -50, anchor: "end" }),
+  mWrist: (N) => ({ p: ap(N.aWrR, [9, 0, 9.6]), text: "the wrist rolls", sub: "drawn", dx: 30, dy: 40 }),
+};
+function tagSvg(t, cam) {
+  const s = cam.s;
+  const cw = 6.62, cw2 = 5.42, pad = 7;
+  const wpx = Math.max(t.text.length * cw, (t.sub || "").length * cw2) + 2 * pad, hpx = t.sub ? 32 : 20;
+  let bx, by, lead = "";
+  if (t.stage) {
+    bx = cam.F[0] + (t.stage[0] - D.W / 2) / s;
+    by = cam.F[1] + (t.stage[1] - D.H / 2) / s;
+  } else {
+    const p = pr(t.p);
+    const ax = t.anchor === "end" ? wpx : t.anchor === "middle" ? wpx / 2 : 0;
+    bx = p[0] + (t.dx - ax) / s;
+    by = p[1] + t.dy / s - hpx / 2 / s;
+    if (!t.bare) {
+      const qx = clamp(p[0], bx, bx + wpx / s), qy = clamp(p[1], by, by + hpx / s);
+      lead = `<path class="lead" d="M${r2(p[0])} ${r2(p[1])}L${r2(qx)} ${r2(qy)}"/><circle class="lead-dot" cx="${r2(p[0])}" cy="${r2(p[1])}" r="${r2(2.4 / s)}"/>`;
+    }
+  }
+  const box = `<rect class="tag${t.cls ? " " + t.cls : ""}" x="${r2(bx)}" y="${r2(by)}" width="${r2(wpx / s)}" height="${r2(hpx / s)}" rx="${r2(4 / s)}"/>`;
+  const t1 = `<text class="tag-t${t.cls ? " " + t.cls : ""}" x="${r2(bx + pad / s)}" y="${r2(by + 14 / s)}" style="font-size:${r2(11 / s)}px">${esc(t.text)}</text>`;
+  const t2 = t.sub ? `<text class="tag-s" x="${r2(bx + pad / s)}" y="${r2(by + 26.5 / s)}" style="font-size:${r2(9 / s)}px">${esc(t.sub)}</text>` : "";
+  return `<g style="opacity:${r3(t.op)}">${lead}${box}${t1}${t2}</g>`;
+}
+
+// ---------------------------------------------------------------- the brush roll, seen from underneath
+// A round inset pinned to the stage, its leader running to where the roll turns under the bumper: the roll laid across
+// it, turning, its orange rubber fins in chevrons, dust lifting off the floor into it.
+const INSET = { at: [598, 104], r: 60 };
+function insetSvg(Z, N, cam) {
+  const s = cam.s, rad = INSET.r / s;
+  const C = [cam.F[0] + (INSET.at[0] - D.W / 2) / s, cam.F[1] + (INSET.at[1] - D.H / 2) / s];
+  // the roll, turned so its axis lies across the inset (the view's horizontal is world heading −50°)
+  const spin = cmp(TF(Rz(-140)), about([BR.x, 0, 14], Ry(-Z.rollTurn)));
+  const still = TF(Rz(-140));
+  const rs = [partSvg(ROLLP, spin, 0, 0), ...PARTS.filter((p) => p.id === "roll-end").map((p) => partSvg(p, still, 0, 0))];
+  const b = boxOf(rs.flatMap((r) => r.pts));
+  const k = (2 * rad * 1.55) / (b[2] - b[0]); // zoomed past the rim, so the roll reads thick
+  const mid = [(b[0] + b[2]) / 2, (b[1] + b[3]) / 2];
+  const roll = `<g transform="translate(${r2(C[0])} ${r2(C[1] + rad * 0.02)}) scale(${r3(k)}) translate(${r2(-mid[0])} ${r2(-mid[1])})">${rs.map((r) => r.s).join("")}</g>`;
+  // the floor under it and the dust going up into it, in step with the roll
+  const fy = C[1] + rad * 0.36;
+  let dust = "";
+  const ph = (Z.rollTurn / 120) % 1;
+  for (let i = 0; i < 9; i++) {
+    const f = (i / 9 + ph * 1.5) % 1, x = C[0] + (-0.62 + (i / 8) * 1.24) * rad;
+    const y = fy - f * rad * 0.42;
+    dust += `<circle cx="${r2(x + Math.sin(i * 2.3 + f * 4) * rad * 0.04)}" cy="${r2(y)}" r="${r2((1.6 + 0.8 * (1 - f)) / s)}" fill="#a69a86" style="opacity:${r3(0.95 * Math.sin(Math.PI * f))}"/>`;
+  }
+  const clip = `<clipPath id="rv-inset"><circle cx="${r2(C[0])}" cy="${r2(C[1])}" r="${r2(rad)}"/></clipPath>`;
+  const body = `<g clip-path="url(#rv-inset)"><circle cx="${r2(C[0])}" cy="${r2(C[1])}" r="${r2(rad)}" fill="#3a3d46"/>` +
+    `<rect x="${r2(C[0] - rad)}" y="${r2(fy)}" width="${r2(2 * rad)}" height="${r2(rad)}" fill="#e2b882"/><path d="M${r2(C[0] - rad)} ${r2(fy)}H${r2(C[0] + rad)}" stroke="#23263a" stroke-width="1" fill="none"/>` +
+    `<path d="M${r2(C[0] - rad)} ${r2(C[1] - rad * 0.3)}Q${r2(C[0])} ${r2(C[1] - rad * 0.78)} ${r2(C[0] + rad)} ${r2(C[1] - rad * 0.3)}" stroke="#5c616c" stroke-width="${r2(3 / s)}" fill="none"/>` + roll + dust + `</g>`;
+  const ring = `<circle cx="${r2(C[0])}" cy="${r2(C[1])}" r="${r2(rad)}" fill="none" stroke="#23263a" stroke-width="1.6"/><circle cx="${r2(C[0])}" cy="${r2(C[1])}" r="${r2(rad - 2.2 / s)}" fill="none" stroke="#fffaf0" stroke-width="1" opacity=".6"/>`;
+  // the leader, from the inset's rim to the roll under the bumper
+  const p = pr(ap(N.body, [BR.x + 30, 0, 14]));
+  const d = [p[0] - C[0], p[1] - C[1]], dl = Math.hypot(d[0], d[1]) || 1;
+  const q = [C[0] + (d[0] / dl) * rad, C[1] + (d[1] / dl) * rad];
+  const lead = `<path class="lead" d="M${r2(q[0])} ${r2(q[1])}L${r2(p[0])} ${r2(p[1])}"/><circle class="lead-dot" cx="${r2(p[0])}" cy="${r2(p[1])}" r="${r2(2.4 / s)}"/>`;
+  const tag = tagSvg({ stage: [INSET.at[0] - 150, INSET.at[1] + INSET.r + 8], text: "brush roll, under the bumper", op: 1 }, cam);
+  return `<g style="opacity:${r3(Z.cut)}">${lead}${clip}${body}${ring}${tag}</g>`;
+}
+
+// ---------------------------------------------------------------- one picture of a state
+function build(Z) {
+  const N = nodes(Z);
+  HATCH_OPEN = Z.hatch;
+  const items = [];
+  const pts = [];
+  const dshadow = [];
+  const dimOf = (p) => (Z.dim > 0.001 && !Z.keep(p) ? Z.dim * (p.dimScale ?? 1) : 0);
+  const hlOf = (p) => Z.hl(p);
+  const draws = (p, keep = true, shadeIn = 0) => { const r = partSvg(p, N[p.node], dimOf(p), hlOf(p)); if (keep) pts.push(...r.pts); return shadeIn ? r.s + `<path d="${dPath(hull(r.pts))}" fill="#0c0d11" style="opacity:${shadeIn}"/>` : r.s; };
+  const keyOf = (p) => depth(ap(N[p.node], p.c)) + p.bias;
+  const worldPts = (list) => list.flatMap((p) => p.meshes.flatMap((m) => m.v.map((v) => ap(N[p.node], v))));
+  const sortDraw = (list) => list.map((p) => ({ p, k: keyOf(p) })).sort((a, b) => a.k - b.k).map(({ p }) => draws(p)).join("");
+  const by = (g) => PARTS.filter((p) => p.grp === g);
+  const e = Z.e;
+  const lifted = Z.shellZ > 0.5 || e.shell > 0.001;
+  const exploded = e.int > 0.001;
+  const op = (s, a) => (a >= 0.999 ? s : a <= 0.001 ? "" : `<g style="opacity:${r3(a)}">${s}</g>`);
+
+  TOP_COL = shade("gloss", mv(N.shell.M, UPN), dimOf(SHELL));
+  const A = Z.arm;
+  COLUMN.meshes = A.lift > 0.01 ? [cyl([0, 0, 0], [0, 0, 1], 12.5, -ARM.LIFT * A.lift, 0.5, "steel", 22)] : [];
+  const armParts = PARTS.filter((p) => p.grp === "arm" || p.grp === "grip");
+  const armOut = A.lift > 0.001 || e.arm > 0.001;
+
+  // ---- the sock: on the floor, in the basket (both, crossing over, as the loop comes round), or held by the arm
+  const sockAt = (tf) => partSvg(SOCK, tf, 0, 0);
+  const floorSock = Z.sock === "floor" || Z.sockFloorOp > 0.001 ? sockAt(Z.sock === "floor" ? N.sock : N.sockFloor) : null;
+  const inSock = Z.sock === "fall" || (Z.sock === "in" && Z.sockInOp > 0.001) ? sockAt(N.sock) : null;
+  // (base() leaves sockFloorOp at 0: a held or binned sock never leaves a copy on the floor until the loop comes round)
+  const heldSockS = Z.sock === "held" ? sockAt(N.sock) : null;
+  if (floorSock) { items.push({ k: -1e6, s: op(floorSock.s, Z.sock === "floor" ? 1 : Z.sockFloorOp) }); pts.push(...floorSock.pts); }
+  const bt = trayDraw(BASKET, N.basket, 0, basketFloor);
+  pts.push(...bt.pts);
+  items.push({ k: depth(ap(N.basket, [0, 0, BK.h / 2])), s: bt.back + (inSock ? op(inSock.s, Z.sock === "fall" ? 1 : Z.sockInOp) : "") + bt.front });
+  dshadow.push(BASKET.outerPts.map((p) => ap(N.basket, p)));
+
+  // ---- the body: the wheels and the side brush under it, the tray, whatever sits in it, the shell on top
+  const tray = trayDraw(BASE, N.body, 0, baseFloorDeco, bumperDeco);
+  pts.push(...tray.pts);
+  const inside = PARTS.filter((p) => p.layer === "in" && p.grp !== "wheel");
+  const wheelsOut = e.wheel > 0.55, rollOut = e.roll > 0.2;
+  let bodyS = "";
+  if (!wheelsOut) bodyS += sortDraw(by("wheel").filter((p) => p.tyre));
+  if (!rollOut) bodyS += sortDraw(by("side"));
+  const open = lifted || exploded;
+  if (open) {
+    bodyS += tray.back;
+    if (!rollOut) bodyS += `<g clip-path="url(#brushclip)">${sortDraw(by("roll"))}</g>`;
+    const homeIn = exploded ? [] : inside;
+    const wheelHoods = wheelsOut ? [] : by("wheel").filter((p) => !p.tyre);
+    const armHome = !armOut && !exploded ? armParts : [];
+    bodyS += sortDraw([...homeIn, ...wheelHoods, ...armHome]);
+    bodyS += tray.front;
+  } else bodyS += tray.closedFront;
+  bodyS += draws(SENS);
+  let shellS = sortDraw([SHELL, TURRET]);
+  if (Z.hatch > 0.001) {
+    let bay = "";
+    const sh = N.shell;
+    const liner = [];
+    const hp = hatchPts;
+    for (let i = 0; i < hp.length; i++) {
+      const a = hp[i], b = hp[(i + 1) % hp.length];
+      const nl = unit3([-(b[1] - a[1]), b[0] - a[0], 0]);
+      const nw = mv(sh.M, nl);
+      if (dot3(nw, VIEW) <= 1e-4) continue;
+      const q = [[a[0], a[1], CR_TOP], [b[0], b[1], CR_TOP], [b[0], b[1], ZT], [a[0], a[1], ZT]].map((p) => ap(sh, p));
+      const col = shade("liner", nw, 0);
+      liner.push([depth(mul3(q.reduce(add3, [0, 0, 0]), 0.25)), `<path class="f" d="${dPath(q.map(pr))}" fill="${col}" stroke="${col}"/>`]);
+    }
+    liner.sort((a, b) => a[0] - b[0]);
+    bay += draws(CRADLE, false, 0.55) + liner.map((x) => x[1]).join("") + by("int").filter((p) => p.id === "saddle").map((p) => draws(p, false)).join("");
+    bay += sortDraw([...armParts, COLUMN].filter((p) => p.meshes.length));
+    if (Z.hatch < 0.999) bay += DOORS.map((p) => draws(p, false)).join("");
+    shellS += `<g clip-path="url(#slotclip)">${bay}</g>`;
+  }
+  if (!lifted) bodyS += shellS;
+  else items.push({ k: depth(ap(N.shell, [0, 0, ZT])) + 600, s: shellS });
+  items.push({ k: depth(ap(N.body, [0, 0, 30])), s: bodyS });
+  dshadow.push([...worldPts([SHELL]), ...BASE.outerPts.map((p) => ap(N.body, p))]);
+
+  // ---- the arm out of its bay (over the shell), clipped to the opening while it is still rising through it; a
+  // held sock hangs under it
+  if (armOut) {
+    const s = sortDraw(armParts);
+    const rising = A.lift < 0.999 && e.arm < 0.001;
+    const k = depth(ap(N.aBase, [0, 0, 0])) + 300;
+    if (heldSockS) { items.push({ k: k - 1, s: heldSockS.s }); pts.push(...heldSockS.pts); }
+    items.push({ k, s: rising ? `<g clip-path="url(#liftclip)">${s}</g>` : s });
+    for (const p of armParts) dshadow.push(worldPts([p]));
+  }
+  if (exploded) {
+    for (const g of ["battery", "board", "bin", "fan", "cradle"]) {
+      const list = inside.filter((p) => p.node === g || (g === "board" && p.node === "boardPost"));
+      if (list.length) items.push({ k: keyOf(list[0]) + 40, s: sortDraw(list) });
+    }
+  }
+  if (wheelsOut) for (const s of [1, -1]) { const list = by("wheel").filter((p) => p.node.startsWith(s > 0 ? "wheelL" : "wheelR")); items.push({ k: keyOf(list[0]), s: sortDraw(list) }); }
+  if (rollOut) { items.push({ k: keyOf(ROLLP), s: sortDraw(by("roll")) }); items.push({ k: keyOf(SIDE[0]), s: sortDraw(by("side")) }); }
+  if (exploded) {
+    const axes = [];
+    const pair = (node, p) => [pr(ap(N.body, p)), pr(ap(N[node], p))];
+    axes.push(pair("battery", [BAT.c[0], BAT.c[1], BAT.c[2] - BAT.h[2]]), pair("board", [BDX, BD.y, BD.z]), pair("bin", [BIN.c[0], BIN.c[1], BIN.c[2] - BIN.h[2]]),
+      pair("fan", [FAN.c[0], FAN.c[1], ZF]), pair("cradle", [-60, 0, ZF]), pair("cradle", [80, 0, ZF]));
+    for (const [nm, sd] of [["wheelL", 1], ["wheelR", -1]]) axes.push(pair(nm, [WH.x, sd * WH.y, WH.r]));
+    axes.push(pair("rollEnd", [BR.x, 0, 14]));
+    axes.push([pr(ap(N.body, [ARM.x, 0, CR_TOP])), pr(ap(N.aBase, [0, 0, 0]))]);
+    const k = clamp(Math.min(e.int, e.arm) * 3);
+    items.push({ k: -2e5, s: `<path class="axis" d="${axes.map(([a, b]) => `M${P2(a)}L${P2(b)}`).join("")}" style="opacity:${r3(k * 0.55)}"/>` });
+    for (const g of ["battery", "board", "bin", "fan", "cradle"]) dshadow.push(worldPts(inside.filter((p) => p.node === g)));
+    if (wheelsOut) for (const s2 of [1, -1]) dshadow.push(worldPts(by("wheel").filter((p) => p.node.startsWith(s2 > 0 ? "wheelL" : "wheelR"))));
+  }
+  items.sort((a, b) => a.k - b.k);
+  const html = items.map((x) => x.s).join("");
+  return { html, pts, dshadow, N };
+}
+
+// ---------------------------------------------------------------- the camera
+// Named aims, each the box of a still pose (or of a few, or of a close subject) measured once; the camera blends
+// between two of them and keeps whatever is drawn (or, close up, the subject) on the stage.
+const PAD = 14;
+const boxOf = (pts) => { let x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9; for (const p of pts) { if (p[0] < x0) x0 = p[0]; if (p[0] > x1) x1 = p[0]; if (p[1] < y0) y0 = p[1]; if (p[1] > y1) y1 = p[1]; } return [x0, y0, x1, y1]; };
+const unionBox = (...bs) => [Math.min(...bs.map((b) => b[0])), Math.min(...bs.map((b) => b[1])), Math.max(...bs.map((b) => b[2])), Math.max(...bs.map((b) => b[3]))];
+const fitOf = (b, fill = 1) => Math.min(((D.W - 2 * PAD) * fill) / (b[2] - b[0]), ((D.H - 2 * PAD) * fill) / (b[3] - b[1]));
+const pose = (o) => { const Z = base(); const { e, arm, ...rest } = o; Object.assign(Z, rest); if (e) Z.e = { ...Z.e, ...e }; if (arm) Z.arm = { ...Z.arm, ...arm }; return Z; };
+const ALL_OUT = { shell: 1, arm: 1, seg: 1, grip: 1, int: 1, wheel: 1, roll: 1 };
+// (robotBox entries alternate floor and top; with { body: N.shell } it reads the shell's ring instead)
+const robotBox = (N) => { const out = []; for (let i = 0; i < 16; i++) { const a = (i / 16) * TAU; for (const z of [0, ZT + 12]) out.push(pr(ap(N.body, [RO * Math.cos(a), RO * Math.sin(a), z]))); } return out; };
+const sockPts = (tf) => SOCK.meshes[0].v.map((v) => pr(ap(tf, v)));
+const basketHalf = (N) => BASKET.outerPts.filter((v) => v[0] * SA - v[1] * CA < 0.25 * BK.r).map((v) => pr(ap(N.basket, v)));
+const gripPts = (N) => [...FINGERS, ARMP.palm, ARMP.collar, ARMP.wrist].flatMap((p) => p.meshes[0].v.map((v) => pr(ap(N[p.node], v))));
+const AIM_SPEC = {
+  // the robot big on its spot, the sock ahead, the near half of the basket
+  rest: { poses: [{}], close: (N) => [...robotBox(N), ...sockPts(SOCK_FLOOR), ...basketHalf(N)], fill: 0.96, shift: [0, 0.01] },
+  // the whole floor, for the map
+  map: { poses: [{}], close: () => k4(MAT).map(([x, y]) => pr([x, y, FT])), fill: 1.3, shift: [0.02, 0.0] },
+  // at the grab stop: the robot and the sock
+  spot: { poses: [{ pos: GRAB.c, yaw: GRAB.yaw }], close: (N) => [...robotBox(N), ...sockPts(SOCK_FLOOR)], fill: 0.94 },
+  // the hook: the arm on the sock, the robot's tail may leave the stage
+  grab: { poses: [{ pos: GRAB.c, yaw: GRAB.yaw, hatch: 1, arm: armPose(ON_SOCK, 1, ARM.GRIP_SHUT) }], close: (N) => [...robotBox(N).filter((p, i) => Math.cos((Math.floor(i / 2) / 16) * TAU) > -0.75), ...sockPts(SOCK_FLOOR), pr(ap(N.aEl, [0, 0, 34])), pr(ap(N.shell, [TUR.x, 0, ZT + 14]))], fill: 0.92 },
+  // at the basket: the robot, the basket, the arm over the rim
+  carry: { poses: [{ pos: DROP.c, yaw: DROP.yaw, hatch: 1, arm: armPose(OVER, 1, ARM.GRIP_OPEN) }], close: (N) => [...robotBox(N), ...BASKET.outerPts.map((v) => pr(ap(N.basket, v))), pr(ap(N.aEl, [0, 0, 34])), pr(ap(N.aWr, [0, 0, 20]))], fill: 0.9 },
+  // the vacuum run: every stop along the lanes
+  vac: { poses: [0, 0.3, 0.42, 0.5, 0.6, 0.85].map((u) => { const p = vacPose(u); return { pos: p.c, yaw: p.yaw, sock: "in" }; }), close: (N) => robotBox(N), fill: 0.84, shift: [0, -0.05] },
+  open: { poses: [{ pos: GRAB.c, yaw: GRAB.yaw, shellZ: OPEN_AT[1], shellX: OPEN_AT[0], sock: "in" }], close: (N) => [...robotBox(N).filter((p, i) => i % 2 === 0), ...robotBox({ body: N.shell }).filter((p, i) => i % 2 === 1)], fill: 0.88, shift: [0.05, 0.03] },
+  apart: { poses: [{ pos: GRAB.c, yaw: GRAB.yaw, shellZ: OPEN_AT[1], shellX: OPEN_AT[0], e: ALL_OUT, sock: "in" }], fill: 0.92, shift: [0.055, 0] },
+  // up close on the gripper, put together, and a second framing a touch off it so the camera keeps drifting
+  grip: { poses: [{ pos: GRAB.c, yaw: GRAB.yaw, shellZ: OPEN_AT[1], shellX: OPEN_AT[0], e: { ...ALL_OUT, grip: 0 }, arm: armPose(STOWED, 0, ARM.GRIP_OPEN + 4), sock: "in" }], close: gripPts, fill: 0.5, shift: [0.04, 0.02] },
+  grip2: { poses: [{ pos: GRAB.c, yaw: GRAB.yaw, shellZ: OPEN_AT[1], shellX: OPEN_AT[0], e: { ...ALL_OUT, grip: 0 }, arm: armPose(STOWED, 0, ARM.GRIP_OPEN + 4), sock: "in" }], close: gripPts, fill: 0.58, shift: [-0.03, -0.02] },
+};
+const k4 = (m) => [[m.x, m.y], [m.x + m.w, m.y], [m.x + m.w, m.y + m.d], [m.x, m.y + m.d]];
+const AIMS = {};
+function aimOf(name) {
+  if (AIMS[name]) return AIMS[name];
+  const o = AIM_SPEC[name];
+  const boxes = o.poses.map((q) => { const Z = pose(q); if (o.close) return boxOf(o.close(nodes(Z))); return boxOf(build(Z).pts); });
+  const b = unionBox(...boxes);
+  const s = fitOf(b, o.fill);
+  const sh = o.shift || [0, 0];
+  AIMS[name] = { s, F: [(b[0] + b[2]) / 2 - (sh[0] * D.W) / s, (b[1] + b[3]) / 2 - (sh[1] * D.H) / s], close: o.close ? b : null };
+  return AIMS[name];
+}
+function camFor(Z, box, follow) {
+  const [n0, n1, kk] = Z.cam;
+  const a0 = aimOf(n0), a1 = aimOf(n1);
+  let s = a0.s * (a1.s / a0.s) ** kk;
+  let F = [lerp(a0.F[0], a1.F[0], kk), lerp(a0.F[1], a1.F[1], kk)];
+  const k0 = a0.close || box, k1 = a1.close || box;
+  box = k0.map((v, i) => lerp(v, k1[i], kk));
+  // while it drives, the robot itself is always kept on the stage
+  if (follow) box = unionBox(box, follow);
+  s = Math.min(s, fitOf(box, 1));
+  const hw = D.W / 2 / s, hh = D.H / 2 / s, pd = PAD / s;
+  F = [clamp(F[0], box[2] + pd - hw, box[0] - pd + hw), clamp(F[1], box[3] + pd - hh, box[1] - pd + hh)];
+  return { s, F, keep: box };
+}
+
+// ---------------------------------------------------------------- the frame
+const robotG = part("robot");
+const notesG = part("notes");
+const shadowEl = part("shadow-live");
+const artG = svg.querySelector("g.art");
+const slotClip = part("slotclip"), liftClip = part("liftclip"), brushClip = part("brushclip");
+const DRAWN = {};
+function draw() {
+  const Z = scene();
+  const B = build(Z);
+  const N = B.N;
+  robotG.innerHTML = B.html;
+  const sh = N.shell;
+  slotClip.setAttribute("d", dPath(hatchPts.map(([x, y]) => pr(ap(sh, [x, y, ZT])))));
+  liftClip.setAttribute("d", dPath(hull([...hatchPts.map(([x, y]) => pr(ap(sh, [x, y, ZT]))), ...hatchPts.map(([x, y]) => pr(ap(sh, [x, y, ZT + 400])))])));
+  const bw = rrPoly(30, BR.hy * 2 + 6, 4).map(([x, y]) => [x + BR.x, y]);
+  brushClip.setAttribute("d", dPath(hull([...bw.map(([x, y]) => pr(ap(N.body, [x, y, ZF]))), ...bw.map(([x, y]) => pr(ap(N.body, [x, y, ZF + 300])))])));
+  const toFloor = (p) => pr([p[0] + D.SHADOW[0] * (p[2] - FT), p[1] + D.SHADOW[1] * (p[2] - FT), FT]);
+  shadowEl.setAttribute("d", B.dshadow.filter((s) => s.length).map((s) => dPath(hull(s.map(toFloor)))).join(""));
+  const box = boxOf(B.pts);
+  const cam = camFor(Z, box, Z.follow ? boxOf([...robotBox(N), ...[-1, 1].map((sd) => pr(ap(N.body, [SB.x + 40, SB.y + sd * 40, 0])))]) : null);
+  scanG.innerHTML = scanSvg(Z, N, cam.s);
+  hudG.innerHTML = hudSvg(Z, N, cam.s);
+  notesG.innerHTML = Z.tags.filter((t) => t.op > 0.001 && TAG[t.id]).map((t) => tagSvg({ ...TAG[t.id](N), op: t.op }, cam)).join("") + (Z.cut > 0.01 ? insetSvg(Z, N, cam) : "");
+  artG.setAttribute("transform", `translate(${D.W / 2} ${D.H / 2}) scale(${cam.s.toFixed(4)}) translate(${(-cam.F[0]).toFixed(3)} ${(-cam.F[1]).toFixed(3)})`);
+  // the sound words, drawn on the action
+  let word = null;
+  if (Z.word) {
+    const p = Z.word.at === "tip" ? ap(N.aWrR, [GRIP_LEN - 10, 0, 0]) : Z.word.at === "basket" ? [BK.c[0], BK.c[1], FT + BK.h + 30] : ap(N.side, [0, 0, 0]);
+    const off = Z.word.at === "tip" ? [-58, -10] : Z.word.at === "basket" ? [20, -40] : [-118, 4];
+    word = { text: Z.word.text, p, off, op: Z.word.op };
+  }
+  if (word) {
+    const q = pr(word.p);
+    setWord({ text: word.text, p: [0, 0, 0] });
+    const t = part("sounds").querySelector("text");
+    t.setAttribute("x", r2(q[0] + word.off[0] / cam.s));
+    t.setAttribute("y", r2(q[1] + word.off[1] / cam.s));
+    t.style.fontSize = r2(17 / cam.s) + "px";
+    t.style.strokeWidth = r2(4 / cam.s) + "px";
+    t.style.opacity = r3(word.op);
+  } else setWord(null);
+  const toStage = (p) => [(p[0] - cam.F[0]) * cam.s + D.W / 2, (p[1] - cam.F[1]) * cam.s + D.H / 2];
+  DRAWN.Z = Z;
+  DRAWN.cam = cam;
+  DRAWN.stageBox = [...toStage([box[0], box[1]]), ...toStage([box[2], box[3]])];
+  DRAWN.track = [pr(ap(N.body, [0, 0, ZT])), pr(ap(N.shell, [0, 0, ZT]))].map(toStage).map((p) => [r2(p[0]), r2(p[1])]);
+  // readouts
+  setText(chip("arm"), Z.arm.lift < 0.01 && Z.e.arm < 0.01 ? "stowed" : Z.sock === "held" ? "holding" : Z.e.arm > 0.5 ? "apart" : "out");
+  setText(chip("seen"), Z.seen);
+  setText(chip("brush"), Z.brush);
+  const parts = Z.e.int > 0.5 ? "10 groups" : Z.shellZ > 60 ? "shell off" : "1 个机器人";
+  setText(chip("parts"), parts);
+  ["arm", "map", "seen", "brush", "parts"].forEach((n) => chipHot(n, Z.hot.includes(n)));
+  return Z;
+}
+
+const UPDATE = Object.fromEntries(ORDER.map((id) => [id, (u) => { S.step = id; S.u = u; }]));
+tour({
+  STEPS,
+  ORDER,
+  gap: 0.5,
+  lead: 0.1,
+  tail: 0.4,
+  update: (id, u) => UPDATE[id](u),
+  reset: () => { S = fresh(); },
+  onFinish: (id) => { if (id === "home") S = fresh(); },
+  draw,
+  paint: (c) => mixHex(c, "#f5f0e5", 0.45),
+  probe: () => {
+    const Z = DRAWN.Z || scene();
+    const A = Z.arm, e = Z.e;
+    return {
+      step: S.step, u: S.u,
+      x: Z.pos[0], y: Z.pos[1], yaw: Z.yaw, hatch: Z.hatch, lift: A.lift, a1: A.a1, ab: A.b, ag: A.g, grip: A.grip, roll: A.roll || 0,
+      held: Z.sock === "held" ? 1 : 0, fall: Z.sock === "fall" ? Z.fall : Z.sock === "in" ? 1 : 0, sockIn: Z.sockInOp, sockFloor: Z.sockFloorOp,
+      laser: Z.laser, scan: Z.scan, ai: Z.ai, cut: Z.cut, side: Z.sideTurn, rollT: Z.rollTurn, lane: Z.lane,
+      shellZ: Z.shellZ, eshell: e.shell, earm: e.arm, eseg: e.seg, egrip: e.grip, eint: e.int, ewheel: e.wheel, eroll: e.roll,
+      word: Z.word ? Z.word.text : "",
+      stageBox: DRAWN.stageBox, track: DRAWN.track, cam: { s: DRAWN.cam.s, F: DRAWN.cam.F },
+    };
+  },
+});
+
+}
+</script><script src="/i18n/lang-switch.js?v=2"></script>
+</body></html>

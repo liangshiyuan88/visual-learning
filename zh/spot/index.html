@@ -1,0 +1,2614 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Spot 机器狗 · 可视化学习</title><script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
+<meta name="description" content="12 个电机、5 对眼睛，并且在摔倒时能自行起身。">
+<meta property="og:type" content="website"><meta property="og:title" content="Spot 机器狗 · 可视化学习"><meta property="og:description" content="12 个电机、5 对眼睛，并且在摔倒时能自行起身。">
+<meta property="og:image" content="https://visual-learning.app/spot-og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:url" content="https://visual-learning.app/spot">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Spot 机器狗 · 可视化学习"><meta name="twitter:description" content="12 个电机、5 对眼睛，并且在摔倒时能自行起身。"><meta name="twitter:image" content="https://visual-learning.app/spot-og.png">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20x%3D%223%22%20y%3D%223%22%20width%3D%2226%22%20height%3D%2226%22%20rx%3D%226%22%20fill%3D%22%23f2c14e%22%20stroke%3D%22%2323263a%22%20stroke-width%3D%222.4%22%2F%3E%3Ccircle%20cx%3D%2216%22%20cy%3D%2216%22%20r%3D%226%22%20fill%3D%22%23fffaf0%22%20stroke%3D%22%2323263a%22%20stroke-width%3D%222.4%22%2F%3E%3C%2Fsvg%3E"><style>
+.site{width:min(980px,100% - 32px);margin:22px auto 0;padding:0 20px;display:flex;align-items:center;gap:10px;font:600 12px ui-monospace,"SF Mono",Menlo,Consolas,monospace;color:#23263a;position:relative;z-index:5}
+.site a{color:inherit;text-decoration:none}
+.site .home{font:700 15px ui-sans-serif,system-ui,"Segoe UI",sans-serif;white-space:nowrap;margin-right:auto}
+.site .home:hover{text-decoration:underline;text-underline-offset:3px}
+.pill{background:#fffaf0;border:1.3px solid #23263a;border-radius:999px;padding:5px 11px;white-space:nowrap;box-shadow:2px 2px 0 #23263a;transition:transform .12s,box-shadow .12s;cursor:pointer}
+.pill:hover{transform:translate(-1px,-1px);box-shadow:3px 3px 0 #23263a}
+.menu{position:relative}
+.menu summary{list-style:none;display:flex;align-items:center;gap:7px}
+.menu summary::-webkit-details-marker{display:none}
+.menu summary b{opacity:.5}
+.menu summary i{font-style:normal;font-size:9px;opacity:.6;transition:transform .15s}
+.menu[open] summary{background:#23263a;color:#fffaf0}
+.menu[open] summary i{transform:rotate(180deg)}
+.panel{position:absolute;right:0;top:calc(100% + 10px);width:min(560px,calc(100vw - 32px));background:#f5f0e5;border:1.4px solid #23263a;border-radius:8px;box-shadow:4px 4px 0 #23263a;padding:10px;display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.panel a{display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 6px 8px;border-radius:6px;border:1.2px solid transparent;text-align:center}
+.panel a:hover{border-color:#23263a;background:#fffaf0}
+.panel a[aria-current]{background:#efe8d8;border-color:#23263a}
+.panel img{width:100%;aspect-ratio:1/1;object-fit:contain}
+.panel b{font-size:10px;opacity:.55;letter-spacing:.06em}
+.panel span{font:600 12px/1.25 ui-sans-serif,system-ui,"Segoe UI",sans-serif}
+.arrows{display:flex;gap:6px}
+.arrows a{padding:5px 10px}
+.iso-page{padding-top:16px!important}
+.credit{margin:16px 2px 0;font:500 12px/1.5 ui-sans-serif,system-ui,"Segoe UI",sans-serif;color:#7b7666}
+.credit a{color:inherit;text-underline-offset:2px}
+.keys{font:600 11px ui-monospace,Menlo,Consolas,monospace;color:#8a8676}
+@media (max-width:760px){
+.site{width:100%;padding:10px 10px 0;margin-top:0;gap:6px;flex-wrap:wrap}
+.site .badges{order:-2;margin-left:auto}
+.site .maker,.site .guide{font-size:11px;padding:4px 10px}
+.site::after{content:"";order:-1;flex-basis:100%;height:0}
+.site .home{font-size:14px}
+.menu summary .nm{display:none}
+.panel{position:fixed;left:10px;right:10px;top:52px;width:auto;max-height:calc(100vh - 70px);overflow:auto;grid-template-columns:repeat(3,1fr);gap:4px;padding:8px}
+.panel span{font-size:11px}
+.iso-page{padding-top:10px!important}
+.keys{display:none}
+.credit{margin:12px 2px 0}
+}
+.render .site,.render .credit{display:none}
+.embed .site,.embed .credit{display:none!important}
+.embed .iso-page{margin:0 auto!important;padding:6px!important;width:100%!important}
+.embed.fill .iso-page{height:100vh;display:flex;flex-direction:column}
+.embed.fill .card{flex:1;grid-template-rows:auto 1fr auto}
+.embed.fill .main{display:flex;flex-direction:column}
+.embed.fill .stage{flex:1;display:grid;place-items:center}
+a.guide,.site a.guide{font:700 12px ui-monospace,"SF Mono",Menlo,Consolas,monospace;white-space:nowrap;text-decoration:none;color:#23263a;background:#f2c14e;border:1.3px solid #23263a;border-radius:999px;padding:5px 12px;box-shadow:2px 2px 0 #23263a;transition:transform .12s,box-shadow .12s}
+a.guide:hover{transform:translate(-1px,-1px);box-shadow:3px 3px 0 #23263a}
+.badges{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+a.maker,.site a.maker{font:600 12px ui-monospace,"SF Mono",Menlo,Consolas,monospace;white-space:nowrap;text-decoration:none;color:#fffaf0;background:#23263a;border:1.3px solid #23263a;border-radius:999px;padding:5px 12px;box-shadow:2px 2px 0 #23263a55;transition:transform .12s}
+.maker b{font-weight:700;color:#f2c14e}
+.maker:hover{transform:translate(-1px,-1px)}
+</style><style>
+.iso{
+  --anatomy-page:#0b0b0b;--anatomy-card:#131313;--anatomy-text:#a3a3a3;--anatomy-strong:#e6e6e6;--anatomy-muted:#6e6e6e;
+  --anatomy-paper:#131313;--anatomy-face:#1b1b1b;--anatomy-top:#1c1c1c;
+  --anatomy-shade-0:#0f0f0f;--anatomy-shade-1:#121212;--anatomy-shade-2:#151515;--anatomy-shade-3:#181818;
+  --anatomy-lit-top:#262626;--anatomy-lit-shade:#1d1d1d;
+  --anatomy-hi:#d4d4d4;--anatomy-mid:#6a6a6a;--anatomy-lo:#3e3e3e;--anatomy-faint:#2a2a2a;--anatomy-lit:#ffffff;
+  --anatomy-halo:#050505;--anatomy-halo-opacity:.9;--anatomy-dot:#e6e6e6;
+  --anatomy-red:#ff6b6b;--anatomy-green:#6be0a0;--anatomy-blue:#6b9bff;
+  --anatomy-weight:.6px;--anatomy-ease:cubic-bezier(.32,.72,0,1);
+  --anatomy-mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --anatomy-lift:inset 0 1px 0 0 #ffffff0a,inset 0 0 0 1px #ffffff06,0 0 0 1px #00000026,0 1px 1px -.5px #00000014,0 3px 3px -1.5px #00000014,0 6px 6px -3px #00000014,0 12px 12px -6px #00000014;
+}
+.iso[data-theme="light"]{
+  --anatomy-page:#f2f2ef;--anatomy-card:#fbfbfa;--anatomy-text:#57575a;--anatomy-strong:#18181a;--anatomy-muted:#8c8c90;
+  --anatomy-paper:#fbfbfa;--anatomy-face:#ffffff;--anatomy-top:#ffffff;
+  --anatomy-shade-0:#dcdcd9;--anatomy-shade-1:#e5e5e2;--anatomy-shade-2:#ededea;--anatomy-shade-3:#f4f4f1;
+  --anatomy-lit-top:#ffffff;--anatomy-lit-shade:#eeeeeb;
+  --anatomy-hi:#26262a;--anatomy-mid:#8a8a8f;--anatomy-lo:#b4b4b8;--anatomy-faint:#d4d4d6;--anatomy-lit:#000000;
+  --anatomy-halo:#8a8a80;--anatomy-halo-opacity:.32;--anatomy-dot:#3a3a3e;
+  --anatomy-red:#e5484d;--anatomy-green:#30a46c;--anatomy-blue:#3e63dd;
+  --anatomy-lift:inset 0 1px 0 0 #ffffff,0 0 0 1px #0000000f,0 1px 1px -.5px #0000000a,0 3px 3px -1.5px #0000000a,0 6px 6px -3px #0000000a,0 12px 12px -6px #0000000a;
+}
+.iso-svg{display:block;width:100%;height:auto;overflow:visible}
+.iso-svg path,.iso-svg circle{vector-effect:non-scaling-stroke}
+.iso-fill{fill:var(--anatomy-paper);stroke:none}
+.iso-solid[data-lit]>.iso-fill{fill:var(--anatomy-face)}
+.iso-shade,.iso-top{stroke:none}
+.iso-shade[data-shade="0"]{fill:var(--anatomy-shade-0)}
+.iso-shade[data-shade="1"]{fill:var(--anatomy-shade-1)}
+.iso-shade[data-shade="2"]{fill:var(--anatomy-shade-2)}
+.iso-shade[data-shade="3"]{fill:var(--anatomy-shade-3)}
+.iso-top{fill:var(--anatomy-top)}
+.iso-solid[data-lit]>.iso-top{fill:var(--anatomy-lit-top)}
+.iso-solid[data-lit]>.iso-shade{fill:var(--anatomy-lit-shade)}
+.iso-solid[data-seamless]>.iso-shade,.iso-solid[data-seamless]>.iso-top{stroke-width:.4;stroke-linejoin:round}
+.iso-solid[data-seamless]>.iso-shade[data-shade="0"]{stroke:var(--anatomy-shade-0)}
+.iso-solid[data-seamless]>.iso-shade[data-shade="1"]{stroke:var(--anatomy-shade-1)}
+.iso-solid[data-seamless]>.iso-shade[data-shade="2"]{stroke:var(--anatomy-shade-2)}
+.iso-solid[data-seamless]>.iso-shade[data-shade="3"]{stroke:var(--anatomy-shade-3)}
+.iso-solid[data-seamless]>.iso-top{stroke:var(--anatomy-top)}
+.iso-solid[data-seamless][data-lit]>.iso-top{stroke:var(--anatomy-lit-top)}
+.iso-solid[data-seamless][data-lit]>.iso-shade{stroke:var(--anatomy-lit-shade)}
+.iso-solid[data-lit]>.iso-edge{stroke:var(--anatomy-lit)}
+.iso-halo{fill:var(--anatomy-halo);stroke:none;filter:blur(9px);opacity:var(--anatomy-halo-opacity);transform:translateY(3px)}
+.iso-line{fill:none;stroke:var(--anatomy-lo);stroke-width:var(--anatomy-weight);stroke-linecap:round;stroke-linejoin:round}
+.iso-line[data-tone="hi"]{stroke:var(--anatomy-hi)}
+.iso-line[data-tone="mid"]{stroke:var(--anatomy-mid)}
+.iso-line[data-tone="lo"]{stroke:var(--anatomy-lo)}
+.iso-line[data-tone="faint"]{stroke:var(--anatomy-faint)}
+.iso-line[data-tone="lit"]{stroke:var(--anatomy-lit)}
+.iso-line[data-tone="red"]{stroke:var(--anatomy-red)}
+.iso-line[data-tone="green"]{stroke:var(--anatomy-green)}
+.iso-line[data-tone="blue"]{stroke:var(--anatomy-blue)}
+.iso-line[data-dotted]{stroke-dasharray:.01 3.5;stroke-width:1}
+.iso-line[data-dashed]{stroke-dasharray:3 3}
+.iso-line[data-flow]{stroke-dasharray:2 6}
+.iso-wire-end{fill:var(--anatomy-paper);stroke:var(--anatomy-lo);stroke-width:var(--anatomy-weight)}
+.iso-wire[data-tone="hi"] .iso-wire-end{stroke:var(--anatomy-hi)}
+.iso-wire[data-tone="mid"] .iso-wire-end{stroke:var(--anatomy-mid)}
+.iso-wire[data-tone="faint"] .iso-wire-end{stroke:var(--anatomy-faint)}
+.iso-wire[data-tone="lit"] .iso-wire-end{stroke:var(--anatomy-lit)}
+.iso-dots circle{fill:var(--anatomy-dot);stroke:none;opacity:.32}
+.iso-dots[data-tone="hi"] circle{opacity:.85}
+.iso-dots[data-tone="mid"] circle{opacity:.45}
+.iso-dots[data-tone="lo"] circle{opacity:.22}
+.iso-dots[data-tone="faint"] circle{opacity:.12}
+.iso-face-text{fill:var(--anatomy-mid);font-family:var(--anatomy-mono);letter-spacing:.04em}
+.iso-face-text[data-tone="hi"]{fill:var(--anatomy-hi)}
+.iso-face-text[data-tone="lo"]{fill:var(--anatomy-lo)}
+.iso-face-text[data-tone="faint"]{fill:var(--anatomy-faint)}
+.tb-body{fill:var(--anatomy-shade-2);stroke:none}
+.tb-shine{fill:var(--anatomy-top);stroke:none}
+.tb-shade{fill:var(--anatomy-shade-0);stroke:none}
+.tb-ring{fill:none;stroke:var(--anatomy-lo);stroke-width:.45;stroke-linecap:butt;stroke-linejoin:round}
+.tb-ring[data-tone="mid"]{stroke:var(--anatomy-mid)}
+.tb-ring[data-tone="faint"]{stroke:var(--anatomy-faint)}
+.tb-ring[data-tone="hi"]{stroke:var(--anatomy-hi)}
+@keyframes iso-flow{to{stroke-dashoffset:-32}}
+@keyframes iso-pulse{0%,100%{opacity:.18}12%{opacity:1}40%{opacity:.18}}
+.iso-line[data-flow]{animation:iso-flow 1600ms linear infinite}
+.iso-dots circle[data-pulse]{animation:iso-pulse 1600ms steps(1,end) infinite;animation-delay:var(--pulse-at,0ms)}
+.iso-figure{margin:32px 0 36px}
+.iso-plate{position:relative;padding:52px 24px;border-radius:0;background:var(--anatomy-card);box-shadow:0 0 0 1px var(--anatomy-mid);--anatomy-paper:var(--anatomy-card)}
+.iso-plate-corners{position:absolute;inset:18px 20px;pointer-events:none}
+.iso-plate-corner{position:absolute;color:var(--anatomy-muted);font-family:var(--anatomy-mono);font-size:10.5px;line-height:1;letter-spacing:.04em;white-space:nowrap}
+.iso-plate-corner[data-corner="fig"]{top:0;left:0;color:var(--anatomy-text)}
+.iso-plate-corner[data-corner="title"]{top:0;right:0;text-transform:uppercase;letter-spacing:.1em}
+.iso-plate-corner[data-corner="hint"]{bottom:0;left:0;text-transform:uppercase;letter-spacing:.1em}
+.iso-plate-corner[data-corner="readout"]{right:0;bottom:0;color:var(--anatomy-text);font-variant-numeric:tabular-nums}
+.iso-plate .iso-svg{margin:0 auto}
+.iso-legend{display:grid;gap:8px;margin-top:12px;color:var(--anatomy-muted);font-size:13px;line-height:1.55}
+.iso-keys{display:flex;flex-wrap:wrap;gap:6px 18px}
+.iso-key{display:inline-flex;align-items:center;gap:7px}
+.iso-swatch{width:16px;height:10px;flex:none;overflow:visible}
+.iso-swatch path{fill:none;stroke:var(--anatomy-hi);stroke-width:1;vector-effect:non-scaling-stroke;stroke-linejoin:round;stroke-linecap:round}
+.iso-swatch[data-mark="raised"] path,.iso-swatch[data-mark="flat"] path{stroke:var(--anatomy-mid)}
+.iso-swatch[data-mark="lit"] path{stroke:var(--anatomy-lit)}
+.iso-swatch[data-mark="dim"] path{stroke:var(--anatomy-lo)}
+.iso-swatch[data-mark="dotted"] path{stroke-dasharray:.01 3;stroke-width:1.4}
+.iso-swatch[data-mark="dashed"] path{stroke-dasharray:3 2.5}
+.iso-swatch[data-mark="red"] path{stroke:var(--anatomy-red)}
+.iso-swatch[data-mark="green"] path{stroke:var(--anatomy-green)}
+.iso-swatch[data-mark="blue"] path{stroke:var(--anatomy-blue)}
+.iso-swatch-crease{stroke:var(--anatomy-lo)!important}
+@media (max-width:560px){.iso-plate{padding:48px 12px 70px}.iso-plate-corner[data-corner="hint"]{bottom:18px}}
+@media (prefers-reduced-motion:reduce){.iso-line[data-flow],.iso-dots circle[data-pulse]{animation:none}}
+
+*{box-sizing:border-box}
+html{color-scheme:dark}
+body[data-theme="light"]{color-scheme:light}
+body{margin:0;background:var(--anatomy-page);color:var(--anatomy-text);font:14px/1.6 ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+.iso-page{width:min(980px,100% - 32px);margin:64px auto 96px}
+</style></head><body class="iso" data-theme="light"><header class="site">
+  <a class="home" href="/">← 可视化学习</a>
+  <details class="menu"><summary class="pill"><b>30</b><span class="nm">Spot 机器狗</span><span>· 全部 40 个</span><i>▼</i></summary>
+    <nav class="panel"><a href="/dji-drone"><img src="/thumbs/dji-drone.webp" alt="" loading="lazy"><b>图 29</b><span>大疆无人机</span></a><a href="/dji-neo"><img src="/thumbs/dji-neo.webp" alt="" loading="lazy"><b>图 36</b><span>大疆 Neo</span></a><a href="/vision-pro"><img src="/thumbs/vision-pro.webp" alt="" loading="lazy"><b>图 28</b><span>Vision Pro</span></a><a href="/rolex"><img src="/thumbs/rolex.webp" alt="" loading="lazy"><b>图 38</b><span>劳力士潜航者</span></a><a href="/meta-glasses"><img src="/thumbs/meta-glasses.webp" alt="" loading="lazy"><b>图 37</b><span>Meta Ray-Ban 显示眼镜</span></a><a href="/ipad-pro"><img src="/thumbs/ipad-pro.webp" alt="" loading="lazy"><b>图 41</b><span>iPad Pro</span></a><a href="/dgx-spark"><img src="/thumbs/dgx-spark.webp" alt="" loading="lazy"><b>图 25</b><span>NVIDIA DGX Spark</span></a><a href="/spot" aria-current="page"><img src="/thumbs/spot.webp" alt="" loading="lazy"><b>图 30</b><span>Spot 机器狗</span></a><a href="/robot-vacuum"><img src="/thumbs/robot-vacuum.webp" alt="" loading="lazy"><b>图 40</b><span>带机械臂的扫地机器人</span></a><a href="/atlas"><img src="/thumbs/atlas.webp" alt="" loading="lazy"><b>图 35</b><span>Atlas 机器人</span></a><a href="/combination-lock"><img src="/thumbs/combination-lock.webp" alt="" loading="lazy"><b>图 39</b><span>密码锁</span></a><a href="/starlink"><img src="/thumbs/starlink.webp" alt="" loading="lazy"><b>图 33</b><span>星链天线</span></a><a href="/switch-2"><img src="/thumbs/switch-2.webp" alt="" loading="lazy"><b>图 32</b><span>任天堂 Switch 2</span></a><a href="/f1-wheel"><img src="/thumbs/f1-wheel.webp" alt="" loading="lazy"><b>图 34</b><span>F1 方向盘</span></a><a href="/ps-controller"><img src="/thumbs/ps-controller.webp" alt="" loading="lazy"><b>图 24</b><span>PlayStation 手柄</span></a><a href="/iphone"><img src="/thumbs/iphone.webp" alt="" loading="lazy"><b>图 20</b><span>iPhone</span></a><a href="/macbook"><img src="/thumbs/macbook.webp" alt="" loading="lazy"><b>图 21</b><span>MacBook</span></a><a href="/rtx-5090"><img src="/thumbs/rtx-5090.webp" alt="" loading="lazy"><b>图 27</b><span>RTX 5090</span></a><a href="/mac-mini"><img src="/thumbs/mac-mini.webp" alt="" loading="lazy"><b>图 26</b><span>Mac mini</span></a><a href="/apple-watch"><img src="/thumbs/apple-watch.webp" alt="" loading="lazy"><b>图 23</b><span>Apple Watch</span></a><a href="/airpods"><img src="/thumbs/airpods.webp" alt="" loading="lazy"><b>图 22</b><span>AirPods Pro</span></a><a href="/mechanical-watch"><img src="/thumbs/mechanical-watch.webp" alt="" loading="lazy"><b>图 18</b><span>机械表</span></a><a href="/rubiks-cube"><img src="/thumbs/rubiks-cube.webp" alt="" loading="lazy"><b>图 15</b><span>魔方</span></a><a href="/instant-camera"><img src="/thumbs/instant-camera.webp" alt="" loading="lazy"><b>图 16</b><span>拍立得</span></a><a href="/atom"><img src="/thumbs/atom.webp" alt="" loading="lazy"><b>图 19</b><span>原子</span></a><a href="/lava-lamp"><img src="/thumbs/lava-lamp.webp" alt="" loading="lazy"><b>图 17</b><span>熔岩灯</span></a><a href="/claw-machine"><img src="/thumbs/claw-machine.webp" alt="" loading="lazy"><b>图 02</b><span>抓娃娃机</span></a><a href="/microwave"><img src="/thumbs/microwave.webp" alt="" loading="lazy"><b>图 07</b><span>微波炉</span></a><a href="/espresso-machine"><img src="/thumbs/espresso-machine.webp" alt="" loading="lazy"><b>图 01</b><span>意式咖啡机</span></a><a href="/car-engine"><img src="/thumbs/car-engine.webp" alt="" loading="lazy"><b>图 03</b><span>汽车发动机</span></a><a href="/vending-machine"><img src="/thumbs/vending-machine.webp" alt="" loading="lazy"><b>图 04</b><span>自动售货机</span></a><a href="/washing-machine"><img src="/thumbs/washing-machine.webp" alt="" loading="lazy"><b>图 05</b><span>洗衣机</span></a><a href="/toaster"><img src="/thumbs/toaster.webp" alt="" loading="lazy"><b>图 06</b><span>烤面包机</span></a><a href="/pencil-sharpener"><img src="/thumbs/pencil-sharpener.webp" alt="" loading="lazy"><b>图 08</b><span>卷笔刀</span></a><a href="/smoke-alarm"><img src="/thumbs/smoke-alarm.webp" alt="" loading="lazy"><b>图 09</b><span>烟雾报警器</span></a><a href="/fridge"><img src="/thumbs/fridge.webp" alt="" loading="lazy"><b>图 10</b><span>冰箱</span></a><a href="/capsule-toy-machine"><img src="/thumbs/capsule-toy-machine.webp" alt="" loading="lazy"><b>图 11</b><span>扭蛋机</span></a><a href="/photo-booth"><img src="/thumbs/photo-booth.webp" alt="" loading="lazy"><b>图 12</b><span>大头贴机</span></a><a href="/roller-coaster"><img src="/thumbs/roller-coaster.webp" alt="" loading="lazy"><b>图 13</b><span>过山车</span></a><a href="/elevator"><img src="/thumbs/elevator.webp" alt="" loading="lazy"><b>图 14</b><span>电梯</span></a></nav>
+  </details>
+  <span class="arrows"><a class="pill" href="/dgx-spark" data-go="prev" title="NVIDIA DGX Spark (←)">←</a><a class="pill" href="/robot-vacuum" data-go="next" title="带机械臂的扫地机器人 (→)">→</a></span>
+  <span class="badges"><a class="guide" href="https://x.com/elvar_official/status/2111831136171151589" target="_blank" rel="noopener">完整指南 ↗</a><a class="maker" href="https://x.com/elvar_official" target="_blank" rel="noopener">作者 <b>@elvar_official</b></a></span>
+</header><main class="iso-page"><style>.c-chrome{--f:#cfd7e0;--t:#e3e8ed;--s3:#d8dee6;--s2:#cfd7e0;--s1:#b8bfc9;--s0:#a0a7b1}
+.c-steel{--f:#bcc5cf;--t:#d8dde3;--s3:#c8cfd8;--s2:#bcc5cf;--s1:#a7afba;--s0:#9299a5}
+.c-dark{--f:#8e98a6;--t:#bdc3cb;--s3:#a2abb6;--s2:#8e98a6;--s1:#7f8896;--s0:#707886}
+.c-iron{--f:#7d8593;--t:#b4b8c0;--s3:#949ba6;--s2:#7d8593;--s1:#707786;--s0:#646a78}
+.c-brass{--f:#e3b866;--t:#efd6a6;--s3:#e8c582;--s2:#e3b866;--s1:#c9a45e;--s0:#af9057}
+.c-copper{--f:#d98a5a;--t:#e9bb9f;--s3:#e09f78;--s2:#d98a5a;--s1:#c07c54;--s0:#a86e4e}
+.c-black{--f:#383a4e;--t:#8c8d98;--s3:#5c5d6e;--s2:#383a4e;--s1:#34364a;--s0:#303245}
+.c-rubber{--f:#44465a;--t:#93949f;--s3:#666778;--s2:#44465a;--s1:#3f4154;--s0:#393b4e}
+.c-wood{--f:#cf9460;--t:#e3c1a3;--s3:#d8a77d;--s2:#cf9460;--s1:#b88559;--s0:#a07552}
+.c-porcelain{--f:#f7f3ea;--t:#faf8f3;--s3:#f8f5ee;--s2:#f7f3ea;--s1:#dad7d1;--s0:#bebbb9}
+.c-glass{--f:#d9eef5;--t:#e9f5f9;--s3:#e0f1f7;--s2:#d9eef5;--s1:#c0d3db;--s0:#a8b8c1}
+.c-amber{--f:#ffb648;--t:#ffd595;--s3:#ffc369;--s2:#ffb648;--s1:#e1a244;--s0:#c48e41}
+.c-mint{--f:#86d3ad;--t:#b9e5cf;--s3:#9cdbbc;--s2:#86d3ad;--s1:#78bb9c;--s0:#6aa48b}
+.c-butter{--f:#f2c14e;--t:#f7db98;--s3:#f4cc6e;--s2:#f2c14e;--s1:#d6ac4a;--s0:#ba9645}
+.c-tomato{--f:#e5583e;--t:#f09e8f;--s3:#ea7661;--s2:#e5583e;--s1:#cb503c;--s0:#b04939}
+.c-sky{--f:#7fb9e9;--t:#b5d6f2;--s3:#96c6ed;--s2:#7fb9e9;--s1:#72a5d0;--s0:#6590b8}
+.c-rose{--f:#f2a5bf;--t:#f7cbda;--s3:#f4b5cb;--s2:#f2a5bf;--s1:#d693ac;--s0:#ba8299}
+.c-lilac{--f:#b9a6e8;--t:#d6cbf2;--s3:#c6b6ec;--s2:#b9a6e8;--s1:#a494d0;--s0:#9082b7}
+.c-cream{--f:#f6eedb;--t:#faf5ea;--s3:#f8f1e1;--s2:#f6eedb;--s1:#dad3c4;--s0:#bdb8ae}
+.c-paper{--f:#fbf7ee;--t:#fdfaf5;--s3:#fcf8f1;--s2:#fbf7ee;--s1:#dedbd5;--s0:#c1bebc}
+.c-green{--f:#5fae7b;--t:#a2d0b2;--s3:#7cbd93;--s2:#5fae7b;--s1:#569b71;--s0:#4d8866}
+.c-pcb{--f:#3f8f5c;--t:#90bea0;--s3:#62a379;--s2:#3f8f5c;--s1:#3a8056;--s0:#367150}
+.c{--anatomy-paper:var(--f);--anatomy-face:var(--f);--anatomy-top:var(--t);--anatomy-shade-3:var(--s3);--anatomy-shade-2:var(--s2);--anatomy-shade-1:var(--s1);--anatomy-shade-0:var(--s0);--anatomy-lit-top:var(--t);--anatomy-lit-shade:var(--s2)}
+.c-body{--f:var(--body);--t:var(--body-t);--s3:var(--body-3);--s2:var(--body);--s1:var(--body-1);--s0:var(--body-0)}
+.c-alt{--f:var(--alt);--t:var(--alt-t);--s3:var(--alt-3);--s2:var(--alt);--s1:var(--alt-1);--s0:var(--alt-0)}
+.iso[data-theme="light"]{--anatomy-page:#ece6d8;--anatomy-card:#f5f0e5;--anatomy-hi:#23263a;--anatomy-mid:#23263aa8;--anatomy-lo:#23263a70;--anatomy-faint:#23263a45;--anatomy-lit:#23263a;--anatomy-dot:#23263a;--anatomy-weight:1.15px;--anatomy-halo-opacity:0;--anatomy-text:#4a4c5e;--anatomy-strong:#23263a;--anatomy-muted:#8a8676}
+body.iso{background:var(--anatomy-page);margin:0}
+.iso-page{max-width:980px;margin:0 auto;padding:28px 20px 40px;font-family:ui-sans-serif,system-ui,"Segoe UI",sans-serif;color:var(--anatomy-text)}
+.card{background:var(--anatomy-card);border:1.4px solid #23263a;border-radius:6px;box-shadow:4px 4px 0 #23263a;display:grid;grid-template-columns:200px 1fr;overflow:hidden}
+.side{border-right:1.4px solid #23263a;padding:18px 16px;display:flex;flex-direction:column;gap:10px;background:#efe8d8}
+.fig{font:600 11px var(--anatomy-mono);letter-spacing:.08em;text-transform:uppercase;color:#6b6656}
+.title{font:700 21px/1.15 ui-sans-serif,system-ui,"Segoe UI",sans-serif;color:#23263a;margin:2px 0 6px}
+.steps{display:flex;flex-direction:column;gap:7px;margin-top:4px}
+.step{appearance:none;text-align:left;font:600 12.5px var(--anatomy-mono);color:#23263a;background:#fffaf0;border:1.3px solid #23263a;border-radius:999px;padding:7px 12px 7px 10px;cursor:pointer;display:flex;gap:8px;align-items:center;box-shadow:2px 2px 0 #23263a;transition:transform .12s,box-shadow .12s,background .2s,opacity .2s}
+.step b{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;background:#23263a;color:#fffaf0;font-size:10px;flex:none}
+.step:hover:not([disabled]){transform:translate(-1px,-1px);box-shadow:3px 3px 0 #23263a}
+.step:active:not([disabled]),.step[data-press]{transform:translate(2px,2px);box-shadow:0 0 0 #23263a}
+.step[disabled]{opacity:.38;cursor:default;box-shadow:none}
+.step[data-on]{background:var(--body);opacity:1;box-shadow:2px 2px 0 #23263a}
+.step[data-done]{opacity:.55;box-shadow:none}
+.main{position:relative;padding:14px 18px 12px}
+.hint{font:500 13.5px/1.45 ui-sans-serif,system-ui,"Segoe UI",sans-serif;color:#23263a;min-height:40px;max-width:600px}
+.lapse{display:inline-block;margin-left:8px;font:700 11px var(--anatomy-mono);background:#23263a;color:#fffaf0;border-radius:4px;padding:2px 6px;vertical-align:1px;opacity:0;transition:opacity .2s}
+.lapse[data-on]{opacity:1}
+.stage svg{display:block;width:100%;height:auto;overflow:visible}
+.chips{display:flex;flex-wrap:wrap;gap:6px 8px;margin-top:4px}
+.chip{font:600 11.5px var(--anatomy-mono);color:#23263a;background:#fffaf0;border:1.2px solid #23263a;border-radius:6px;padding:5px 8px;font-variant-numeric:tabular-nums;white-space:nowrap;transition:background .25s}
+.chip i{font-style:normal;color:#7b7666;font-weight:500;margin-right:5px;text-transform:uppercase;font-size:10px;letter-spacing:.06em}
+.chip[data-hot]{background:var(--body)}
+.foot{display:flex;align-items:center;gap:18px;flex-wrap:wrap;border-top:1.4px solid #23263a;padding:10px 18px;grid-column:1/-1;background:#efe8d8}
+.idea{font:500 13px/1.45 ui-sans-serif,system-ui,"Segoe UI",sans-serif;color:#23263a;flex:1 1 340px}
+.idea b{font-weight:700}
+.ctl{display:flex;align-items:center;gap:8px;font:600 10px var(--anatomy-mono);letter-spacing:.07em;text-transform:uppercase;color:#6b6656}
+.sw{width:18px;height:18px;border-radius:50%;border:1.3px solid #23263a;cursor:pointer;padding:0}
+.sw[data-on]{box-shadow:0 0 0 2px #f5f0e5,0 0 0 3.4px #23263a}
+.shadow{fill:#ddd4c3}
+.slot{fill:#23263a;opacity:.62}
+.plate{fill:#e3b866;stroke:#23263a;stroke-width:1px;vector-effect:non-scaling-stroke}
+.dial-face{fill:#fffdf6;stroke:#23263a;stroke-width:1px;vector-effect:non-scaling-stroke}
+.dial-red{fill:none;stroke:#e5583e;stroke-width:2.2px;stroke-linecap:round;vector-effect:non-scaling-stroke}
+.glint{fill:none;stroke:#fff;stroke-width:1.6px;stroke-linecap:round;opacity:.85;vector-effect:non-scaling-stroke}
+.needle{fill:none;stroke:#e5583e;stroke-width:1.6px;stroke-linecap:round;vector-effect:non-scaling-stroke}
+.lcd{fill:#cde7c3;stroke:#23263a;stroke-width:1px;vector-effect:non-scaling-stroke}
+.lcd-text{fill:#23263a;font-family:var(--anatomy-mono);font-weight:700;letter-spacing:.02em}
+.glass .iso-fill,.glass .iso-shade,.glass .iso-top{fill-opacity:.32}
+.ink{fill:none;stroke:#23263a;stroke-width:1.15px;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+.word{font:700 15px "Segoe Print","Bradley Hand","Comic Sans MS",cursive;fill:#23263a;paint-order:stroke;stroke:#f5f0e5;stroke-width:4px;stroke-linejoin:round}
+.cursor{position:fixed;left:0;top:0;z-index:10;pointer-events:none;transform-origin:3px 2px;filter:drop-shadow(1px 2px 0 #23263a55)}
+.render *{transition:none!important}
+.modes{display:flex;gap:2px;padding:2px;background:#fffaf0;border:1.3px solid #23263a;border-radius:999px;box-shadow:2px 2px 0 #23263a;margin:2px 0 6px}
+.mode{flex:1;appearance:none;border:0;background:none;border-radius:999px;padding:5px 6px;font:700 11.5px var(--anatomy-mono);color:#6b6656;cursor:pointer;white-space:nowrap;transition:background .15s,color .15s;display:flex;align-items:center;justify-content:center;gap:6px}
+.mode:hover:not([aria-checked="true"]){color:#23263a}
+.mode[aria-checked="true"]{background:#23263a;color:#fffaf0}
+.restart{appearance:none;background:none;border:0;padding:2px 0;margin-top:auto;align-self:flex-start;font:600 11px var(--anatomy-mono);color:#6b6656;cursor:pointer;text-decoration:underline;text-decoration-color:#6b665666;text-underline-offset:3px}
+.restart:hover{color:#23263a;text-decoration-color:#23263a}
+.render .modes,.render .restart{display:none}
+.manual .step:not([disabled]):not([data-on]){animation:nudge 1.5s ease-in-out infinite}
+@keyframes nudge{0%,100%{box-shadow:2px 2px 0 #23263a,0 0 0 0 #23263a55}60%{box-shadow:2px 2px 0 #23263a,0 0 0 6px #23263a00}}
+@media (prefers-reduced-motion:reduce){.manual .step{animation:none!important}}
+@media (max-width:760px){
+.iso-page{width:100%;margin:0 auto;padding:10px 10px 28px}
+.card{grid-template-columns:1fr;box-shadow:3px 3px 0 #23263a}
+.side{border-right:0;border-bottom:1.4px solid #23263a;padding:12px 12px 10px;gap:6px}
+.title{font-size:18px;margin:0 0 4px}
+.steps{flex-direction:row;flex-wrap:wrap;gap:6px}
+.step{padding:5px 10px 5px 6px;font-size:11.5px;gap:6px}
+.modes{max-width:280px;margin:0 0 4px}
+.restart{margin-top:2px}
+.main{padding:10px 10px 10px}
+.hint{min-height:57px;font-size:13px}
+.foot{padding:10px 12px;gap:10px 16px}
+.idea{flex-basis:100%}
+}
+
+.stage svg{overflow:hidden}
+.step[data-on],.chip[data-hot]{background:var(--alt)}
+.shadow-floor{mix-blend-mode:multiply}
+.grid path{fill:none;stroke:#23263a;stroke-width:.7px;opacity:.09;vector-effect:non-scaling-stroke}
+.sp path,.sp circle,.sp rect,.sp ellipse,.sp use{vector-effect:non-scaling-stroke;stroke-linejoin:round}
+.sp .f{stroke-width:.65px}
+.sp .ol{fill:none;stroke:#23263a;stroke-width:1.15px}
+.sp .ol-s{fill:none;stroke:#23263a;stroke-width:.8px}
+.sp .cr{fill:none;stroke:#23263a;stroke-width:.5px;opacity:.4}
+.sp .seam{fill:none;stroke:#23263a;stroke-width:.6px;opacity:.55}
+.sp .seam-l{fill:none;stroke:#fff;stroke-width:.6px;opacity:.28}
+.sp .hair{fill:none;stroke:#23263a;stroke-width:.4px;opacity:.5}
+.sp .turn{fill:none;stroke:#fff;stroke-width:.35px;opacity:.13}
+.sp .lite{fill:none;stroke:#fff;stroke-width:.8px;opacity:.5;stroke-linecap:round}
+.sp .gl-soft{fill:none;stroke:#fff;stroke-linecap:round;stroke-linejoin:round}
+.sp .gl-core{fill:none;stroke:#fffdf2;stroke-linecap:round;stroke-linejoin:round}
+.sp .grain{stroke:none;mix-blend-mode:screen}
+.sp .ink{fill:#23263a;stroke:none}
+.sp .logo{fill:#23263a;stroke:none;fill-rule:evenodd}
+.sp .logo-lt{fill:#e9ebef;stroke:none;fill-rule:evenodd}
+.sp .logo-gr{fill:#8f95a1;stroke:none;fill-rule:evenodd}
+.sp text{font-family:ui-sans-serif,system-ui,"Segoe UI",sans-serif;font-weight:800}
+.sp .wm{fill:#23263a;font-weight:900}
+.sp .print{fill:#23263a;font-weight:700}
+.sp .print2{fill:#23263a;font-weight:600;opacity:.7}
+.sp .wprint{fill:#e9ebef;font-weight:700}
+.sp .wprint2{fill:#c9ccd3;font-weight:600;opacity:.8}
+.sp .bezel{fill:#3b3f4b;stroke:#23263a;stroke-width:.5px}
+.sp .glass{stroke:#0b0c10;stroke-width:.4px}
+.sp .lens{fill:#0a0b10;stroke:#5c6373;stroke-width:.45px}
+.sp .lens2{fill:#1d2533;stroke:none}
+.sp .lens3{fill:#34465c;stroke:none}
+.sp .glint{fill:#fff;opacity:.9;stroke:none}
+.sp .glint2{fill:#fff;opacity:.35;stroke:none}
+.sp .ir{fill:#4a1f2a;stroke:#23263a;stroke-width:.3px}
+.sp .screw{fill:#9aa1ad;stroke:#23263a;stroke-width:.45px}
+.sp .screw-d{fill:#4a4d58;stroke:#15161b;stroke-width:.45px}
+.sp .slot{fill:none;stroke:#23263a;stroke-width:.55px;stroke-linecap:round}
+.sp .hole{fill:#15161b;stroke:none}
+.sp .groove{fill:#14151a;stroke:none}
+.sp .hi{fill:#fff;opacity:.6;stroke:none}
+.sp .chipb{fill:#2b2d37;stroke:#23263a;stroke-width:.4px}
+.sp .pad{fill:#e3b866;stroke:none}
+.sp .trace{fill:none;stroke:#7fc49a;stroke-width:.45px;opacity:.55}
+.sp .silk{fill:#e9efe6;font-weight:600;opacity:.85}
+.sp .cap{fill:#b9946a;stroke:#23263a;stroke-width:.3px}
+.sp .conn{fill:#3a3c48;stroke:#23263a;stroke-width:.4px}
+.sp .conn-l{fill:#e9e6dd;stroke:#23263a;stroke-width:.4px}
+.sp .pins{fill:none;stroke:#e3b866;stroke-width:.6px}
+.sp .led{fill:#6fe39b;stroke:#23263a;stroke-width:.35px}
+.sp .led-off{fill:#4a4e58;stroke:#23263a;stroke-width:.35px}
+.sp .ledbar{fill:#bff5d2;stroke:#23263a;stroke-width:.4px}
+.sp .ledglow{fill:#6fe39b;stroke:none;opacity:.7}
+.sp .label{fill:#e9e6dd;stroke:#23263a;stroke-width:.4px}
+.sp .warn{fill:#f3c11f;stroke:#23263a;stroke-width:.35px}
+.sp .fin{fill:#9ca3ae;stroke:none}
+.sp .fin-d{fill:#5d636e;stroke:none}
+.sp .fan{fill:#2c2e36;stroke:#23263a;stroke-width:.45px}
+.sp .blade{fill:#4b4e59;stroke:#23263a;stroke-width:.3px}
+.sp .tread{fill:none;stroke:#101115;stroke-width:.7px;opacity:.55;stroke-linecap:round}
+.sp .cable-o{fill:none;stroke:#23263a;stroke-linecap:round;stroke-linejoin:round}
+.sp .wire{fill:none;stroke-linecap:round;stroke-linejoin:round}
+.sp .flex{fill:#d08a3f;stroke:#23263a;stroke-width:.45px}
+.sp .hl-glow{fill:none;stroke-linejoin:round}
+.sp .hl-rim{fill:none;stroke-linejoin:round}
+.sp .floor-ring{fill:none;stroke:#2f6aa8;stroke-width:1px;opacity:.55;stroke-dasharray:3 3}
+.sp .sector{stroke:#2f6aa8;stroke-width:.9px;stroke-linejoin:round}
+.sp .cone{stroke:none}
+.sp .cone-e{fill:none;stroke:#2f6aa8;stroke-width:.85px;stroke-dasharray:3 2.4;opacity:.75;stroke-linecap:round}
+.sp .badge{fill:#fffaf0;stroke:#23263a;stroke-width:1.1px}
+.sp .badge-t{fill:#23263a;font:700 11px ui-monospace,"Cascadia Mono",Consolas,monospace}
+.sp .tag{fill:#fffaf0;stroke:#23263a;stroke-width:1.1px}
+.sp .tag-t{fill:#23263a;font:700 11px ui-monospace,"Cascadia Mono",Consolas,monospace}
+.sp .tag-s{fill:#6b6656;font:600 9px ui-monospace,"Cascadia Mono",Consolas,monospace}
+.sp .support{fill:#ff9d3a;fill-opacity:.24;stroke:#e5583e;stroke-width:2.4px;stroke-dasharray:7 4;stroke-linejoin:round;stroke-linecap:round}
+.sp .support-dot{fill:#e5583e;stroke:#fffaf0;stroke-width:1.4px}
+.sp .scan{fill:none;stroke:#2f6aa8;stroke-width:1.6px;stroke-linecap:round}
+.sp .pulse{fill:none;stroke:#2f6aa8;stroke-width:1.2px}
+.sp .hazard-y{fill:#f3c11f;stroke:none}
+.sp .hazard-k{fill:#2b2d35;stroke:none}
+.sp .lead{fill:none;stroke:#23263a;stroke-width:.9px;stroke-dasharray:3 2.2}
+.sp .lead-dot{fill:#23263a;stroke:none}
+</style>
+<div class="card">
+  <aside class="side">
+    <div class="fig">图 30 · 机器人</div>
+    <div class="title">Spot机器人</div>
+    <div class="modes" role="radiogroup" aria-label="Mode"><button class="mode" data-mode="auto" role="radio" aria-checked="false"><svg viewBox="0 0 12 12" width="9" height="9" aria-hidden="true"><path d="M2 1.2v9.6L10.4 6z" fill="currentColor"/></svg>自动</button><button class="mode" data-mode="manual" role="radio" aria-checked="true"><svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M4 2.5l14.5 8.6-6.2 1.4 3.2 7-2.9 1.3-3.1-7-5.5 4.3z" fill="currentColor"/></svg>手动</button></div>
+    <div class="steps"><button class="step" data-step="walk" ><b>1</b>行走</button><button class="step" data-step="climb" disabled><b>2</b>上一个台阶</button><button class="step" data-step="see" disabled><b>3</b>它看到的是什么</button><button class="step" data-step="fall" disabled><b>4</b>跌倒和起身</button><button class="step" data-step="lid" disabled><b>5</b>抬起面板</button><button class="step" data-step="leg" disabled><b>6</b>一条腿，三个电机</button><button class="step" data-step="apart" disabled><b>7</b>拆开它</button><button class="step" data-step="together" disabled><b>↺</b>重新装好</button></div>
+    <button class="restart" data-restart>⟲ 重新开始</button>
+  </aside>
+  <section class="main">
+    <div class="hint"><span data-hint>机器人狗是如何行走、攀爬、环顾四周并重新站起来的？按下各个步骤，或者等待机器人自行执行这些步骤。</span><span class="lapse" data-lapse>×3</span></div>
+    <div class="stage"><svg xmlns="http://www.w3.org/2000/svg" class="iso-svg" viewBox="0 0 700 500" role="img" aria-label="A yellow four-legged Spot robot with BOSTON DYNAMICS printed along its side panels, standing 开启 a lab 楼层. It trots 开启 the spot in diagonal pairs, climbs a low step keeping its body level, shows the ring its 5 stereo camera pairs see all the way round it, falls onto its side, rolls back with its legs 和 stands up. Then its yellow panels lift 关闭 over the 电池, the compute 时松开， 12 个电机 that move its legs, three per leg, which light up one by one; one leg lifts 和 shows its three 电机 (the hip swings it out, the hip swings it forward, the knee 电机 folds the knee through a rod); it comes apart into panels, 电池, compute 和 four legs laid out in 块, 和 goes back together."><defs><clipPath id="floorclip"><path d="M1154 270.5L1156.6 271.2L1158.8 272.1L1160.6 273.1L1161.8 274.3L1162.5 275.6L1162.5 276.9L1161.8 278.1L1160.6 279.3L607.7 702.3L606 703.4L603.7 704.3L601.1 705L598.2 705.5L595.1 705.7L591.9 705.7L588.8 705.5L585.9 705L-454 480.1L-456.6 479.4L-458.8 478.5L-460.6 477.4L-461.8 476.2L-462.5 475L-462.5 473.7L-461.8 472.4L-460.6 471.2L92.3 48.3L94 47.2L96.3 46.3L98.9 45.6L101.8 45.1L104.9 44.8L108.1 44.8L111.2 45.1L114.1 45.6Z"/></clipPath>
+<filter id="sp-glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="3.4"/></filter>
+<filter id="sp-soft" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="1.3"/></filter>
+<filter id="sp-led" x="-150%" y="-150%" width="400%" height="400%"><feGaussianBlur stdDeviation="1.6"/></filter>
+<linearGradient id="sp-band" x1="0" y1="0" x2="1" y2=".55"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".2" stop-color="#fff" stop-opacity="0"/><stop offset=".27" stop-color="#fff" stop-opacity=".34"/><stop offset=".31" stop-color="#fff" stop-opacity=".06"/><stop offset=".37" stop-color="#fff" stop-opacity=".2"/><stop offset=".42" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+<linearGradient id="sp-sheen" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".3"/><stop offset=".45" stop-color="#fff" stop-opacity=".04"/><stop offset="1" stop-color="#7a4a00" stop-opacity=".14"/></linearGradient>
+<linearGradient id="sp-top" x1="0" y1="1" x2=".3" y2="0"><stop offset="0" stop-color="#fff" stop-opacity=".02"/><stop offset=".55" stop-color="#fff" stop-opacity=".22"/><stop offset="1" stop-color="#fff" stop-opacity=".05"/></linearGradient>
+<linearGradient id="sp-glass" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3a4152"/><stop offset=".38" stop-color="#151820"/><stop offset=".52" stop-color="#262c3a"/><stop offset="1" stop-color="#0b0c11"/></linearGradient>
+<linearGradient id="sp-matte" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".1"/><stop offset=".6" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".12"/></linearGradient>
+<pattern id="sp-grain" width="2.2" height="2.2" patternUnits="userSpaceOnUse" patternTransform="rotate(32)"><rect width="2.2" height="1" fill="#fff" fill-opacity=".55"/></pattern></defs><g class="art"><g class="c c-alt"><g class="iso-solid"><path class="iso-fill" d="M-462.5 473.7L-461.8 472.4L-460.6 471.2L92.3 48.3L94 47.2L96.3 46.3L98.9 45.6L101.8 45.1L104.9 44.8L108.1 44.8L111.2 45.1L114.1 45.6L1154 270.5L1156.6 271.2L1158.8 272.1L1160.6 273.1L1161.8 274.3L1162.5 275.6L1162.5 276.9L1162.5 280.6L1161.8 281.8L1160.6 283L607.7 706L606 707L603.7 708L601.1 708.7L598.2 709.2L595.1 709.4L591.9 709.4L588.8 709.2L585.9 708.7L-454 483.8L-456.6 483.1L-458.8 482.2L-460.6 481.1L-461.8 479.9L-462.5 478.7L-462.5 477.4Z"/><path class="iso-shade" data-shade="0" d="M1162.5 280.6L1161.8 281.8L1161.8 278.1L1162.5 276.9ZM1161.8 281.8L1160.6 283L1160.6 279.3L1161.8 278.1ZM1160.6 283L607.7 706L607.7 702.3L1160.6 279.3ZM607.7 706L606 707L606 703.4L607.7 702.3ZM606 707L603.7 708L603.7 704.3L606 703.4ZM603.7 708L601.1 708.7L601.1 705L603.7 704.3Z"/><path class="iso-shade" data-shade="1" d="M601.1 708.7L598.2 709.2L598.2 705.5L601.1 705ZM598.2 709.2L595.1 709.4L595.1 705.7L598.2 705.5ZM595.1 709.4L591.9 709.4L591.9 705.7L595.1 705.7Z"/><path class="iso-shade" data-shade="2" d="M591.9 709.4L588.8 709.2L588.8 705.5L591.9 705.7ZM588.8 709.2L585.9 708.7L585.9 705L588.8 705.5ZM585.9 708.7L-454 483.8L-454 480.1L585.9 705Z"/><path class="iso-shade" data-shade="3" d="M-454 483.8L-456.6 483.1L-456.6 479.4L-454 480.1ZM-456.6 483.1L-458.8 482.2L-458.8 478.5L-456.6 479.4ZM-458.8 482.2L-460.6 481.1L-460.6 477.4L-458.8 478.5ZM-460.6 481.1L-461.8 479.9L-461.8 476.2L-460.6 477.4ZM-461.8 479.9L-462.5 478.7L-462.5 475L-461.8 476.2ZM-462.5 478.7L-462.5 477.4L-462.5 473.7L-462.5 475Z"/><path class="iso-top" d="M1154 270.5L1156.6 271.2L1158.8 272.1L1160.6 273.1L1161.8 274.3L1162.5 275.6L1162.5 276.9L1161.8 278.1L1160.6 279.3L607.7 702.3L606 703.4L603.7 704.3L601.1 705L598.2 705.5L595.1 705.7L591.9 705.7L588.8 705.5L585.9 705L-454 480.1L-456.6 479.4L-458.8 478.5L-460.6 477.4L-461.8 476.2L-462.5 475L-462.5 473.7L-461.8 472.4L-460.6 471.2L92.3 48.3L94 47.2L96.3 46.3L98.9 45.6L101.8 45.1L104.9 44.8L108.1 44.8L111.2 45.1L114.1 45.6Z"/><path class="iso-line iso-crease" data-tone="faint" d="M1162.5 276.9L1161.8 278.1L1160.6 279.3L607.7 702.3L606 703.4L603.7 704.3L601.1 705L598.2 705.5L595.1 705.7L591.9 705.7L588.8 705.5L585.9 705L-454 480.1L-456.6 479.4L-458.8 478.5L-460.6 477.4L-461.8 476.2L-462.5 475L-462.5 473.7"/><path class="iso-line iso-bevel" data-tone="faint" d="M1162.5 276.9L1161.4 278.1L1160.2 279.2L607.3 702.2L605.6 703.2L603.4 704.1L600.9 704.8L598.1 705.3L595.1 705.5L592 705.5L589 705.3L586.1 704.8L-453.7 479.9L-456.3 479.2L-458.5 478.4L-460.2 477.3L-461.4 476.2L-462 474.9L-462.5 473.7"/><path class="iso-line" data-tone="faint" d="M1162.5 279.7L1161.8 280.9L1160.6 282.1L607.7 705.1L606 706.2L603.7 707.1L601.1 707.8L598.2 708.3L595.1 708.5L591.9 708.5L588.8 708.3L585.9 707.8L-454 482.9L-456.6 482.2L-458.8 481.3L-460.6 480.2L-461.8 479L-462.5 477.8L-462.5 476.5"/><path class="iso-line iso-edge" data-tone="hi" d="M-462.5 473.7L-461.8 472.4L-460.6 471.2L92.3 48.3L94 47.2L96.3 46.3L98.9 45.6L101.8 45.1L104.9 44.8L108.1 44.8L111.2 45.1L114.1 45.6L1154 270.5L1156.6 271.2L1158.8 272.1L1160.6 273.1L1161.8 274.3L1162.5 275.6L1162.5 276.9M1162.5 280.6L1161.8 281.8L1160.6 283L607.7 706L606 707L603.7 708L601.1 708.7L598.2 709.2L595.1 709.4L591.9 709.4L588.8 709.2L585.9 708.7L-454 483.8L-456.6 483.1L-458.8 482.2L-460.6 481.1L-461.8 479.9L-462.5 478.7L-462.5 477.4M1162.5 276.9L1162.5 280.6M-462.5 473.7L-462.5 477.4"/></g></g><path class="iso-line" data-tone="faint" data-dotted="" d="M1148.3 274.8L1148.9 275L1149.5 275.2L1150 275.5L1150.3 275.8L1150.4 276.1L1150.4 276.4L1150.3 276.7L1150 277L597 700L596.6 700.2L596 700.5L595.4 700.6L594.7 700.8L593.9 700.8L593.1 700.8L592.3 700.8L591.6 700.7L-448.3 475.8L-448.9 475.6L-449.5 475.4L-450 475.1L-450.3 474.8L-450.4 474.5L-450.4 474.2L-450.3 473.8L-450 473.5L103 50.6L103.4 50.3L104 50.1L104.6 49.9L105.3 49.8L106.1 49.7L106.9 49.7L107.7 49.8L108.4 49.9Z"/><g class="grid" data-part="grid" clip-path="url(#floorclip)"></g><g class="shadow-floor" clip-path="url(#floorclip)"><path class="shadow" data-part="shadow-live" d=""/><path class="shadow" data-part="shadow-float" d="" opacity=".45"/></g><g class="sp" data-part="under"></g><g class="sp" data-part="robot"></g><g class="sp" data-part="notes"></g><g data-part="sounds"></g></g></svg></div>
+    <div class="chips"><span class="chip" data-chipbox="mass"><i>质量· BD</i><span data-chip="mass">≈32.5 kg</span></span><span class="chip" data-chipbox="dof"><i>关节 · BD</i><span data-chip="dof">12</span></span><span class="chip" data-chipbox="pairs"><i>立体声对 · BD</i><span data-chip="pairs">5</span></span><span class="chip" data-chipbox="speed"><i>顶级速度 · BD</i><span data-chip="speed">≈1.6 m/s</span></span><span class="chip" data-chipbox="runtime"><i>运行时间 · BD</i><span data-chip="runtime">≈90 分钟</span></span><span class="chip" data-chipbox="payload"><i>负载 · BD</i><span data-chip="payload">≤14 kg</span></span><span class="chip" data-chipbox="parts"><i>零件</i><span data-chip="parts">1 个机器人</span></span><span class="chip" data-chipbox="joint"><i>关节</i><span data-chip="joint">–</span></span><span class="chip" data-chipbox="feet"><i>向下数英尺</i><span data-chip="feet">4</span></span><span class="chip" data-chipbox="pair"><i>主动式双</i><span data-chip="pair">–</span></span></div>
+  </section>
+  <footer class="foot">
+    <div class="idea"><b>核心原理：</b> <b>12 个电机</b> 和 <b>5 对眼睛</b> 使其保持站立（两个图均为波士顿动力公司提供）。</div>
+    <div class="ctl">配色 <button class="sw" data-swatch="#f2c14e" title="butter" style="background:#f2c14e" data-on></button><button class="sw" data-swatch="#e5583e" title="tomato" style="background:#e5583e" ></button><button class="sw" data-swatch="#86d3ad" title="mint" style="background:#86d3ad" ></button><button class="sw" data-swatch="#7fb9e9" title="sky" style="background:#7fb9e9" ></button><button class="sw" data-swatch="#f2a5bf" title="rose" style="background:#f2a5bf" ></button></div>
+  </footer>
+</div><p class="credit"><span class="keys">按空格或回车执行下一步 · ← → 切换机器<br></span>作者 <a target="_blank" rel="noopener" href="https://x.com/elvar_official">@elvar_official</a></p></main><script>
+if (/[?&]embed\b/.test(location.search)) document.body.classList.add("embed");
+addEventListener("keydown", (e) => {
+  if (e.key === "Escape") document.querySelector(".menu").open = false;
+  if (e.altKey || e.ctrlKey || e.metaKey || e.target.closest("input,textarea,select")) return;
+  const go = e.key === "ArrowLeft" ? "prev" : e.key === "ArrowRight" ? "next" : null;
+  if (go) location.href = document.querySelector('[data-go="' + go + '"]').href;
+});
+addEventListener("click", (e) => { const m = document.querySelector(".menu"); if (m.open && !m.contains(e.target)) m.open = false; });
+</script><script type="module">const AZIMUTH = 45;
+const ELEVATION = 30;
+const SHADES = 4;
+const RADIANS = Math.PI / 180;
+const UNIT = Math.sqrt(1.6);
+function cameraOf({ scale, azimuth = AZIMUTH, elevation = ELEVATION }) {
+    const a = azimuth * RADIANS;
+    const e = elevation * RADIANS;
+    return { sinA: Math.sin(a), cosA: Math.cos(a), sinE: Math.sin(e), cosE: Math.cos(e), k: scale * UNIT };
+}
+function iso([x, y, z], projection) {
+    const { origin } = projection;
+    const { sinA, cosA, sinE, cosE, k } = cameraOf(projection);
+    return [origin[0] + (x * sinA - y * cosA) * k, origin[1] + ((x * cosA + y * sinA) * sinE - z * cosE) * k];
+}
+function towardViewer(projection) {
+    const { sinA, cosA } = cameraOf(projection);
+    return [cosA, sinA];
+}
+function depthOf([x, y, z], projection) {
+    const { sinA, cosA, sinE, cosE } = cameraOf(projection);
+    return (x * cosA + y * sinA) * cosE + z * sinE;
+}
+const tenth = (value) => {
+    const text = (Math.round(value * 10) / 10).toFixed(1).replace(/\.0$/, "");
+    return text === "-0" ? "0" : text;
+};
+function pathOf(points, closed = false) {
+    if (!points.length)
+        return "";
+    return points.map(([x, y], at) => `${at ? "L" : "M"}${tenth(x)} ${tenth(y)}`).join("") + (closed ? "Z" : "");
+}
+const joinPaths = (paths) => paths.filter(Boolean).join("");
+function roundedPlan({ x, y, w, d, r }, steps = 8) {
+    const radius = Math.max(0, Math.min(r, w / 2, d / 2));
+    const corners = [
+        [x + w - radius, y + radius, -90],
+        [x + w - radius, y + d - radius, 0],
+        [x + radius, y + d - radius, 90],
+        [x + radius, y + radius, 180],
+    ];
+    const out = [];
+    for (const [cx, cy, start] of corners) {
+        const count = radius > 0 ? steps : 0;
+        for (let step = 0; step <= count; step++) {
+            const angle = (start + (count ? (90 * step) / count : 45)) * RADIANS;
+            out.push([cx + radius * Math.cos(angle), cy + radius * Math.sin(angle)]);
+        }
+    }
+    return out;
+}
+function signedArea(points) {
+    let area = 0;
+    for (let index = 0; index < points.length; index++) {
+        const [ax, ay] = points[index];
+        const [bx, by] = points[(index + 1) % points.length];
+        area += ax * by - bx * ay;
+    }
+    return area / 2;
+}
+const oriented = (points) => (signedArea(points) < 0 ? [...points].reverse() : points);
+function convexHull(points) {
+    const sorted = [...points].sort((a, b) => a[0] - b[0] || a[1] - b[1]);
+    if (sorted.length < 3)
+        return sorted;
+    const cross = (o, a, b) => (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0]);
+    const lower = [];
+    for (const point of sorted) {
+        while (lower.length >= 2 && cross(lower[lower.length - 2], lower[lower.length - 1], point) <= 0)
+            lower.pop();
+        lower.push(point);
+    }
+    const upper = [];
+    for (let index = sorted.length - 1; index >= 0; index--) {
+        const point = sorted[index];
+        while (upper.length >= 2 && cross(upper[upper.length - 2], upper[upper.length - 1], point) <= 0)
+            upper.pop();
+        upper.push(point);
+    }
+    return [...lower.slice(0, -1), ...upper.slice(0, -1)];
+}
+function runsOf(flags, want) {
+    const count = flags.length;
+    const runs = [];
+    const start = flags.findIndex((flag, index) => flag !== flags[(index + count - 1) % count]);
+    if (start < 0)
+        return flags[0] === want ? [Array.from({ length: count + 1 }, (_, index) => index % count)] : [];
+    let run = null;
+    for (let step = 0; step < count; step++) {
+        const index = (start + step) % count;
+        if (flags[index] === want) {
+            if (!run)
+                run = [index];
+            run.push((index + 1) % count);
+        }
+        else if (run) {
+            runs.push(run);
+            run = null;
+        }
+    }
+    if (run)
+        runs.push(run);
+    return runs;
+}
+function extrude(ring, z, height, projection, options = {}) {
+    const convex = options.convex ?? true;
+    const count = ring.length;
+    const counter = signedArea(ring) > 0;
+    const [vx, vy] = towardViewer(projection);
+    const { sinA, cosA } = cameraOf(projection);
+    const normals = ring.map(([ax, ay], index) => {
+        const [bx, by] = ring[(index + 1) % count];
+        const dx = bx - ax;
+        const dy = by - ay;
+        const length = Math.hypot(dx, dy) || 1;
+        return (counter ? [dy / length, -dx / length] : [-dy / length, dx / length]);
+    });
+    const facing = normals.map(([nx, ny]) => nx * vx + ny * vy > 1e-9);
+    const top = ring.map(([x, y]) => iso([x, y, z + height], projection));
+    const bottom = ring.map(([x, y]) => iso([x, y, z], projection));
+    const outline = [];
+    const crease = [];
+    for (const run of runsOf(facing, false))
+        outline.push(pathOf(run.map((index) => top[index])));
+    for (const run of runsOf(facing, true)) {
+        crease.push(pathOf(run.map((index) => top[index])));
+        if (height > 0)
+            outline.push(pathOf(run.map((index) => bottom[index])));
+    }
+    if (height > 0) {
+        for (let index = 0; index < count; index++) {
+            if (facing[(index + count - 1) % count] !== facing[index])
+                outline.push(pathOf([top[index], bottom[index]]));
+        }
+    }
+    let fill;
+    if (convex) {
+        fill = pathOf(convexHull([...top, ...bottom]), true);
+    }
+    else {
+        const parts = [pathOf(oriented(top), true), pathOf(oriented(bottom), true)];
+        for (let index = 0; index < count; index++) {
+            if (!facing[index])
+                continue;
+            const next = (index + 1) % count;
+            parts.push(pathOf(oriented([top[index], top[next], bottom[next], bottom[index]]), true));
+        }
+        fill = parts.join("");
+    }
+    const buckets = Array.from({ length: SHADES }, () => []);
+    if (height > 0) {
+        const [lx, ly] = [-sinA, cosA];
+        for (let index = 0; index < count; index++) {
+            if (!facing[index])
+                continue;
+            const [nx, ny] = normals[index];
+            const lit = (nx * lx + ny * ly + 1) / 2;
+            const shade = Math.min(SHADES - 1, Math.max(0, Math.floor(lit * SHADES)));
+            const next = (index + 1) % count;
+            buckets[shade].push(pathOf(oriented([top[index], top[next], bottom[next], bottom[index]]), true));
+        }
+    }
+    let bevel;
+    if (options.bevel && options.bevel > 0) {
+        const by = options.bevel;
+        const inset = ring.map(([x, y], index) => {
+            const [ax, ay] = normals[(index + count - 1) % count];
+            const [bx, by2] = normals[index];
+            const mx = ax + bx;
+            const my = ay + by2;
+            const length = Math.hypot(mx, my) || 1;
+            return [x - (mx / length) * by, y - (my / length) * by];
+        });
+        const insetTop = inset.map(([x, y]) => iso([x, y, z + height], projection));
+        bevel = runsOf(facing, true)
+            .map((run) => pathOf([top[run[0]], ...run.slice(1, -1).map((index) => insetTop[index]), top[run[run.length - 1]]]))
+            .join("");
+    }
+    return {
+        fill,
+        outline: outline.join(""),
+        crease: crease.join(""),
+        top: pathOf(oriented(top), true),
+        shades: buckets.map((paths) => paths.join("")),
+        bevel,
+    };
+}
+const ringOf = (plan, steps = 8) => roundedPlan(plan, steps);
+function slabOf(plan, z, height, projection, steps = 8, bevel = 0) {
+    return extrude(ringOf(plan, steps), z, height, projection, { convex: true, bevel });
+}
+function circleRing(cx, cy, radius, steps = 40) {
+    return Array.from({ length: steps }, (_, step) => {
+        const angle = (step / steps) * Math.PI * 2;
+        return [cx + radius * Math.cos(angle), cy + radius * Math.sin(angle)];
+    });
+}
+function cylinder(cx, cy, radius, z, height, projection, steps = 32, bevel = 0) {
+    return extrude(circleRing(cx, cy, radius, steps), z, height, projection, { convex: true, bevel });
+}
+const insetPlan = ({ x, y, w, d, r }, by) => ({ x: x + by, y: y + by, w: w - by * 2, d: d - by * 2, r: Math.max(0, r - by) });
+function onTop(points, z, projection, closed = false) {
+    return pathOf(points.map(([x, y]) => iso([x, y, z], projection)), closed);
+}
+const planOutline = (plan, z, projection, steps = 8) => onTop(ringOf(plan, steps), z, projection, true);
+const lineOnTop = (from, to, z, projection) => onTop([from, to], z, projection);
+const segment = (from, to, projection) => pathOf([iso(from, projection), iso(to, projection)]);
+const rise = (at, from, to, projection) => segment([at[0], at[1], from], [at[0], at[1], to], projection);
+const ring = (cx, cy, radius, z, projection, steps = 40) => onTop(circleRing(cx, cy, radius, steps), z, projection, true);
+const pointsAt = (points, projection) => points.map((point) => iso(point, projection));
+function dotGrid(x, y, columns, rows, gap, z, projection) {
+    const dots = [];
+    for (let row = 0; row < rows; row++) {
+        for (let column = 0; column < columns; column++)
+            dots.push(iso([x + column * gap, y + row * gap, z], projection));
+    }
+    return dots;
+}
+function corners({ x, y, w, d }, inset = 0) {
+    return [
+        [x + inset, y + inset],
+        [x + w - inset, y + inset],
+        [x + inset, y + d - inset],
+        [x + w - inset, y + d - inset],
+    ];
+}
+function boxCorners({ x, y, w, d }, z0, z1) {
+    const out = [];
+    for (const px of [x, x + w])
+        for (const py of [y, y + d])
+            for (const z of [z0, z1])
+                out.push([px, py, z]);
+    return out;
+}
+function knurl(cx, cy, radius, z0, z1, count, projection, inset = 0.4) {
+    const [vx, vy] = towardViewer(projection);
+    const lines = [];
+    for (let index = 0; index < count; index++) {
+        const angle = (index / count) * Math.PI * 2;
+        const nx = Math.cos(angle);
+        const ny = Math.sin(angle);
+        if (nx * vx + ny * vy < 0.15)
+            continue;
+        lines.push(segment([cx + radius * nx, cy + radius * ny, z0 + inset], [cx + radius * nx, cy + radius * ny, z1 - inset], projection));
+    }
+    return lines.join("");
+}
+function sideArc(cx, cy, radius, z, projection, steps = 24) {
+    const [vx, vy] = towardViewer(projection);
+    const facing = Math.atan2(vy, vx);
+    const points = [];
+    for (let step = 0; step <= steps; step++) {
+        const angle = facing - Math.PI / 2 + (step / steps) * Math.PI;
+        points.push(iso([cx + radius * Math.cos(angle), cy + radius * Math.sin(angle), z], projection));
+    }
+    return pathOf(points);
+}
+function ringSeam(ring, z, projection) {
+    const count = ring.length;
+    const counter = signedArea(ring) > 0;
+    const [vx, vy] = towardViewer(projection);
+    const facing = ring.map(([ax, ay], index) => {
+        const [bx, by] = ring[(index + 1) % count];
+        const dx = bx - ax;
+        const dy = by - ay;
+        const [nx, ny] = counter ? [dy, -dx] : [-dy, dx];
+        return nx * vx + ny * vy > 1e-9;
+    });
+    return runsOf(facing, true).map((run) => pathOf(run.map((index) => iso([ring[index][0], ring[index][1], z], projection)))).join("");
+}
+const sideSeam = (plan, z, projection, steps = 8) => ringSeam(ringOf(plan, steps), z, projection);
+function sideRing(center, radius, axis, projection, steps = 20) {
+    const [px, py, pz] = center;
+    const points = [];
+    for (let step = 0; step < steps; step++) {
+        const angle = (step / steps) * Math.PI * 2;
+        const u = radius * Math.cos(angle);
+        const v = radius * Math.sin(angle);
+        points.push(iso(axis === "x" ? [px, py + u, pz + v] : [px + u, py, pz + v], projection));
+    }
+    return pathOf(points, true);
+}
+function coil(from, to, center, radius, turns, axis, projection, perTurn = 16) {
+    const count = Math.max(1, Math.round(turns * perTurn));
+    const back = [];
+    const front = [];
+    let run = [];
+    let near = null;
+    for (let index = 0; index <= count; index++) {
+        const share = index / count;
+        const angle = share * turns * Math.PI * 2;
+        const u = radius * Math.cos(angle);
+        const v = radius * Math.sin(angle);
+        const along = from + (to - from) * share;
+        const point = axis === "x" ? [along, center[0] + u, center[1] + v] : [center[0] + u, along, center[1] + v];
+        const normal = axis === "x" ? [0, Math.cos(angle), Math.sin(angle)] : [Math.cos(angle), 0, Math.sin(angle)];
+        const facing = depthOf(normal, projection) > 0;
+        const flat = iso(point, projection);
+        if (near === null)
+            near = facing;
+        if (facing !== near) {
+            run.push(flat);
+            (near ? front : back).push(pathOf(run));
+            run = [flat];
+            near = facing;
+            continue;
+        }
+        run.push(flat);
+    }
+    if (run.length > 1)
+        (near ? front : back).push(pathOf(run));
+    return { back: back.join(""), front: front.join("") };
+}
+function topTicks(from, to, step, every, edge, z, lengths, projection, axis = "x") {
+    const minor = [];
+    const major = [];
+    const first = Math.ceil(from / step) * step;
+    for (let at = first, index = Math.round(first / step); at <= to + 1e-9; at += step, index++) {
+        const big = index % every === 0;
+        const length = big ? lengths[1] : lengths[0];
+        const a = axis === "x" ? [at, edge] : [edge, at];
+        const b = axis === "x" ? [at, edge + length] : [edge + length, at];
+        (big ? major : minor).push(lineOnTop(a, b, z, projection));
+    }
+    return { minor: minor.join(""), major: major.join("") };
+}
+function sideTicks(from, to, step, every, face, top, lengths, projection, axis = "x") {
+    const minor = [];
+    const major = [];
+    const first = Math.ceil(from / step) * step;
+    for (let at = first, index = Math.round(first / step); at <= to + 1e-9; at += step, index++) {
+        const big = index % every === 0;
+        const length = big ? lengths[1] : lengths[0];
+        const a = axis === "x" ? [at, face, top] : [face, at, top];
+        const b = axis === "x" ? [at, face, top - length] : [face, at, top - length];
+        (big ? major : minor).push(segment(a, b, projection));
+    }
+    return { minor: minor.join(""), major: major.join("") };
+}
+function radialTicks(cx, cy, radius, count, every, z, lengths, projection, from = 0, span = Math.PI * 2) {
+    const minor = [];
+    const major = [];
+    const closed = Math.abs(span - Math.PI * 2) < 1e-9;
+    const steps = closed ? count : count + 1;
+    for (let index = 0; index < steps; index++) {
+        const angle = from + (index / count) * span;
+        const big = index % every === 0;
+        const inner = radius - (big ? lengths[1] : lengths[0]);
+        const sx = Math.sin(angle);
+        const sy = -Math.cos(angle);
+        (big ? major : minor).push(lineOnTop([cx + sx * inner, cy + sy * inner], [cx + sx * radius, cy + sy * radius], z, projection));
+    }
+    return { minor: minor.join(""), major: major.join("") };
+}
+const haloOf = (plan, z, height, projection) => slabOf(plan, z, height, projection).fill;
+function axisVector(projection, [dx, dy, dz]) {
+    const origin = iso([0, 0, 0], projection);
+    const moved = iso([dx, dy, dz], projection);
+    return [moved[0] - origin[0], moved[1] - origin[1]];
+}
+const fine = (value) => Math.round(value * 100) / 100;
+function translateAlong(projection, by) {
+    const [x, y] = axisVector(projection, by);
+    return `translate(${fine(x)} ${fine(y)})`;
+}
+const thousandth = (value) => Math.round(value * 1000) / 1000;
+function axesAt(at, z, projection) {
+    const origin = iso([at[0], at[1], z], projection);
+    const along = (point) => {
+        const [px, py] = iso(point, projection);
+        return [px - origin[0], py - origin[1]];
+    };
+    return { origin, x: along([at[0] + 1, at[1], z]), y: along([at[0], at[1] + 1, z]), z: along([at[0], at[1], z + 1]) };
+}
+const matrixOf = (u, v, origin) => `matrix(${thousandth(u[0])} ${thousandth(u[1])} ${thousandth(v[0])} ${thousandth(v[1])} ${thousandth(origin[0])} ${thousandth(origin[1])})`;
+function holdStill(element, [dx, dy]) {
+    const text = dx || dy ? `translate(${-dx} ${-dy})` : "";
+    element.querySelectorAll("[data-hold]").forEach((node) => (text ? node.setAttribute("transform", text) : node.removeAttribute("transform")));
+}
+function topMatrix(at, z, projection, along = "x") {
+    const { origin, x, y } = axesAt(at, z, projection);
+    return along === "x" ? matrixOf(x, y, origin) : matrixOf([-y[0], -y[1]], x, origin);
+}
+function sideMatrix(at, z, projection, face) {
+    const { origin, x, y, z: up } = axesAt(at, z, projection);
+    const down = [-up[0], -up[1]];
+    return face === "left" ? matrixOf(x, down, origin) : matrixOf([-y[0], -y[1]], down, origin);
+}
+function screenRise(height, projection) {
+    const { cosE, k } = cameraOf(projection);
+    return height * cosE * k;
+}
+function fitProjection(points, width, height, { pad = 24, headroom = 0, azimuth = AZIMUTH, elevation = ELEVATION } = {}) {
+    const unit = { origin: [0, 0], scale: 1, azimuth, elevation };
+    const flat = points.map((point) => iso(point, unit));
+    const xs = flat.map(([x]) => x);
+    const ys = flat.map(([, y]) => y);
+    const left = Math.min(...xs);
+    const right = Math.max(...xs);
+    const up = Math.min(...ys);
+    const down = Math.max(...ys);
+    const scale = Math.min((width - pad * 2) / (right - left), (height - pad * 2 - headroom) / (down - up));
+    return {
+        origin: [width / 2 - ((left + right) / 2) * scale, headroom + (height - headroom) / 2 - ((up + down) / 2) * scale],
+        scale,
+        azimuth,
+        elevation,
+    };
+}
+const escape = (text) => text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+const attrs = (pairs) => Object.entries(pairs)
+    .filter(([, value]) => value !== undefined && value !== false)
+    .map(([key, value]) => ` ${key}="${escape(String(value))}"`)
+    .join("");
+function solidSvg(paths, { tone = "hi", crease = "faint", halo = false, lit = false, flat = false, className, inner = "" } = {}) {
+    const parts = [];
+    if (halo)
+        parts.push(`<path class="iso-halo" d="${paths.fill}"/>`);
+    parts.push(`<path class="iso-fill" d="${paths.fill}"/>`);
+    if (!flat) {
+        paths.shades.forEach((d, shade) => {
+            if (d)
+                parts.push(`<path class="iso-shade" data-shade="${shade}" d="${d}"/>`);
+        });
+        parts.push(`<path class="iso-top" d="${paths.top}"/>`);
+    }
+    if (crease !== "none" && paths.crease)
+        parts.push(`<path class="iso-line iso-crease" data-tone="${crease}" d="${paths.crease}"/>`);
+    if (crease !== "none" && paths.bevel)
+        parts.push(`<path class="iso-line iso-bevel" data-tone="${crease}" d="${paths.bevel}"/>`);
+    if (inner)
+        parts.push(inner);
+    parts.push(`<path class="iso-line iso-edge" data-tone="${tone}" d="${paths.outline}"/>`);
+    return `<g${attrs({ class: className ? `iso-solid ${className}` : "iso-solid", "data-lit": lit ? "" : undefined, "data-seamless": paths.seamless ? "" : undefined })}>${parts.join("")}</g>`;
+}
+function lineSvg(d, { tone = "lo", dotted = false, dashed = false, flow = false, className, free } = {}) {
+    if (!d)
+        return "";
+    return `<path${attrs({
+        class: className ? `iso-line ${className}` : "iso-line",
+        "data-tone": tone,
+        "data-free": free === true ? "" : free || undefined,
+        "data-dotted": dotted ? "" : undefined,
+        "data-dashed": dashed ? "" : undefined,
+        "data-flow": flow ? "" : undefined,
+        d,
+    })}/>`;
+}
+function dotsSvg(points, { size = 0.5, tone = "mid", pulse = false } = {}) {
+    const dots = points
+        .map(([x, y, alpha], index) => `<circle cx="${tenth(x)}" cy="${tenth(y)}" r="${size}"${alpha !== undefined && alpha < 1 ? ` fill-opacity="${Math.max(0, alpha).toFixed(2)}"` : ""}${pulse ? ` data-pulse="" style="--pulse-at:${(index * 137) % 1600}ms"` : ""}/>`)
+        .join("");
+    return `<g class="iso-dots" data-tone="${tone}">${dots}</g>`;
+}
+function fadedSvg(list, style = {}) {
+    const groups = new Map();
+    for (const entry of list) {
+        const [d, alpha] = Array.isArray(entry) ? entry : [entry.d, entry.alpha];
+        if (!d || !(alpha > 0.02))
+            continue;
+        const level = Math.min(1, Math.round(alpha * 20) / 20);
+        groups.set(level, (groups.get(level) ?? "") + d);
+    }
+    return [...groups].map(([alpha, d]) => (alpha >= 1 ? lineSvg(d, style) : `<g opacity="${alpha.toFixed(2)}">${lineSvg(d, style)}</g>`)).join("");
+}
+function fadeLineSvg(points, { fade = [0, 0], tone = "lo", className, stops = 6 } = {}) {
+    if (points.length < 2)
+        return "";
+    const ease = (t) => t * t * (3 - 2 * t);
+    const hashOf = (text) => {
+        let hash = 2166136261;
+        for (let index = 0; index < text.length; index++)
+            hash = Math.imul(hash ^ text.charCodeAt(index), 16777619);
+        return (hash >>> 0).toString(36);
+    };
+    const lengths = [0];
+    for (let index = 1; index < points.length; index++)
+        lengths.push(lengths[index - 1] + Math.hypot(points[index][0] - points[index - 1][0], points[index][1] - points[index - 1][1]));
+    const at = (length) => {
+        let index = 1;
+        while (index < points.length - 1 && lengths[index] < length)
+            index++;
+        const span = lengths[index] - lengths[index - 1] || 1;
+        const t = Math.max(0, Math.min(1, (length - lengths[index - 1]) / span));
+        return [points[index - 1][0] + (points[index][0] - points[index - 1][0]) * t, points[index - 1][1] + (points[index][1] - points[index - 1][1]) * t];
+    };
+    const pieceOf = (from, to) => [at(from), ...points.filter((_, index) => lengths[index] > from + 1e-6 && lengths[index] < to - 1e-6), at(to)];
+    const total = lengths[lengths.length - 1];
+    if (total < 1e-6)
+        return "";
+    let [start, end] = Array.isArray(fade) ? fade : [fade, fade];
+    if (start + end > total) {
+        const share = total / (start + end);
+        start *= share;
+        end *= share;
+    }
+    const paint = `var(--anatomy-${tone})`;
+    const ramp = (piece, rising) => {
+        const d = pathOf(piece);
+        const [x1, y1] = piece[0];
+        const [x2, y2] = piece[piece.length - 1];
+        const id = `iso-fade-${hashOf(`${d}|${tone}|${rising}`)}`;
+        const marks = Array.from({ length: stops + 1 }, (_, index) => {
+            const t = index / stops;
+            const alpha = ease(rising ? t : 1 - t);
+            return `<stop offset="${t.toFixed(3)}" stop-opacity="${alpha.toFixed(3)}" style="stop-color:${paint}"/>`;
+        }).join("");
+        const gradient = `<linearGradient id="${id}" gradientUnits="userSpaceOnUse" x1="${tenth(x1)}" y1="${tenth(y1)}" x2="${tenth(x2)}" y2="${tenth(y2)}">${marks}</linearGradient>`;
+        return `<defs>${gradient}</defs><path${attrs({ class: className ? `iso-line ${className}` : "iso-line", "data-tone": tone, "data-free": rising ? "start" : "end", d, style: `stroke:url(#${id})` })}/>`;
+    };
+    const parts = [];
+    if (start > 0.05)
+        parts.push(ramp(pieceOf(0, start), true));
+    if (total - end - start > 0.05)
+        parts.push(lineSvg(pathOf(pieceOf(start, total - end)), { tone, className }));
+    if (end > 0.05)
+        parts.push(ramp(pieceOf(total - end, total), false));
+    return `<g class="iso-fade">${parts.join("")}</g>`;
+}
+function wireSvg(from, to, { via = [], tone = "lo", dotted = false, dashed = false, flow = false, ends = "both", size = 1.2 } = {}) {
+    const d = pathOf([from, ...via, to]);
+    const end = ([x, y]) => `<circle class="iso-wire-end" cx="${tenth(x)}" cy="${tenth(y)}" r="${size}"/>`;
+    return `<g class="iso-wire" data-tone="${tone}">${lineSvg(d, { tone, dotted, dashed, flow })}${ends === "both" || ends === "from" ? end(from) : ""}${ends === "both" || ends === "to" ? end(to) : ""}</g>`;
+}
+function faceTextSvg(transform, text, { size = 3, tone = "mid", anchor = "start" } = {}) {
+    return `<text class="iso-face-text" data-tone="${tone}" transform="${transform}" font-size="${size}" text-anchor="${anchor}">${escape(text)}</text>`;
+}
+function groupSvg(children, extra = {}) {
+    return `<g${attrs(extra)}>${Array.isArray(children) ? children.join("") : children}</g>`;
+}
+function figureSvg({ width, height, label, body, standalone = false, className }) {
+    const style = standalone ? `<style>${ISO_CSS}</style>` : "";
+    return `<svg${attrs({
+        xmlns: "http://www.w3.org/2000/svg",
+        class: `iso-svg${standalone ? " iso" : ""}${className ? ` ${className}` : ""}`,
+        "data-theme": standalone || undefined,
+        viewBox: `0 0 ${width} ${height}`,
+        role: "img",
+        "aria-label": label,
+    })}>${style}${Array.isArray(body) ? body.join("") : body}</svg>`;
+}
+function swatchSvg(mark) {
+    if (mark === "raised" || mark === "flat" || mark === "lit") {
+        const body = mark === "flat" ? "M2 6.5 8 3.5 14 6.5 8 9.5Z" : "M2 4.5 8 1.5 14 4.5 14 6 8 9 2 6Z";
+        const crease = mark === "flat" ? "" : `<path class="iso-swatch-crease" d="M2 4.5 8 7.5 14 4.5"/>`;
+        return `<svg class="iso-swatch" data-mark="${mark}" viewBox="0 0 16 10" aria-hidden="true"><path d="${body}"/>${crease}</svg>`;
+    }
+    return `<svg class="iso-swatch" data-mark="${mark}" viewBox="0 0 16 10" aria-hidden="true"><path d="M1.5 5h13"/></svg>`;
+}
+function plateHtml({ fig, title, hint, readout = "", keys = [], caption, body }) {
+    const corner = (name, text, extra = "") => `<span class="iso-plate-corner" data-corner="${name}"${extra}>${escape(text)}</span>`;
+    const legend = keys.length || caption
+        ? `<figcaption class="iso-legend">${keys.length ? `<span class="iso-keys">${keys.map((key) => `<span class="iso-key">${swatchSvg(key.mark)}${escape(key.label)}</span>`).join("")}</span>` : ""}${caption ? `<span class="iso-caption">${escape(caption)}</span>` : ""}</figcaption>`
+        : "";
+    return `<figure class="iso-figure"><div class="iso-plate"><div class="iso-plate-corners" aria-hidden="true">${corner("fig", fig)}${title ? corner("title", title) : ""}${hint ? corner("hint", hint) : ""}${corner("readout", readout, " data-readout")}</div>${body}</div>${legend}</figure>`;
+}
+function pageHtml({ title, theme = "dark", body, script = "", width = 650 }) {
+    return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>${escape(title)}</title><style>${ISO_CSS}${PAGE_CSS.replace("__WIDTH__", String(width))}</style></head><body class="iso" data-theme="${theme}"><main class="iso-page">${body}</main>${script ? `<script type="module">${script.replace(/<\/(script)/gi, "<\\/$1")}<\/script>` : ""}</body></html>`;
+}
+const PAGE_CSS = `
+*{box-sizing:border-box}
+html{color-scheme:dark}
+body[data-theme="light"]{color-scheme:light}
+body{margin:0;background:var(--anatomy-page);color:var(--anatomy-text);font:14px/1.6 ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+.iso-page{width:min(__WIDTH__px,100% - 32px);margin:64px auto 96px}
+`;
+const ISO_CSS = `
+.iso{
+  --anatomy-page:#0b0b0b;--anatomy-card:#131313;--anatomy-text:#a3a3a3;--anatomy-strong:#e6e6e6;--anatomy-muted:#6e6e6e;
+  --anatomy-paper:#131313;--anatomy-face:#1b1b1b;--anatomy-top:#1c1c1c;
+  --anatomy-shade-0:#0f0f0f;--anatomy-shade-1:#121212;--anatomy-shade-2:#151515;--anatomy-shade-3:#181818;
+  --anatomy-lit-top:#262626;--anatomy-lit-shade:#1d1d1d;
+  --anatomy-hi:#d4d4d4;--anatomy-mid:#6a6a6a;--anatomy-lo:#3e3e3e;--anatomy-faint:#2a2a2a;--anatomy-lit:#ffffff;
+  --anatomy-halo:#050505;--anatomy-halo-opacity:.9;--anatomy-dot:#e6e6e6;
+  --anatomy-red:#ff6b6b;--anatomy-green:#6be0a0;--anatomy-blue:#6b9bff;
+  --anatomy-weight:.6px;--anatomy-ease:cubic-bezier(.32,.72,0,1);
+  --anatomy-mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --anatomy-lift:inset 0 1px 0 0 #ffffff0a,inset 0 0 0 1px #ffffff06,0 0 0 1px #00000026,0 1px 1px -.5px #00000014,0 3px 3px -1.5px #00000014,0 6px 6px -3px #00000014,0 12px 12px -6px #00000014;
+}
+.iso[data-theme="light"]{
+  --anatomy-page:#f2f2ef;--anatomy-card:#fbfbfa;--anatomy-text:#57575a;--anatomy-strong:#18181a;--anatomy-muted:#8c8c90;
+  --anatomy-paper:#fbfbfa;--anatomy-face:#ffffff;--anatomy-top:#ffffff;
+  --anatomy-shade-0:#dcdcd9;--anatomy-shade-1:#e5e5e2;--anatomy-shade-2:#ededea;--anatomy-shade-3:#f4f4f1;
+  --anatomy-lit-top:#ffffff;--anatomy-lit-shade:#eeeeeb;
+  --anatomy-hi:#26262a;--anatomy-mid:#8a8a8f;--anatomy-lo:#b4b4b8;--anatomy-faint:#d4d4d6;--anatomy-lit:#000000;
+  --anatomy-halo:#8a8a80;--anatomy-halo-opacity:.32;--anatomy-dot:#3a3a3e;
+  --anatomy-red:#e5484d;--anatomy-green:#30a46c;--anatomy-blue:#3e63dd;
+  --anatomy-lift:inset 0 1px 0 0 #ffffff,0 0 0 1px #0000000f,0 1px 1px -.5px #0000000a,0 3px 3px -1.5px #0000000a,0 6px 6px -3px #0000000a,0 12px 12px -6px #0000000a;
+}
+.iso-svg{display:block;width:100%;height:auto;overflow:visible}
+.iso-svg path,.iso-svg circle{vector-effect:non-scaling-stroke}
+.iso-fill{fill:var(--anatomy-paper);stroke:none}
+.iso-solid[data-lit]>.iso-fill{fill:var(--anatomy-face)}
+.iso-shade,.iso-top{stroke:none}
+.iso-shade[data-shade="0"]{fill:var(--anatomy-shade-0)}
+.iso-shade[data-shade="1"]{fill:var(--anatomy-shade-1)}
+.iso-shade[data-shade="2"]{fill:var(--anatomy-shade-2)}
+.iso-shade[data-shade="3"]{fill:var(--anatomy-shade-3)}
+.iso-top{fill:var(--anatomy-top)}
+.iso-solid[data-lit]>.iso-top{fill:var(--anatomy-lit-top)}
+.iso-solid[data-lit]>.iso-shade{fill:var(--anatomy-lit-shade)}
+.iso-solid[data-seamless]>.iso-shade,.iso-solid[data-seamless]>.iso-top{stroke-width:.4;stroke-linejoin:round}
+.iso-solid[data-seamless]>.iso-shade[data-shade="0"]{stroke:var(--anatomy-shade-0)}
+.iso-solid[data-seamless]>.iso-shade[data-shade="1"]{stroke:var(--anatomy-shade-1)}
+.iso-solid[data-seamless]>.iso-shade[data-shade="2"]{stroke:var(--anatomy-shade-2)}
+.iso-solid[data-seamless]>.iso-shade[data-shade="3"]{stroke:var(--anatomy-shade-3)}
+.iso-solid[data-seamless]>.iso-top{stroke:var(--anatomy-top)}
+.iso-solid[data-seamless][data-lit]>.iso-top{stroke:var(--anatomy-lit-top)}
+.iso-solid[data-seamless][data-lit]>.iso-shade{stroke:var(--anatomy-lit-shade)}
+.iso-solid[data-lit]>.iso-edge{stroke:var(--anatomy-lit)}
+.iso-halo{fill:var(--anatomy-halo);stroke:none;filter:blur(9px);opacity:var(--anatomy-halo-opacity);transform:translateY(3px)}
+.iso-line{fill:none;stroke:var(--anatomy-lo);stroke-width:var(--anatomy-weight);stroke-linecap:round;stroke-linejoin:round}
+.iso-line[data-tone="hi"]{stroke:var(--anatomy-hi)}
+.iso-line[data-tone="mid"]{stroke:var(--anatomy-mid)}
+.iso-line[data-tone="lo"]{stroke:var(--anatomy-lo)}
+.iso-line[data-tone="faint"]{stroke:var(--anatomy-faint)}
+.iso-line[data-tone="lit"]{stroke:var(--anatomy-lit)}
+.iso-line[data-tone="red"]{stroke:var(--anatomy-red)}
+.iso-line[data-tone="green"]{stroke:var(--anatomy-green)}
+.iso-line[data-tone="blue"]{stroke:var(--anatomy-blue)}
+.iso-line[data-dotted]{stroke-dasharray:.01 3.5;stroke-width:1}
+.iso-line[data-dashed]{stroke-dasharray:3 3}
+.iso-line[data-flow]{stroke-dasharray:2 6}
+.iso-wire-end{fill:var(--anatomy-paper);stroke:var(--anatomy-lo);stroke-width:var(--anatomy-weight)}
+.iso-wire[data-tone="hi"] .iso-wire-end{stroke:var(--anatomy-hi)}
+.iso-wire[data-tone="mid"] .iso-wire-end{stroke:var(--anatomy-mid)}
+.iso-wire[data-tone="faint"] .iso-wire-end{stroke:var(--anatomy-faint)}
+.iso-wire[data-tone="lit"] .iso-wire-end{stroke:var(--anatomy-lit)}
+.iso-dots circle{fill:var(--anatomy-dot);stroke:none;opacity:.32}
+.iso-dots[data-tone="hi"] circle{opacity:.85}
+.iso-dots[data-tone="mid"] circle{opacity:.45}
+.iso-dots[data-tone="lo"] circle{opacity:.22}
+.iso-dots[data-tone="faint"] circle{opacity:.12}
+.iso-face-text{fill:var(--anatomy-mid);font-family:var(--anatomy-mono);letter-spacing:.04em}
+.iso-face-text[data-tone="hi"]{fill:var(--anatomy-hi)}
+.iso-face-text[data-tone="lo"]{fill:var(--anatomy-lo)}
+.iso-face-text[data-tone="faint"]{fill:var(--anatomy-faint)}
+.tb-body{fill:var(--anatomy-shade-2);stroke:none}
+.tb-shine{fill:var(--anatomy-top);stroke:none}
+.tb-shade{fill:var(--anatomy-shade-0);stroke:none}
+.tb-ring{fill:none;stroke:var(--anatomy-lo);stroke-width:.45;stroke-linecap:butt;stroke-linejoin:round}
+.tb-ring[data-tone="mid"]{stroke:var(--anatomy-mid)}
+.tb-ring[data-tone="faint"]{stroke:var(--anatomy-faint)}
+.tb-ring[data-tone="hi"]{stroke:var(--anatomy-hi)}
+@keyframes iso-flow{to{stroke-dashoffset:-32}}
+@keyframes iso-pulse{0%,100%{opacity:.18}12%{opacity:1}40%{opacity:.18}}
+.iso-line[data-flow]{animation:iso-flow 1600ms linear infinite}
+.iso-dots circle[data-pulse]{animation:iso-pulse 1600ms steps(1,end) infinite;animation-delay:var(--pulse-at,0ms)}
+.iso-figure{margin:32px 0 36px}
+.iso-plate{position:relative;padding:52px 24px;border-radius:0;background:var(--anatomy-card);box-shadow:0 0 0 1px var(--anatomy-mid);--anatomy-paper:var(--anatomy-card)}
+.iso-plate-corners{position:absolute;inset:18px 20px;pointer-events:none}
+.iso-plate-corner{position:absolute;color:var(--anatomy-muted);font-family:var(--anatomy-mono);font-size:10.5px;line-height:1;letter-spacing:.04em;white-space:nowrap}
+.iso-plate-corner[data-corner="fig"]{top:0;left:0;color:var(--anatomy-text)}
+.iso-plate-corner[data-corner="title"]{top:0;right:0;text-transform:uppercase;letter-spacing:.1em}
+.iso-plate-corner[data-corner="hint"]{bottom:0;left:0;text-transform:uppercase;letter-spacing:.1em}
+.iso-plate-corner[data-corner="readout"]{right:0;bottom:0;color:var(--anatomy-text);font-variant-numeric:tabular-nums}
+.iso-plate .iso-svg{margin:0 auto}
+.iso-legend{display:grid;gap:8px;margin-top:12px;color:var(--anatomy-muted);font-size:13px;line-height:1.55}
+.iso-keys{display:flex;flex-wrap:wrap;gap:6px 18px}
+.iso-key{display:inline-flex;align-items:center;gap:7px}
+.iso-swatch{width:16px;height:10px;flex:none;overflow:visible}
+.iso-swatch path{fill:none;stroke:var(--anatomy-hi);stroke-width:1;vector-effect:non-scaling-stroke;stroke-linejoin:round;stroke-linecap:round}
+.iso-swatch[data-mark="raised"] path,.iso-swatch[data-mark="flat"] path{stroke:var(--anatomy-mid)}
+.iso-swatch[data-mark="lit"] path{stroke:var(--anatomy-lit)}
+.iso-swatch[data-mark="dim"] path{stroke:var(--anatomy-lo)}
+.iso-swatch[data-mark="dotted"] path{stroke-dasharray:.01 3;stroke-width:1.4}
+.iso-swatch[data-mark="dashed"] path{stroke-dasharray:3 2.5}
+.iso-swatch[data-mark="red"] path{stroke:var(--anatomy-red)}
+.iso-swatch[data-mark="green"] path{stroke:var(--anatomy-green)}
+.iso-swatch[data-mark="blue"] path{stroke:var(--anatomy-blue)}
+.iso-swatch-crease{stroke:var(--anatomy-lo)!important}
+@media (max-width:560px){.iso-plate{padding:48px 12px 70px}.iso-plate-corner[data-corner="hint"]{bottom:18px}}
+@media (prefers-reduced-motion:reduce){.iso-line[data-flow],.iso-dots circle[data-pulse]{animation:none}}
+`;
+
+{ // the figure's own scope, so nothing collides with the inlined kit
+const D = {"P":{"origin":[350,378.9627108916801],"scale":0.31886434193267815,"azimuth":40,"elevation":24},"KS":0.40333503404719984,"W":700,"H":500,"MODEL":{"mass":32.5,"dof":12,"pairs":5,"speed":1.6,"runtime":90,"payload":14},"BRAND":{"name":"Spot","heading":"Spot机器人","maker":"Boston Dynamics","wordmark":"BOSTON DYNAMICS","badge":"SPOT","logo":"M8 22H32A13 13 0 0 1 32 48H34A15 15 0 0 1 34 78H8ZM19 31H31A4 4 0 0 1 31 39H19ZM19 56H33A7 7 0 0 1 33 70H19ZM55 22H70A24 28 0 0 1 70 78H55ZM66 33H70A13 17 0 0 1 70 67H66Z"},"SHADOW":[-0.06,0.17],"FLOOR_T":10,"AZ":40,"EL":24,"YAW":-22,"FLOOR_HALF":1500};
+// Shared runtime for the figures, inlined after the kit (iso, ring, lineOnTop, translateAlong exist).
+// A figure's live.js defines its state, UPDATE and draw, then calls tour({...}).
+
+const P = D.P;
+const svg = document.querySelector(".stage svg");
+const part = (name) => svg.querySelector(`[data-part="${name}"]`);
+const slot = (name) => svg.querySelector(`[data-slot="${name}"]`);
+const chip = (name) => document.querySelector(`[data-chip="${name}"]`);
+const chipHot = (name, on) => document.querySelector(`[data-chipbox="${name}"]`)?.toggleAttribute("data-hot", !!on);
+const still = matchMedia("(prefers-reduced-motion: reduce)");
+const f1 = (n) => Math.round(n * 10) / 10;
+const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+const ease = (x) => { const t = clamp(x); return t * t * (3 - 2 * t); };
+const seg = (u, a, b) => clamp((u - a) / (b - a));
+const lerp = (a, b, t) => a + (b - a) * t;
+const lerp3 = (a, b, t) => a.map((v, i) => lerp(v, b[i], t));
+const pathOf = (pts, close = true) => (pts.length ? "M" + pts.map((p) => f1(p[0]) + " " + f1(p[1])).join("L") + (close ? "Z" : "") : "");
+const at = (p) => iso(p, P);
+const toward = towardViewer(P);
+function hull(points) {
+  const pts = [...points].sort((a, b) => a[0] - b[0] || a[1] - b[1]);
+  if (pts.length < 3) return pts;
+  const cross = (o, a, b) => (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0]);
+  const lo = [];
+  for (const p of pts) { while (lo.length >= 2 && cross(lo[lo.length - 2], lo[lo.length - 1], p) <= 0) lo.pop(); lo.push(p); }
+  const hi = [];
+  for (const p of pts.reverse()) { while (hi.length >= 2 && cross(hi[hi.length - 2], hi[hi.length - 1], p) <= 0) hi.pop(); hi.push(p); }
+  return lo.slice(0, -1).concat(hi.slice(0, -1));
+}
+const circle3 = (cx, cy, r, z, n = 36) => Array.from({ length: n }, (_, i) => { const a = (i / n) * Math.PI * 2; return [cx + r * Math.cos(a), cy + r * Math.sin(a), z]; });
+const cylPath = (cx, cy, r, z0, z1, n = 36) => pathOf(hull([...circle3(cx, cy, r, z0, n), ...circle3(cx, cy, r, z1, n)].map(at)));
+const discPath = (cx, cy, r, z, n = 44) => pathOf(circle3(cx, cy, r, z, n).map(at));
+// a circle in a vertical plane: axis "x" means the circle lies in the plane x = c[0]
+const vcircle = (c, r, axis = "x", n = 36) => Array.from({ length: n }, (_, i) => { const a = (i / n) * Math.PI * 2; return axis === "x" ? [c[0], c[1] + r * Math.cos(a), c[2] + r * Math.sin(a)] : [c[0] + r * Math.cos(a), c[1], c[2] + r * Math.sin(a)]; });
+// a straight rod between two world points, as a screen quad with round ends; r in world units
+function rodPath(a, b, r) {
+  const A = at(a), B = at(b), KS = D.KS;
+  const dx = B[0] - A[0], dy = B[1] - A[1], len = Math.hypot(dx, dy) || 1;
+  const nx = (-dy / len) * r * KS, ny = (dx / len) * r * KS, R = r * KS;
+  return `M${f1(A[0] + nx)} ${f1(A[1] + ny)}L${f1(B[0] + nx)} ${f1(B[1] + ny)}A${f1(R)} ${f1(R)} 0 0 1 ${f1(B[0] - nx)} ${f1(B[1] - ny)}L${f1(A[0] - nx)} ${f1(A[1] - ny)}A${f1(R)} ${f1(R)} 0 0 1 ${f1(A[0] + nx)} ${f1(A[1] + ny)}Z`;
+}
+const mixHex = (a, b, t) => {
+  const h = (x) => [1, 3, 5].map((i) => parseInt(x.slice(i, i + 2), 16));
+  const A = h(a), B = h(b);
+  return "#" + A.map((v, i) => Math.round(v + (B[i] - v) * t).toString(16).padStart(2, "0")).join("");
+};
+const along = (pts, u) => {
+  const n = pts.length - 1;
+  const x = clamp(u) * n;
+  const i = Math.min(n - 1, Math.floor(x));
+  return lerp3(pts[i], pts[i + 1], ease(x - i));
+};
+const lapseEl = document.querySelector("[data-lapse]");
+function setLapse(text) {
+  if (text) { if (lapseEl.textContent !== text) lapseEl.textContent = text; lapseEl.setAttribute("data-on", ""); } else lapseEl.removeAttribute("data-on");
+}
+const soundsG = part("sounds");
+function setWord(w) {
+  if (!w) { if (soundsG.firstChild) soundsG.textContent = ""; return; }
+  const [x, y] = at(w.p);
+  let t = soundsG.querySelector("text");
+  if (!t) { t = document.createElementNS("http://www.w3.org/2000/svg", "text"); t.setAttribute("class", "word"); soundsG.appendChild(t); }
+  if (t.textContent !== w.text) t.textContent = w.text;
+  t.setAttribute("x", f1(x)); t.setAttribute("y", f1(y));
+  t.setAttribute("font-size", w.size || 15);
+}
+const setText = (el, text) => { if (el && el.textContent !== text) el.textContent = text; };
+
+// Steps, buttons, the idle tour, the drawn cursor and window.seek(t) for frame-exact recording.
+function tour({ STEPS, ORDER, update, reset, onBegin = () => {}, onFinish = () => {}, draw, paint, probe = () => null, gap = 0.7, lead = 0.2, tail = 1.0 }) {
+  const buttons = [...document.querySelectorAll("[data-step]")];
+  const hintEl = document.querySelector("[data-hint]");
+  const INTRO = hintEl.textContent;
+  let next = 0, run = null, idle = 0, last = 0, auto = true;
+  const setButtons = () => buttons.forEach((b, i) => {
+    b.disabled = !!run || i !== next;
+    b.toggleAttribute("data-on", !!run && ORDER[i] === run.id);
+    b.toggleAttribute("data-done", !run && i < next && next !== 0);
+  });
+  const begin = (id) => { run = { id, t: 0 }; onBegin(id); hintEl.textContent = STEPS[id].hint; };
+  const finish = () => { const id = run.id; update(id, 1); onFinish(id); run = null; next = (next + 1) % ORDER.length; idle = 0; setButtons(); };
+  const start = (id) => { if (run || ORDER[next] !== id) return; begin(id); setButtons(); if (still.matches) finish(); };
+  // two modes: Auto runs the steps on a loop, Manual waits for the visitor to press each one in order
+  const modeEls = [...document.querySelectorAll("[data-mode]")];
+  const INTRO_MANUAL = INTRO.split(/(?<=[.?!])\s+/)[0] + " 按顺序点击步骤。";
+  const setAuto = (on, save = true) => {
+    auto = on;
+    idle = 0;
+    document.body.classList.toggle("manual", !on);
+    modeEls.forEach((m) => m.setAttribute("aria-checked", String((m.dataset.mode === "auto") === on)));
+    if (save) try { localStorage.setItem("fig-mode2", on ? "auto" : "manual"); } catch {}
+  };
+  const restart = () => { reset(); run = null; next = 0; hintEl.textContent = auto ? INTRO : INTRO_MANUAL; idle = 0; setButtons(); };
+  modeEls.forEach((m) => m.addEventListener("click", () => {
+    const on = m.dataset.mode === "auto";
+    if (on === auto) return;
+    setAuto(on);
+    // Manual starts the visitor from step 1; Auto picks up from wherever the machine stands
+    if (!on) restart(); else idle = gap;
+  }));
+  buttons.forEach((b) => b.addEventListener("click", () => { if (auto) setAuto(false); start(b.dataset.step); }));
+  // a press on a step that is still greyed out also switches to Manual once the running step ends
+  document.querySelector(".steps")?.addEventListener("pointerdown", () => { if (auto) setAuto(false); });
+  document.querySelector("[data-restart]")?.addEventListener("click", restart);
+  document.addEventListener("keydown", (e) => {
+    if (e.target.closest?.("button,input,a,select,textarea")) return;
+    if (e.key === " " || e.key === "Enter") { e.preventDefault(); setAuto(false); start(ORDER[next]); }
+  });
+  function tick(now) {
+    const dt = last ? Math.min((now - last) / 1000, 1 / 20) : 1 / 60;
+    last = now;
+    if (run) { run.t += dt; const u = run.t / STEPS[run.id].dur; update(run.id, Math.min(1, u)); if (u >= 1) finish(); }
+    else if (auto && !still.matches) { idle += dt; if (idle > gap) start(ORDER[next]); }
+    draw(now / 1000);
+    requestAnimationFrame(tick);
+  }
+  const PLAN = [];
+  { let t = lead; for (const id of ORDER) { t += gap; PLAN.push({ id, t0: t, t1: t + STEPS[id].dur }); t += STEPS[id].dur; } }
+  const TOTAL = PLAN[PLAN.length - 1].t1 + tail;
+  const cursor = document.createElement("div");
+  cursor.className = "cursor";
+  cursor.innerHTML = '<svg viewBox="0 0 24 24" width="28" height="28"><path d="M3 2l15.5 9.2-6.6 1.5 3.4 7.4-3.1 1.4-3.3-7.4L3 18.6z" fill="#fff" stroke="#23263a" stroke-width="1.6" stroke-linejoin="round"/></svg>';
+  const aim = (i) => { const r = buttons[i].getBoundingClientRect(); return [r.left + r.width * 0.62, r.top + r.height * 0.55]; };
+  const restPoint = () => { const r = document.querySelector(".stage").getBoundingClientRect(); return [r.left + r.width * 0.55, r.top + r.height * 0.62]; };
+  function placeCursor(time) {
+    let from = restPoint(), to = from, u = 0, press = -1;
+    for (let i = 0; i < PLAN.length; i++) {
+      const p = PLAN[i];
+      const leave = i ? PLAN[i - 1].t1 - 0.35 : 0.05, arrive = p.t0 - 0.16;
+      if (time < leave) break;
+      from = i ? aim(i - 1) : restPoint();
+      to = aim(i);
+      u = ease((time - leave) / (arrive - leave));
+      if (time > p.t0 - 0.12 && time < p.t0 + 0.08) press = i;
+    }
+    const x = lerp(from[0], to[0], u) + Math.sin(u * Math.PI) * 18, y = lerp(from[1], to[1], u) - Math.sin(u * Math.PI) * 10;
+    cursor.style.transform = `translate(${f1(x - 3.3)}px, ${f1(y - 2.2)}px) scale(${press >= 0 ? 0.86 : 1})`;
+    buttons.forEach((b, i) => b.toggleAttribute("data-press", i === press));
+  }
+  function seekTo(time) {
+    reset();
+    run = null;
+    next = 0;
+    hintEl.textContent = INTRO;
+    for (const p of PLAN) {
+      if (time < p.t0) break;
+      begin(p.id);
+      if (time >= p.t1) { run.t = STEPS[p.id].dur; finish(); continue; }
+      run.t = time - p.t0;
+      update(p.id, run.t / STEPS[p.id].dur);
+      break;
+    }
+    setButtons();
+    draw(time);
+    placeCursor(time);
+  }
+  // colour swatches
+  document.querySelectorAll("[data-swatch]").forEach((sw) => sw.addEventListener("click", () => {
+    document.querySelectorAll("[data-swatch]").forEach((o) => o.toggleAttribute("data-on", o === sw));
+    paintBody(sw.dataset.swatch);
+  }));
+  function paintBody(c) {
+    const t = (x) => ({ f: x, t: mixHex(x, "#ffffff", 0.42), s3: mixHex(x, "#ffffff", 0.18), s1: mixHex(x, "#1b1d2c", 0.13), s0: mixHex(x, "#1b1d2c", 0.26) });
+    const set = (name, x) => { const v = t(x); const s = document.body.style; s.setProperty(`--${name}`, v.f); s.setProperty(`--${name}-t`, v.t); s.setProperty(`--${name}-3`, v.s3); s.setProperty(`--${name}-1`, v.s1); s.setProperty(`--${name}-0`, v.s0); };
+    set("body", c);
+    set("alt", paint ? paint(c) : c);
+  }
+  paintBody(document.querySelector("[data-swatch]").dataset.swatch);
+  reset();
+  setButtons();
+  draw(0);
+  // probe() hands the figure state to tools outside the page (videos/_kit/timeline.mjs samples it for the score)
+  window.__fig = { start, seek: seekTo, total: TOTAL, plan: PLAN, get state() { return probe(); } };
+  if (location.search.includes("render")) {
+    document.body.classList.add("render");
+    document.body.appendChild(cursor);
+    window.DURATION = TOTAL;
+    window.seek = seekTo;
+    seekTo(0);
+  } else {
+    // Manual is the default; Auto only when the visitor picked it on an earlier page
+    let saved = null;
+    try { saved = localStorage.getItem("fig-mode2"); } catch {}
+    // ?auto in the address starts the tour by itself (pages shown side by side), without touching the saved choice
+    setAuto(/[?&]auto\b/.test(location.search) || saved === "auto", false);
+    hintEl.textContent = auto ? INTRO : INTRO_MANUAL;
+    requestAnimationFrame(tick);
+  }
+}
+
+// Live code for the robot. Runs inside the figure scope after _kit/runtime.js.
+// The robot is real 3D: every part is a solid built once in its own frame (the body's parts in the robot's frame:
+// x forward, y to its left, z up from the floor; a leg segment in the frame of its joint), placed every frame by its
+// chain of poses (the robot, the panels, the hip roll, the hip pitch, the knee, the explode, the fall), culled, shaded
+// by facing with a specular term (glossy yellow panels, satin black joints, matte rubber), and painted back to front
+// in groups: the legs on the far side of the body, the body, the legs on the near side, each leg inboard to outboard.
+// Walking and climbing, every foot is planned first in the floor's frame and the legs are solved with 2-link IK to
+// reach it, so a planted foot never slides. Flat print (the wordmark, the cameras, the labels) lives on a part's face
+// and is placed every frame by that plane's 2 × 2 screen matrix. Every frame is a pure function of (S.step, S.u), so
+// window.seek(t) lands on the same picture.
+const M = D.MODEL;
+const BRAND = D.BRAND;
+const FT = D.FLOOR_T;
+const DEG = Math.PI / 180;
+const TAU = Math.PI * 2;
+
+// ---------------------------------------------------------------- vectors, matrices and the camera
+const add3 = (a, b) => [a[0] + b[0], a[1] + b[1], a[2] + b[2]];
+const sub3 = (a, b) => [a[0] - b[0], a[1] - b[1], a[2] - b[2]];
+const mul3 = (a, s) => [a[0] * s, a[1] * s, a[2] * s];
+const dot3 = (a, b) => a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
+const cross3 = (a, b) => [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]];
+const unit3 = (a) => { const l = Math.hypot(a[0], a[1], a[2]) || 1; return [a[0] / l, a[1] / l, a[2] / l]; };
+const I3 = [1, 0, 0, 0, 1, 0, 0, 0, 1];
+const mm = (a, b) => [0, 1, 2].flatMap((r) => [0, 1, 2].map((c) => a[r * 3] * b[c] + a[r * 3 + 1] * b[3 + c] + a[r * 3 + 2] * b[6 + c]));
+const mv = (a, v) => [a[0] * v[0] + a[1] * v[1] + a[2] * v[2], a[3] * v[0] + a[4] * v[1] + a[5] * v[2], a[6] * v[0] + a[7] * v[1] + a[8] * v[2]];
+// the transpose times v: a world direction read in a part's own frame
+const mtv = (a, v) => [a[0] * v[0] + a[3] * v[1] + a[6] * v[2], a[1] * v[0] + a[4] * v[1] + a[7] * v[2], a[2] * v[0] + a[5] * v[1] + a[8] * v[2]];
+function rotAxis(n, th) {
+  const c = Math.cos(th), s = Math.sin(th), t = 1 - c, [x, y, z] = n;
+  return [t * x * x + c, t * x * y - s * z, t * x * z + s * y, t * x * y + s * z, t * y * y + c, t * y * z - s * x, t * x * z - s * y, t * y * z + s * x, t * z * z + c];
+}
+const Rz = (deg) => rotAxis([0, 0, 1], deg * DEG);
+const Rx = (deg) => rotAxis([1, 0, 0], deg * DEG);
+const Ry = (deg) => rotAxis([0, 1, 0], deg * DEG);
+// a rigid pose: p → M p + t
+const TF = (M = I3, t = [0, 0, 0]) => ({ M, t });
+const cmp = (a, b) => ({ M: mm(a.M, b.M), t: add3(mv(a.M, b.t), a.t) });
+const tr = (x, y, z) => TF(I3, [x, y, z]);
+const ap = (tf, p) => add3(mv(tf.M, p), tf.t);
+const about = (c, R) => cmp(tr(c[0], c[1], c[2]), cmp(TF(R), tr(-c[0], -c[1], -c[2])));
+
+const CAM = cameraOf(P);
+const SA = CAM.sinA, CA = CAM.cosA, SE = CAM.sinE, CE = CAM.cosE, KK = CAM.k, OX = P.origin[0], OY = P.origin[1];
+const pr = (p) => [OX + (p[0] * SA - p[1] * CA) * KK, OY + ((p[0] * CA + p[1] * SA) * SE - p[2] * CE) * KK];
+const prv = (v) => [(v[0] * SA - v[1] * CA) * KK, ((v[0] * CA + v[1] * SA) * SE - v[2] * CE) * KK];
+const VIEW = [CA * CE, SA * CE, SE];
+const LIGHT = unit3([-SA, CA, 1.25]);
+const HALF = unit3(add3(LIGHT, VIEW));
+const depth = (p) => dot3(p, VIEW);
+const r2 = (n) => Math.round(n * 100) / 100;
+const r3 = (n) => Math.round(n * 1000) / 1000;
+const P2 = (p) => r2(p[0]) + " " + r2(p[1]);
+const dPath = (pts) => { let s = "M" + P2(pts[0]); for (let i = 1; i < pts.length; i++) s += "L" + P2(pts[i]); return s + "Z"; };
+const dOpen = (pts) => { let s = "M" + P2(pts[0]); for (let i = 1; i < pts.length; i++) s += "L" + P2(pts[i]); return s; };
+const loc = (pts, close = true) => "M" + pts.map((p) => r3(p[0]) + " " + r3(p[1])).join("L") + (close ? "Z" : "");
+const smoother = (x) => { const t = clamp(x); return t * t * t * (t * (t * 6 - 15) + 10); };
+const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
+// ---------------------------------------------------------------- colours: diffuse toward a lit and a shade tone of
+// the material's own (a warm brown under the yellow, never a blue), a specular glint, dimmed toward the paper
+const rgbOf = (h) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16));
+const hexOf = (c) => "#" + c.map((v) => Math.round(Math.max(0, Math.min(255, v))).toString(16).padStart(2, "0")).join("");
+const mixc = (a, b, t) => a.map((x, i) => x + (b[i] - x) * t);
+const WHITE = [255, 255, 255], PAPER = rgbOf("#f5f0e5");
+const MATS = {
+  yellow: { c: "#f4c01c", lit: "#fff4c4", dark: "#a8700a", hi: 0.5, lo: 0.62, spec: 0.92, pw: 46 }, // the panels, glossy
+  black: { c: "#2e3038", lit: "#8b909d", dark: "#121318", hi: 0.34, lo: 0.55, spec: 0.22, pw: 12 }, // the chassis, matte
+  satin: { c: "#32343d", lit: "#959aa7", dark: "#121318", hi: 0.36, lo: 0.55, spec: 0.5, pw: 20 }, // the actuator covers
+  trayIn: { c: "#202128", lit: "#4c4f5a", dark: "#0e0f13", hi: 0.3, lo: 0.4 },
+  rubber: { c: "#3c3e45", lit: "#6c6f79", dark: "#17181c", hi: 0.3, lo: 0.55, spec: 0.07, pw: 6 },
+  steel: { c: "#b4bac4", lit: "#ffffff", dark: "#545a65", hi: 0.55, lo: 0.55, spec: 0.85, pw: 26 },
+  alu: { c: "#c2c7cf", lit: "#ffffff", dark: "#626874", hi: 0.5, lo: 0.5, spec: 0.55, pw: 16 },
+  motor: { c: "#9aa1ac", lit: "#ffffff", dark: "#454a54", hi: 0.5, lo: 0.55, spec: 0.75, pw: 24 }, // the roll motors' bodies
+  battery: { c: "#43464f", lit: "#a1a6b2", dark: "#16171c", hi: 0.36, lo: 0.5, spec: 0.3, pw: 14 },
+  pcb: { c: "#2e6a51", lit: "#5fa384", dark: "#173828", hi: 0.3, lo: 0.4 },
+  step: { c: "#d9d1c1", lit: "#f6f1e6", dark: "#8c8373", hi: 0.45, lo: 0.5, spec: 0.06, pw: 8 }, // the step block
+};
+for (const m of Object.values(MATS)) { m.rgb = rgbOf(m.c); m.L = rgbOf(m.lit); m.Dk = rgbOf(m.dark); }
+const shadeCache = new Map();
+function shade(mat, n, dim = 0) {
+  const m = MATS[mat];
+  const q = Math.round(dot3(n, LIGHT) * 120) / 120;
+  const sp = m.spec ? Math.round(Math.max(0, dot3(n, HALF)) ** m.pw * 60) / 60 : 0;
+  const dn = Math.round(Math.max(0, -n[2]) * 10) / 10;
+  const dq = Math.round(dim * 20) / 20;
+  const key = mat + q + "|" + sp + "|" + dn + "|" + dq;
+  let v = shadeCache.get(key);
+  if (v) return v;
+  let c = q >= 0 ? mixc(m.rgb, m.L, m.hi * Math.min(1, q / 0.9) ** 1.3) : mixc(m.rgb, m.Dk, m.lo * Math.min(1, -q / 0.9) ** 0.85);
+  if (dn) c = mixc(c, m.Dk, 0.3 * dn);
+  if (sp) c = mixc(c, WHITE, sp * m.spec);
+  if (dq) c = mixc(c, PAPER, 0.64 * dq);
+  v = hexOf(c);
+  shadeCache.set(key, v);
+  return v;
+}
+const shadeHex = (h, dim) => (dim > 0.01 ? hexOf(mixc(rgbOf(h), PAPER, 0.64 * dim)) : h);
+
+// ---------------------------------------------------------------- solids, built once in their own frame
+// A solid: points, faces as index lists, outward normals (turned away from the solid's own centre; every solid here
+// is convex), face centres, and the creases (edges between faces that meet at a sharp angle) for the ink.
+function finish(v, f, mat, fm = null, refs = null) {
+  const c = mul3(v.reduce(add3, [0, 0, 0]), 1 / v.length);
+  const fc = f.map((ix) => mul3(ix.reduce((s, i) => add3(s, v[i]), [0, 0, 0]), 1 / ix.length));
+  const n = f.map((ix, k) => {
+    let nn = [0, 0, 0];
+    for (let i = 0; i < ix.length; i++) { const a = v[ix[i]], b = v[ix[(i + 1) % ix.length]]; nn = add3(nn, [(a[1] - b[1]) * (a[2] + b[2]), (a[2] - b[2]) * (a[0] + b[0]), (a[0] - b[0]) * (a[1] + b[1])]); }
+    nn = unit3(nn);
+    return dot3(nn, sub3(fc[k], refs ? refs[k] : c)) < 0 ? mul3(nn, -1) : nn;
+  });
+  const fmA = typeof fm === "function" ? n.map((nn, k) => fm(nn, fc[k]) || mat) : fm;
+  const em = new Map();
+  f.forEach((ix, k) => ix.forEach((a, i) => { const b = ix[(i + 1) % ix.length]; const key = a < b ? a + "_" + b : b + "_" + a; const e = em.get(key); if (e) e.push(k); else em.set(key, [k]); }));
+  const creases = [];
+  for (const [key, fs] of em) if (fs.length === 2 && dot3(n[fs[0]], n[fs[1]]) < Math.cos(40 * DEG)) { const [a, b] = key.split("_").map(Number); creases.push([a, b, fs[0], fs[1]]); }
+  return { v, f, n, fc, fm: fmA, mat, c, creases, refs };
+}
+const perpOf = (a) => { const h = Math.abs(a[2]) > 0.9 ? [1, 0, 0] : [0, 0, 1]; const u = unit3(cross3(h, a)); return [u, cross3(a, u)]; };
+function prism(o, a, u, w, poly, s0, s1, mat, fm) {
+  const v = [];
+  for (const s of [s0, s1]) for (const [x, y] of poly) v.push(add3(o, add3(mul3(a, s), add3(mul3(u, x), mul3(w, y)))));
+  const n = poly.length, f = [];
+  f.push([...Array(n).keys()]);
+  f.push([...Array(n).keys()].map((i) => n + i));
+  for (let i = 0; i < n; i++) f.push([i, (i + 1) % n, n + ((i + 1) % n), n + i]);
+  return finish(v, f, mat, fm);
+}
+const circlePoly = (r, n) => Array.from({ length: n }, (_, i) => [r * Math.cos((i / n) * TAU + Math.PI / n), r * Math.sin((i / n) * TAU + Math.PI / n)]);
+function rrPoly(w, h, r, per = 4) {
+  r = Math.min(r, w / 2, h / 2);
+  const out = [];
+  for (const [cx, cy, a0] of [[w / 2 - r, h / 2 - r, 0], [-(w / 2 - r), h / 2 - r, 90], [-(w / 2 - r), -(h / 2 - r), 180], [w / 2 - r, -(h / 2 - r), 270]])
+    for (let i = 0; i <= per; i++) { const a = (a0 + (90 * i) / per) * DEG; out.push([cx + r * Math.cos(a), cy + r * Math.sin(a)]); }
+  return out;
+}
+const cylinder = (c, a, r, s0, s1, mat, n = 28) => { const [u, w] = perpOf(a); return prism(c, a, u, w, circlePoly(r, n), s0, s1, mat); };
+// (each face is turned away from the middle of the two rings it spans, so thin tapered plates come out right too)
+function loft(rings, mat, fm) {
+  const v = [], f = [], refs = [], m = rings[0].length;
+  rings.forEach((r) => v.push(...r));
+  const rc = rings.map((r) => mul3(r.reduce(add3, [0, 0, 0]), 1 / m));
+  const mid = mul3(rc.reduce(add3, [0, 0, 0]), 1 / rc.length);
+  for (let i = 0; i + 1 < rings.length; i++) for (let j = 0; j < m; j++) { const a = i * m + j, b = i * m + ((j + 1) % m); f.push([a, b, b + m, a + m]); refs.push(mul3(add3(rc[i], rc[i + 1]), 0.5)); }
+  f.push([...Array(m).keys()]);
+  f.push([...Array(m).keys()].map((j) => (rings.length - 1) * m + j));
+  refs.push(mid, mid);
+  return finish(v, f, mat, fm, refs);
+}
+// a turned solid: rings of radius r at stations s along axis a through c
+function lathe(c, a, prof, mat, n = 28) {
+  const [u, w] = perpOf(a);
+  return loft(prof.map(([s, r]) => circlePoly(r, n).map(([x, y]) => add3(c, add3(mul3(a, s), add3(mul3(u, x), mul3(w, y)))))), mat);
+}
+function chamferBox(cen, ax, h, b, mat, fm) {
+  const v = [], id = new Map();
+  const vid = (i, si, sj, sk) => id.get(`${i}${si}${sj}${sk}`);
+  for (let i = 0; i < 3; i++) {
+    const j = (i + 1) % 3, kx = (i + 2) % 3;
+    for (const si of [-1, 1]) for (const sj of [-1, 1]) for (const sk of [-1, 1]) {
+      id.set(`${i}${si}${sj}${sk}`, v.length);
+      v.push(add3(cen, add3(mul3(ax[i], si * h[i]), add3(mul3(ax[j], sj * (h[j] - b)), mul3(ax[kx], sk * (h[kx] - b))))));
+    }
+  }
+  const f = [];
+  for (let i = 0; i < 3; i++) for (const si of [-1, 1]) f.push([vid(i, si, -1, -1), vid(i, si, 1, -1), vid(i, si, 1, 1), vid(i, si, -1, 1)]);
+  for (let i = 0; i < 3; i++) {
+    const j = (i + 1) % 3;
+    for (const si of [-1, 1]) for (const sj of [-1, 1]) f.push([vid(i, si, sj, -1), vid(i, si, sj, 1), vid(j, sj, 1, si), vid(j, sj, -1, si)]);
+  }
+  for (const s0 of [-1, 1]) for (const s1 of [-1, 1]) for (const s2 of [-1, 1]) { const s = [s0, s1, s2]; f.push([0, 1, 2].map((i) => vid(i, s[i], s[(i + 1) % 3], s[(i + 2) % 3]))); }
+  return finish(v, f, mat, fm);
+}
+const AXES = [[1, 0, 0], [0, 1, 0], [0, 0, 1]];
+const box = (cen, h, b, mat, fm) => chamferBox(cen, AXES, h, b, mat, fm);
+const posed = (sol, tf) => finish(sol.v.map((p) => ap(tf, p)), sol.f, sol.mat, sol.fm, sol.refs && sol.refs.map((p) => ap(tf, p)));
+// the same solid mirrored across the robot's midplane (y → -y) or end to end (x → -x)
+const mirrored = (sol, sx, sy) => { if (sx === 1 && sy === 1) return sol; const m = ([x, y, z]) => [x * sx, y * sy, z]; return finish(sol.v.map(m), sol.f, sol.mat, sol.fm, sol.refs && sol.refs.map(m)); };
+// a slab of a convex outline outl(d) (in the plane (u, w), inset by d) between t0 and t1 along a, its edges rounded
+// by re in nb steps a side: the bevels catch the light the way a moulded part does
+function roundSlab(o, a, u, w, outl, t0, t1, re, mat, nb = 3) {
+  const ringAt = (t, d) => outl(d).map(([x, y]) => add3(o, add3(mul3(a, t), add3(mul3(u, x), mul3(w, y)))));
+  const rings = [];
+  for (let i = nb; i >= 0; i--) { const ph = (i / nb) * 90 * DEG; rings.push(ringAt(t0 + re * (1 - Math.sin(ph)), re * (1 - Math.cos(ph)))); }
+  for (let i = 0; i <= nb; i++) { const ph = (i / nb) * 90 * DEG; rings.push(ringAt(t1 - re * (1 - Math.sin(ph)), re * (1 - Math.cos(ph)))); }
+  return loft(rings, mat);
+}
+// a tapered stadium in (x, y): circle r1 at the origin, circle r2 at (0, -L), joined by their tangents, inset by d
+function stadium(r1, r2, L, d = 0, n1 = 18, n2 = 12) {
+  const b = Math.asin((r2 - r1) / L);
+  const out = [];
+  for (let i = 0; i <= n1; i++) { const a = b + ((Math.PI - 2 * b) * i) / n1; out.push([(r1 - d) * Math.cos(a), (r1 - d) * Math.sin(a)]); }
+  for (let i = 0; i <= n2; i++) { const a = Math.PI - b + ((Math.PI + 2 * b) * i) / n2; out.push([(r2 - d) * Math.cos(a), -L + (r2 - d) * Math.sin(a)]); }
+  return out;
+}
+// a convex polygon moved in by d (either winding)
+function offsetPoly(poly, d) {
+  if (!d) return poly;
+  const n = poly.length;
+  let A = 0;
+  for (let i = 0; i < n; i++) { const a = poly[i], b = poly[(i + 1) % n]; A += a[0] * b[1] - b[0] * a[1]; }
+  const s = A > 0 ? 1 : -1;
+  const lines = poly.map((a, i) => { const b = poly[(i + 1) % n]; const dx = b[0] - a[0], dy = b[1] - a[1], l = Math.hypot(dx, dy); return { p: [a[0] - (dy / l) * s * d, a[1] + (dx / l) * s * d], d: [dx / l, dy / l] }; });
+  return poly.map((_, i) => {
+    const L1 = lines[(i + n - 1) % n], L2 = lines[i];
+    const den = L1.d[0] * L2.d[1] - L1.d[1] * L2.d[0];
+    if (Math.abs(den) < 1e-9) return L2.p;
+    const t = ((L2.p[0] - L1.p[0]) * L2.d[1] - (L2.p[1] - L1.p[1]) * L2.d[0]) / den;
+    return [L1.p[0] + L1.d[0] * t, L1.p[1] + L1.d[1] * t];
+  });
+}
+
+// ---------------------------------------------------------------- flat print, drawn in a plane (mm, y up)
+const circPts = (cx, cy, r, n = 32) => Array.from({ length: n }, (_, i) => { const a = (i / n) * TAU; return [cx + r * Math.cos(a), cy + r * Math.sin(a)]; });
+const rrD = (cx, cy, w, h, r, per = 4) => loc(rrPoly(w, h, r, per).map(([x, y]) => [x + cx, y + cy]));
+const circD = (cx, cy, r, n = 32) => loc(circPts(cx, cy, r, n));
+const lineD = (pts) => loc(pts, false);
+const txt = (x, y, s, size, cls = "print", anchor = "middle", extra = "") => `<text class="${cls}" x="${r3(x)}" y="${r3(-y)}" font-size="${size}" text-anchor="${anchor}" transform="scale(1 -1)"${extra}>${esc(s)}</text>`;
+const rect = (x, y, w, h, cls, extra = "") => `<rect class="${cls}" x="${r3(x - w / 2)}" y="${r3(y - h / 2)}" width="${r3(w)}" height="${r3(h)}"${extra}/>`;
+const circle = (x, y, r, cls, extra = "") => `<circle class="${cls}" cx="${r3(x)}" cy="${r3(y)}" r="${r3(r)}"${extra}/>`;
+// the brand's logo, centred at (cx, cy), h tall (its 100-box), y up
+const logoAt = (cx, cy, h, cls) => { const k = h / 100; return `<g transform="matrix(${r3(k)} 0 0 ${r3(-k)} ${r3(cx - 50 * k)} ${r3(cy + 50 * k)})"><path d="${BRAND.logo}" class="${cls}"/></g>`; };
+let screwN = 0;
+// a cross-head screw (bright), or a socket-head cap screw (dark, on the black parts)
+function screwSvg(x, y, r = 2.2) {
+  const a = (31 + screwN++ * 67) * DEG, c = Math.cos(a) * r * 0.6, s = Math.sin(a) * r * 0.6;
+  return `<circle class="screw" cx="${r3(x)}" cy="${r3(y)}" r="${r}"/><path class="slot" d="M${r3(x - c)} ${r3(y - s)}L${r3(x + c)} ${r3(y + s)}M${r3(x + s)} ${r3(y - c)}L${r3(x - s)} ${r3(y + c)}"/>`;
+}
+function capScrew(x, y, r = 2.6) {
+  const a = (17 + screwN++ * 53) * DEG;
+  const hex = Array.from({ length: 6 }, (_, i) => [x + r * 0.5 * Math.cos(a + (i * TAU) / 6), y + r * 0.5 * Math.sin(a + (i * TAU) / 6)]);
+  return `<circle class="screw-d" cx="${r3(x)}" cy="${r3(y)}" r="${r}"/><path class="hole" d="${loc(hex)}"/>` + circle(x - r * 0.35, y + r * 0.4, r * 0.22, "hi");
+}
+// fine turning marks on a machined face, a bolt circle and a hub
+function turnedFace(r, bolts, rb, hub, logo = 0) {
+  let s = "";
+  for (let rr = hub + 2.4; rr < r - 1; rr += 2.6) s += `<circle class="turn" cx="0" cy="0" r="${r3(rr)}"/>`;
+  s += `<circle class="seam" cx="0" cy="0" r="${r3(r - 2.4)}"/>`;
+  for (let i = 0; i < bolts; i++) { const a = (i / bolts) * TAU + 0.3; s += capScrew(rb * Math.cos(a), rb * Math.sin(a), 2.6); }
+  s += circle(0, 0, hub, "screw-d") + `<circle class="turn" cx="0" cy="0" r="${r3(hub * 0.7)}"/>`;
+  if (logo) s += logoAt(0, 0, logo, "logo-gr");
+  return s;
+}
+function rng(seed) { let a = seed >>> 0; return () => { a = (a + 0x6d2b79f5) >>> 0; let t = a; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
+// a plane in a part's frame: origin o, in-plane axes u (print's x) and v (print's y), outward normal n
+const plane = (o, u, v, n, svg) => ({ o, u, v, n, svg });
+// a stereo camera pair: a bezel, the glass, the two lenses, the projector between them; w × h, turned rot degrees
+function camWin(w, h, rot = 0) {
+  let s = `<g transform="rotate(${rot})"><path class="bezel" d="${rrD(0, 0, w + 7, h + 7, h / 2 + 3.5, 6)}"/>`;
+  s += `<path class="glass" d="${rrD(0, 0, w, h, h / 2, 6)}" fill="url(#sp-glass)"/>`;
+  for (const sx of [-1, 1]) {
+    const x = sx * (w / 2 - h / 2);
+    s += circle(x, 0, h * 0.36, "lens") + circle(x, 0, h * 0.24, "lens2") + circle(x, 0, h * 0.12, "lens3") + circle(x - h * 0.1, h * 0.1, h * 0.065, "glint");
+  }
+  s += circle(0, 0, h * 0.14, "ir") + circle(0, 0, h * 0.05, "glint2");
+  s += `<path class="glint2" d="${rrD(-w * 0.12, h * 0.3, w * 0.36, h * 0.09, h * 0.045)}"/>`;
+  return s + "</g>";
+}
+
+// ---------------------------------------------------------------- painting one part
+// faces that look at us (sorted among themselves), the creases, the texture, the marks on curved surfaces, the
+// print, the glints, then the outline (the hull of its corners) and its highlight
+function lines3(Ln, tf) {
+  const S = Ln.pts.map((p) => pr(ap(tf, p)));
+  const vis = Ln.pts.map((_, i) => dot3(mv(tf.M, Ln.ns ? Ln.ns[i] : Ln.n), VIEW) > 0.04);
+  const n = S.length, m = Ln.closed ? n : n - 1;
+  let d = "", open = false;
+  for (let i = 0; i < m; i++) {
+    const j = (i + 1) % n;
+    if (vis[i] && vis[j]) { d += (open ? "" : "M" + P2(S[i])) + "L" + P2(S[j]); open = true; } else open = false;
+  }
+  return d ? `<path class="${Ln.cls}" d="${d}"/>` : "";
+}
+function decalSvg(dc, tf) {
+  if (dot3(mv(tf.M, dc.n), VIEW) <= 0.02) return "";
+  const U = prv(mv(tf.M, dc.u)), V = prv(mv(tf.M, dc.v)), O = pr(ap(tf, dc.o));
+  return `<g transform="matrix(${r3(U[0])} ${r3(U[1])} ${r3(V[0])} ${r3(V[1])} ${r2(O[0])} ${r2(O[1])})">${typeof dc.svg === "function" ? dc.svg() : dc.svg}</g>`;
+}
+function partSvg(pt, tf, dim, hl) {
+  let s = "";
+  const all = [];
+  for (const m of pt.meshes) {
+    const sc = m.v.map((p) => pr(ap(tf, p)));
+    all.push(...sc);
+    const nw = m.n.map((nn) => mv(tf.M, nn));
+    const vis = nw.map((nn) => dot3(nn, VIEW) > 1e-4);
+    const order = [];
+    for (let i = 0; i < m.f.length; i++) if (vis[i]) order.push([depth(ap(tf, m.fc[i])), i]);
+    order.sort((a, b) => a[0] - b[0]);
+    for (const [, i] of order) {
+      const col = shade(m.fm ? m.fm[i] : m.mat, nw[i], dim);
+      s += `<path class="f" d="${dPath(m.f[i].map((j) => sc[j]))}" fill="${col}" stroke="${col}"/>`;
+    }
+    if (pt.crease !== false) {
+      let d = "";
+      for (const [a, b, f1, f2] of m.creases) if (vis[f1] && vis[f2]) d += `M${P2(sc[a])}L${P2(sc[b])}`;
+      if (d) s += `<path class="cr" d="${d}"/>`;
+    }
+  }
+  const hullD = dPath(hull(all));
+  if (pt.tex && dim < 0.98) s += `<path class="grain" d="${hullD}" fill="url(#sp-grain)" style="opacity:${r3(pt.tex * (1 - dim))}"/><path d="${hullD}" fill="url(#sp-matte)" stroke="none" style="opacity:${r3(1 - dim)}"/>`;
+  if (pt.sheen) s += pt.sheen(tf, dim);
+  if (pt.lines) for (const Ln of pt.lines) s += lines3(Ln, tf);
+  let deco = "";
+  if (pt.decals) for (const dc of pt.decals) deco += decalSvg(dc, tf);
+  if (pt.gloss && dim < 0.97) deco += pt.gloss(tf, dim);
+  const glow = hl > 0.01 ? `<path class="hl-glow" d="${hullD}" stroke="#ff9d3a" stroke-width="13" filter="url(#sp-glow)" style="opacity:${r3(hl * 0.95)}"/>` : "";
+  const ol = pt.outline === false ? "" : `<path class="${pt.outline || "ol"}" d="${hullD}"/>`;
+  const rim = hl > 0.01 ? `<path class="hl-rim" d="${hullD}" stroke="#e5583e" stroke-width="2.4" style="opacity:${r3(hl)}"/>` : "";
+  const after = deco + ol;
+  return { s: glow + s + (dim > 0.01 ? `<g style="opacity:${r3(1 - 0.55 * dim)}">${after}</g>` : after) + rim, pts: all };
+}
+
+// a cable as a tube on the screen: its ink, its colour, a lit line along it; r in mm
+function tubeSvg(world, r, col, dim = 0) {
+  const S = world.map(pr);
+  const R = r * KK;
+  const L = [], Rr = [];
+  for (let i = 0; i < S.length; i++) {
+    const a = S[Math.max(0, i - 1)], b = S[Math.min(S.length - 1, i + 1)];
+    const dx = b[0] - a[0], dy = b[1] - a[1], l = Math.hypot(dx, dy) || 1;
+    const nx = -dy / l, ny = dx / l;
+    L.push([S[i][0] + nx * R, S[i][1] + ny * R]);
+    Rr.push([S[i][0] - nx * R, S[i][1] - ny * R]);
+  }
+  // the lit side is the one toward the screen's upper left
+  const lit = S.map((p, i) => { const k = (L[i][0] - p[0]) * -0.6 + (L[i][1] - p[1]) * -0.8 > 0 ? L[i] : Rr[i]; return [p[0] + (k[0] - p[0]) * 0.45, p[1] + (k[1] - p[1]) * 0.45]; });
+  return `<path d="${dPath([...L, ...Rr.reverse()])}" fill="${shadeHex(col, dim)}" stroke="#23263a" stroke-width=".8"/><path class="lite" d="${dOpen(lit)}" style="opacity:${r3(0.4 * (1 - dim))}"/>`;
+}
+function smooth3(pts, n = 6) {
+  const out = [];
+  for (let i = 0; i + 1 < pts.length; i++) {
+    const p0 = pts[Math.max(0, i - 1)], p1 = pts[i], p2 = pts[i + 1], p3 = pts[Math.min(pts.length - 1, i + 2)];
+    for (let k = 0; k < n; k++) { const t = k / n, t2 = t * t, t3 = t2 * t; out.push([0, 1, 2].map((c) => 0.5 * (2 * p1[c] + (-p0[c] + p2[c]) * t + (2 * p0[c] - 5 * p1[c] + 4 * p2[c] - p3[c]) * t2 + (-p0[c] + 3 * p1[c] - 3 * p2[c] + p3[c]) * t3))); }
+  }
+  out.push(pts[pts.length - 1]);
+  return out;
+}
+
+const PARTS = [];
+const mk = (o) => { const p = { bias: 0, ...o }; p.c = p.c || mul3(p.meshes.reduce((s, m) => add3(s, m.c), [0, 0, 0]), 1 / p.meshes.length); PARTS.push(p); return p; };
+
+// ================================================================= THE BODY
+// Heights: the belly's bottom, the belly's top (where the side panels start), the side panels' top (where the top
+// panel starts). The body is long and shallow, about a sixth as deep as it is long. Stations along x: x, half width,
+// top; the top panel rises in one long, gentle arch and rounds down into its nose and its tail.
+const ZB0 = 446, ZB1 = 500, ZS1 = 566, PT = 4.5;
+const ST = [[-482, 98, 590], [-478, 106, 600], [-471, 112, 608], [-460, 117, 614], [-444, 120.5, 618], [-422, 122, 619.2],
+  [-300, 122, 620.6], [-150, 122, 621.6], [0, 122, 622], [150, 122, 621.6], [300, 122, 620.6],
+  [412, 122, 619.2], [434, 120.5, 618], [450, 117, 614], [461, 112, 608], [468, 106, 600], [472, 98, 590]];
+// the side panels' own stations (x, half width): they stop where the head and the tail take over
+const SST = [[-462, 114], [-454, 119.5], [-438, 122], [428, 122], [444, 119.5], [452, 114]];
+const NA = 14;
+function topRing([x, w, zt]) {
+  const R = zt - ZS1, out = [];
+  for (let i = 0; i <= NA; i++) { const a = (180 - (90 * i) / NA) * DEG; out.push([x, -w + R + R * Math.cos(a), zt - R + R * Math.sin(a)]); }
+  for (let i = 0; i <= NA; i++) { const a = (90 - (90 * i) / NA) * DEG; out.push([x, w - R + R * Math.cos(a), zt - R + R * Math.sin(a)]); }
+  return out;
+}
+function stationAt(x) {
+  for (let i = 0; i + 1 < ST.length; i++) if (x <= ST[i + 1][0]) { const t = (x - ST[i][0]) / (ST[i + 1][0] - ST[i][0]); return [x, lerp(ST[i][1], ST[i + 1][1], t), lerp(ST[i][2], ST[i + 1][2], t)]; }
+  return ST[ST.length - 1];
+}
+
+// ---- the top panel: the badge, the logo, the payload port, and the glint that runs along each shoulder
+const TOPU = [1, 0, 0], TOPV = [0, -1, 0], UPN = [0, 0, 1];
+const topPrint = (() => {
+  // the print sits toward the far rail: the near rail stands proud and hides a strip behind it from where we look
+  let s = txt(300, -8, BRAND.badge, 58, "wm", "middle", ' textLength="172" lengthAdjust="spacingAndGlyphs"');
+  s += logoAt(80, 11, 66, "logo");
+  s += `<path class="conn" d="${rrD(-330, 4, 74, 50, 6)}"/>`;
+  for (const x of [-348, -312]) s += `<path class="conn-l" d="${rrD(x, 4, 22, 30, 5)}"/>` + circle(x, 4, 6.5, "hole") + circle(x - 1.6, 5.8, 1.6, "hi");
+  for (const sx of [-1, 1]) for (const sy of [-1, 1]) s += screwSvg(sx * 404, sy * 60, 2.6);
+  return s;
+})();
+function topGloss(tf, dim) {
+  // the streak sits where the shoulder's normal meets the half vector between the light and the eye
+  const hl = mtv(tf.M, HALF), vl = mtv(tf.M, VIEW);
+  let out = "";
+  for (const sg of [1, -1]) {
+    const th = clamp(Math.atan2(hl[2], sg * hl[1]), 5 * DEG, 85 * DEG);
+    const nrm = [0, sg * Math.cos(th), Math.sin(th)];
+    if (dot3(nrm, vl) <= 0.06) continue;
+    const I = Math.max(0, dot3(nrm, hl)) ** 14;
+    if (I < 0.05) continue;
+    const pts = [];
+    for (let x = ST[2][0] + 2; x <= ST[ST.length - 3][0] - 2; x += 12) {
+      const [, w, zt] = stationAt(x), R = zt - ZS1;
+      pts.push(pr(ap(tf, [x, sg * (w - R + R * Math.cos(th)), zt - R + R * Math.sin(th)])));
+    }
+    const k = I * (1 - dim);
+    out += `<path class="gl-soft" d="${dOpen(pts)}" stroke-width="7" filter="url(#sp-soft)" style="opacity:${r3(0.6 * k)}"/><path class="gl-core" d="${dOpen(pts)}" stroke-width="1.5" style="opacity:${r3(0.95 * k)}"/>`;
+  }
+  return out;
+}
+function topSheen(tf, dim) {
+  if (dot3(mv(tf.M, UPN), VIEW) <= 0.05) return "";
+  const a = [], b = [];
+  for (const [x, w, zt] of ST.slice(3, -3)) { const R = zt - ZS1; a.push(pr(ap(tf, [x, w - R, zt]))); b.push(pr(ap(tf, [x, -(w - R), zt]))); }
+  return `<path d="${dPath([...a, ...b.reverse()])}" fill="url(#sp-top)" stroke="none" style="opacity:${r3(1 - dim)}"/>`;
+}
+const TOP = mk({ id: "top", grp: "lid", node: "top", meshes: [loft(ST.map(topRing), "yellow")], gloss: topGloss, sheen: topSheen, decals: [plane([0, 0, 622.06], TOPU, TOPV, UPN, topPrint)] });
+
+// ---- the payload rails along the top and the mounts at their back ends
+const RAIL_Y = 46;
+const railPrint = (() => {
+  let s = rect(0, 0, 700, 5, "groove");
+  for (let x = -330; x <= 330; x += 60) s += capScrew(x, 0, 2.4);
+  return s;
+})();
+const RAILS = [1, -1].map((s) => mk({ id: "rail" + s, grp: "lid", node: "top", tex: 0.05, outline: "ol-s", meshes: [box([-25, s * RAIL_Y, 628], [355, 10, 6], 1.8, "black")], decals: [plane([-25, s * RAIL_Y, 634.06], TOPU, TOPV, UPN, railPrint)], bias: 6 }));
+const MOUNTS = [1, -1].map((s) => mk({ id: "mount" + s, grp: "lid", node: "top", outline: "ol-s", meshes: [box([-404, s * RAIL_Y, 630], [17, 15, 10], 3, "black")], decals: [plane([-404, s * RAIL_Y, 640.06], TOPU, TOPV, UPN, capScrew(-6, 0, 3) + capScrew(6, 0, 3))], bias: 8 }));
+
+// ---- the side panels, the wordmark printed along their whole length
+const sideRing = ([x, w], s) => [[x, s * (w - PT), ZB1], [x, s * w, ZB1], [x, s * w, ZS1], [x, s * (w - PT), ZS1]];
+const sidePrint = (() => {
+  // the hip stacks stand in front of the panel's ends, so the wordmark runs between them
+  let s = txt(0, -20.5, BRAND.wordmark, 60, "wm", "middle", ' textLength="604" lengthAdjust="spacing"');
+  for (const x of [-425, 425]) for (const y of [-24, 24]) s += screwSvg(x, y, 2.6);
+  return s;
+})();
+function sideSheen(sg) {
+  return (tf, dim) => {
+    if (dot3(mv(tf.M, [0, sg, 0]), VIEW) <= 0.05) return "";
+    const a = SST.map(([x, w]) => pr(ap(tf, [x, sg * w, ZB1]))), b = SST.map(([x, w]) => pr(ap(tf, [x, sg * w, ZS1])));
+    const d = dPath([...a, ...b.reverse()]);
+    return `<path d="${d}" fill="url(#sp-sheen)" stroke="none" style="opacity:${r3(1 - dim)}"/><path d="${d}" fill="url(#sp-band)" stroke="none" style="opacity:${r3(1 - dim)}"/>`;
+  };
+}
+const SIDES = [1, -1].map((s) => mk({ id: "side" + s, grp: "lid", node: s > 0 ? "sideL" : "sideR", side: s, meshes: [loft(SST.map((st) => sideRing(st, s)), "yellow")], sheen: sideSheen(s),
+  decals: [plane([-5, s * 122.06, 533], [s, 0, 0], [0, 0, 1], [0, s, 0], sidePrint)] }));
+
+// ---- the chassis: a black tray with the belly's rounded edge, drawn as its inside and its outside so whatever
+// sits in it can be painted between the two
+const TRP = { hx: 452, hy: 112, r: 34 };
+const trayPlan = (d) => rrPoly(2 * (TRP.hx - d), 2 * (TRP.hy - d), Math.max(2, TRP.r - d), 5);
+const TRAY = (() => {
+  const ring = (z, d) => trayPlan(d).map(([x, y]) => [x, y, z]);
+  const O = [[ZB0, 12], [ZB0 + 2.5, 4.5], [ZB0 + 8, 1], [ZB0 + 15, 0], [ZB1, 0]].map(([z, d]) => ring(z, d));
+  const I = [ring(ZB1, 5), ring(ZB0 + 8, 5)];
+  const m = O[0].length;
+  const quads = [];
+  const newell = (q) => { let n = [0, 0, 0]; for (let i = 0; i < q.length; i++) { const a = q[i], b = q[(i + 1) % q.length]; n = add3(n, [(a[1] - b[1]) * (a[2] + b[2]), (a[2] - b[2]) * (a[0] + b[0]), (a[0] - b[0]) * (a[1] + b[1])]); } return unit3(n); };
+  const orient = (q, inward) => { let n = newell(q); const c = mul3(q.reduce(add3, [0, 0, 0]), 1 / q.length); if ((dot3(n, [c[0], c[1], 0]) > 0) === inward) n = mul3(n, -1); return n; };
+  for (let i = 0; i + 1 < O.length; i++) for (let j = 0; j < m; j++) { const q = [O[i][j], O[i][(j + 1) % m], O[i + 1][(j + 1) % m], O[i + 1][j]]; quads.push({ q, n: orient(q, false), mat: "black" }); }
+  for (let j = 0; j < m; j++) { const q = [I[0][j], I[0][(j + 1) % m], I[1][(j + 1) % m], I[1][j]]; quads.push({ q, n: orient(q, true), inner: true, mat: "trayIn" }); }
+  const T = O[O.length - 1];
+  for (let j = 0; j < m; j++) { const q = [T[j], T[(j + 1) % m], I[0][(j + 1) % m], I[0][j]]; const c = mul3(q.reduce(add3, [0, 0, 0]), 0.25); quads.push({ q, n: [0, 0, 1], rim: true, out: unit3([c[0], c[1], 0]), mat: "black" }); }
+  quads.push({ q: I[1], n: [0, 0, 1], inner: true, mat: "trayIn" });
+  // the belly itself, seen only when the robot lies on its side
+  quads.push({ q: O[0], n: [0, 0, -1], mat: "black" });
+  const camPrint = camWin(100, 30) + screwSvg(-64, 0, 2.2) + screwSvg(64, 0, 2.2);
+  const vents = (() => { let s = ""; for (let i = 0; i < 9; i++) s += `<path class="groove" d="${rrD(-i * 9, 0, 4.2, 26, 2.1)}"/>`; return s; })();
+  const decals = [];
+  for (const s of [1, -1]) {
+    decals.push(plane([-20, s * (TRP.hy + 0.06), 473], [s, 0, 0], [0, 0, 1], [0, s, 0], camPrint));
+    decals.push(plane([-190, s * (TRP.hy + 0.06), 473], [s, 0, 0], [0, 0, 1], [0, s, 0], vents));
+  }
+  return { quads, outerPts: O.flat(), rimIn: I[0], decals };
+})();
+function traySvg(tf, dim) {
+  const back = [], front = [];
+  for (const qd of TRAY.quads) {
+    const nw = mv(tf.M, qd.n);
+    if (dot3(nw, VIEW) <= 1e-4) continue;
+    const pts = qd.q.map((p) => ap(tf, p));
+    const k = depth(mul3(pts.reduce(add3, [0, 0, 0]), 1 / pts.length));
+    const col = shade(qd.mat, nw, dim);
+    const far = qd.inner || (qd.rim && dot3(mv(tf.M, qd.out), VIEW) < 0);
+    (far ? back : front).push([k, `<path class="f" d="${dPath(pts.map(pr))}" fill="${col}" stroke="${col}"/>`]);
+  }
+  back.sort((a, b) => a[0] - b[0]);
+  front.sort((a, b) => a[0] - b[0]);
+  // a rim point is far when the wall it tops faces away from us (its outward normal in plan, from the rounded corner)
+  const rimN = ([x, y]) => unit3([x - clamp(x, -(TRP.hx - TRP.r), TRP.hx - TRP.r), y - clamp(y, -(TRP.hy - TRP.r), TRP.hy - TRP.r), 0]);
+  const hp = hull(TRAY.outerPts.map((p) => { const q = pr(ap(tf, p)); q.far = Math.abs(p[2] - ZB1) < 0.01 && dot3(mv(tf.M, rimN(p)), VIEW) < 0; return q; }));
+  let nearD = "";
+  for (let i = 0; i < hp.length; i++) { const a = hp[i], b = hp[(i + 1) % hp.length]; if (!(a.far && b.far)) nearD += `M${P2(a)}L${P2(b)}`; }
+  const rimPts = TRAY.rimIn.map((p) => pr(ap(tf, p)));
+  let deco = "";
+  for (const dc of TRAY.decals) deco += decalSvg(dc, tf);
+  const op = dim > 0.01 ? ` style="opacity:${r3(1 - 0.55 * dim)}"` : "";
+  const grain = dim < 0.98 ? `<path class="grain" d="${dPath(hp)}" fill="url(#sp-grain)" style="opacity:${r3(0.05 * (1 - dim))}"/>` : "";
+  const rimVis = dot3(mv(tf.M, [0, 0, 1]), VIEW) > 0;
+  return {
+    back: back.map((x) => x[1]).join("") + `<g${op}>${rimVis ? `<path class="seam" d="${dPath(rimPts)}"/>` : ""}<path class="ol" d="${dPath(hp)}"/></g>`,
+    front: front.map((x) => x[1]).join("") + grain + `<g${op}>${deco}<path class="ol" d="${nearD}"/></g>`,
+    pts: TRAY.outerPts.map((p) => pr(ap(tf, p))),
+  };
+}
+
+// ---- the head and the tail: black, lofted along the body's axis and tapering to a face. The head's face leans back
+// and carries the front stereo pair as two windows tilted into a shallow V; the tail's face carries the rear pair.
+// Rings: x, half width, bottom, top, top corner radius, bottom corner radius, lean (x per mm of height)
+const HEAD_ST = [[436, 110, 450, 566, 24, 12, 0], [462, 109, 451, 565, 26, 12, 0], [494, 104, 455, 560, 28, 14, 0], [522, 97, 459, 554, 26, 14, -0.15], [540, 91, 462, 548, 22, 13, -0.35], [551, 86, 465, 543, 18, 11, -0.45], [555, 81, 468, 539, 13, 8, -0.45]];
+const TAIL_ST = [[-436, 110, 450, 566, 24, 12, 0], [-458, 108, 452, 564, 26, 12, 0], [-480, 100, 456, 559, 26, 13, 0], [-496, 90, 460, 553, 22, 12, 0.18], [-502, 82, 465, 548, 16, 9, 0.18]];
+function capRing([x, hw, zb, zt, rT, rB, lean]) {
+  const zc = (zb + zt) / 2, out = [];
+  const corner = (cy, cz, r, a0) => { for (let i = 0; i <= 3; i++) { const a = (a0 + 30 * i) * DEG; out.push([cy + r * Math.cos(a), cz + r * Math.sin(a)]); } };
+  corner(hw - rT, zt - rT, rT, 0);
+  corner(-(hw - rT), zt - rT, rT, 90);
+  corner(-(hw - rB), zb + rB, rB, 180);
+  corner(hw - rB, zb + rB, rB, 270);
+  return out.map(([y, z]) => [x + lean * (z - zc), y, z]);
+}
+// the plane of a cap's face (dir +1 the head, -1 the tail), print reading left to right from outside
+function capPlane(st, dir, svg) {
+  const r = capRing(st), o = mul3(r.reduce(add3, [0, 0, 0]), 1 / r.length);
+  const v = unit3([st[6], 0, 1]), n = unit3([dir, 0, -dir * st[6]]);
+  return plane(add3(o, mul3(n, 0.1)), [0, -dir, 0], v, n, svg);
+}
+const ledBar = (w) => `<path class="ledglow" d="${rrD(0, 0, w + 6, 7, 3.5)}" filter="url(#sp-led)"/><path class="ledbar" d="${rrD(0, 0, w, 3.2, 1.6)}"/>`;
+// the front pair: two windows, each tilted so their inner ends dip toward the middle (the "frown")
+const FRONT_WIN = [{ x: -38, y: 6, rot: -12 }, { x: 38, y: 6, rot: 12 }];
+const frontPrint = FRONT_WIN.map((w) => `<g transform="translate(${w.x} ${w.y})">${camWin(58, 20, w.rot)}</g>`).join("") + `<g transform="translate(0 -21)">${ledBar(62)}</g>` + capScrew(-62, -21, 2.2) + capScrew(62, -21, 2.2);
+const rearPrint = `<g transform="translate(0 6)">${camWin(52, 18)}</g><g transform="translate(0 -16)">${ledBar(40)}</g>` + capScrew(-46, -16, 2.2) + capScrew(46, -16, 2.2);
+const FRONT_PL = capPlane(HEAD_ST[HEAD_ST.length - 1], 1, frontPrint);
+const REAR_PL = capPlane(TAIL_ST[TAIL_ST.length - 1], -1, rearPrint);
+const headLogo = plane([508, 0, 556.2], unit3([28, 0, -8]), [0, -1, 0], unit3([8, 0, 28]), logoAt(0, 2, 34, "logo-lt"));
+const FACE = mk({ id: "face", grp: "face", node: "face", tex: 0.04, meshes: [loft(HEAD_ST.map(capRing), "black")], decals: [FRONT_PL, headLogo] });
+const REAR = mk({ id: "rear", grp: "rear", node: "rear", tex: 0.04, meshes: [loft(TAIL_ST.map(capRing), "black")], decals: [REAR_PL] });
+
+// ---- inside: the battery, the compute, the cables
+const BAT = { c: [-99, 0, 494], h: [158, 68, 40] };
+const batPrint = (() => {
+  let s = `<path class="label" d="${rrD(-26, 0, 208, 108, 4)}"/>` + logoAt(-92, 6, 62, "logo");
+  s += txt(-50, 14, "BATTERY", 15, "print", "start") + txt(-50, -2, BRAND.maker.toUpperCase(), 7.4, "print2", "start");
+  s += `<path class="hair" d="${lineD([[-50, -10], [66, -10]])}"/>`;
+  for (let i = 0; i < 4; i++) s += `<path class="warn" d="${loc([[-48 + i * 12, -38], [-38 + i * 12, -38], [-43 + i * 12, -29]])}"/>`;
+  for (let i = 0; i < 5; i++) s += circle(98, -24 + i * 9, 2.4, i < 4 ? "led" : "led-off");
+  s += `<path class="groove" d="${rrD(126, 0, 18, 88, 8)}"/>`;
+  return s;
+})();
+mk({ id: "battery", grp: "bat", node: "bat", inside: true, tex: 0.03, meshes: [box(BAT.c, BAT.h, 5, "battery")], decals: [plane([BAT.c[0], 0, BAT.c[2] + BAT.h[2] + 0.06], TOPU, TOPV, UPN, batPrint)] });
+const CMP = { c: [201, 0, 488], h: [60, 70, 34] };
+const cmpPrint = (() => {
+  let s = "";
+  for (let i = 0; i < 18; i++) s += rect(-6, -60 + i * 7, 100, 3.6, i % 2 ? "fin" : "fin-d");
+  s += circle(-6, 0, 30, "fan") + circle(-6, 0, 10, "conn");
+  for (let i = 0; i < 7; i++) { const a = (i / 7) * TAU; s += `<path class="blade" d="${loc([[-6 + 11 * Math.cos(a), 11 * Math.sin(a)], [-6 + 28 * Math.cos(a + 0.42), 28 * Math.sin(a + 0.42)], [-6 + 27 * Math.cos(a + 0.8), 27 * Math.sin(a + 0.8)], [-6 + 11 * Math.cos(a + 0.6), 11 * Math.sin(a + 0.6)]])}"/>`; }
+  s += logoAt(44, 0, 30, "logo-gr");
+  for (const sx of [-1, 1]) for (const sy of [-1, 1]) s += screwSvg(sx * 52, sy * 62, 2.2);
+  return s;
+})();
+const cmpSide = (() => {
+  let s = "";
+  for (let i = 0; i < 4; i++) s += `<path class="conn" d="${rrD(-44 + i * 22, 6, 16, 9, 1.5)}"/>` + `<path class="pins" d="${lineD([[-50 + i * 22, 6], [-38 + i * 22, 6]])}"/>`;
+  for (let i = 0; i < 3; i++) s += circle(36 + i * 8, -14, 2, i < 2 ? "led" : "led-off");
+  return s;
+})();
+mk({ id: "compute", grp: "comp", node: "comp", inside: true, meshes: [box(CMP.c, CMP.h, 4, "alu")],
+  decals: [plane([CMP.c[0], 0, CMP.c[2] + CMP.h[2] + 0.06], TOPU, TOPV, UPN, cmpPrint), plane([CMP.c[0], CMP.h[1] + 0.06, CMP.c[2]], [1, 0, 0], [0, 0, 1], [0, 1, 0], cmpSide), plane([CMP.c[0], -CMP.h[1] - 0.06, CMP.c[2]], [-1, 0, 0], [0, 0, 1], [0, -1, 0], cmpSide)] });
+// the power and signal runs, in the robot's frame: battery to compute, compute to each roll motor (the rear ones along
+// the battery's sides), and the flex up to the head's cameras
+const RUNS = [
+  { pts: [[58, -30, 530], [100, -30, 562], [142, -30, 524]], r: 6, col: "#c9412c" },
+  { pts: [[58, 30, 530], [100, 30, 562], [142, 30, 524]], r: 6, col: "#2b2d35" },
+  ...[1, -1].flatMap((s) => [
+    { pts: [[236, s * 58, 524], [258, s * 70, 540], [272, s * 66, 504]], r: 4.5, col: "#e3a03a" },
+    { pts: [[146, s * 70, 512], [100, s * 86, 528], [-40, s * 88, 534], [-220, s * 86, 532], [-262, s * 78, 510], [-272, s * 68, 494]], r: 4.5, col: "#e3a03a" },
+  ]),
+];
+const RUN_PTS = RUNS.map((r) => ({ ...r, pts: smooth3(r.pts, 6) }));
+const FLEX = smooth3([[236, 0, 524], [300, 0, 540], [420, 0, 534], [446, 0, 515]], 5);
+
+// ================================================================= THE LEGS
+// Each leg in the frames of its joints. Sizes along y (to the outside): the hip pitch motor, the upper leg, the knee
+// motor on it, the cranks, the rod. The upper leg points down its frame's -z to the knee; the lower leg down its own
+// to the foot. The knee motor sits at the hip, coaxial with the hip pitch, and drives the knee through a crank, a rod
+// down the outside of the upper leg and a second crank on the lower leg (a parallelogram: the knee turns as the crank
+// at the hip does).
+const HX = 380, HZ = 486, LU = 335, LL = 345, FOOT_R = 30;
+const YP0 = 120, YP1 = 158, YT0 = 160, YT1 = 206, YK1 = 232, YC0 = 233, YC1 = 240, YR = 246, YS = 184;
+const CR = 34; // the crank's throw
+const KNEE0 = 97; // the knee crank's set angle on the lower leg, so the rod runs down the front edge standing
+const LEGS = [
+  { id: "FL", sx: 1, sy: 1 }, { id: "FR", sx: 1, sy: -1 }, { id: "RL", sx: -1, sy: 1 }, { id: "RR", sx: -1, sy: -1 },
+];
+const thighOutline = (d) => stadium(56, 37, LU, d, 20, 12);
+const crankMesh = roundSlab([0, 0, 0], [0, 1, 0], [0, 0, 1], [-1, 0, 0], (d) => stadium(19, 12, CR, d, 12, 10), YC0, YC1, 2.4, "steel", 2);
+const CANON = {
+  roll: (sx) => lathe([sx * (HX - 112), 66, 0], [sx, 0, 0], [[0, 28], [3, 34], [6, 37], [42, 37], [45, 33], [50, 37], [86, 37], [90, 32], [104, 25]], "motor", 32),
+  hipPitch: lathe([0, 0, 0], [0, 1, 0], [[YP0 - 4, 44], [YP0, 50], [YP0 + 3, 55], [YP0 + 6, 56], [YP1 - 6, 56], [YP1 - 3, 55], [YP1, 50]], "satin", 44),
+  thigh: roundSlab([0, 0, 0], [0, 1, 0], [1, 0, 0], [0, 0, 1], thighOutline, YT0, YT1, 10, "black", 3),
+  kneeMotor: lathe([0, 0, 0], [0, 1, 0], [[YT1 - 2, 42], [YT1 + 1, 47], [YT1 + 4, 49], [YK1 - 4, 49], [YK1 - 1, 47], [YK1, 43]], "satin", 44),
+  rod: cylinder([0, YR, 0], [0, 0, -1], 6, 12, LU - 12, "steel", 16),
+  rodEnd: lathe([0, 0, 0], [0, 1, 0], [[YC1, 10], [YC1 + 1.5, 12], [YR + 4.5, 12], [YR + 6, 10]], "steel", 22),
+  rodEndLow: lathe([0, 0, -LU], [0, 1, 0], [[YC1, 10], [YC1 + 1.5, 12], [YR + 4.5, 12], [YR + 6, 10]], "steel", 22),
+  kneeHousing: lathe([0, 0, 0], [0, 1, 0], [[YT1 - 6, 27], [YT1 - 3, 31], [YC0 - 3, 31], [YC0, 27]], "satin", 34),
+  kneeCrank: posed(crankMesh, TF(Ry(KNEE0))),
+  shin: lathe([0, YS, 0], [0, 0, -1], [[-24, 12], [-18, 22], [-8, 27], [30, 26], [120, 22.5], [LL - 70, 17.5], [LL - 46, 16]], "black", 26),
+  ankle: lathe([0, YS, 0], [0, 0, -1], [[LL - 48, 15.5], [LL - 45, 18.5], [LL - 30, 18.5], [LL - 26, 15]], "satin", 24),
+  foot: lathe([0, YS, 0], [0, 0, -1], Array.from({ length: 15 }, (_, i) => { const a = (-64 + (154 * i) / 14) * DEG; return [30 * Math.sin(a), Math.max(1, 30 * Math.cos(a))]; }), "rubber", 40),
+};
+// the tread rings round each foot
+const footLines = (s) => [12, 20].map((z) => { const r = Math.sqrt(30 * 30 - z * z) - 0.4; const pts = [], ns = []; for (let i = 0; i < 40; i++) { const a = (i / 40) * TAU; pts.push([r * Math.cos(a), s * YS + r * Math.sin(a), -z]); ns.push([Math.cos(a), Math.sin(a), -z / 30]); } return { pts, ns, cls: "tread", closed: true }; });
+const hipPrint = turnedFace(50, 8, 40, 15, 20);
+const kneePrint = turnedFace(43, 6, 34, 12);
+const thighPrint = (() => {
+  const seam = stadium(56, 37, LU, 15, 20, 12);
+  let s = `<path class="seam" d="${loc(seam)}"/><path class="seam-l" d="${loc(seam.map(([x, y]) => [x + 0.8, y - 0.8]))}"/>`;
+  for (const [x, y] of [[-28, -78], [28, -78], [-22, -262], [22, -262]]) s += capScrew(x, y, 2.6);
+  for (let i = 0; i < 5; i++) s += `<path class="groove" d="${rrD(0, -150 - i * 11, 34 - i * 2, 4, 2)}"/>`;
+  return s;
+})();
+// a satin glint along the thigh's rounded outer edge, where that edge turns toward the light
+function slabGlint(sg) {
+  const ol = stadium(56, 37, LU, 3, 20, 12);
+  const n2 = ol.map((p, i) => { const a = ol[(i + ol.length - 1) % ol.length], b = ol[(i + 1) % ol.length]; return unit3([b[1] - a[1], 0, -(b[0] - a[0])]); });
+  const pts = ol.map(([x, z]) => [x, sg * (YT1 - 3), z]);
+  const ns = n2.map((n) => unit3([n[0], sg, n[2]]));
+  return (tf, dim) => {
+    let out = "", run = [];
+    const flush = () => { if (run.length > 2) { const d = dOpen(run); out += `<path class="gl-soft" d="${d}" stroke-width="4" filter="url(#sp-soft)" style="opacity:${r3(0.32 * (1 - dim))}"/><path class="gl-core" d="${d}" stroke-width="1" style="opacity:${r3(0.42 * (1 - dim))}"/>`; } run = []; };
+    for (let i = 0; i < pts.length; i++) {
+      const nw = mv(tf.M, ns[i]);
+      if (dot3(nw, VIEW) > 0.05 && dot3(nw, HALF) > 0.5) run.push(pr(ap(tf, pts[i]))); else flush();
+    }
+    flush();
+    return out;
+  };
+}
+const crankPrint = circle(0, 0, 7, "screw") + circle(0, 0, 3, "hole") + circle(CR, 0, 5, "screw") + circle(CR, 0, 2, "hole");
+for (const L of LEGS) {
+  const s = L.sy, sx = L.sx;
+  const my = (sol) => mirrored(sol, 1, s);
+  const U = [s, 0, 0], V = [0, 0, 1], NY = [0, s, 0];
+  const leg = { leg: L.id, side: s };
+  mk({ ...leg, id: L.id + "-roll", grp: "roll", node: "roll" + L.id, seg: "hip", lay: 0, act: "roll", inside: true, meshes: [mirrored(CANON.roll(sx), 1, s)],
+    decals: [plane([sx * (HX - 112.06), s * 66, 0], [0, -sx * s, 0], [0, 0, 1], [-sx, 0, 0], turnedFace(26, 4, 20, 8))], c: [sx * (HX - 62), s * 66, 0] });
+  mk({ ...leg, id: L.id + "-hip", grp: "leg", node: "hip" + L.id, seg: "hip", lay: 1, act: "pitch", tex: 0.05, meshes: [my(CANON.hipPitch)], decals: [plane([0, s * (YP1 + 0.05), 0], U, V, NY, hipPrint)] });
+  mk({ ...leg, id: L.id + "-thigh", grp: "leg", node: "thigh" + L.id, seg: "thigh", lay: 2, tex: 0.06, gloss: slabGlint(s), meshes: [my(CANON.thigh)], decals: [plane([0, s * (YT1 + 0.05), 0], U, V, NY, thighPrint)] });
+  mk({ ...leg, id: L.id + "-knee", grp: "leg", node: "thigh" + L.id, seg: "thigh", lay: 3, act: "knee", tex: 0.05, meshes: [my(CANON.kneeMotor)], decals: [plane([0, s * (YK1 + 0.05), 0], U, V, NY, kneePrint)] });
+  mk({ ...leg, id: L.id + "-crank", grp: "leg", node: "crank" + L.id, seg: "thigh", lay: 4, drive: true, outline: "ol-s", meshes: [my(crankMesh)], decals: [plane([0, s * (YC1 + 0.05), 0], U, V, NY, crankPrint)] });
+  mk({ ...leg, id: L.id + "-rod", grp: "leg", node: "rod" + L.id, seg: "thigh", lay: 5, drive: true, outline: "ol-s", meshes: [my(CANON.rod)], crease: false });
+  mk({ ...leg, id: L.id + "-rodA", grp: "leg", node: "rod" + L.id, seg: "thigh", lay: 5.5, drive: true, outline: "ol-s", meshes: [my(CANON.rodEnd)], decals: [plane([0, s * (YR + 6.05), 0], U, V, NY, circle(0, 0, 6, "screw") + circle(0, 0, 2.4, "hole"))] });
+  mk({ ...leg, id: L.id + "-rodB", grp: "leg", node: "rod" + L.id, seg: "thigh", lay: 5.5, drive: true, outline: "ol-s", meshes: [my(CANON.rodEndLow)], decals: [plane([0, s * (YR + 6.05), -LU], U, V, NY, circle(0, 0, 6, "screw") + circle(0, 0, 2.4, "hole"))] });
+  mk({ ...leg, id: L.id + "-kneeH", grp: "leg", node: "shin" + L.id, seg: "shin", lay: 3, tex: 0.05, meshes: [my(CANON.kneeHousing)], decals: [plane([0, s * (YC0 + 0.05), 0], U, V, NY, circle(0, 0, 24, "seam") + capScrew(0, 0, 3.4))] });
+  mk({ ...leg, id: L.id + "-kcrank", grp: "leg", node: "shin" + L.id, seg: "shin", lay: 4, drive: true, outline: "ol-s", meshes: [my(CANON.kneeCrank)] });
+  mk({ ...leg, id: L.id + "-shin", grp: "leg", node: "shin" + L.id, seg: "shin", lay: 1.9, tex: 0.06, meshes: [my(CANON.shin)], crease: false });
+  mk({ ...leg, id: L.id + "-ankle", grp: "leg", node: "shin" + L.id, seg: "shin", lay: 1.9, bias: 2, outline: "ol-s", meshes: [my(CANON.ankle)], crease: false });
+  mk({ ...leg, id: L.id + "-foot", grp: "leg", node: "foot" + L.id, seg: "foot", lay: 1.9, meshes: [my(CANON.foot)], lines: footLines(s), crease: false });
+}
+
+// ================================================================= THE STEP BLOCK (step 5)
+// A low block in the floor's frame: it rises out of the floor ahead, the floor carries it under the robot as it
+// walks, and it sinks back once the robot stands on it.
+const BLOCK = { B0: 560, B1: 1810, hw: 430, H: 120 };
+const blockPrint = (() => {
+  // a hazard band along the edge the robot climbs, on the top face (print x along the floor's x, print y = -y)
+  let s = `<path class="hazard-k" d="${rrD(BLOCK.B0 + 26, 0, 40, 2 * BLOCK.hw - 16, 2)}"/>`;
+  for (let y = -BLOCK.hw + 8; y < BLOCK.hw - 30; y += 34) s += `<path class="hazard-y" d="${loc([[BLOCK.B0 + 6, y], [BLOCK.B0 + 6, y + 17], [BLOCK.B0 + 46, y + 37], [BLOCK.B0 + 46, y + 20]])}"/>`;
+  s += `<path class="hair" d="${rrD((BLOCK.B0 + BLOCK.B1) / 2, 0, BLOCK.B1 - BLOCK.B0 - 24, 2 * BLOCK.hw - 24, 6)}"/>`;
+  return s;
+})();
+function blockPart(h) {
+  const L2 = (BLOCK.B1 - BLOCK.B0) / 2;
+  return { meshes: [box([(BLOCK.B0 + BLOCK.B1) / 2, 0, h / 2], [L2, BLOCK.hw, h / 2], Math.min(4, h / 3), "step")], decals: [plane([0, 0, h + 0.08], TOPU, TOPV, UPN, blockPrint)], outline: "ol", crease: false };
+}
+const onBlock = (X) => (X >= BLOCK.B0 && X <= BLOCK.B1 ? 1 : 0);
+// a foot never lands right on the edge
+const safeX = (X) => (Math.abs(X - BLOCK.B0) < 44 ? (X < BLOCK.B0 ? BLOCK.B0 - 44 : BLOCK.B0 + 44) : X);
+
+// ================================================================= THE GAIT
+// A trot: diagonal pairs (front left with rear right, front right with rear left) swing in turn. Every foot is
+// planned first, in the floor's frame: it stands still on the floor (or the block) until its swing, then lifts, moves
+// and lands where the plan says; the legs are then solved with 2-link IK to reach the feet, so a planted foot never
+// slides. Times are seconds into the step.
+const T_CYC = 0.62, T_SW = 0.27, T_ST = T_CYC - T_SW;
+const XN = Object.fromEntries(LEGS.map((L) => [L.id, L.sx * HX + 22]));
+const PAIR_OFF = { FL: 0, RR: 0, FR: 0.5, RL: 0.5 };
+function planSwings(id, tA, tB, Sfn, terrain) {
+  const out = [];
+  let X = XN[id], b = terrain ? terrain(X) : 0;
+  for (let i = 0; ; i++) {
+    const t0 = tA + (i + PAIR_OFF[id]) * T_CYC;
+    if (t0 > tB) break;
+    const t1 = t0 + T_SW;
+    let X1 = XN[id] + Sfn(t1) + (Sfn(t1 + T_ST) - Sfn(t1)) / 2;
+    if (terrain) X1 = safeX(X1);
+    const b1 = terrain ? terrain(X1) : 0;
+    out.push({ t0, t1, X0: X, X1, b0: b, b1, lift: b1 > b ? 70 : b1 < b ? 55 : 62 });
+    X = X1;
+    b = b1;
+  }
+  return out;
+}
+// where a foot is at time t: floor x, height of its sole's centre above the floor, the height it stands on, planted
+function footAt(sw, id, t, hNow) {
+  let X = XN[id], b = sw.length ? sw[0].b0 : 0;
+  for (const s of sw) {
+    if (t < s.t0) break;
+    if (t >= s.t1) { X = s.X1; b = s.b1; continue; }
+    const k = (t - s.t0) / (s.t1 - s.t0);
+    const kx = smoother(clamp((k - 0.15) / 0.75));
+    // stepping up, the foot rises before it moves over the edge; stepping down, it moves over before it drops
+    const kz = s.b1 > s.b0 ? smoother(clamp(k / 0.5)) : s.b1 < s.b0 ? smoother(clamp((k - 0.5) / 0.5)) : smoother(k);
+    const z0 = s.b0 * hNow, z1 = s.b1 * hNow;
+    return { X: lerp(s.X0, s.X1, kx), z: lerp(z0, z1, kz) + s.lift * Math.sin(Math.PI * k), sup: lerp(z0, z1, kx), planted: false };
+  }
+  return { X, z: b * hNow, sup: b * hNow, planted: true };
+}
+// 2-link IK in the leg's plane: the knee behind the line from the hip to the foot
+function ik(hx, fx, hz, fz) {
+  const dx = fx - hx, dz = fz - hz, d = Math.min(Math.hypot(dx, dz), LU + LL - 1);
+  const a = Math.acos(clamp((LU * LU + d * d - LL * LL) / (2 * LU * d), -1, 1));
+  const bt = Math.atan2(-dx, -dz) + a;
+  const kx = hx - LU * Math.sin(bt), kz = hz - LU * Math.cos(bt);
+  const bs = Math.atan2(-(fx - kx), -(fz - kz));
+  return { roll: 0, pitch: bt / DEG, knee: (bs - bt) / DEG };
+}
+const STAND = Object.fromEntries(LEGS.map((L) => [L.id, ik(L.sx * HX, XN[L.id], HZ, FOOT_R)]));
+const SPOKE = { roll: 90, pitch: 0, knee: 0 };
+const TUCK = Object.fromEntries(LEGS.map((L) => [L.id, ik(L.sx * HX, L.sx * HX + 22, HZ, FOOT_R + 70)]));
+const CROUCH_DZ = -166; // the body's drop in a crouch
+const CROUCH = Object.fromEntries(LEGS.map((L) => [L.id, ik(L.sx * HX, XN[L.id], HZ, FOOT_R - CROUCH_DZ)]));
+const lerpJ = (a, b, t) => ({ roll: lerp(a.roll, b.roll, t), pitch: lerp(a.pitch, b.pitch, t), knee: lerp(a.knee, b.knee, t) });
+const perLeg = (f) => Object.fromEntries(LEGS.map((L) => [L.id, f(L)]));
+
+// ================================================================= THE POSES
+// The body's pose (an offset, a lift, a roll about a line on the floor beside its far feet, for the fall), the
+// panels' offsets, each leg's three joint angles, how far each leg has swung out sideways (spoke) and how far its
+// pieces have come apart along it (legE), and the floor's scroll under the feet.
+// the fall turns the body about the line through its far feet (y -184, the feet's centres): with those legs solved
+// to keep their feet there, the far feet stay planted while it tips over and while it rolls back
+const FALL_Y = -YS;
+// where each leg's pieces sit, pulled straight out sideways along the leg's own axis once it points out (y outward)
+const EX = { hip: [0, 110, 0], thigh: [0, 275, 0], shin: [0, 400, 0], foot: [0, 475, 0] };
+function nodes(Z) {
+  const N = {};
+  const world = cmp(TF(I3, [0, 0, FT]), TF(Rz(D.YAW)));
+  N.world = world;
+  N.floor = cmp(world, tr(-Z.scroll, 0, 0));
+  const b = Z.body;
+  const root = cmp(world, cmp(tr(b.x, b.y, b.z + b.lift), about([0, FALL_Y, FOOT_R - b.z], Rx(b.roll))));
+  N.root = root;
+  N.body = root;
+  const off = (v) => cmp(root, tr(v[0], v[1], v[2]));
+  N.top = off(Z.top);
+  N.sideL = off([Z.side[0], Z.side[1], Z.side[2]]);
+  N.sideR = off([Z.side[0], -Z.side[1], Z.side[2]]);
+  N.face = off(Z.face);
+  N.rear = off(Z.rear);
+  N.bat = off(Z.bat);
+  N.comp = off(Z.comp);
+  const e = Z.legE;
+  for (const L of LEGS) {
+    const s = L.sy, sx = L.sx;
+    const O = (o) => [sx * o[0] * e, s * o[1] * e, o[2] * e];
+    const j = Z.joints[L.id];
+    const hipC = cmp(tr(sx * HX, 0, HZ), about([0, s * 66, 0], Rx(s * j.roll)));
+    const thighC = cmp(hipC, TF(Ry(j.pitch)));
+    const crankC = cmp(thighC, TF(Ry(j.knee + KNEE0)));
+    const shinC = cmp(thighC, cmp(tr(0, 0, -LU), TF(Ry(j.knee))));
+    const footC = cmp(shinC, tr(0, 0, -LL));
+    const rodC = cmp(thighC, TF(I3, mv(Ry(j.knee + KNEE0), [CR, 0, 0])));
+    N["roll" + L.id] = off(add3(O(EX.hip), [0, 0, HZ]));
+    N["hip" + L.id] = cmp(off(O(EX.hip)), hipC);
+    N["thigh" + L.id] = cmp(off(O(EX.thigh)), thighC);
+    N["crank" + L.id] = cmp(off(O(EX.thigh)), crankC);
+    N["rod" + L.id] = cmp(off(O(EX.thigh)), rodC);
+    N["shin" + L.id] = cmp(off(O(EX.shin)), shinC);
+    N["foot" + L.id] = cmp(off(O(EX.foot)), footC);
+  }
+  return N;
+}
+// points spread over the whole robot, to find its lowest one (the robot rests on it when it falls)
+const KEY_PTS = PARTS.filter((p) => !p.inside).map((p) => ({ p, v: p.meshes.flatMap((m) => m.v.filter((_, i) => i % Math.max(1, Math.floor(m.v.length / 40)) === 0)) }));
+function lowest(N) {
+  let lo = 1e9;
+  for (const { p, v } of KEY_PTS) { const tf = N[p.node]; for (const q of v) { const z = ap(tf, q)[2]; if (z < lo) lo = z; } }
+  return lo;
+}
+const clampLift = (Z) => { Z.body.lift = 0; Z.body.lift = Math.max(0, FT - lowest(nodes(Z))); return Z; };
+
+// ---------------------------------------------------------------- the panels' poses
+const Z0 = [0, 0, 0];
+const POSE = {
+  rest: { top: Z0, side: Z0, face: Z0, rear: Z0, bat: Z0, comp: Z0 },
+  lid: { top: [-20, 0, 300], side: [-20, 0, 300], face: Z0, rear: Z0, bat: Z0, comp: Z0 },
+  apart: { top: [0, 0, 500], side: [0, 0, 380], face: [170, 0, 0], rear: [-170, 0, 0], bat: [0, 0, 190], comp: [0, 0, 190] },
+};
+const lerpPose = (a, b, t) => { const o = {}; for (const k of Object.keys(a)) o[k] = lerp3(a[k], b[k], t); return o; };
+// each panel group on its own clock, so the pieces leave (and come home) one after another
+function panels(Z, a, b, k) {
+  const g = { top: k[0], side: k[0], bat: k[1], comp: k[1], face: k[2], rear: k[2] };
+  for (const key of Object.keys(g)) Z[key] = lerp3(a[key], b[key], g[key]);
+}
+
+// ---------------------------------------------------------------- the steps
+// it moves first (walk, climb, see, fall), then comes apart, then goes back together, ending where it started
+const ORDER = ["walk", "climb", "see", "fall", "lid", "leg", "apart", "together"];
+const DUR = { walk: 4.0, climb: 5.8, see: 6.4, fall: 5.0, lid: 3.8, leg: 5.4, apart: 4.4, together: 3.8 };
+const N_ = BRAND.name;
+const STEPS = {
+  lid: { dur: DUR.lid, hint: `Under the yellow panels: the battery, the compute and ${M.dof} motors, 3 per leg, lighting up leg by leg (${BRAND.maker}).` },
+  leg: { dur: DUR.leg, hint: `One leg, three motors: the hip roll swings it out, the hip pitch swings it forward, and the knee motor up at the hip folds the knee through the rod.` },
+  apart: { dur: DUR.apart, hint: `Panels up, battery and compute lifted out, and every leg pulled straight out sideways into its four pieces: hip, upper leg, lower leg, foot.` },
+  together: { dur: DUR.together, hint: `Back together: the pieces slide home, the legs swing back down, the panels close, and it stands where it started.` },
+  walk: { dur: DUR.walk, hint: `It trots on the spot in diagonal pairs; the line on the floor joins the feet holding it up. Top speed is about ${M.speed} m/s (${BRAND.maker}).` },
+  climb: { dur: DUR.climb, hint: `A low step comes up ahead. Front legs climb first, then the rear ones, and the body stays level the whole way.` },
+  see: { dur: DUR.see, hint: `${M.pairs} stereo camera pairs (${BRAND.maker}), two at the front, one on each side and one at the back, see the ground all the way round it. The ring is approximate.` },
+  fall: { dur: DUR.fall, hint: `Knocked over, it lands on its side, rolls itself back with its legs and stands up again.` },
+};
+const fresh = () => ({ step: null, u: 0 });
+let S = fresh();
+const NONE = () => 0;
+function base() {
+  return {
+    ...POSE.rest, body: { x: 0, y: 0, z: 0, roll: 0, lift: 0 }, joints: { ...STAND }, spoke: 0, legE: 0, scroll: 0, block: 0,
+    dim: 0, keep: () => true, hl: NONE, tags: [], sectors: null, pulse: 0, support: 0, cam: ["rest", "rest", 0], hot: [],
+    joint: "–", pair: "–", pairI: 0, lit: 0, moving: 0,
+  };
+}
+const sine = (x) => (1 - Math.cos(Math.PI * clamp(x))) / 2;
+const bump = (u, a, b, w = 0.25) => ease(seg(u, a, a + (b - a) * w)) * (1 - ease(seg(u, b - (b - a) * w, b)));
+// the order the motors light up in: leg by leg, roll, pitch, knee
+const MOTOR_SEQ = LEGS.flatMap((L) => ["roll", "pitch", "knee"].map((a) => ({ leg: L.id, act: a })));
+const isAct = (p) => !!p.act;
+// the legs swing out into spokes and back in through the same blend of angles
+const spokeJ = (kTuck, kOut) => perLeg((L) => lerpJ(lerpJ(STAND[L.id], TUCK[L.id], kTuck), SPOKE, kOut));
+
+// ---- the lid lifts, the 12 motors light leg by leg (each flares, then settles to a steady glow)
+const litT = (i) => 0.36 + 0.043 * i;
+function lidGlow(p, u) {
+  if (!p.act) return 0;
+  const i = MOTOR_SEQ.findIndex((m) => m.leg === p.leg && m.act === p.act);
+  return ease(seg(u, litT(i), litT(i) + 0.05)) * (1 - 0.42 * ease(seg(u, litT(i) + 0.07, litT(i) + 0.18)));
+}
+function sLid(Z, u) {
+  Object.assign(Z, lerpPose(POSE.rest, POSE.lid, smoother(seg(u, 0.04, 0.32))));
+  Z.dim = 0.6 * ease(seg(u, 0.3, 0.4));
+  Z.keep = isAct;
+  Z.hl = (p) => lidGlow(p, u);
+  Z.lit = MOTOR_SEQ.filter((_, i) => u > litT(i) + 0.02).length;
+  Z.joint = Z.lit ? `${Z.lit} of ${M.dof} lit` : "–";
+  if (u > 0.86) Z.tags.push({ id: "motors", op: ease(seg(u, 0.86, 0.94)) });
+  Z.cam = ["rest", "open", sine(seg(u, 0, 0.4))];
+  Z.hot = ["dof"];
+  return Z;
+}
+// ---- step 2: the near front leg lifts, swings out (hip roll), forward (hip pitch), folds the knee (through the rod)
+const LEG_ID = "FL";
+const LEG_PH = { roll: [0.14, 0.25, 0.29, 0.38, 26], pitch: [0.4, 0.51, 0.55, 0.64, -34], knee: [0.66, 0.77, 0.81, 0.9, -46] };
+const legDelta = (u, k) => { const [a, b, c, d, amp] = LEG_PH[k]; return amp * (smoother(seg(u, a, b)) - smoother(seg(u, c, d))); };
+function sLeg(Z, u) {
+  Object.assign(Z, POSE.lid);
+  const lift = 90 * (ease(seg(u, 0.03, 0.12)) - ease(seg(u, 0.9, 0.98)));
+  const j0 = ik(HX, XN[LEG_ID], HZ, FOOT_R + lift);
+  const d = { roll: legDelta(u, "roll"), pitch: legDelta(u, "pitch"), knee: legDelta(u, "knee") };
+  Z.joints = { ...STAND, [LEG_ID]: { roll: d.roll, pitch: j0.pitch + d.pitch, knee: j0.knee + d.knee } };
+  const which = Object.keys(LEG_PH).find((k) => u >= LEG_PH[k][0] - 0.01 && u <= LEG_PH[k][3] + 0.01);
+  const glow = which ? bump(u, LEG_PH[which][0] - 0.01, LEG_PH[which][3] + 0.01, 0.2) : 0;
+  // the lid's look (motors bright, the rest dimmed, all 12 glowing) hands over to this step's (this leg bright)
+  const k = ease(seg(u, 0, 0.12));
+  Z.dimFn = (p) => lerp(isAct(p) ? 0 : 0.6, p.leg === LEG_ID ? 0 : 0.45, k);
+  Z.hl = (p) => lidGlow(p, 1) * (1 - k) + (which && p.leg === LEG_ID && (p.act === which || (which === "knee" && p.drive)) ? glow : 0);
+  if (k < 1) Z.tags.push({ id: "motors", op: 1 - k });
+  const names = { roll: "hip roll", pitch: "hip pitch", knee: "knee" };
+  Z.joint = which ? `${names[which]} ${d[which] >= 0 ? "+" : "−"}${Math.abs(Math.round(d[which]))}°` : "–";
+  Z.moving = which ? ["roll", "pitch", "knee"].indexOf(which) + 1 : 0;
+  Z.cam = u < 0.5 ? ["open", "leg", sine(seg(u, 0, 0.3))] : ["leg", "open", sine(seg(u, 0.7, 1))];
+  Z.hot = ["joint"];
+  return Z;
+}
+// ---- step 3: the clean exploded view
+function sApart(Z, u) {
+  const kLeg = smoother(seg(u, 0.08, 0.44));
+  Z.joints = spokeJ(smoother(seg(u, 0.0, 0.1)), kLeg);
+  Z.spoke = kLeg;
+  Z.legE = smoother(seg(u, 0.3, 0.66));
+  panels(Z, POSE.lid, POSE.apart, [smoother(seg(u, 0.1, 0.5)), smoother(seg(u, 0.2, 0.58)), smoother(seg(u, 0.26, 0.64))]);
+  const kd = 1 - ease(seg(u, 0, 0.14));
+  Z.dimFn = (p) => (p.leg === LEG_ID ? 0 : 0.45 * kd);
+  if (u > 0.72) Z.tags.push(...["xtop", "xbat", "xcomp", "xhip", "xthigh", "xshin", "xfoot"].map((id) => ({ id, op: ease(seg(u, 0.72, 0.84)) })));
+  Z.cam = ["open", "apart", sine(seg(u, 0.02, 0.62))];
+  Z.hot = ["parts"];
+  return Z;
+}
+// ---- walk: a trot on the spot, straight from the rest pose (the first feet lift 0.3 s in)
+const WALK_T = [0.3, DUR.walk - 0.32 - T_SW];
+const WALK_SW = perLeg((L) => planSwings(L.id, WALK_T[0], WALK_T[1], () => 0, null));
+function gaitInto(Z, sw, t, Sfn, hNow) {
+  const S0 = Sfn(t);
+  const feet = perLeg((L) => footAt(sw[L.id], L.id, t, hNow));
+  const bz = LEGS.reduce((s, L) => s + feet[L.id].sup, 0) / 4;
+  Z.scroll = S0;
+  Z.body = { ...Z.body, z: bz };
+  Z.joints = perLeg((L) => ik(L.sx * HX, feet[L.id].X - S0, HZ, FOOT_R + feet[L.id].z - bz));
+  Z.feet = feet;
+  return Z;
+}
+function sWalk(Z, u) {
+  gaitInto(Z, WALK_SW, u * DUR.walk, () => 0, 0);
+  Z.support = ease(seg(u, 0.02, 0.09)) * (1 - ease(seg(u, 0.92, 0.99)));
+  if (u < 0.97) Z.tags.push({ id: "trot", op: ease(seg(u, 0.04, 0.12)) * (1 - ease(seg(u, 0.9, 0.97))) });
+  Z.hot = ["speed", "feet"];
+  return Z;
+}
+// ---- back together: the pieces slide home along the legs, the legs swing down and set their feet straight down,
+// the battery, compute, head and tail go back, the panels close; it ends exactly in the rest pose, so the loop closes
+function sTogether(Z, u) {
+  Z.legE = 1 - smoother(seg(u, 0.06, 0.4));
+  const kOut = 1 - smoother(seg(u, 0.3, 0.72));
+  const kTuck = 1 - smoother(seg(u, 0.7, 0.93));
+  Z.spoke = kOut;
+  Z.joints = spokeJ(kTuck, kOut);
+  panels(Z, POSE.apart, POSE.rest, [smoother(seg(u, 0.36, 0.86)), smoother(seg(u, 0.18, 0.56)), smoother(seg(u, 0.24, 0.62))]);
+  if (u < 0.14) Z.tags.push(...["xtop", "xbat", "xcomp", "xhip", "xthigh", "xshin", "xfoot"].map((id) => ({ id, op: 1 - ease(seg(u, 0, 0.14)) })));
+  Z.cam = ["apart", "rest", sine(seg(u, 0.26, 1))];
+  Z.hot = ["parts"];
+  return Z;
+}
+// ---- step 5: a low step comes up ahead; the floor carries it under the robot as it walks on, front legs climb, then
+// the rear, the body level; once it stands on top the step sinks back into the floor with it
+const CLIMB_S = 1200; // a whole number of floor tiles, so the floor looks the same after the scroll
+const CLIMB_T = { rise: [0.1, 0.62], walk: [0.75, 4.5], sink: [4.98, 5.62], trot: [0.62, 4.86] };
+const climbS = (t) => { const x = clamp((t - CLIMB_T.walk[0]) / (CLIMB_T.walk[1] - CLIMB_T.walk[0])); return CLIMB_S * x * x * (3 - 2 * x); };
+const climbH = (t) => BLOCK.H * (smoother(seg(t, ...CLIMB_T.rise)) - smoother(seg(t, ...CLIMB_T.sink)));
+const CLIMB_SW = perLeg((L) => planSwings(L.id, CLIMB_T.trot[0], CLIMB_T.trot[1], climbS, onBlock));
+function sClimb(Z, u) {
+  const t = u * DUR.climb;
+  const h = climbH(t);
+  Z.block = h;
+  gaitInto(Z, CLIMB_SW, t, climbS, h);
+  Z.support = ease(seg(u, 0.06, 0.12)) * (1 - ease(seg(u, 0.86, 0.94)));
+  if (u > 0.2 && u < 0.85) Z.tags.push({ id: "level", op: ease(seg(u, 0.2, 0.26)) * (1 - ease(seg(u, 0.8, 0.85))) });
+  Z.cam = u < 0.5 ? ["rest", "climb", sine(seg(u, 0, 0.16))] : ["climb", "rest", sine(seg(u, 0.84, 1))];
+  Z.hot = ["speed", "feet"];
+  return Z;
+}
+// ---- step 6: what it sees: the five pairs' slices of the ring sweep in one by one
+const RING_ORDER = ["FL", "L", "B", "R", "FR"];
+const RING_NAME = { FL: "front left", L: "left side", B: "back", R: "right side", FR: "front right" };
+const sweepAt = (u, i) => smoother(seg(u, 0.1 + 0.135 * i, 0.1 + 0.135 * i + 0.2));
+function sSee(Z, u) {
+  Z.sectors = RING_ORDER.map((_, i) => sweepAt(u, i));
+  Z.pulse = seg(u, 0.84, 1);
+  const cur = RING_ORDER.findIndex((_, i) => u >= 0.1 + 0.135 * i && u < 0.1 + 0.135 * i + 0.2);
+  const last = Z.sectors.filter((p) => p > 0.02).length;
+  Z.pairI = cur >= 0 ? cur + 1 : 0;
+  Z.pair = cur >= 0 ? `${cur + 1} · ${RING_NAME[RING_ORDER[cur]]}` : last >= 5 ? "all 5" : "–";
+  Z.camGlow = (id) => { const i = RING_ORDER.indexOf(id); const p = Z.sectors[i]; return p <= 0 ? 0 : 0.55 + 0.45 * bump(u, 0.1 + 0.135 * i, 0.1 + 0.135 * i + 0.22, 0.25); };
+  if (u > 0.84) Z.tags.push({ id: "pairs", op: ease(seg(u, 0.84, 0.92)) });
+  Z.cam = ["rest", "see", sine(seg(u, 0, 0.28))];
+  Z.hot = ["pairs", "pair"];
+  return Z;
+}
+// ---- step 7: it falls onto its far side (so the wordmark ends up facing up), rolls back with its legs, stands up
+const FLAIL_N = { roll: -22, pitch: 22, knee: -72 }; // the upper legs fold toward the belly, clear of the wordmark
+const FALL_ROLL = 82;
+// the far legs keep their feet on the floor line the body turns about; the near legs are free
+const farFeet = (Z, bz) => { for (const L of LEGS) if (L.sy < 0) Z.joints[L.id] = ik(L.sx * HX, XN[L.id], HZ, FOOT_R - bz); };
+function sFall(Z, u) {
+  if (u < 0.72) {
+    // a quick crouch, then it tips over (accelerating, like a fall), bounces once on its side, lies there kicking,
+    // rolls back up about the same line, and lands in a crouch
+    const tip = seg(u, 0.06, 0.27), back = smoother(seg(u, 0.44, 0.66));
+    let roll = FALL_ROLL * tip * tip * (1 - back);
+    if (u > 0.27 && u < 0.38) { const k = seg(u, 0.27, 0.38); roll -= 6 * Math.sin(Math.PI * k) * (1 - k); }
+    const bz = lerp(-40 * smoother(seg(u, 0, 0.06)), CROUCH_DZ, smoother(seg(u, 0.06, 0.3)));
+    Z.body = { x: 0, y: 0, z: bz, roll, lift: 0 };
+    const near = smoother(seg(u, 0.1, 0.3)) * (1 - back);
+    Z.joints = perLeg((L) => (L.sy > 0 ? lerpJ(ik(L.sx * HX, XN[L.id], HZ, FOOT_R - bz), FLAIL_N, near) : null));
+    if (u > 0.3 && u < 0.44) for (const L of LEGS) if (L.sy > 0) Z.joints[L.id] = { ...Z.joints[L.id], pitch: Z.joints[L.id].pitch + 18 * Math.sin(TAU * seg(u, 0.3, 0.44)) };
+    farFeet(Z, bz);
+    clampLift(Z);
+  } else {
+    // standing up from the crouch, every foot planted where it stands at rest
+    const k = smoother(seg(u, 0.72, 0.96));
+    const bz = CROUCH_DZ * (1 - k);
+    Z.body = { x: 0, y: 0, z: bz, roll: 0, lift: 0 };
+    Z.joints = perLeg((L) => ik(L.sx * HX, XN[L.id], HZ, FOOT_R - bz));
+  }
+  Z.tilt = Z.body.roll;
+  // the ring the step before left on the floor fades out as it starts to tip
+  const ring = 1 - ease(seg(u, 0, 0.14));
+  if (ring > 0) {
+    Z.sectors = RING_ORDER.map(() => 1);
+    Z.ringOp = ring;
+    Z.camGlow = () => 0.55 * ring;
+    Z.tags.push({ id: "pairs", op: ring });
+  }
+  Z.cam = u < 0.5 ? ["see", "fall", sine(seg(u, 0, 0.22))] : ["fall", "rest", sine(seg(u, 0.7, 1))];
+  Z.hot = ["dof", "feet"];
+  return Z;
+}
+const STEP_FN = { lid: sLid, leg: sLeg, apart: sApart, together: sTogether, walk: sWalk, climb: sClimb, see: sSee, fall: sFall };
+function sceneAt(st, u) { const Z = base(); return st ? STEP_FN[st](Z, u) : Z; }
+const scene = () => sceneAt(S.step, S.u);
+
+// ---------------------------------------------------------------- the cameras, and what they see on the floor
+// in the robot's frame: each pair's window (its plane, size and tilt) and the slice of the ring round the robot it
+// covers (degrees about the body centre)
+const camAt = (pl, x, y, extra) => ({ pl: plane(add3(pl.o, add3(mul3(pl.u, x), mul3(pl.v, y))), pl.u, pl.v, pl.n), ...extra });
+const CAMS = [
+  camAt(FRONT_PL, FRONT_WIN[0].x, FRONT_WIN[0].y, { id: "FL", node: "face", w: 58, h: 20, rot: FRONT_WIN[0].rot, a0: 3, a1: 49 }),
+  camAt(FRONT_PL, FRONT_WIN[1].x, FRONT_WIN[1].y, { id: "FR", node: "face", w: 58, h: 20, rot: FRONT_WIN[1].rot, a0: -49, a1: -3 }),
+  { id: "L", node: "body", pl: plane([-20, 112, 473], [1, 0, 0], [0, 0, 1], [0, 1, 0]), w: 100, h: 30, rot: 0, a0: 53, a1: 127 },
+  { id: "R", node: "body", pl: plane([-20, -112, 473], [-1, 0, 0], [0, 0, 1], [0, -1, 0]), w: 100, h: 30, rot: 0, a0: -127, a1: -53 },
+  camAt(REAR_PL, 0, 6, { id: "B", node: "rear", w: 52, h: 18, rot: 0, a0: 131, a1: 229 }),
+];
+const CAM_BY = Object.fromEntries(CAMS.map((c) => [c.id, c]));
+const RING = { r0: 540, r1: 960 };
+function camRing(c, g) {
+  const t = c.rot * DEG, ct = Math.cos(t), st = Math.sin(t);
+  return rrPoly(c.w + 7 + 2 * g, c.h + 7 + 2 * g, (c.h + 7) / 2 + g, 6).map(([x, y]) => { const X = x * ct - y * st, Y = x * st + y * ct; return add3(c.pl.o, add3(mul3(c.pl.u, X), mul3(c.pl.v, Y))); });
+}
+function arc(r, a0, a1, n = 18) { const out = []; for (let i = 0; i <= n; i++) { const a = (a0 + ((a1 - a0) * i) / n) * DEG; out.push([r * Math.cos(a), r * Math.sin(a), 0]); } return out; }
+function ringSvg(N, Z, s) {
+  if (!Z.sectors) return "";
+  const W = N.world;
+  const k0 = ease(clamp(Z.sectors[0] * 3));
+  let floor = "", vols = "", top = "";
+  const ringD = (r) => dPath(arc(r, 0, 360, 96).map((p) => pr(ap(W, p))));
+  floor += `<path class="floor-ring" d="${ringD(RING.r1)}" style="opacity:${r3(0.55 * k0)}"/><path class="floor-ring" d="${ringD(RING.r0)}" style="opacity:${r3(0.4 * k0)}"/>`;
+  RING_ORDER.forEach((id, i) => {
+    const p = Z.sectors[i];
+    if (p < 0.005) return;
+    const c = CAM_BY[id];
+    const a1 = c.a0 + (c.a1 - c.a0) * p;
+    const outer = arc(RING.r1, c.a0, a1), inner = arc(RING.r0, c.a0, a1).reverse();
+    const sec = [...outer, ...inner].map((q) => pr(ap(W, q)));
+    floor += `<path class="sector" d="${dPath(sec)}" fill="#7fb9e9" style="fill-opacity:${r3(0.36 * Math.min(1, p * 2))};stroke-opacity:${r3(0.85 * Math.min(1, p * 2))}"/>`;
+    const cp = pr(ap(N[c.node], c.pl.o));
+    vols += `<path class="cone" d="${dPath(hull([cp, ...sec]))}" fill="#7fb9e9" style="fill-opacity:${r3(0.13 * Math.min(1, p * 2))}"/>`;
+    for (const q of [outer[0], outer[outer.length - 1], inner[0], inner[inner.length - 1]]) vols += `<path class="cone-e" d="${dOpen([cp, pr(ap(W, q))])}" style="opacity:${r3(0.7 * Math.min(1, p * 2))}"/>`;
+    // the sweeping edge, bright while it moves
+    if (p < 0.999) { const e = pr(ap(W, outer[outer.length - 1])); top += `<path class="scan" d="${dOpen([cp, e])}" style="opacity:${r3(0.9 * Math.sin(Math.PI * p))}"/>`; }
+    // the pair's number, outside the ring
+    if (p > 0.55) {
+      const am = ((c.a0 + c.a1) / 2) * DEG, q = pr(ap(W, [(RING.r1 + 70) * Math.cos(am), (RING.r1 + 70) * Math.sin(am), 0]));
+      top += `<g style="opacity:${r3(ease(seg(p, 0.55, 0.8)))}"><circle class="badge" cx="${r2(q[0])}" cy="${r2(q[1])}" r="${r2(10 / s)}"/><text class="badge-t" x="${r2(q[0])}" y="${r2(q[1] + 4 / s)}" text-anchor="middle" style="font-size:${r2(11 / s)}px">${i + 1}</text></g>`;
+    }
+  });
+  // once the ring is whole, one soft pulse runs out across it
+  if (Z.pulse > 0 && Z.pulse < 1) top += `<path class="pulse" d="${ringD(lerp(RING.r0, RING.r1 + 60, ease(Z.pulse)))}" style="opacity:${r3(0.8 * Math.sin(Math.PI * Z.pulse))}"/>`;
+  const op = Z.ringOp ?? 1;
+  return op < 0.999 ? `<g style="opacity:${r3(op)}">${floor + vols + top}</g>` : floor + vols + top;
+}
+// a rim of light hugging each camera window that faces us
+function camGlowSvg(N, Z) {
+  if (!Z.camGlow) return "";
+  let out = "";
+  for (const c of CAMS) {
+    const k = Z.camGlow(c.id);
+    if (k < 0.01) continue;
+    const tf = N[c.node];
+    if (dot3(mv(tf.M, c.pl.n), VIEW) < 0.05) continue;
+    const ring = (g) => dPath(camRing(c, g).map((p) => pr(ap(tf, p))));
+    out += `<path d="${ring(3)}" fill="none" stroke="#ff9d3a" stroke-width="6" filter="url(#sp-glow)" style="opacity:${r3(0.95 * k)}"/><path d="${ring(2.5)}" fill="none" stroke="#e5583e" stroke-width="1.7" style="opacity:${r3(k)}"/>`;
+  }
+  return out;
+}
+
+// ---------------------------------------------------------------- one picture of a state
+const robotG = part("robot");
+const underG = part("under");
+const gridG = part("grid");
+const notesG = part("notes");
+const shadowEl = part("shadow-live");
+const floatEl = part("shadow-float");
+const artG = svg.querySelector("g.art");
+const DRAWN = {};
+const byId = Object.fromEntries(PARTS.map((p) => [p.id, p]));
+const LEG_PARTS = Object.fromEntries(LEGS.map((L) => [L.id, PARTS.filter((p) => p.leg === L.id && p.grp === "leg")]));
+const ROLLS = Object.fromEntries(LEGS.map((L) => [L.id, byId[L.id + "-roll"]]));
+const BODY_HALF = [480, 122, 88], BODY_C = [0, 0, 534];
+// which side of the body a leg is on, read off the box the body fills: the axis it clears the body along, and
+// whether that face of the body looks at us
+function legSide(N, pts) {
+  const B = N.body, lo = [1e9, 1e9, 1e9], hi = [-1e9, -1e9, -1e9];
+  for (const w of pts) {
+    const q = mtv(B.M, sub3(w, B.t));
+    for (let i = 0; i < 3; i++) { if (q[i] < lo[i]) lo[i] = q[i]; if (q[i] > hi[i]) hi[i] = q[i]; }
+  }
+  for (const i of [1, 2, 0]) {
+    const tol = i === 1 ? 12 : 4;
+    const ax = [0, 0, 0];
+    if (lo[i] > BODY_C[i] + BODY_HALF[i] - tol) ax[i] = 1;
+    else if (hi[i] < BODY_C[i] - BODY_HALF[i] + tol) ax[i] = -1;
+    else continue;
+    return dot3(mv(B.M, ax), VIEW) > 0 ? 1 : -1;
+  }
+  return 0;
+}
+
+function build(Z) {
+  const N = nodes(Z);
+  const items = [], pts = [], shadows = [], floats = [];
+  const dimOf = (p) => (Z.dimFn ? Z.dimFn(p) : Z.dim > 0.001 && !Z.keep(p) ? Z.dim : 0);
+  const draws = (p, ghost = 0) => { const r = partSvg(p, N[p.node], Math.max(dimOf(p), ghost), Z.hl(p)); pts.push(...r.pts); return r.s; };
+  const keyOf = (p) => depth(ap(N[p.node], p.c)) + (p.bias || 0);
+  const sortDraw = (list) => list.map((p) => ({ p, k: keyOf(p) })).sort((a, b) => a.k - b.k).map(({ p }) => draws(p)).join("");
+  const wpts = (list) => list.flatMap((p) => p.meshes.flatMap((m) => m.v.map((v) => ap(N[p.node], v))));
+  const apart = Z.legE > 0.02 || Z.face[0] > 2;
+  const lidUp = Z.top[2] > 2 || apart;
+  const rollsOut = Z.legE > 0.6;
+  const bodyDim = Z.dimFn ? Z.dimFn({}) : Z.dim;
+
+  // ---- the chassis: the tail, the tray's inside, what sits in it, the tray's outside, the head; with the panels on,
+  // the side panels (far, then near), the head, then the top panel and its rails go on last
+  const tray = traySvg(N.body, bodyDim);
+  pts.push(...tray.pts);
+  const yNear = dot3(mv(N.body.M, [0, 1, 0]), VIEW) > 0 ? 1 : -1;
+  const sideNear = SIDES.find((p) => p.side === yNear), sideFar = SIDES.find((p) => p.side !== yNear);
+  const upFacing = dot3(mv(N.body.M, [0, 0, 1]), VIEW) > 0;
+  const inside = PARTS.filter((p) => p.inside && (p.grp !== "roll" || !rollsOut));
+  const floating = { bat: Z.bat[2] > 60, comp: Z.comp[2] > 60 };
+  let s = "";
+  // tipped past the point where the top faces away, the top panel and its rails are behind everything else
+  if (!lidUp && !upFacing) s += sortDraw([...RAILS, ...MOUNTS]) + draws(TOP) + draws(sideFar);
+  if (!apart) s += draws(REAR);
+  s += tray.back;
+  if (lidUp) {
+    // the runs lie on the tray's floor, under whatever sits in it
+    const ck = 1 - smoother(clamp(Math.max(Z.bat[2], Z.comp[2]) / 40));
+    if (ck > 0.001) {
+      let c = "";
+      for (const r of RUN_PTS) c += tubeSvg(r.pts.map((p) => ap(N.body, p)), r.r, r.col, bodyDim);
+      const fa = FLEX.map((p) => pr(ap(N.body, add3(p, [0, 9, 0])))), fb = FLEX.map((p) => pr(ap(N.body, add3(p, [0, -9, 0]))));
+      c += `<path class="flex" d="${dPath([...fa, ...fb.reverse()])}" style="fill:${shadeHex("#d08a3f", bodyDim)}"/>`;
+      s += `<g style="opacity:${r3(ck)}">${c}</g>`;
+    }
+    s += sortDraw(inside.filter((p) => !floating[p.grp]));
+  }
+  s += tray.front;
+  // upright, the head sits in front of the side panels' ends and under the top panel's nose
+  if (!lidUp && upFacing) s += draws(sideFar) + draws(sideNear);
+  if (!apart) s += draws(FACE);
+  if (!lidUp) s += upFacing ? draws(TOP) + sortDraw([...RAILS, ...MOUNTS]) : draws(sideNear);
+  const bodyKey = depth(ap(N.body, [0, 0, ZB1]));
+  items.push({ k: bodyKey, s });
+  const bodyShadow = [...TRAY.outerPts.map((p) => ap(N.body, p)), ...(apart ? [] : wpts([FACE, REAR]))];
+  if (!lidUp) shadows.push([...bodyShadow, ...wpts([TOP, ...SIDES])]);
+  else {
+    shadows.push(bodyShadow);
+    // the lid, lifted as one or stacked apart: far side, top and rails, near side, painted over the body
+    items.push({ k: bodyKey + 5e3, s: draws(sideFar) + draws(TOP) + sortDraw([...RAILS, ...MOUNTS]) + draws(sideNear) });
+    floats.push(wpts([TOP, ...SIDES]));
+    if (apart) { items.push({ k: keyOf(FACE), s: draws(FACE) }, { k: keyOf(REAR) - 200, s: draws(REAR) }); shadows.push(wpts([FACE]), wpts([REAR])); }
+    for (const g of ["bat", "comp"]) if (floating[g]) { const p = PARTS.find((q) => q.grp === g); items.push({ k: keyOf(p), s: draws(p) }); floats.push(wpts([p])); }
+  }
+
+  // ---- the legs: each on the side of the body it clears; inside a leg, inboard to outboard while it hangs, by depth
+  // once it has swung out into a spoke
+  for (const L of LEGS) {
+    const list = [...LEG_PARTS[L.id]];
+    if (rollsOut) list.push(ROLLS[L.id]);
+    const lp = wpts(list);
+    const side = legSide(N, lp) || (depth(ap(N["thigh" + L.id], [0, 0, -LU / 2])) > bodyKey ? 1 : -1);
+    const lat = dot3(mv(N["hip" + L.id].M, [0, L.sy, 0]), VIEW) > 0 ? 1 : -1;
+    const W = 2600 * (1 - clamp(Math.abs(Z.joints[L.id].roll) / 90));
+    const keyed = list.map((p) => ({ p, k: keyOf(p) + lat * p.lay * W }));
+    keyed.sort((a, b) => a.k - b.k);
+    // apart, the legs beyond the body fade back toward the paper, so the near ones and the stack read first
+    const ghost = side < 0 ? 0.5 * Z.legE : 0;
+    items.push({ k: bodyKey + side * 1e4 + depth(ap(N["hip" + L.id], [0, 0, 0])) * 0.01, s: keyed.map((x) => draws(x.p, ghost)).join("") });
+    if (Z.spoke < 0.5) for (const sg of ["hip", "thigh", "shin", "foot"]) shadows.push(wpts(list.filter((p) => p.seg === sg && p.grp === "leg")));
+  }
+
+  items.sort((a, b) => a.k - b.k);
+  return { html: items.map((x) => x.s).join(""), pts, shadows, floats, N };
+}
+
+// ---------------------------------------------------------------- what lies on the floor: the tiles, the step, the
+// support polygon under the planted feet
+function gridSvg(Z, N) {
+  // tiles every 400 mm along the robot's own axes; the lines across its path move back as the floor scrolls
+  const half = D.FLOOR_HALF - 40, step = 400, S0 = Z.scroll;
+  const Q = (x, y) => P2(pr(ap(N.world, [x, y, 0.02])));
+  let d = "";
+  for (let k = Math.ceil((-half + S0) / step); k <= Math.floor((half + S0) / step); k++) { const x = k * step - S0; d += `M${Q(x, -half)}L${Q(x, half)}`; }
+  for (let y = -1200; y <= 1200; y += step) d += `M${Q(-half, y)}L${Q(half, y)}`;
+  return `<path d="${d}"/>`;
+}
+function underSvg(Z, B) {
+  const N = B.N;
+  let s = "";
+  if (Z.block > 0.5) {
+    const bp = blockPart(Z.block);
+    s += partSvg(bp, N.floor, 0, 0).s;
+    // the robot's shadow where it falls on the step's top
+    const top = [[BLOCK.B0, -BLOCK.hw], [BLOCK.B1, -BLOCK.hw], [BLOCK.B1, BLOCK.hw], [BLOCK.B0, BLOCK.hw]].map(([x, y]) => pr(ap(N.floor, [x, y, Z.block])));
+    const zt = FT + Z.block;
+    const toTop = (p) => pr([p[0] + D.SHADOW[0] * (p[2] - zt), p[1] + D.SHADOW[1] * (p[2] - zt), zt]);
+    const d = B.shadows.filter((q) => q.length > 2).map((q) => dPath(hull(q.map(toTop)))).join("");
+    s += `<clipPath id="sp-blockclip"><path d="${dPath(top)}"/></clipPath><g clip-path="url(#sp-blockclip)" style="mix-blend-mode:multiply"><path class="shadow" d="${d}"/></g>`;
+  }
+  if (Z.support > 0.01 && Z.feet) {
+    const planted = LEGS.filter((L) => Z.feet[L.id].planted).map((L) => pr(ap(N.floor, [Z.feet[L.id].X, L.sy * YS, Z.feet[L.id].z + 0.5])));
+    if (planted.length >= 2) {
+      const poly = planted.length > 2 ? dPath(hull(planted)) : dOpen(planted);
+      s += `<g style="opacity:${r3(Z.support)}"><path class="support" d="${poly}"/>${planted.map((p) => `<circle class="support-dot" cx="${r2(p[0])}" cy="${r2(p[1])}" r="5.5"/>`).join("")}</g>`;
+    }
+  }
+  return s;
+}
+
+// ---------------------------------------------------------------- the labels
+// each knows the point it names and where its box sits: next to that point (dx, dy in stage px) or pinned to the stage
+const TAG = {
+  motors: () => ({ text: `${M.dof} motors · 3 per leg`, sub: BRAND.maker, stage: [16, 16] }),
+  xtop: (N, near) => ({ p: ap(N.top, [-260, near * 70, 622]), text: "yellow panels + rails", at: [24, 14] }),
+  xbat: (N) => ({ p: ap(N.bat, [BAT.c[0] - 90, 30, BAT.c[2] + BAT.h[2]]), text: "battery", at: [40, 128] }),
+  xcomp: (N) => ({ p: ap(N.comp, [CMP.c[0] + 30, -20, CMP.c[2] + CMP.h[2]]), text: "compute", at: [686, 196], anchor: "end" }),
+  xhip: (N, near) => ({ p: ap(N["hip" + (near > 0 ? "FL" : "FR")], [0, near * YP1, 0]), text: "hip · 2 motors", at: [686, 262], anchor: "end" }),
+  xthigh: (N, near) => ({ p: ap(N["thigh" + (near > 0 ? "FL" : "FR")], [0, near * YT1, -LU * 0.62]), text: "upper leg · knee motor", at: [686, 382], anchor: "end" }),
+  xshin: (N, near) => ({ p: ap(N["shin" + (near > 0 ? "FL" : "FR")], [0, near * YS, -LL / 2]), text: "lower leg", at: [686, 424], anchor: "end" }),
+  xfoot: (N, near) => ({ p: ap(N["foot" + (near > 0 ? "FL" : "FR")], [0, near * YS, 0]), text: "rubber foot", at: [686, 466], anchor: "end" }),
+  trot: () => ({ text: "trot · diagonal pairs", sub: `top speed ≈${M.speed} m/s · ${BRAND.maker}`, stage: [16, 16] }),
+  level: () => ({ text: "front legs, then rear", sub: "the body stays level", stage: [16, 16] }),
+  pairs: () => ({ text: `${M.pairs} stereo pairs · approx. 360°`, sub: BRAND.maker, stage: [16, 16] }),
+};
+function tagSvg(t, cam) {
+  const s = cam.s;
+  const cw = 6.62, cw2 = 5.42, pad = 7;
+  const wpx = Math.max(t.text.length * cw, (t.sub || "").length * cw2) + 2 * pad, hpx = t.sub ? 32 : 20;
+  let bx, by, lead = "";
+  if (t.stage) {
+    bx = cam.F[0] + (t.stage[0] - D.W / 2) / s;
+    by = cam.F[1] + (t.stage[1] - D.H / 2) / s;
+  } else {
+    const p = pr(t.p);
+    const ax = t.anchor === "end" ? wpx : t.anchor === "middle" ? wpx / 2 : 0;
+    if (t.at) { bx = cam.F[0] + (t.at[0] - ax - D.W / 2) / s; by = cam.F[1] + (t.at[1] - D.H / 2) / s; }
+    else { bx = p[0] + (t.dx - ax) / s; by = p[1] + t.dy / s - hpx / 2 / s; }
+    const qx = clamp(p[0], bx, bx + wpx / s), qy = clamp(p[1], by, by + hpx / s);
+    lead = `<path class="lead" d="M${r2(p[0])} ${r2(p[1])}L${r2(qx)} ${r2(qy)}"/><circle class="lead-dot" cx="${r2(p[0])}" cy="${r2(p[1])}" r="${r2(2.4 / s)}"/>`;
+  }
+  const box = `<rect class="tag" x="${r2(bx)}" y="${r2(by)}" width="${r2(wpx / s)}" height="${r2(hpx / s)}" rx="${r2(4 / s)}"/>`;
+  const t1 = `<text class="tag-t" x="${r2(bx + pad / s)}" y="${r2(by + 14 / s)}" style="font-size:${r2(11 / s)}px">${esc(t.text)}</text>`;
+  const t2 = t.sub ? `<text class="tag-s" x="${r2(bx + pad / s)}" y="${r2(by + 26.5 / s)}" style="font-size:${r2(9 / s)}px">${esc(t.sub)}</text>` : "";
+  return `<g style="opacity:${r3(t.op)}">${lead}${box}${t1}${t2}</g>`;
+}
+
+// ---------------------------------------------------------------- the camera
+// Named aims, each the box of a few still frames of a step measured once; the camera blends between two of them and
+// always keeps the whole robot on the stage.
+const PAD = 14;
+const boxOf = (pts) => { let x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9; for (const p of pts) { if (p[0] < x0) x0 = p[0]; if (p[0] > x1) x1 = p[0]; if (p[1] < y0) y0 = p[1]; if (p[1] > y1) y1 = p[1]; } return [x0, y0, x1, y1]; };
+const unionBox = (...bs) => [Math.min(...bs.map((b) => b[0])), Math.min(...bs.map((b) => b[1])), Math.max(...bs.map((b) => b[2])), Math.max(...bs.map((b) => b[3]))];
+const fitOf = (b, fill = 1) => Math.min(((D.W - 2 * PAD) * fill) / (b[2] - b[0]), ((D.H - 2 * PAD) * fill) / (b[3] - b[1]));
+const ringPts = () => { const N = nodes(base()); return arc(RING.r1 + 110, 0, 360, 48).map((p) => pr(ap(N.world, p))); };
+const blockPts = () => { const N = nodes(base()); return [[BLOCK.B0, -BLOCK.hw], [BLOCK.B0 + 420, -BLOCK.hw], [BLOCK.B0 + 420, BLOCK.hw], [BLOCK.B0, BLOCK.hw]].flatMap(([x, y]) => [0, BLOCK.H].map((z) => pr(ap(N.world, [x, y, z])))); };
+const AIM_SPEC = {
+  rest: { frames: [[null, 0]], fill: 0.95, shift: [0, 0.02] },
+  open: { frames: [["lid", 1]], fill: 0.95, shift: [0, 0.03] },
+  leg: { frames: [["leg", 0.2], ["leg", 0.5], ["leg", 0.75]], fill: 0.82, close: (N) => [...wptsOf(N, LEG_PARTS[LEG_ID]), ...[[300, 0, 450], [560, 0, 700], [560, 120, 450], [200, 120, 650]].map((p) => pr(ap(N.body, p)))] },
+  apart: { frames: [["apart", 1]], fill: 0.98 },
+  climb: { frames: [[null, 0]], extra: blockPts, fill: 0.97 },
+  see: { frames: [[null, 0]], extra: ringPts, fill: 1.0, shift: [0, 0.01] },
+  fall: { frames: [["fall", 0.0], ["fall", 0.3], ["fall", 0.56]], fill: 0.97 },
+};
+const wptsOf = (N, list) => list.flatMap((p) => p.meshes.flatMap((m) => m.v.map((v) => pr(ap(N[p.node], v)))));
+const AIMS = {};
+function aimOf(name) {
+  if (AIMS[name]) return AIMS[name];
+  const o = AIM_SPEC[name];
+  const boxes = o.frames.map(([st, u]) => { const Z = sceneAt(st, u); if (o.close) return boxOf(o.close(nodes(Z))); return boxOf(build(Z).pts); });
+  if (o.extra) boxes.push(boxOf(o.extra()));
+  const b = unionBox(...boxes);
+  const s = fitOf(b, o.fill);
+  const sh = o.shift || [0, 0];
+  AIMS[name] = { s, F: [(b[0] + b[2]) / 2 - (sh[0] * D.W) / s, (b[1] + b[3]) / 2 - (sh[1] * D.H) / s], box: b, close: !!o.close };
+  return AIMS[name];
+}
+function camFor(Z, box) {
+  const [n0, n1, kk] = Z.cam;
+  const a0 = aimOf(n0), a1 = aimOf(n1);
+  let s = a0.s * (a1.s / a0.s) ** kk;
+  let F = [lerp(a0.F[0], a1.F[0], kk), lerp(a0.F[1], a1.F[1], kk)];
+  // a close aim keeps only its own box; the box to keep slides between the two aims', so nothing snaps
+  const k0 = a0.close ? a0.box : box, k1 = a1.close ? a1.box : box;
+  let keep = k0.map((v, i) => lerp(v, k1[i], kk));
+  s = Math.min(s, fitOf(keep, 1));
+  const hw = D.W / 2 / s, hh = D.H / 2 / s, pd = PAD / s;
+  F = [clamp(F[0], keep[2] + pd - hw, keep[0] - pd + hw), clamp(F[1], keep[3] + pd - hh, keep[1] - pd + hh)];
+  return { s, F, keep };
+}
+
+// ---------------------------------------------------------------- the frame
+function draw() {
+  const Z = scene();
+  const B = build(Z);
+  robotG.innerHTML = B.html;
+  const toFloor = (p) => pr([p[0] + D.SHADOW[0] * (p[2] - FT), p[1] + D.SHADOW[1] * (p[2] - FT), FT]);
+  shadowEl.setAttribute("d", B.shadows.filter((s) => s.length > 2).map((s) => dPath(hull(s.map(toFloor)))).join(""));
+  floatEl.setAttribute("d", B.floats.filter((s) => s.length > 2).map((s) => dPath(hull(s.map(toFloor)))).join(""));
+  const box = boxOf(B.pts);
+  const cam = camFor(Z, box);
+  gridG.innerHTML = gridSvg(Z, B.N);
+  underG.innerHTML = underSvg(Z, B) + ringSvg(B.N, Z, cam.s);
+  const near = dot3(mv(B.N.body.M, [0, 1, 0]), VIEW) > 0 ? 1 : -1;
+  notesG.innerHTML = camGlowSvg(B.N, Z) + Z.tags.map((t) => ({ ...TAG[t.id](B.N, near), op: t.op })).map((t) => tagSvg(t, cam)).join("");
+  artG.setAttribute("transform", `translate(${D.W / 2} ${D.H / 2}) scale(${cam.s.toFixed(4)}) translate(${(-cam.F[0]).toFixed(3)} ${(-cam.F[1]).toFixed(3)})`);
+  DRAWN.Z = Z;
+  DRAWN.B = B;
+  DRAWN.cam = cam;
+  const outN = Z.legE > 0.5 ? 6 + 4 * 5 : Z.top[2] > 100 ? 4 : 0;
+  setText(chip("parts"), outN ? `${outN} parts` : "1 个机器人");
+  setText(chip("joint"), Z.joint);
+  const down = feetDown(B.N, Z);
+  setText(chip("feet"), Z.legE > 0.02 || Z.spoke > 0.02 ? "–" : String(down.n) + (down.n === 2 ? ` · ${down.ids.join("+")}` : ""));
+  setText(chip("pair"), Z.pair);
+  ["mass", "dof", "pairs", "speed", "runtime", "payload", "parts", "joint", "feet", "pair"].forEach((n) => chipHot(n, Z.hot.includes(n)));
+  return Z;
+}
+// which feet are on the ground (the floor or the step under them): the sole within 3 mm of it
+function feetDown(N, Z) {
+  const ids = [];
+  for (const L of LEGS) {
+    const c = ap(N["foot" + L.id], [0, L.sy * YS, 0]);
+    const f = mtv(N.floor.M, sub3(c, N.floor.t));
+    const ground = FT + (Z.block > 0.5 && f[0] >= BLOCK.B0 && f[0] <= BLOCK.B1 && Math.abs(f[1]) <= BLOCK.hw ? Z.block : 0);
+    if (c[2] - FOOT_R - ground < 3) ids.push(L.id);
+  }
+  return { n: ids.length, ids };
+}
+
+const UPDATE = Object.fromEntries(ORDER.map((id) => [id, (u) => { S.step = id; S.u = u; }]));
+tour({
+  STEPS,
+  ORDER,
+  update: (id, u) => UPDATE[id](u),
+  reset: () => { S = fresh(); },
+  onFinish: (id) => { if (id === "together") S = fresh(); },
+  draw,
+  paint: (c) => mixHex(c, "#ece7dc", 0.8),
+  probe: () => {
+    const Z = DRAWN.Z || scene();
+    const N = DRAWN.B ? DRAWN.B.N : nodes(Z);
+    const down = feetDown(N, Z);
+    const ground = Z.legE < 0.02 && Z.spoke < 0.02;
+    // how fast the joints turn, in degrees a second, from the pose a frame earlier in the same step
+    let jv = 0;
+    if (S.step) {
+      const du = 1 / 120 / DUR[S.step];
+      const Zp = sceneAt(S.step, Math.max(0, S.u - du));
+      for (const L of LEGS) for (const a of ["roll", "pitch", "knee"]) jv = Math.max(jv, Math.abs(Z.joints[L.id][a] - Zp.joints[L.id][a]) * 120);
+    }
+    const feet = {};
+    for (const L of LEGS) { const c = ap(N["foot" + L.id], [0, L.sy * YS, 0]); const f = mtv(N.floor.M, sub3(c, N.floor.t)); feet[L.id] = [Math.round(f[0] * 10) / 10, Math.round(f[1] * 10) / 10, Math.round((c[2] - FT) * 10) / 10]; }
+    return {
+      step: S.step, u: S.u,
+      lid: Z.top[2], parts: Z.legE > 0.5 ? 26 : Z.top[2] > 100 ? 4 : 1, legE: Z.legE, spoke: Z.spoke,
+      lit: Z.lit, moving: Z.moving, jv,
+      fl: ground && down.ids.includes("FL") ? 1 : 0, fr: ground && down.ids.includes("FR") ? 1 : 0, rl: ground && down.ids.includes("RL") ? 1 : 0, rr: ground && down.ids.includes("RR") ? 1 : 0,
+      block: Z.block, scroll: Z.scroll, sectors: Z.sectors ? Z.sectors.filter((p) => p > 0.02).length : 0, pair: Z.pairI, tilt: Z.body.roll, lift: Z.body.lift,
+      feet, cam: DRAWN.cam ? { s: DRAWN.cam.s, F: DRAWN.cam.F } : null,
+    };
+  },
+});
+
+}
+</script><script src="/i18n/lang-switch.js?v=2"></script>
+</body></html>

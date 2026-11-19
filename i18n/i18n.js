@@ -38,6 +38,32 @@
     return lead + hit + trail;
   }
 
+  var keyCache = null;
+  function dictionaryKeys() {
+    if (!keyCache) {
+      keyCache = Object.keys(DICT).filter(function (k) { return k.length > 2; })
+        .sort(function (a, b) { return b.length - a.length; });
+    }
+    return keyCache;
+  }
+
+  function translateString(value) {
+    if (typeof value !== 'string' || !value.trim() || lang !== 'zh') return value;
+    var exact = DICT[value.trim()];
+    if (exact) {
+      var lead = value.slice(0, value.indexOf(value.trim()));
+      var trail = value.slice(value.indexOf(value.trim()) + value.trim().length);
+      return lead + exact + trail;
+    }
+    var result = value;
+    var keys = dictionaryKeys();
+    for (var i = 0; i < keys.length; i++) {
+      var k = keys[i];
+      if (result.indexOf(k) !== -1) result = result.split(k).join(DICT[k]);
+    }
+    return result;
+  }
+
   function isSkippable(node) {
     var el = node.parentElement;
     if (!el) return false;
@@ -91,7 +117,7 @@
 
   function apply() {
     document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
-    allTextNodes(document.body).forEach(function (node) { translateTextNode(node); });
+    allTextNodes(document.body).forEach(function (node) { translateTextNode(node, true); });
     translateAttrs();
     translateHeadings();
     if (toggle) toggle.textContent = lang === 'zh' ? 'EN' : '中文';
@@ -104,12 +130,45 @@
       if (!original || original.__vlPatched) return;
       var patched = function (text) {
         var args = Array.prototype.slice.call(arguments);
-        args[0] = lang === 'zh' ? lookup(String(text)) : String(text);
+        args[0] = translateString(String(text));
         return original.apply(this, args);
       };
       patched.__vlPatched = true;
       CanvasRenderingContext2D.prototype[method] = patched;
     });
+  }
+
+  function patchSetter(proto, name) {
+    var desc = Object.getOwnPropertyDescriptor(proto, name);
+    if (!desc || !desc.set || desc.set.__vlPatched) return;
+    var setter = desc.set;
+    var patched = function (value) {
+      var raw = typeof value === 'string' ? value : String(value);
+      var out = translateString(raw);
+      setter.call(this, out);
+      if (out !== raw) {
+        if (this.nodeType === Node.TEXT_NODE) {
+          originals.set(this, raw);
+          expected.set(this, out);
+        } else if (this.childNodes.length === 1 && this.firstChild.nodeType === Node.TEXT_NODE) {
+          originals.set(this.firstChild, raw);
+          expected.set(this.firstChild, out);
+        }
+      }
+    };
+    patched.__vlPatched = true;
+    Object.defineProperty(proto, name, {
+      configurable: true,
+      enumerable: desc.enumerable,
+      get: desc.get,
+      set: patched,
+    });
+  }
+
+  function patchDynamicText() {
+    patchSetter(Node.prototype, 'textContent');
+    patchSetter(Node.prototype, 'nodeValue');
+    if (typeof CharacterData !== 'undefined') patchSetter(CharacterData.prototype, 'data');
   }
 
   function observeChanges() {
@@ -160,6 +219,7 @@
 
   function init() {
     patchCanvas();
+    patchDynamicText();
     makeToggle();
     apply();
     observeChanges();
